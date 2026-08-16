@@ -1,0 +1,10 @@
+{
+    "Name"        : "LightenDetector",
+    "Version"     : "1.0.0",
+    "Description" : "Provides lighten detector plugin entry.",
+    "Category"    : "Algorithm",
+    "Required"    : false,
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}

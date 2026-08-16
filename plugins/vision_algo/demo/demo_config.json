@@ -1,0 +1,20 @@
+{
+  "poolThreadNum": 1,
+  "solderWidth": 109,
+  "solderHeight": 45,
+  "chipGroupWidth": 109,
+  "chipGroupHeight": 175,
+  "chipWidth": 51,
+  "chipHeight": 20,
+  "ledGapX": 1250,
+  "ledGapY": 1250,
+  "pixeSize": 2.95,
+  "alignType": 0,
+  "confThr": 0.4,
+  "confGroupThr": 0.6,
+  "chipLimThr": 0.8,
+  "solderLimThr": 0.8,
+  "isDefectClassify": false,
+  "isPolarityDetect": true,
+  "dlInferenceEngine": 2
+}

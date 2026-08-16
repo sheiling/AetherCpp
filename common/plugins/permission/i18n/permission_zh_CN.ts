@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
+<context>
+    <name>LanguageManager</name>
+    <message><source>perm.audit.col_action_name</source><translation>操作名称</translation></message>
+    <message><source>perm.audit.col_action_type</source><translation>操作类型</translation></message>
+    <message><source>perm.audit.col_details</source><translation>详情</translation></message>
+    <message><source>perm.audit.col_result</source><translation>结果</translation></message>
+    <message><source>perm.audit.col_target</source><translation>对象</translation></message>
+    <message><source>perm.audit.col_time</source><translation>时间</translation></message>
+    <message><source>perm.audit.col_user</source><translation>用户</translation></message>
+    <message><source>perm.audit.details_title</source><translation>审计详情</translation></message>
+    <message><source>perm.audit.export</source><translation>导出</translation></message>
+    <message><source>perm.audit.export_pending</source><translation>导出功能将在后续版本提供。</translation></message>
+    <message><source>perm.audit.field_action_name</source><translation>操作名称：%1</translation></message>
+    <message><source>perm.audit.field_action_type</source><translation>操作类型：%1</translation></message>
+    <message><source>perm.audit.field_added_ids</source><translation>新增权限 ID：%1</translation></message>
+    <message><source>perm.audit.field_details</source><translation>操作详情：</translation></message>
+    <message><source>perm.audit.field_ip</source><translation>IP：%1</translation></message>
+    <message><source>perm.audit.field_module</source><translation>模块：%1</translation></message>
+    <message><source>perm.audit.field_normalized_count</source><translation>归一化后权限数：%1</translation></message>
+    <message><source>perm.audit.field_raw_data</source><translation>原始数据：</translation></message>
+    <message><source>perm.audit.field_removed_ids</source><translation>移除权限 ID：%1</translation></message>
+    <message><source>perm.audit.field_result</source><translation>结果：%1</translation></message>
+    <message><source>perm.audit.field_role</source><translation>角色：%1</translation></message>
+    <message><source>perm.audit.field_role_id</source><translation>角色 ID：%1</translation></message>
+    <message><source>perm.audit.field_target</source><translation>对象：%1</translation></message>
+    <message><source>perm.audit.field_time</source><translation>时间：%1</translation></message>
+    <message><source>perm.audit.field_user</source><translation>用户：%1</translation></message>
+    <message><source>perm.audit.filter_all_actions</source><translation>全部操作</translation></message>
+    <message><source>perm.audit.filter_login</source><translation>登录</translation></message>
+    <message><source>perm.audit.filter_any_time</source><translation>不限时间</translation></message>
+    <message><source>perm.audit.filter_permission_change_legacy</source><translation>权限变更（旧）</translation></message>
+    <message><source>perm.audit.filter_recipe_edit</source><translation>配方修改</translation></message>
+    <message><source>perm.audit.filter_role_permission_save</source><translation>角色权限保存</translation></message>
+    <message><source>perm.audit.filter_system_config</source><translation>系统配置</translation></message>
+    <message><source>perm.audit.nextPage</source><translation>下一页</translation></message>
+    <message><source>perm.audit.page_title</source><translation>操作审计</translation></message>
+    <message><source>perm.audit.preset_last_30_days</source><translation>最近 30 天</translation></message>
+    <message><source>perm.audit.preset_last_7_days</source><translation>最近7天</translation></message>
+    <message><source>perm.audit.preset_today</source><translation>今天</translation></message>
+    <message><source>perm.audit.preset_yesterday</source><translation>昨天</translation></message>
+    <message><source>perm.audit.prevPage</source><translation>上一页</translation></message>
+    <message><source>perm.audit.query</source><translation>查询</translation></message>
+    <message><source>perm.audit.record_not_found</source><translation>未找到该审计记录。</translation></message>
+    <message><source>perm.audit.resetFilter</source><translation>重置</translation></message>
+    <message><source>perm.audit.search_operator_placeholder</source><translation>搜索操作人</translation></message>
+    <message><source>perm.audit.start_after_end</source><translation>开始时间不能晚于结束时间。</translation></message>
+    <message><source>perm.audit.view</source><translation>查看详情</translation></message>
+    <message><source>perm.common.all_statuses</source><translation>全部状态</translation></message>
+    <message><source>perm.common.any</source><translation>不限</translation></message>
+    <message><source>perm.common.cancel</source><translation>取消</translation></message>
+    <message><source>perm.common.clear</source><translation>清空</translation></message>
+    <message><source>perm.common.confirm</source><translation>确认</translation></message>
+    <message><source>perm.common.confirm_deletion</source><translation>确认删除</translation></message>
+    <message><source>perm.common.delete</source><translation>删除</translation></message>
+    <message><source>perm.common.description</source><translation>说明</translation></message>
+    <message><source>perm.common.disabled</source><translation>禁用</translation></message>
+    <message><source>perm.common.disabled_only</source><translation>仅禁用</translation></message>
+    <message><source>perm.common.edit</source><translation>编辑</translation></message>
+    <message><source>perm.common.enabled</source><translation>启用</translation></message>
+    <message><source>perm.common.enabled_only</source><translation>仅启用</translation></message>
+    <message><source>perm.common.error</source><translation>错误</translation></message>
+    <message><source>perm.common.export</source><translation>导出</translation></message>
+    <message><source>perm.common.next_page</source><translation>下一页</translation></message>
+    <message><source>perm.common.no</source><translation>否</translation></message>
+    <message><source>perm.common.notice</source><translation>提示</translation></message>
+    <message><source>perm.common.ok</source><translation>确定</translation></message>
+    <message><source>perm.common.optional</source><translation>可选</translation></message>
+    <message><source>perm.common.page_indicator</source><translation>第 %1 / %2 页</translation></message>
+    <message><source>perm.common.prev_page</source><translation>上一页</translation></message>
+    <message><source>perm.common.reset</source><translation>重置</translation></message>
+    <message><source>perm.common.save</source><translation>保存</translation></message>
+    <message><source>perm.common.search</source><translation>查询</translation></message>
+    <message><source>perm.common.select_all</source><translation>全选</translation></message>
+    <message><source>perm.common.selected_count</source><translation>已选 %1 项</translation></message>
+    <message><source>perm.common.total_count</source><translation>共 %1 条</translation></message>
+    <message><source>perm.common.yes</source><translation>是</translation></message>
+    <message><source>perm.datetime.end_at_hour</source><translation>结束于 %1 时整段（%1:00:00 – %1:59:59）</translation></message>
+    <message><source>perm.datetime.hour_label</source><translation>时(整点)</translation></message>
+    <message><source>perm.datetime.hour_range_hint</source><translation>每个选项表示该小时的完整区间（如 23 表示 23:00:00 – 23:59:59）</translation></message>
+    <message><source>perm.datetime.hour_tooltip</source><translation>%1:00:00 – %1:59:59</translation></message>
+    <message><source>perm.datetime.month_header</source><translation>%1年 %2月</translation></message>
+    <message><source>perm.datetime.now</source><translation>此刻</translation></message>
+    <message><source>perm.datetime.start_at_hour</source><translation>开始于 %1:00:00（含该小时）</translation></message>
+    <message><source>perm.err.action_as_parent</source><translation>操作不能作为父节点</translation></message>
+    <message><source>perm.err.action_parent_invalid</source><translation>操作必须挂在导航页或子页面下</translation></message>
+    <message><source>perm.err.create_failed</source><translation>创建失败</translation></message>
+    <message><source>perm.err.delete_failed</source><translation>删除失败</translation></message>
+    <message><source>perm.err.has_children</source><translation>请先删除子节点</translation></message>
+    <message><source>perm.err.has_grant_refs</source><translation>该资源已被角色引用，无法删除</translation></message>
+    <message><source>perm.err.invalid_resource_type</source><translation>资源类型无效</translation></message>
+    <message><source>perm.err.key_duplicate</source><translation>资源 key 已存在</translation></message>
+    <message><source>perm.err.key_immutable</source><translation>已创建资源的 key 不可修改</translation></message>
+    <message><source>perm.err.key_required</source><translation>请填写资源 key</translation></message>
+    <message><source>perm.err.nav_parent_must_be_root</source><translation>导航页必须为根节点</translation></message>
+    <message><source>perm.err.parent_not_found</source><translation>父节点不存在</translation></message>
+    <message><source>perm.err.parent_required</source><translation>请选择父节点</translation></message>
+    <message><source>perm.err.resource_not_found</source><translation>资源不存在</translation></message>
+    <message><source>perm.err.resource_type_immutable</source><translation>资源类型不可修改</translation></message>
+    <message><source>perm.err.save_failed</source><translation>保存失败</translation></message>
+    <message><source>perm.err.store_unavailable</source><translation>数据服务不可用</translation></message>
+    <message><source>perm.err.sub_page_parent_must_be_nav</source><translation>子页面必须挂在导航页下</translation></message>
+    <message><source>perm.form.key</source><translation>Key</translation></message>
+    <message><source>perm.form.page_key</source><translation>Page Key</translation></message>
+    <message><source>perm.login.account_disabled</source><translation>账号已禁用，请联系管理员</translation></message>
+    <message><source>perm.login.exit</source><translation>退出</translation></message>
+    <message><source>perm.login.invalid_credentials</source><translation>用户名或密码错误</translation></message>
+    <message><source>perm.login.session_idle_logout</source><translation>长时间无操作，已自动退出登录。</translation></message>
+    <message><source>perm.login.session_timeout_title</source><translation>会话超时</translation></message>
+    <message><source>perm.login.sign_in</source><translation>登录</translation></message>
+    <message><source>perm.login.sign_in_failed</source><translation>登录失败</translation></message>
+    <message><source>perm.login.welcome</source><translation>欢迎登录</translation></message>
+    <message><source>perm.resources.cascade_disabled_children</source><translation>已同时禁用子节点：%1</translation></message>
+    <message><source>perm.resources.cascade_enabled_parents</source><translation>已同时启用父节点：%1</translation></message>
+    <message><source>perm.resources.createAction</source><translation>新建操作</translation></message>
+    <message><source>perm.resources.created</source><translation>资源已创建。</translation></message>
+    <message>
+        <source>perm.resources.created_with_info</source>
+        <translation>资源已创建。
+%1</translation>
+    </message>
+    <message><source>perm.resources.createNav</source><translation>新建导航</translation></message>
+    <message><source>perm.resources.createSubPage</source><translation>新建子页</translation></message>
+    <message><source>perm.resources.delete</source><translation>删除资源</translation></message>
+    <message><source>perm.resources.delete_confirm</source><translation>确定删除该资源？有子节点或角色引用时将无法删除。</translation></message>
+    <message><source>perm.resources.deleted</source><translation>资源已删除。</translation></message>
+    <message><source>perm.resources.details_title</source><translation>资源详情</translation></message>
+    <message><source>perm.resources.discard_unsaved_switch</source><translation>当前资源修改尚未保存，切换节点将放弃这些修改，是否继续？</translation></message>
+    <message>
+        <source>perm.resources.duplicate_key_prompt</source>
+        <translation>已存在同 key 资源（可能已禁用）。
+
+是：显示全部并定位
+否：仅看禁用并定位
+取消：关闭</translation>
+    </message>
+    <message><source>perm.resources.edit</source><translation>编辑资源</translation></message>
+    <message><source>perm.resources.edit_title</source><translation>编辑资源：%1</translation></message>
+    <message><source>perm.resources.filter_all_types</source><translation>全部类型</translation></message>
+    <message><source>perm.resources.label_description</source><translation>描述</translation></message>
+    <message><source>perm.resources.label_display_name</source><translation>姓名</translation></message>
+    <message><source>perm.resources.label_grant_refs</source><translation>角色引用</translation></message>
+    <message><source>perm.resources.label_parent</source><translation>父节点</translation></message>
+    <message><source>perm.resources.label_sort_order</source><translation>排序</translation></message>
+    <message><source>perm.resources.label_source</source><translation>来源</translation></message>
+    <message><source>perm.resources.label_type</source><translation>类型</translation></message>
+    <message><source>perm.resources.new_action</source><translation>新建操作</translation></message>
+    <message><source>perm.resources.new_nav</source><translation>新建导航</translation></message>
+    <message><source>perm.resources.new_resource</source><translation>新建资源</translation></message>
+    <message><source>perm.resources.new_sub_page</source><translation>新建子页</translation></message>
+    <message><source>perm.resources.page_title</source><translation>权限资源</translation></message>
+    <message><source>perm.resources.please_enter_display_name</source><translation>请输入姓名</translation></message>
+    <message><source>perm.resources.please_select_nav</source><translation>请先选择一个导航页</translation></message>
+    <message><source>perm.resources.please_select_nav_or_sub</source><translation>请先选择导航页或子页面</translation></message>
+    <message><source>perm.resources.reset</source><translation>重置资源筛选</translation></message>
+    <message><source>perm.resources.root_parent</source><translation>（根）</translation></message>
+    <message><source>perm.resources.save</source><translation>保存资源</translation></message>
+    <message><source>perm.resources.saved</source><translation>资源已保存。</translation></message>
+    <message>
+        <source>perm.resources.saved_with_info</source>
+        <translation>资源已保存。
+%1</translation>
+    </message>
+    <message><source>perm.resources.search_placeholder</source><translation>搜索 key / 名称 / page_key</translation></message>
+    <message><source>perm.resources.toggle_enabled</source><translation>切换启用</translation></message>
+    <message><source>perm.resources.toggleEnabled</source><translation>启用/禁用</translation></message>
+    <message><source>perm.resources.type_action</source><translation>操作</translation></message>
+    <message><source>perm.resources.type_nav</source><translation>导航页</translation></message>
+    <message><source>perm.resources.type_sub_page</source><translation>子页面</translation></message>
+    <message><source>perm.role.minimal.description</source><translation>未登录时的默认身份；可在角色管理中调整授权。</translation></message>
+    <message><source>perm.role.minimal.name</source><translation>最小权限</translation></message>
+    <message><source>perm.role.super_admin.description</source><translation>系统内置角色，不可删除。</translation></message>
+    <message><source>perm.role.super_admin.name</source><translation>超级管理员</translation></message>
+    <message><source>perm.roles.add</source><translation>新增角色</translation></message>
+    <message><source>perm.roles.clear</source><translation>清空</translation></message>
+    <message><source>perm.roles.copy_minimal_grants_failed</source><translation>复制最小权限角色授权失败</translation></message>
+    <message><source>perm.roles.create</source><translation>新增角色</translation></message>
+    <message><source>perm.roles.description_placeholder</source><translation>角色说明（可选）</translation></message>
+    <message><source>perm.roles.discard_unsaved_switch</source><translation>当前角色的权限修改尚未保存，切换角色将放弃这些修改，是否继续？</translation></message>
+    <message><source>perm.roles.edit</source><translation>编辑角色</translation></message>
+    <message><source>perm.roles.edit</source><translation>编辑角色</translation></message>
+    <message><source>perm.roles.label_name</source><translation>角色名称</translation></message>
+    <message><source>perm.roles.list_title</source><translation>角色列表</translation></message>
+    <message><source>perm.roles.name_duplicate</source><translation>角色名称已存在，请使用其他名称</translation></message>
+    <message><source>perm.roles.not_editable</source><translation>该角色不可编辑</translation></message>
+    <message><source>perm.roles.not_found</source><translation>角色不存在</translation></message>
+    <message><source>perm.roles.permissions_saved</source><translation>角色权限已保存。</translation></message>
+    <message>
+        <source>perm.roles.permissions_saved_pruned</source>
+        <translation>角色权限已保存。
+已自动剔除 %1 项不符合父子链或已禁用的授权。</translation>
+    </message>
+    <message><source>perm.roles.permissions_title</source><translation>角色权限</translation></message>
+    <message><source>perm.roles.permissions_title_with_name</source><translation>角色权限：%1</translation></message>
+    <message><source>perm.roles.please_enter_name</source><translation>请输入角色名称</translation></message>
+    <message><source>perm.roles.reset</source><translation>重置权限</translation></message>
+    <message><source>perm.roles.save</source><translation>保存权限</translation></message>
+    <message><source>perm.roles.save_permissions</source><translation>保存权限</translation></message>
+    <message><source>perm.roles.selectAll</source><translation>全选</translation></message>
+    <message><source>perm.roles.visible</source><translation>可见</translation></message>
+    <message><source>perm.users.add</source><translation>新增用户</translation></message>
+    <message><source>perm.users.bulk_assign_roles</source><translation>批量分配角色</translation></message>
+    <message><source>perm.users.bulk_disable</source><translation>批量禁用</translation></message>
+    <message><source>perm.users.bulk_enable</source><translation>批量启用</translation></message>
+    <message><source>perm.users.bulkAssignRoles</source><translation>批量分配角色</translation></message>
+    <message><source>perm.users.bulkDisable</source><translation>批量禁用</translation></message>
+    <message><source>perm.users.bulkEnable</source><translation>批量启用</translation></message>
+    <message><source>perm.users.cannot_assign_super_admin</source><translation>不可分配超级管理员角色</translation></message>
+    <message><source>perm.users.cannot_toggle_status</source><translation>该用户不可启用或禁用</translation></message>
+    <message><source>perm.users.col_department</source><translation>所属部门</translation></message>
+    <message><source>perm.users.col_last_login</source><translation>最后登录</translation></message>
+    <message><source>perm.users.col_role</source><translation>角色</translation></message>
+    <message><source>perm.users.col_status</source><translation>状态</translation></message>
+    <message><source>perm.users.col_username</source><translation>用户名</translation></message>
+    <message><source>perm.users.create</source><translation>新增用户</translation></message>
+    <message><source>perm.users.edit</source><translation>编辑用户</translation></message>
+    <message><source>perm.users.edit_user</source><translation>编辑用户信息</translation></message>
+    <message><source>perm.users.filter_all_roles</source><translation>全部角色</translation></message>
+    <message><source>perm.users.label_department</source><translation>部门</translation></message>
+    <message><source>perm.users.label_display_name</source><translation>显示名称</translation></message>
+    <message><source>perm.users.label_password</source><translation>密码</translation></message>
+    <message><source>perm.users.label_remarks</source><translation>备注</translation></message>
+    <message><source>perm.users.page_title</source><translation>用户管理</translation></message>
+    <message><source>perm.users.password_reset_done</source><translation>密码已重置为123456。</translation></message>
+    <message><source>perm.users.placeholder_account</source><translation>登录账号</translation></message>
+    <message><source>perm.users.placeholder_password</source><translation>登录密码</translation></message>
+    <message><source>perm.users.please_enter_department</source><translation>请输入部门</translation></message>
+    <message><source>perm.users.please_enter_display_name</source><translation>请填写显示名称</translation></message>
+    <message><source>perm.users.please_enter_password</source><translation>请输入密码</translation></message>
+    <message><source>perm.users.please_enter_username</source><translation>请输入用户名</translation></message>
+    <message><source>perm.users.please_select_role</source><translation>请选择角色</translation></message>
+    <message><source>perm.users.query</source><translation>查询用户</translation></message>
+    <message><source>perm.users.reset_password</source><translation>重置密码</translation></message>
+    <message><source>perm.users.resetFilter</source><translation>重置条件</translation></message>
+    <message><source>perm.users.resetPassword</source><translation>重置密码</translation></message>
+    <message><source>perm.users.search_placeholder</source><translation>搜索用户名/姓名</translation></message>
+    <message><source>perm.users.toggleStatus</source><translation>启用/禁用</translation></message>
+</context>
+</TS>

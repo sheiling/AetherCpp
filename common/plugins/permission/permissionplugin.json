@@ -1,0 +1,10 @@
+{
+    "Name"        : "Permission",
+    "Version"     : "1.0.0",
+    "Description" : "Provides permission and role management.",
+    "Category"    : "Business",
+    "Required"    : true,
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}

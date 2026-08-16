@@ -1,0 +1,37 @@
+# CMake 构建目录
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Qt 生成文件
+ui_*.h
+moc_*.cpp
+qrc_*.cpp
+*.autosave
+
+# 编译输出
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+
+# IDE 配置文件
+.vscode/
+.idea/
+.claude/
+.omo/
+*.user
+*.pro.user
+*.pro.user.*
+
+# 其他
+bin/
+lib/
+*.log

@@ -1,0 +1,22 @@
+﻿#ifndef __DIE_DETECTOR_ERRORS_H__
+#define __DIE_DETECTOR_ERRORS_H__
+
+#include "ci_basic_error.h"
+#include "ci_frontend_modname.h"
+#include "ci_detection_modname.h"
+
+#define ALGOERROR_DIE_DETECTOR_TEMPLATE_NAME_NOT_EXIST                 ERROR_CODE(ALGOMOD_DIE_DETECTOR,101)  //model name 不存在
+#define ALGOERROR_DIE_DETECTOR_MODEL_TYPE_MISMATCH                     ERROR_CODE(ALGOMOD_DIE_DETECTOR,102)  //model 类型不匹配
+#define ALGOERROR_DIE_DETECTOR_MODEL_INPUT_EMPTY                       ERROR_CODE(ALGOMOD_DIE_DETECTOR,103)  //输入模板为空
+#define ALGOERROR_DIE_DETECTOR_IMG_INPUT_EMPTY                         ERROR_CODE(ALGOMOD_DIE_DETECTOR,104)  //图像输入为空
+#define ALGOERROR_DIE_DETECTOR_MATCH_CONTOUR_EMPTY                     ERROR_CODE(ALGOMOD_DIE_DETECTOR,105)  //没有匹配到芯片
+#define ALGOERROR_DIE_DETECTOR_DATA_EMPTY                              ERROR_CODE(ALGOMOD_DIE_DETECTOR,106)  //数据为空
+#define ALGOERROR_DIE_DETECTOR_DIE_NOT_COMPLETE						   ERROR_CODE(ALGOMOD_DIE_DETECTOR,107)  //芯片不符合要求
+#define ALGOERROR_DIE_DETECTOR_DIE_IMAGE_INFORMATION_NOT_ENOUGH		   ERROR_CODE(ALGOMOD_DIE_DETECTOR,108)  //输入的图片信息不完整，晶粒过少
+#define ALGOERROR_DIE_DETECTOR_WRITE_IMG_ERROR   		               ERROR_CODE(ALGOMOD_DIE_DETECTOR,109)  //写入错误，检查路径或磁盘是否已满
+#define ALGOERROR_DIE_DETECTOR_WRONG_INPUT_PARA   		               ERROR_CODE(ALGOMOD_DIE_DETECTOR,110)  //输入阈值信息错误
+
+
+
+
+#endif

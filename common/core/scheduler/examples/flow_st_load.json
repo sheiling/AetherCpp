@@ -1,0 +1,60 @@
+{
+  "_comment": "上料工位流程 — 取板、点胶、发送到检测工位",
+  "name":               "上料流程",
+  "description":        "上料工位：取板 → 点胶 → 发送工件数据到检测通道",
+  "version":            1,
+  "timeoutMs":          30000,
+  "enableCompensation": true,
+  "steps": {
+    "type": "control.sequential",
+    "name": "上料主流程",
+    "children": [
+      {
+        "type":    "control.script",
+        "name":    "取板",
+        "script":  "st_load_pickup",
+        "timeoutMs": 8000,
+        "retryCount": 2
+      },
+      {
+        "type":   "control.delay",
+        "name":   "取板稳定延时",
+        "params": { "ms": 100 }
+      },
+      {
+        "type":    "control.script",
+        "name":    "点胶",
+        "script":  "st_load_apply_glue",
+        "timeoutMs": 5000,
+        "isCheckpoint": true
+      },
+      {
+        "type":   "control.delay",
+        "name":   "点胶固化延时",
+        "params": { "ms": 200 }
+      },
+      {
+        "type":    "control.script",
+        "name":    "准备工件数据",
+        "script":  "st_load_prepare_data",
+        "timeoutMs": 1000
+      },
+      {
+        "_comment": "将工件数据发送到检测工位通道（阻塞直到通道有空位）",
+        "type":   "sync.channel_send",
+        "name":   "发送工件到检测队列",
+        "timeoutMs": 10000,
+        "params": {
+          "channel": "ch-load-to-inspect",
+          "ctxKey":  "workpiece_data"
+        }
+      },
+      {
+        "type":    "control.script",
+        "name":    "上料完成上报",
+        "script":  "st_load_report_done",
+        "optional": true
+      }
+    ]
+  }
+}

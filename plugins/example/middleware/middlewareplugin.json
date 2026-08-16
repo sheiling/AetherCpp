@@ -1,0 +1,10 @@
+{
+    "Name"        : "Middleware",
+    "Version"     : "1.0.0",
+    "Description" : "Demonstrates the Middleware pattern for MVVM: property pipeline and command pipeline.",
+    "Category"    : "UI",
+    "Required"    : false,
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}

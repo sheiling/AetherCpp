@@ -1,0 +1,10 @@
+{
+    "Name"        : "Mvvm",
+    "Version"     : "1.0.0",
+    "Description" : "Provides the MVVM example page with UserView.",
+    "Category"    : "UI",
+    "Required"    : false,
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}

@@ -1,0 +1,128 @@
+# ============================================================
+# 配置文件
+#
+# 覆盖场景：
+#   [app]       应用基础信息
+#   [ui]        界面主题配置
+#   [orm]       数据库连接池配置
+#   [logger]    日志系统配置
+#   [help]      帮助页版本信息与 PDF 文档路径
+# ============================================================
+
+# ── 应用基础信息 ───────────────────────────────────────────────────────────────
+[app]
+name        = "Aether Platform"
+version     = "2.0.0"
+debug       = false
+description = "Aether Platform"
+build_date  = "2026-03-12"
+max_threads = 8
+pi_value    = 3.141592653589793     # 浮点示例
+
+
+# ── UI / 主题配置 ────────────────────────────────────────────────────────────
+[ui]
+# 启动时应用的 ACSS 主题（不含 .xml）；未配置时默认使用 dark_theme
+theme = "dark_aether"
+# 标题栏「切换亮/暗」使用的两套主题名（toggleTheme / setTheme）
+light_theme = "light_blue"
+dark_theme  = "dark_aether"
+# 可选：ACSS 样式包目录名（styles/ 下子目录，默认 qt_material）
+# style = "qt_material"
+# 颜色主题候选（styles/qt_material/themes/ 下 xml 文件名，不含扩展名）：
+# 亮色系：light_blue  light_cyan  light_cyan_500  light_teal  light_amber
+#         light_red   light_pink  light_purple   light_lightgreen  light_yellow
+# 暗色系：dark_blue   dark_cyan   dark_teal      dark_amber   dark_red
+#         dark_pink   dark_purple dark_lightgreen dark_yellow  dark_aether
+
+# ── 帮助页（Help 插件读取；版本空串时回退 [app] 同名字段）────────────────────
+[help.version]
+app_name        = "AOI检测系统"
+current_version = ""
+build_time      = ""
+update_time     = "2026-04-22 16:00"
+
+[help.documents]
+user_manual = "help/用户手册.pdf"
+maintenance = "help/维护手册.pdf"
+help_doc    = "help/帮助文档.pdf"
+
+# ── 数据库连接池配置 ────────────────────────────────────────────────────────────
+[orm]
+driverName     = "QSQLITE"  # 可选：QSQLITE/QMYSQL/QPSQL/QODBC
+database       = "data/aether.db"
+host           = "127.0.0.1"
+port           = 0
+username       = ""
+password       = ""
+connectOptions = ""
+traceSql       = false
+traceSqlError  = true
+
+
+# ── 日志系统配置 ────────────────────────────────────────────────────────────
+# 只要文件名 + 行号（简洁）：pattern = "[%Y-%m-%d %H:%M:%S.%e] [%^%-8l%$] [%n] [%@] %v"
+# 文件名 + 行号 + 函数名（更完整）：pattern = "[%Y-%m-%d %H:%M:%S.%e] [%^%-8l%$] [%n] [%s:%# %!()] %v"
+# 与代码里默认格式一致（还带线程 ID）：pattern = "[%Y-%m-%d %H:%M:%S.%e] [%^%-8l%$] [tid:%-5t] [%s:%# %!()] %v"
+[logger]
+appName        = "Aether Platform"
+logDir         = "logs"
+pattern        = "[%Y-%m-%d %H:%M:%S.%e] [%^%-8l%$] [%n] [%s:%# %!()] %v"
+level          = 1          # logger::LogLevel，常用：0 Trace, 1 Debug, 2 Info
+target         = 2          # logger::OutputTarget，常用：2 Both
+enableColor    = true
+rotateStrategy = 3          # logger::RotateStrategy，常用：3 Both
+maxFileSize    = 10485760   # 10 MiB
+maxRotatedFiles = 30
+rotationHour   = 0
+rotationMinute = 0
+maxDailyFiles  = 30
+flushMode      = 1          # 0=Buffered(异步缓冲,Error+刷盘) 1=Sync(Info+同步刷盘)
+
+
+# ── 设备管理 ────────────────────────────────────────────────────────────
+[deviceManager]
+enabled          = true
+deviceConfigPath = "config/device_config.json"
+
+
+# ── 调度 ────────────────────────────────────────────────────────────
+[scheduler]
+enabled = true
+flowsDir = "config/flows"
+flowsName = "machine_normally"
+resetFlowName = "machine_reset"
+estopFlowName = "machine_estop"
+maxConcurrent = 1
+continuousIntervalMs = 0
+continuousResubmitOnFail = false
+
+[scheduler.buttonMonitor]
+enabled = true
+pollIntervalMs = 20
+startBtn = "启动按钮"
+stopBtn = "停止按钮"
+resetBtn = "复位按钮"
+modeSwitch = "手动"
+estop = "急停按钮"
+
+[splash]
+enabled = true
+# 空则依次尝试 config/splash.* 与内置 app_splash.ico；相对路径相对于 exe 目录
+imagePath = "config/splashBG.png"
+
+# ── 虚拟相机 / 虚拟运控调试 ──
+[virtual_debug]
+virtual_camera_enable = true
+virtual_motion_enable = true
+
+[virtual_debug.camera]
+image_path = "D:\\Work\\Project_Aether\\build\\bin\\RelWithDebInfo\\imageTest"
+frame_rate = 10
+width = 9777
+height = 7000
+
+
+# ── 耗时诊断（[timing_debug] 各开关独立控制，默认关闭） ──
+[timing_debug]
+CaptureTiming = true

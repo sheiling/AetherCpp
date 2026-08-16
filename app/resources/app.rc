@@ -1,0 +1,4 @@
+#pragma code_page(65001)
+
+// 相对路径（相对本 .rc 所在目录）
+IDI_ICON1 ICON DISCARDABLE "image/short_logo.ico"

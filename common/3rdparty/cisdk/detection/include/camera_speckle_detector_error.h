@@ -1,0 +1,10 @@
+﻿#ifndef __CAMERA_SPECKLE_DETECTOR_ERROR_H__
+#define __CAMERA_SPECKLE_DETECTOR_ERROR_H__
+
+#include "ci_basic_error.h"
+#include "ci_frontend_modname.h"
+#include "ci_detection_modname.h"
+
+
+
+#endif

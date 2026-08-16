@@ -1,0 +1,23 @@
+{
+    "_comment": "整机急停工步流（MachineFSM::EmergencyStop → Scheduler::submit）",
+    "name": "machine_estop",
+    "description": "急停后停止全部运控轴",
+    "version": 1,
+    "timeoutMs": 0,
+    "enableCompensation": false,
+    "priority": 10,
+    "maxInstances": 1,
+    "requiredDevices": ["motion_x", "motion_y"],
+    "steps": {
+        "type": "control.sequential",
+        "name": "estop_root",
+        "children": [
+            {
+                "type": "aoi.machine_estop",
+                "name": "stop_all_axes",
+                "timeoutMs": 30000,
+                "retryCount": 0
+            }
+        ]
+    }
+}

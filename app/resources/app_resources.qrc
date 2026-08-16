@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="resources/image/app_splash.ico">image/app_splash.ico</file>
+    <file alias="resources/image/short_logo.ico">image/short_logo.ico</file>
+  </qresource>
+</RCC>

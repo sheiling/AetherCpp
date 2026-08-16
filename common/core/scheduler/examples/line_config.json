@@ -1,0 +1,59 @@
+{
+  "_comment": "SMT 贴片产线多工位配置 — 三工位流水线示例",
+  "lineId": "SMT-Line-1",
+  "description": "SMT 自动贴片检测产线（上料→检测→下料）",
+
+  "stations": [
+    {
+      "_comment": "工位 A：上料工位（取板、点胶、传送到检测工位）",
+      "stationId":            "st-load",
+      "name":                 "上料工位",
+      "flowFile":             "flow_st_load.json",
+      "continuousMode":       true,
+      "continuousIntervalMs": 300,
+      "resubmitOnFail":       true,
+      "params": { "boardType": "FR4-10x10" }
+    },
+    {
+      "_comment": "工位 B：AOI 视觉检测工位（接收工件、检测、发送结果到下料工位）",
+      "stationId":            "st-inspect",
+      "name":                 "检测工位",
+      "flowFile":             "flow_st_inspect.json",
+      "continuousMode":       true,
+      "continuousIntervalMs": 0,
+      "resubmitOnFail":       false,
+      "params": { "threshold": 0.95 }
+    },
+    {
+      "_comment": "工位 C：下料工位（接收检测结果，OK/NG 分拣）",
+      "stationId":            "st-unload",
+      "name":                 "下料工位",
+      "flowFile":             "flow_st_unload.json",
+      "continuousMode":       true,
+      "continuousIntervalMs": 0,
+      "resubmitOnFail":       true,
+      "params": {}
+    }
+  ],
+
+  "channels": [
+    {
+      "_comment": "上料工位 → 检测工位的工件数据通道（有界，最多缓冲 2 个）",
+      "name":     "ch-load-to-inspect",
+      "capacity": 2
+    },
+    {
+      "_comment": "检测工位 → 下料工位的检测结果通道",
+      "name":     "ch-inspect-to-unload",
+      "capacity": 2
+    }
+  ],
+
+  "barriers": [
+    {
+      "_comment": "检测工位和下料工位必须同步就绪后才能进入换班流程",
+      "name":         "sync-end-of-shift",
+      "participants": ["st-inspect", "st-unload"]
+    }
+  ]
+}

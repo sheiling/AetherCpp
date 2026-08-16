@@ -1,0 +1,10 @@
+{
+    "Name" : "Invoker",
+    "Version" : "1.0.0",
+    "Description" : "ExtensionSystem::Invoker 使用示例插件",
+    "Category" : "UI",
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}
+

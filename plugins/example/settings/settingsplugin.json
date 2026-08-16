@@ -1,0 +1,10 @@
+{
+    "Name"        : "Settings",
+    "Version"     : "1.0.0",
+    "Description" : "Provides the Settings page with sub-navigation.",
+    "Category"    : "UI",
+    "Required"    : false,
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}

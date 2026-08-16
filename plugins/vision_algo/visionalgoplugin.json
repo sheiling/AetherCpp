@@ -1,0 +1,11 @@
+{
+    "Name": "VisionAlgo",
+    "Version": "1.0.0",
+    "CompatVersion": "1.0.0",
+    "Vendor": "Aether",
+    "Copyright": "(C) Aether",
+    "License": [],
+    "Description": "Unified vision algorithm plugin (CISDK + ZXing)",
+    "Url": "",
+    "Dependencies": []
+}

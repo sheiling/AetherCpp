@@ -1,0 +1,50 @@
+{
+  "_comment": "下料工位流程 — 接收检测结果、OK/NG分拣、下料",
+  "name":               "下料流程",
+  "description":        "下料工位：接收检测结果 → OK/NG分拣 → 下料",
+  "version":            1,
+  "timeoutMs":          30000,
+  "enableCompensation": true,
+  "steps": {
+    "type": "control.sequential",
+    "name": "下料主流程",
+    "children": [
+      {
+        "_comment": "从检测工位通道接收检测结果",
+        "type":   "sync.channel_receive",
+        "name":   "接收检测结果",
+        "timeoutMs": 30000,
+        "params": {
+          "channel": "ch-inspect-to-unload",
+          "ctxKey":  "inspect_result"
+        }
+      },
+      {
+        "_comment": "根据检测结果执行 OK 或 NG 分支",
+        "type": "gateway.exclusive",
+        "name": "OK/NG 分拣网关",
+        "children": [
+          {
+            "type":    "control.script",
+            "name":    "OK 下料",
+            "script":  "st_unload_ok",
+            "timeoutMs": 5000
+          },
+          {
+            "type":    "control.script",
+            "name":    "NG 拒料",
+            "script":  "st_unload_ng",
+            "timeoutMs": 5000
+          }
+        ]
+      },
+      {
+        "type":    "control.script",
+        "name":    "下料完成上报",
+        "script":  "st_unload_report",
+        "optional": true,
+        "timeoutMs": 2000
+      }
+    ]
+  }
+}

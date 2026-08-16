@@ -1,0 +1,25 @@
+﻿#ifndef __CHIP_DETECTOR_ERRORS_H__
+#define __CHIP_DETECTOR_ERRORS_H__
+
+#include "ci_basic_error.h"
+#include "ci_frontend_modname.h"
+#include "ci_detection_modname.h"
+
+
+#define ALGOERROR_CHIP_DETECTOR_TEMPLATE_NAME_NOT_EXIST                 ERROR_CODE(ALGOMOD_CHIP_DETECTOR,101)  //model name 不存在
+#define ALGOERROR_CHIP_DETECTOR_MODEL_TYPE_MISMATCH                     ERROR_CODE(ALGOMOD_CHIP_DETECTOR,102)  //model 类型不匹配
+#define ALGOERROR_CHIP_DETECTOR_MODEL_INPUT_EMPTY                       ERROR_CODE(ALGOMOD_CHIP_DETECTOR,103)  //输入为空
+#define ALGOERROR_CHIP_DETECTOR_IMG_INPUT_EMPTY                         ERROR_CODE(ALGOMOD_CHIP_DETECTOR,104)  //图像输入为空
+#define ALGOERROR_CHIP_DETECTOR_MATCH_CONTOUR_EMPTY                     ERROR_CODE(ALGOMOD_CHIP_DETECTOR,105)  //图像输入为空
+#define ALGOERROR_CHIP_DETECTOR_DATA_EMPTY                              ERROR_CODE(ALGOMOD_CHIP_DETECTOR,106)  //数据为空
+#define ALGOERROR_CHIP_DETECTOR_IMG_CHANNEL_WRONG                       ERROR_CODE(ALGOMOD_CHIP_DETECTOR,107)  //数据为空
+#define ALGOERROR_CHIP_DETECTOR_SOLDER_EMPTY                            ERROR_CODE(ALGOMOD_CHIP_DETECTOR,108)  //数据为空
+#define ALGOERROR_CHIP_DETECTOR_MAX_AREA_EMPTY                          ERROR_CODE(ALGOMOD_CHIP_DETECTOR,109)  //数据为空
+#define ALGOERROR_CHIP_DETECTOR_ROI_IMG_SIZE_WRONG                      ERROR_CODE(ALGOMOD_CHIP_DETECTOR,110)  //ROI区域小于模板区域
+#define ALGOERROR_CHIP_DETECTOR_ALIGN_TYPE_MISMATCH                     ERROR_CODE(ALGOMOD_CHIP_DETECTOR,111)  //模板与选择的灯珠排列方式不匹配
+
+
+
+#define ALGOERROR_CHIP_DETECTOR_CHIP_EMPTY                              ERROR_CODE(ALGOMOD_CHIP_DETECTOR,200)  //检测到焊盘但是此处无芯片
+
+#endif

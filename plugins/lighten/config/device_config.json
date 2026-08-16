@@ -1,0 +1,201 @@
+{
+    "DeviceManager": {
+        "Camera": {
+            "主相机": {
+                "connOpts": {
+                    "SN": "DA6037863",
+                    "configFile": "",
+                    "connType": "CONN_BY_SN",
+                    "devNO": 0,
+                    "index": 0,
+                    "ip": "",
+                    "port": 0
+                },
+                "pixelFormat": "BayerRG12",
+                "reConnectAuto": true,
+                "reverseX": false,
+                "reverseY": false,
+                "xResolution": 5496,
+                "yResolution": 3672,
+                "type": "CDN_MVS",
+				"path":"MainCamera"
+            }
+        },
+        "Colorimeter": null,
+        "DisplayControl": null,
+        "FlashDetect": {
+            "flashDetect": {
+                "type": "FD_BY_SERIAL",
+                "connOpts": {
+                    "deviceName": "flashDetect",
+                    "portName": "COM3",
+                    "baudRate": 115200,
+                    "stopBits": 0,
+                    "dataBits": 8,
+                    "parity": 0,
+                    "flowControl": 0
+                },
+                "checkOpts": {
+                    "destAddr": 1,
+                    "portAddr": 1,
+                    "boardAddr": 1,
+                    "maxRetries": 100,
+                    "retryIntervalMs": 200,
+                    "expectedStatus": 5
+                }
+            }
+        },
+        "HardwareScreen": null,
+        "ImageCaptureList": null,
+        "Lamphouse": null,
+        "MotionController": {
+            "Axis": {},
+            "Card": {
+                "GaoChuanIoCard": {
+                    "connOpts": {
+                        "baud": 115200,
+                        "configfile": "",
+                        "connectNO": 0,
+                        "connectString": "GC-IO-001",
+                        "connectType": 2,
+                        "dataBit": 8,
+                        "parity": 0,
+                        "stopBit": 1
+                    },
+                    "type": "GaoChuanIO"
+                }
+            },
+            "DeviceAd": null,
+            "DeviceIo": {
+                "进料感应光电": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 2,
+                    "type": 0
+                },
+                "检测位感应光电": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 1,
+                    "type": 0
+                },
+                "良品出料感应光电": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 0,
+                    "type": 0
+                },
+                "start": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 12,
+                    "type": 0
+                },
+                "stop": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 13,
+                    "type": 0
+                },
+                "reset": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 14,
+                    "type": 0
+                },
+                "greenLight": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 1,
+                    "type": 1
+                },
+                "yellowLight": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 2,
+                    "type": 1
+                },
+                "redLight": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 3,
+                    "type": 1
+                },
+                "buzzer": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 4,
+                    "type": 1
+                },
+                "灯板点亮": {
+                    "cardName": "GaoChuanIoCard",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 0,
+                    "type": 1
+                }
+            }
+        },
+        "PressurePickup": null,
+        "Rangefinder": null,
+        "Scanner": {
+            "scan": {
+                "deviceName": "scan",
+                "connOpts": {
+                    "devNO": 0,
+                    "ip": "192.168.100.44",
+                    "port": 15000,
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "SSDN_HAIKANG"
+            }
+        },
+        "SoftwareScreen": {
+            "winScreen": {
+                "connOpts": {
+                    "devNO": 0
+                },
+                "type": "SWSDN_WIN32"
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "Name": "Container",
+    "Version": "1.0.0",
+    "Description": "Container IoC 服务容器使用示例：展示 bind/singleton/instance/extend/contextual/named 等核心特性",
+    "Category" : "UI",
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}

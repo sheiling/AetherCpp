@@ -1,0 +1,10 @@
+{
+    "Name"        : "MotionControl",
+    "Version"     : "1.0.0",
+    "Description" : "Motion control service: jog, point move, IO control, axis/IO status refresh",
+    "Category"    : "Device",
+    "Required"    : false,
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}

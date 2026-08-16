@@ -1,0 +1,249 @@
+{
+  "_comment": "AOI 二代进出料工步 — 单文件含进料/出料两段 sequential 子树；扫码步骤已省略",
+  "name": "flow_aoi_material",
+  "description": "AOI 进料定位 → 出料排空（皮带/气缸/光电 + 多轴回安全位）",
+  "version": 1,
+  "timeoutMs": 0,
+  "enableCompensation": false,
+  "priority": 4,
+  "maxInstances": 1,
+  "requiredDevices": ["motion_x", "motion_y"],
+  "steps": {
+    "type": "control.sequential",
+    "name": "material_root",
+    "children": [
+      {
+        "_comment": "进料：板件入站 → 皮带传送 → 侧推/顶升定位",
+        "type": "control.sequential",
+        "name": "aoi_feedstock",
+        "children": [
+          {
+            "type": "motion.iosensor",
+            "name": "气压检测",
+            "timeoutMs": 5000,
+            "params": {
+              "diName": "气压检测",
+              "bGet": true,
+              "iMSpace": 20,
+              "iMTimeout": 5000
+            }
+          },
+          {
+            "type": "motion.iosensor",
+            "name": "进料感应光电到位",
+            "timeoutMs": 60000,
+            "params": {
+              "diName": "AOI位进料感应光电",
+              "bGet": true,
+              "iMSpace": 20,
+              "iMTimeout": -1
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "皮带传送方向正向切换",
+            "params": {
+              "doName": "AOI位进料皮带传送方向切换",
+              "bSet": false,
+              "iMSleep": 50
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "阻挡气缸到位",
+            "params": {
+              "doName": "AOI位阻挡气缸1和2到位",
+              "bSet": true,
+              "iMSleep": 100
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "启动进料皮带",
+            "params": {
+              "doName": "AOI位进料皮带传送启停",
+              "bSet": true
+            }
+          },
+          {
+            "type": "motion.iosensor",
+            "name": "检测位感应光电到位",
+            "timeoutMs": 60000,
+            "params": {
+              "diName": "AOI位检测位感应光电",
+              "bGet": true,
+              "iMSpace": 20,
+              "iMTimeout": -1
+            }
+          },
+          {
+            "type": "control.delay",
+            "name": "停皮带前延时",
+            "params": { "ms": 500 }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "停止进料皮带",
+            "params": {
+              "doName": "AOI位进料皮带传送启停",
+              "bSet": false
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "侧推气缸压紧",
+            "params": {
+              "doName": "AOI位侧面压紧气缸到位",
+              "bSet": true,
+              "iMSleep": 100
+            }
+          },
+          {
+            "type": "motion.iosensor",
+            "name": "侧推气缸到位检测",
+            "timeoutMs": 15000,
+            "params": {
+              "diName": "AOI位侧面压紧气缸到位检测",
+              "bGet": true,
+              "iMSpace": 20,
+              "iMTimeout": 15000
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "顶升气缸到位",
+            "params": {
+              "doName": "AOI位顶升气缸到位",
+              "bSet": true,
+              "iMSleep": 100
+            }
+          },
+          {
+            "type": "motion.iosensor",
+            "name": "顶升气缸到位检测",
+            "timeoutMs": 15000,
+            "params": {
+              "diName": "AOI位顶升气缸到位检测",
+              "bGet": true,
+              "iMSpace": 20,
+              "iMTimeout": 15000
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "阻挡气缸退回",
+            "params": {
+              "doName": "AOI位阻挡气缸1和2到位",
+              "bSet": false,
+              "iMSleep": 100
+            }
+          }
+        ]
+      },
+      {
+        "_comment": "出料：定位释放 → 皮带送出 → 轴回安全位 → 皮带返程",
+        "type": "control.sequential",
+        "name": "aoi_ejection",
+        "children": [
+          {
+            "type": "motion.ioctrl10",
+            "name": "顶升气缸退回",
+            "params": {
+              "doName": "AOI位顶升气缸到位",
+              "bSet": false,
+              "iMSleep": 100
+            }
+          },
+          {
+            "type": "motion.iosensor",
+            "name": "顶升气缸原位检测",
+            "timeoutMs": 15000,
+            "params": {
+              "diName": "AOI位顶升气缸原位检测",
+              "bGet": false,
+              "iMSpace": 20,
+              "iMTimeout": 15000
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "侧推气缸退回",
+            "params": {
+              "doName": "AOI位侧面压紧气缸到位",
+              "bSet": false,
+              "iMSleep": 100
+            }
+          },
+          {
+            "type": "motion.iosensor",
+            "name": "侧推气缸原位检测",
+            "timeoutMs": 15000,
+            "params": {
+              "diName": "AOI位侧面压紧气缸原位检测",
+              "bGet": false,
+              "iMSpace": 20,
+              "iMTimeout": 15000
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "启动出料皮带",
+            "params": {
+              "doName": "AOI位进料皮带传送启停",
+              "bSet": true
+            }
+          },
+          {
+            "type": "motion.iosensor",
+            "name": "良品出料感应光电到位",
+            "timeoutMs": 100000,
+            "params": {
+              "diName": "AOI位良品出料感应光电",
+              "bGet": true,
+              "iMSpace": 20,
+              "iMTimeout": 100000
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "停止出料皮带",
+            "params": {
+              "doName": "AOI位进料皮带传送启停",
+              "bSet": false
+            }
+          },
+          {
+            "type": "motion.multi_axis_move",
+            "name": "轴回到安全位",
+            "timeoutMs": 120000,
+            "params": {
+              "ctxKey": "motion.multi_axis_move.params",
+              "axisNames": ["X轴", "Y轴"],
+              "positions": [0.0, 0.0],
+              "absolute": true,
+              "speed": 0.0,
+              "parallel": true
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "皮带传送方向切换",
+            "params": {
+              "doName": "AOI位进料皮带传送方向切换",
+              "bSet": true,
+              "iMSleep": 50
+            }
+          },
+          {
+            "type": "motion.ioctrl10",
+            "name": "返程启动皮带",
+            "params": {
+              "doName": "AOI位进料皮带传送启停",
+              "bSet": true
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

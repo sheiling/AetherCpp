@@ -1,0 +1,59 @@
+{
+  "name": "stepctrl_finish",
+  "description": "步骤控制器示例 — 收尾（串行与并行交替，叶子为脚本步骤）",
+  "version": 1,
+  "steps": {
+    "type": "control.sequential",
+    "name": "finish_root",
+    "children": [
+      {
+        "type": "control.script",
+        "name": "串行_停止进料",
+        "script": "stepctrl_fn_stop_infeed",
+        "timeoutMs": 10000
+      },
+      {
+        "type": "control.parallel",
+        "name": "并行_同步排空",
+        "children": [
+          {
+            "type": "control.script",
+            "name": "排空_工位1",
+            "script": "stepctrl_fn_drain_station1",
+            "timeoutMs": 10000
+          },
+          {
+            "type": "control.script",
+            "name": "排空_工位2",
+            "script": "stepctrl_fn_drain_station2",
+            "timeoutMs": 10000
+          }
+        ]
+      },
+      {
+        "type": "control.script",
+        "name": "串行_完全停机",
+        "script": "stepctrl_fn_full_stop",
+        "timeoutMs": 10000
+      },
+      {
+        "type": "control.parallel",
+        "name": "并行_指示灯复位",
+        "children": [
+          {
+            "type": "control.script",
+            "name": "并行_绿灯",
+            "script": "stepctrl_fn_led_green_reset",
+            "timeoutMs": 10000
+          },
+          {
+            "type": "control.script",
+            "name": "并行_黄灯",
+            "script": "stepctrl_fn_led_amber_reset",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    ]
+  }
+}

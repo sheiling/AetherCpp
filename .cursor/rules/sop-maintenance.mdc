@@ -1,0 +1,114 @@
+---
+description: AI 变更后增量维护设计方案、SOP 描述与软件操作SOP.md
+alwaysApply: true
+---
+
+# 工程文档增量维护协议（Project_Aether）
+
+> 读源码、归纳架构时，从本工程「Project_Aether」**工作区根目录**起，不要用 `plugins/aoi/docs/../` 推断代码位置。
+
+## 分层原则
+
+| 位置 | 职责 | 功能演化时 |
+| --- | --- | --- |
+| `.cursor/` | 规则、Skill、模板、文风 | **少改** |
+| `plugins/aoi/docs/` | 设计方案、SOP描述、操作手册、`doc-index/`、截图 | **常改** |
+
+新增页面/模块：只更新 `plugins/aoi/docs/` 与 `doc-index/` 索引，**不要**在 `.cursor/` 维护映射表。
+
+## 文件职责
+
+| 文件 | 角色 | 读者 |
+| --- | --- | --- |
+| `plugins/aoi/docs/AOI 检测软件 设计方案.md` | **设计真相源**：架构、流程、接口、模块 | 研发、架构 |
+| `plugins/aoi/docs/AOI 检测软件 SOP描述.txt` | **SOP 真相源**：业务意图、页面事实、输出约束 | AI 生成用；面向现场表述 |
+| `plugins/aoi/docs/AOI 检测软件 软件操作SOP.md` | **操作手册** | **操作员、FAE、现场工艺** |
+| `plugins/aoi/docs/UI截图/` | 页面事实依据（最高优先级） | — |
+| `plugins/aoi/docs/doc-index/sop-modules.md` | SOP 模块 ↔ 章节映射（**随功能演化，在 docs**） | — |
+| `plugins/aoi/docs/doc-index/design-sections.md` | 代码路径 ↔ 设计方案章节（**随功能演化，在 docs**） | — |
+| `plugins/aoi/docs/guides/` | 维护手册（部署指南、Agent 示例；少改） | — |
+| `.cursor/skills/incremental-design-doc/` | 设计方案增量 skill | — |
+| `.cursor/skills/incremental-sop-doc/` | SOP 描述 + 操作手册增量 skill | — |
+| `.cursor/sop/templates/sop-writing-style.md` | 操作 SOP 写作风格（禁止研发用语） | — |
+| `.cursor/sop/templates/sop-output-constraints.md` | **操作手册成品**输出约束（禁维护用语、灵活插图、富版式） | — |
+| `.cursor/skills/code-to-template/` | 全量生成（仅用户明确要求） | — |
+
+**不维护**：`plugins/aoi/docs/plans/` 等独立功能计划/设计附件；新功能设计要点写入 `AOI 检测软件 设计方案.md` 对应章节即可。
+
+**触发方式**：仅本 Rule + 增量 Skill（对话中生效）；**不**使用 Cursor `stop` Hook 兜底提醒。
+
+信息冲突优先级：UI 截图 > SOP描述 > 设计方案
+
+## 触发条件
+
+### 需更新设计方案
+
+- 模块/Handler/工艺/Controller/Action 新增或变更
+- 业务流程、状态机、消息命令、配置 schema、外部接口变化
+- **执行**：`.cursor/skills/incremental-design-doc/SKILL.md`
+
+### 需更新 SOP 描述 + 操作手册
+
+- 用户可见功能、菜单、按钮、控件、操作流程变化
+- 权限、配置页、错误提示、业务规则变化
+- **执行**：`.cursor/skills/incremental-sop-doc/SKILL.md`（**必遵** `sop-writing-style.md` + `sop-output-constraints.md`）
+
+### 不更新
+
+纯格式化、注释、样式、测试代码、与操作/架构无关的内部实现。
+
+## 更新顺序（必须按序）
+
+1. **设计方案** — `incremental-design-doc` → `AOI 检测软件 设计方案.md` + 修订记录
+2. **SOP 描述** — `incremental-sop-doc` → `AOI 检测软件 SOP描述.txt`
+3. **操作手册** — `incremental-sop-doc` → `AOI 检测软件 软件操作SOP.md`（**现场用语**，非设计方案副本）
+4. **变更/修订记录** — `.cursor/sop/templates/revision-log-policy.md`（**先比日期，跨日必追加**）
+
+## 修订/变更记录（重要）
+
+**完整策略**：`.cursor/sop/templates/revision-log-policy.md`
+
+1. **先读最后一行日期** `lastDate`，与本次 `todayDate` 比较
+2. **`todayDate ≠ lastDate` → 必须末尾追加新行**（禁止合并进旧行、禁止改旧行日期）
+3. **同日且改动小** → 只扩写最后一行摘要（`；` 连接），不升版本号（设计方案同日亦不升版本）
+4. **跳过**：正文未改的内部修复
+
+| 文档 | 表格位置 | 格式 |
+| --- | --- | --- |
+| 设计方案 | `## 修订记录` | `日期 \| 版本 \| 变更摘要 \| 操作人` |
+| 操作手册 | 文末 `## 变更记录` | `日期 \| 模块 \| 变更摘要 \| 操作人(AI)` |
+
+## SOP 写作（操作手册）
+
+**必遵**：`.cursor/sop/templates/sop-writing-style.md`、`.cursor/sop/templates/sop-output-constraints.md`
+
+- 读者：操作员、FAE — 步骤短、用界面名称、一步一事
+- **禁止**在步骤/判定/误区中写 JSON、数据库表、Controller、链路等研发词
+- 后台行为转写为现场说法；键名/路径仅可放在「附：工程师参考」
+- **`AOI 检测软件 软件操作SOP.md` 正文**：不写「UI截图」「SOP描述.txt」「设计方案.md」等；插图路径可含 `UI截图/`；多图可同节；可用表格/强调/Mermaid 等
+
+## SOP 增量规则
+
+- 定位 `plugins/aoi/docs/doc-index/sop-modules.md`
+- 只改「页面事实 / 必须写清 / 规则事实」
+- 新增页面：追加 SOP描述 条目、更新 **sop-modules.md**、操作手册章节；删除：标注 `[已废弃]`
+
+## 设计方案增量规则
+
+- 定位 `plugins/aoi/docs/doc-index/design-sections.md`
+- 只改受影响段落；全量生成仅用户明确要求时用 `code-to-template`
+
+## 软件操作SOP 文档结构
+
+**全书**（`.cursor/sop/templates/sop-document-template.md`）：`# 标题` → **封面** → **文档说明** → **目录** → 正文 §0～§N → **变更记录** → **自检清单**。
+
+**单页**（`page-sop-template.md` 参考 + `sop-output-constraints.md`）：目的、角色、前置、核心功能、步骤（≥8）、判定、误区（≥3）、异常（≥3）；插图灵活（多图同节）。增删页时同步更新目录。
+
+## 任务结束前自检
+
+- [ ] 设计方案已增量更新（若触发）
+- [ ] SOP 已用**现场用语**（若触发），已读 `sop-writing-style.md` 与 `sop-output-constraints.md`
+- [ ] 变更/修订记录：**跨日已追加新行**；同日小改才合并最后一行
+- [ ] 操作 SOP 含封面、目录（全量/首次生成或缺项时）
+- [ ] 未把设计方案段落原样复制进操作 SOP
+- [ ] 未虚构功能；不足处标注「待补充项」

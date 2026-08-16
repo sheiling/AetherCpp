@@ -1,0 +1,108 @@
+{
+    "_comment": "产线自动光学检测（AOI）流程定义示例",
+    "name":               "AOI检测流程",
+    "description":        "自动光学检测：取料 → 并行检测 → 判级 → 放料 → 上报",
+    "version":            1,
+    "timeoutMs":          30000,
+    "enableCompensation": true,
+    "priority":           5,
+    "maxInstances":       1,
+    "requiredDevices":    ["aoi_camera", "robot_arm"],
+
+    "steps": {
+        "type": "control.sequential",
+        "name": "root",
+        "children": [
+
+            {
+                "type":         "control.script",
+                "name":         "初始化",
+                "script":       "aoi_init",
+                "timeoutMs":    3000,
+                "retryCount":   1,
+                "isCheckpoint": true,
+                "_comment":     "初始化上下文变量，记录批次/料号"
+            },
+
+            {
+                "type":   "control.script",
+                "name":   "机械臂取料",
+                "script": "robot_pick",
+                "timeoutMs": 5000,
+                "retryCount": 2,
+                "compensation": {
+                    "type":   "control.script",
+                    "name":   "放回物料",
+                    "script": "robot_place_back"
+                }
+            },
+
+            {
+                "type":   "control.delay",
+                "name":   "相机预热稳定",
+                "params": { "ms": 200 }
+            },
+
+            {
+                "type": "control.parallel",
+                "name": "并行检测组",
+                "_comment": "视觉 + 尺寸 + 表面缺陷三路并行",
+                "children": [
+                    {
+                        "type":       "control.script",
+                        "name":       "外观视觉检测",
+                        "script":     "aoi_visual_check",
+                        "timeoutMs":  8000,
+                        "retryCount": 1
+                    },
+                    {
+                        "type":       "control.script",
+                        "name":       "关键尺寸测量",
+                        "script":     "aoi_dimension_check",
+                        "timeoutMs":  6000,
+                        "retryCount": 0
+                    },
+                    {
+                        "type":       "control.script",
+                        "name":       "表面缺陷扫描",
+                        "script":     "aoi_defect_scan",
+                        "timeoutMs":  8000,
+                        "optional":   true,
+                        "_comment":   "可选步骤，缺陷扫描失败不终止整体流程"
+                    }
+                ]
+            },
+
+            {
+                "type":         "control.script",
+                "name":         "综合判级",
+                "script":       "aoi_grade",
+                "timeoutMs":    2000,
+                "isCheckpoint": true,
+                "_comment":     "综合所有检测结果，输出: PASS/FAIL/REWORK"
+            },
+
+            {
+                "type":   "control.script",
+                "name":   "机械臂放料",
+                "script": "robot_place",
+                "timeoutMs": 5000,
+                "retryCount": 2
+            },
+
+            {
+                "type":   "control.script",
+                "name":   "上报MES",
+                "script": "aoi_report_mes",
+                "timeoutMs": 3000,
+                "retryCount": 3,
+                "retryIntervalMs": 1000,
+                "compensation": {
+                    "type":   "control.script",
+                    "name":   "撤销MES上报",
+                    "script": "aoi_cancel_mes_report"
+                }
+            }
+        ]
+    }
+}

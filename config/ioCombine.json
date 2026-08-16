@@ -1,0 +1,89 @@
+[
+  {
+    "group": "模块1",
+    "actions": [
+      {
+        "name": "气缸侧边顶升",
+        "outputs": [
+          { "name": "左边气缸缩回位", "set": false },
+          { "name": "左边气缸伸出位", "set": true },
+          { "name": "右边气缸缩回位", "set": false },
+          { "name": "右边气缸伸出位", "set": true }
+        ]
+      },
+      {
+        "name": "气缸侧边下降",
+        "outputs": [
+          { "name": "左边气缸缩回位", "set": true },
+          { "name": "左边气缸伸出位", "set": false },
+          { "name": "右边气缸缩回位", "set": true },
+          { "name": "右边气缸伸出位", "set": false }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "模块2",
+    "actions": [
+      {
+        "name": "阻挡气缸上升",
+        "outputs": [
+          { "name": "阻挡气缸下降位", "set": false },
+          { "name": "阻挡气缸上升位", "set": true }
+        ]
+      },
+      {
+        "name": "阻挡气缸下降",
+        "outputs": [
+          { "name": "阻挡气缸下降位", "set": true },
+          { "name": "阻挡气缸上升位", "set": false }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "模块3",
+    "actions": [
+      {
+        "name": "皮带正转",
+        "outputs": [
+          { "name": "皮带启停信号", "set": true },
+          { "name": "皮带反转信号", "set": false }
+        ]
+      },
+      {
+        "name": "皮带反转",
+        "outputs": [
+          { "name": "皮带启停信号", "set": true },
+          { "name": "皮带反转信号", "set": true }
+        ]
+      },
+      {
+        "name": "皮带停止",
+        "outputs": [
+          { "name": "皮带启停信号", "set": false },
+          { "name": "皮带反转信号", "set": false }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "模块4",
+    "actions": [
+      {
+        "name": "进料缓冲阻挡气缸上升",
+        "outputs": [
+          { "name": "进料缓存阻挡下降位", "set": false },
+          { "name": "进料缓存阻挡上升位", "set": true }
+        ]
+      },
+      {
+        "name": "进料缓冲阻挡气缸下降",
+        "outputs": [
+          { "name": "进料缓存阻挡下降位", "set": true },
+          { "name": "进料缓存阻挡上升位", "set": false }
+        ]
+      }
+    ]
+  }
+]

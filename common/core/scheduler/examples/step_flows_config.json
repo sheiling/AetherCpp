@@ -1,0 +1,7 @@
+{
+  "_comment": "步骤名（键）→ 流程 JSON 文件路径（值），路径相对于本配置文件所在目录",
+  "stepFlows": {
+    "warmup": "stepctrl_flow_warmup.json",
+    "finish": "stepctrl_flow_finish.json"
+  }
+}

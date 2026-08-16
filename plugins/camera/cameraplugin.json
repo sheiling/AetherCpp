@@ -1,0 +1,10 @@
+{
+    "Name"        : "Camera",
+    "Version"     : "1.0.0",
+    "Description" : "Galaxy camera capture service for cross-plugin snap/preview",
+    "Category"    : "Device",
+    "Required"    : false,
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}

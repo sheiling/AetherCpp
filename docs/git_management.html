@@ -1,0 +1,974 @@
+<!DOCTYPE html><html><head>
+      <title>git_management</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\60507\.cursor\extensions\shd101wyy.markdown-preview-enhanced-0.8.20-universal\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      <script type="text/javascript" src="file:///c:\Users\60507\.cursor\extensions\shd101wyy.markdown-preview-enhanced-0.8.20-universal\crossnote\dependencies\mermaid\mermaid.min.js" charset="UTF-8"></script>
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      <div>
+<h1 id="aether-platform-git-仓库管理与分支策略规范">Aether 平台 Git 仓库管理与分支策略规范 </h1>
+<blockquote>
+<p><strong>文档版本</strong>：v1.0.0 · <strong>制定日期</strong>：2026-03-10 · <strong>适用范围</strong>：Aether_Platform_V2 分组下所有仓库</p>
+</blockquote>
+<hr>
+<h2 id="目录">目录 </h2>
+<ol>
+<li><a href="#1-%E8%83%8C%E6%99%AF%E4%B8%8E%E5%B9%B3%E5%8F%B0%E8%A7%84%E5%88%92">背景与平台规划</a></li>
+<li><a href="#2-%E4%BB%93%E5%BA%93%E7%BB%93%E6%9E%84%E6%80%BB%E8%A7%88">仓库结构总览</a></li>
+<li><a href="#3-%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83">仓库管理规范</a>
+<ul>
+<li>3.1 <a href="#31-%E4%BB%93%E5%BA%93%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83">仓库命名规范</a></li>
+<li>3.2 <a href="#32-%E4%BB%93%E5%BA%93%E9%85%8D%E7%BD%AE%E8%A7%84%E8%8C%83">仓库配置规范</a></li>
+<li>3.3 <a href="#33-%E5%AD%90%E6%A8%A1%E5%9D%97submodule%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83">子模块（Submodule）管理规范</a></li>
+</ul>
+</li>
+<li><a href="#4-git-flow-%E5%88%86%E6%94%AF%E7%AD%96%E7%95%A5">Git Flow 分支策略</a>
+<ul>
+<li>4.1 <a href="#41-%E5%88%86%E6%94%AF%E7%B1%BB%E5%9E%8B%E8%AF%B4%E6%98%8E">分支类型说明</a></li>
+<li>4.2 <a href="#42-%E5%88%86%E6%94%AF%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83">分支命名规范</a></li>
+<li>4.3 <a href="#43-%E5%88%86%E6%94%AF%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E5%B7%A5%E4%BD%9C%E6%B5%81">分支生命周期与工作流</a></li>
+<li>4.4 <a href="#44-%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE">分支操作流程图</a></li>
+</ul>
+</li>
+<li><a href="#5-%E5%88%86%E6%94%AF%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">分支权限管理</a>
+<ul>
+<li>5.1 <a href="#51-%E8%A7%92%E8%89%B2%E5%AE%9A%E4%B9%89">角色定义</a></li>
+<li>5.2 <a href="#52-%E5%88%86%E6%94%AF%E6%9D%83%E9%99%90%E7%9F%A9%E9%98%B5">分支权限矩阵</a></li>
+<li>5.3 <a href="#53-%E5%90%88%E5%B9%B6%E8%AF%B7%E6%B1%82mr%E5%AE%A1%E6%A0%B8%E8%A7%84%E5%88%99">合并请求（MR）审核规则</a></li>
+</ul>
+</li>
+<li><a href="#6-%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83">提交规范</a></li>
+<li><a href="#7-common-%E5%AD%90%E6%A8%A1%E5%9D%97%E5%8D%8F%E4%BD%9C%E8%A7%84%E8%8C%83">common 子模块协作规范</a></li>
+<li><a href="#8-%E9%99%84%E5%BD%95%E5%BF%AB%E9%80%9F%E5%8F%82%E8%80%83%E5%8D%A1">附录：快速参考卡</a></li>
+</ol>
+<hr>
+<h2 id="1-背景与平台规划">1. 背景与平台规划 </h2>
+<h3 id="11-平台背景">1.1 平台背景 </h3>
+<p><strong>Aether 平台</strong>（Aether Platform）是公司面向工业控制与智能设备领域的新一代桌面端软件平台，基于 <strong>Qt + CMake</strong> 插件化架构体系构建，旨在通过统一的平台化能力：</p>
+<ul>
+<li>📐 <strong>统一开发标准</strong> — 规范插件接口、MVVM 架构、中间件管道等核心规约</li>
+<li>⚡ <strong>提升开发效率</strong> — 沉淀通用业务模块，杜绝重复造轮子</li>
+<li>🔧 <strong>降低维护成本</strong> — 公共能力集中管理，一处升级、多项目受益</li>
+<li>🚀 <strong>支撑快速交付</strong> — 新项目基于模板快速启动，聚焦业务差异化开发</li>
+</ul>
+<h3 id="12-仓库分组规划">1.2 仓库分组规划 </h3>
+<p>所有Aether 平台 相关仓库统一归属于 GitLab <strong><code>Aether_Platform_V2</code></strong> 分组下，形成"1个公共仓库 + N个项目仓库"的仓库群体系：</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Aether_Platform_V2/                        ← GitLab 分组（Group）
+├── common/                             ← 公共仓库（平台化公共能力沉淀）
+├── project_A/                          ← 项目仓库 A（引入 common 子模块）
+├── project_B/                          ← 项目仓库 B（引入 common 子模块）
+├── project_C/                          ← 项目仓库 C（引入 common 子模块）
+└── ...                                 ← 更多项目仓库
+</code></pre><div class="mermaid">graph TD
+    subgraph GitLab["GitLab · Aether_Platform_V2 分组"]
+        direction TB
+        COMMON["common 公共仓库&lt;br/&gt;平台核心能力 / 通用业务能力"]
+
+        subgraph PROJECTS["项目仓库群"]
+            direction LR
+            PA["project_A"]
+            PB["project_B"]
+            PC["project_C"]
+            PN["...更多项目"]
+        end
+
+        PA -- "git submodule" --&gt; COMMON
+        PB -- "git submodule" --&gt; COMMON
+        PC -- "git submodule" --&gt; COMMON
+        PN -- "git submodule" --&gt; COMMON
+    end
+
+    style COMMON fill:#4A90D9,color:#fff,stroke:#2c6fad
+    style PA fill:#5BAD6F,color:#fff,stroke:#3d8a50
+    style PB fill:#5BAD6F,color:#fff,stroke:#3d8a50
+    style PC fill:#5BAD6F,color:#fff,stroke:#3d8a50
+    style PN fill:#9E9E9E,color:#fff,stroke:#757575
+</div><hr>
+<h2 id="2-仓库结构总览">2. 仓库结构总览 </h2>
+<h3 id="21-common-公共仓库">2.1 common 公共仓库 </h3>
+<p><code>common</code> 仓库是平台化建设的核心资产仓库，由<strong>平台架构组</strong>统一维护，内容分为两大类：</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>目录</th>
+<th>内容说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>平台技术能力</strong></td>
+<td><code>core/extensionsystem/</code></td>
+<td>插件加载引擎、对象池、反射调用</td>
+</tr>
+<tr>
+<td></td>
+<td><code>core/communication/</code></td>
+<td>通信协议（串口、TCP/IP、Modbus 等）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>core/device/</code></td>
+<td>设备管理框架</td>
+</tr>
+<tr>
+<td></td>
+<td><code>ui/mvvm/</code></td>
+<td>MVVM 基础库</td>
+</tr>
+<tr>
+<td></td>
+<td><code>ui/uibase/</code></td>
+<td>UI 基础组件库</td>
+</tr>
+<tr>
+<td><strong>通用业务能力</strong></td>
+<td><code>plugins/</code></td>
+<td>平台级通用插件（权限、主题、语言等）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>ui/resources/</code></td>
+<td>公共资源（图标、样式表、翻译文件）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>utility/</code></td>
+<td>通用工具类</td>
+</tr>
+<tr>
+<td><strong>构建支撑</strong></td>
+<td><code>cmake/</code></td>
+<td>CMake 辅助模块（FZ2Helpers.cmake 等）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>3rdparty/</code></td>
+<td>第三方依赖库</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-项目仓库结构参考模板">2.2 项目仓库结构（参考模板） </h3>
+<p>每个项目仓库以 <code>project-template</code> 为模板创建，通过 Git Submodule 机制引入 <code>common</code>：</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>project_xxx/
+├── app/                    # 应用程序入口（主窗口启动）
+├── common/                 # ← Git Submodule，指向 Aether_Platform_V2/common
+│   ├── 3rdparty/
+│   ├── cmake/
+│   ├── core/
+│   ├── ui/
+│   └── utility/
+├── plugins/                # 项目业务插件（项目差异化内容）
+├── config/                 # 项目配置文件
+├── docs/                   # 项目文档
+├── scripts/                # 构建脚本
+├── tests/                  # 单元测试
+├── .gitmodules             # 子模块配置
+└── CMakeLists.txt
+</code></pre><hr>
+<h2 id="3-仓库管理规范">3. 仓库管理规范 </h2>
+<h3 id="31-仓库命名规范">3.1 仓库命名规范 </h3>
+<table>
+<thead>
+<tr>
+<th>仓库类型</th>
+<th>命名格式</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公共仓库</td>
+<td><code>common</code></td>
+<td><code>Aether_Platform_V2/common</code></td>
+</tr>
+<tr>
+<td>项目仓库</td>
+<td><code>项目代号_功能描述</code>（小写+下划线）</td>
+<td><code>Aether_Platform_V2/nms_monitor</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>命名要求</strong>：</p>
+<ul>
+<li>全部使用小写字母，单词间以下划线 <code>_</code> 分隔</li>
+<li>禁止使用中文、空格、特殊字符</li>
+<li>名称应简洁且具有业务语义，控制在 30 字符以内</li>
+</ul>
+</blockquote>
+<h3 id="32-仓库配置规范">3.2 仓库配置规范 </h3>
+<p>新建仓库时，须完成以下基础配置：</p>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>仓库描述</strong></td>
+<td>必填，简要说明仓库用途（中英文均可）</td>
+</tr>
+<tr>
+<td><strong>可见性</strong></td>
+<td>设置为 <code>Private</code>（私有）</td>
+</tr>
+<tr>
+<td><strong>默认分支</strong></td>
+<td>设置为 <code>develop</code></td>
+</tr>
+<tr>
+<td><strong>标签</strong></td>
+<td>按项目类型添加适当标签，如 <code>platform</code>、<code>project</code></td>
+</tr>
+<tr>
+<td><strong>Protected Branches</strong></td>
+<td>按本文 <a href="#5-%E5%88%86%E6%94%AF%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">第5节</a> 配置受保护分支</td>
+</tr>
+<tr>
+<td><strong>MR 审核人数</strong></td>
+<td><code>master</code>/<code>release</code> 分支至少 2 人审核</td>
+</tr>
+<tr>
+<td><code>.gitignore</code></td>
+<td>必须包含，推荐使用平台标准模板</td>
+</tr>
+<tr>
+<td><code>README.md</code></td>
+<td>必须包含，说明仓库用途、构建方式、目录结构</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-子模块submodule管理规范">3.3 子模块（Submodule）管理规范 </h3>
+<h4 id="331-初始化与引入">3.3.1 初始化与引入 </h4>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># 在项目仓库根目录执行</span>
+<span class="token function">git</span> submodule <span class="token function">add</span> https://gitlab.xxx.com/Aether_Platform_V2/common.git common
+
+<span class="token comment"># 初始化并拉取子模块内容</span>
+<span class="token function">git</span> submodule update <span class="token parameter variable">--init</span> <span class="token parameter variable">--recursive</span>
+</code></pre><h4 id="332-子模块版本锁定原则">3.3.2 子模块版本锁定原则 </h4>
+<ul>
+<li>项目仓库中记录的是 <code>common</code> 的<strong>特定 Commit SHA</strong>，不是分支名</li>
+<li>正式发布时，项目仓库必须将 <code>common</code> 子模块锁定到 <strong><code>common</code> 的某个 Tag 版本</strong></li>
+<li>开发阶段，子模块追踪 <code>common</code> 的 <code>develop</code> 分支最新提交</li>
+</ul>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># 将子模块切换到指定 tag</span>
+<span class="token builtin class-name">cd</span> common
+<span class="token function">git</span> checkout v1.2.0
+<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>
+<span class="token function">git</span> <span class="token function">add</span> common
+<span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"chore: bump common to v1.2.0"</span>
+</code></pre><h4 id="333-子模块更新流程">3.3.3 子模块更新流程 </h4>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># 拉取 common 最新变更</span>
+<span class="token function">git</span> submodule update <span class="token parameter variable">--remote</span> <span class="token parameter variable">--merge</span>
+
+<span class="token comment"># 提交子模块引用更新</span>
+<span class="token function">git</span> <span class="token function">add</span> common
+<span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"chore: update common submodule to latest"</span>
+</code></pre><h4 id="334-注意事项">3.3.4 注意事项 </h4>
+<blockquote>
+<p>⚠️ <strong>禁止</strong> 在项目仓库中直接修改 <code>common/</code> 目录内的文件；<br>
+✅ 对 <code>common</code> 的修改须在 <strong><code>Aether_Platform_V2/common</code></strong> 仓库中进行，经审核合并后，再由项目仓库更新子模块引用。</p>
+</blockquote>
+<hr>
+<h2 id="4-git-flow-分支策略">4. Git Flow 分支策略 </h2>
+<p>本平台采用 <strong>Git Flow</strong> 作为标准协同工作流模型，通过明确定义各类分支的职责与生命周期，保障代码质量和发布稳定性。</p>
+<h3 id="41-分支类型说明">4.1 分支类型说明 </h3>
+<p>Git Flow 共定义以下 <strong>5 类分支</strong>：</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>┌─────────────────────────────────────────────────────────────────┐
+│                       Git Flow 分支体系                          │
+├────────────────┬──────────────────────────────────────────────  │
+│  主干分支      │  master    — 生产发布分支，永久存在             │
+│  (长期分支)    │  develop   — 集成开发分支，永久存在             │
+├────────────────┼──────────────────────────────────────────────  │
+│  辅助分支      │  feature/* — 功能开发分支，开发完成后删除       │
+│  (临时分支)    │  release/* — 发布准备分支，发布完成后删除       │
+│                │  hotfix/*  — 紧急修复分支，修复完成后删除       │
+└────────────────┴──────────────────────────────────────────────  │
+</code></pre><h4 id="-master-分支">🔵 master 分支 </h4>
+<ul>
+<li><strong>唯一来源</strong>：只能由 <code>release/*</code> 或 <code>hotfix/*</code> 分支合并</li>
+<li><strong>职责</strong>：存放<strong>生产就绪</strong>的代码，每次合并均打上版本 Tag</li>
+<li><strong>原则</strong>：禁止直接 push；所有变更必须经过 MR + 审核</li>
+</ul>
+<h4 id="-develop-分支">🟢 develop 分支 </h4>
+<ul>
+<li><strong>基于</strong>：初始从 <code>master</code> 分支创建</li>
+<li><strong>职责</strong>：作为所有功能开发的集成分支，始终保持最新的开发状态</li>
+<li><strong>原则</strong>：禁止直接 push；<code>feature</code> 分支通过 MR 合并进来</li>
+</ul>
+<h4 id="-feature-分支">🟡 feature/* 分支 </h4>
+<ul>
+<li><strong>基于</strong>：从 <code>develop</code> 分支切出</li>
+<li><strong>职责</strong>：独立开发某个功能模块，开发完成后合并回 <code>develop</code></li>
+<li><strong>生命周期</strong>：MR 合并后删除</li>
+<li><strong>原则</strong>：一个功能/任务对应一个 <code>feature</code> 分支</li>
+</ul>
+<h4 id="-release-分支">🟠 release/* 分支 </h4>
+<ul>
+<li><strong>基于</strong>：从 <code>develop</code> 分支切出</li>
+<li><strong>职责</strong>：版本发布前的最终准备（Bug修复、版本号更新、文档更新）</li>
+<li><strong>生命周期</strong>：同时合并回 <code>master</code> 和 <code>develop</code> 后删除</li>
+<li><strong>原则</strong>：该阶段禁止新功能开发，只允许 Bug 修复</li>
+</ul>
+<h4 id="-hotfix-分支">🔴 hotfix/* 分支 </h4>
+<ul>
+<li><strong>基于</strong>：从 <code>master</code> 分支切出</li>
+<li><strong>职责</strong>：线上紧急 Bug 修复</li>
+<li><strong>生命周期</strong>：同时合并回 <code>master</code> 和 <code>develop</code>（或当前 <code>release</code>）后删除</li>
+<li><strong>原则</strong>：修复内容必须最小化，禁止引入新功能</li>
+</ul>
+<h3 id="42-分支命名规范">4.2 分支命名规范 </h3>
+<table>
+<thead>
+<tr>
+<th>分支类型</th>
+<th>命名格式</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主干分支</td>
+<td><code>master</code></td>
+<td><code>master</code></td>
+</tr>
+<tr>
+<td>开发分支</td>
+<td><code>develop</code></td>
+<td><code>develop</code></td>
+</tr>
+<tr>
+<td>功能分支</td>
+<td><code>feature/&lt;任务ID&gt;-&lt;简短描述&gt;</code></td>
+<td><code>feature/TASK-123-user-login</code></td>
+</tr>
+<tr>
+<td>发布分支</td>
+<td><code>release/&lt;版本号&gt;</code></td>
+<td><code>release/v1.2.0</code></td>
+</tr>
+<tr>
+<td>修复分支</td>
+<td><code>hotfix/&lt;问题ID&gt;-&lt;简短描述&gt;</code></td>
+<td><code>hotfix/BUG-456-login-crash</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>命名要求</strong>：</p>
+<ul>
+<li>全部小写，单词间以 <code>-</code> 连字符分隔</li>
+<li>描述部分使用英文，简洁表达分支目的</li>
+<li>功能/修复分支需关联任务/问题编号（如 Jira、GitLab Issue ID）</li>
+</ul>
+</blockquote>
+<h3 id="43-分支生命周期与工作流">4.3 分支生命周期与工作流 </h3>
+<h4 id="-功能开发流程feature-flow">🟡 功能开发流程（Feature Flow） </h4>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>                  ① 从 develop 切出                ③ MR 审核合并回 develop
+                        │                                    │
+develop  ───────────────┼────────────────────────────────────┼──────────────►
+                        │                                    ↑
+                        └──► feature/TASK-xxx ──[开发提交]──►┘
+                                                             ②
+                                                      (MR通过后删除分支)
+</code></pre><p><strong>操作步骤：</strong></p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># 1. 从 develop 切出 feature 分支</span>
+<span class="token function">git</span> checkout develop
+<span class="token function">git</span> pull origin develop
+<span class="token function">git</span> checkout <span class="token parameter variable">-b</span> feature/TASK-123-user-login
+
+<span class="token comment"># 2. 开发功能，提交代码</span>
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+<span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"feat(login): implement user login with JWT"</span>
+
+<span class="token comment"># 3. 推送并发起 MR（Merge Request）</span>
+<span class="token function">git</span> push origin feature/TASK-123-user-login
+
+<span class="token comment"># 4. MR 审核通过后，合并到 develop（由 GitLab 执行）</span>
+<span class="token comment"># 5. 合并后删除 feature 分支（GitLab 可配置自动删除）</span>
+</code></pre><h4 id="-版本发布流程release-flow">🟠 版本发布流程（Release Flow） </h4>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>                ① 从 develop 切出               ④ MR 合并到 master（打 Tag）
+                      │                                     │
+master  ──────────────│─────────────────────────────────────●──────────────►
+                      │                                  ↗  │ Tag:vX.X.X
+                      │                         ③ MR合并    │
+                      │                        ╱            │ ⑤ 同步回 develop
+                      ↓                       ╱             ↓
+develop ──────────────┼──────────────────────┼──────────────┼──────────────►
+                      │                      ↑              │
+                      └──► release/vX.X.X ───┘              │
+                              ② Bug修复 / 版本号更新          │
+                           (禁止新增功能，仅允许修复)         (MR通过后删除分支)
+</code></pre><p><strong>操作步骤：</strong></p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># 1. 从 develop 切出 release 分支</span>
+<span class="token function">git</span> checkout develop
+<span class="token function">git</span> pull origin develop
+<span class="token function">git</span> checkout <span class="token parameter variable">-b</span> release/v1.2.0
+
+<span class="token comment"># 2. 版本准备工作（修改版本号、更新 CHANGELOG 等）</span>
+<span class="token comment"># 修改 CMakeLists.txt 版本号</span>
+<span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"chore: bump version to v1.2.0"</span>
+
+<span class="token comment"># 3. 测试期间只允许 Bug 修复提交</span>
+<span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"fix(ui): fix layout issue on settings page"</span>
+
+<span class="token comment"># 4. 准备就绪后：① 合并到 master 并打 Tag</span>
+<span class="token function">git</span> checkout master
+<span class="token function">git</span> merge --no-ff release/v1.2.0
+<span class="token function">git</span> tag <span class="token parameter variable">-a</span> v1.2.0 <span class="token parameter variable">-m</span> <span class="token string">"Release v1.2.0"</span>
+<span class="token function">git</span> push origin master <span class="token parameter variable">--tags</span>
+
+<span class="token comment"># 5. ② 将修复同步回 develop</span>
+<span class="token function">git</span> checkout develop
+<span class="token function">git</span> merge --no-ff release/v1.2.0
+<span class="token function">git</span> push origin develop
+
+<span class="token comment"># 6. 删除 release 分支</span>
+<span class="token function">git</span> branch <span class="token parameter variable">-d</span> release/v1.2.0
+<span class="token function">git</span> push origin <span class="token parameter variable">--delete</span> release/v1.2.0
+</code></pre><h4 id="-紧急修复流程hotfix-flow">🔴 紧急修复流程（Hotfix Flow） </h4>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>         ① 从 master 切出                     ③ MR 合并回 master（打 Tag）
+               │                                          │
+master  ────────┼──────────────────────────────────────────●──────────────►
+                │                                        ↗  │ Tag:vX.X.X+1
+                └──► hotfix/BUG-xxx ──[紧急修复提交]──►╱   │
+                              ②                             │ ④ 同步回 develop
+                                                            ↓
+develop ────────────────────────────────────────────────────┼──────────────►
+                                                            │
+                                                  (MR通过后删除分支)
+</code></pre><p><strong>操作步骤：</strong></p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># 1. 从 master 切出 hotfix 分支</span>
+<span class="token function">git</span> checkout master
+<span class="token function">git</span> pull origin master
+<span class="token function">git</span> checkout <span class="token parameter variable">-b</span> hotfix/BUG-456-login-crash
+
+<span class="token comment"># 2. 修复 Bug，提交代码</span>
+<span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"fix(login): prevent crash when token is null"</span>
+
+<span class="token comment"># 3. 合并到 master 并打 Tag</span>
+<span class="token function">git</span> checkout master
+<span class="token function">git</span> merge --no-ff hotfix/BUG-456-login-crash
+<span class="token function">git</span> tag <span class="token parameter variable">-a</span> v1.2.1 <span class="token parameter variable">-m</span> <span class="token string">"Hotfix v1.2.1"</span>
+<span class="token function">git</span> push origin master <span class="token parameter variable">--tags</span>
+
+<span class="token comment"># 4. 同步修复到 develop</span>
+<span class="token function">git</span> checkout develop
+<span class="token function">git</span> merge --no-ff hotfix/BUG-456-login-crash
+<span class="token function">git</span> push origin develop
+
+<span class="token comment"># 5. 删除 hotfix 分支</span>
+<span class="token function">git</span> branch <span class="token parameter variable">-d</span> hotfix/BUG-456-login-crash
+<span class="token function">git</span> push origin <span class="token parameter variable">--delete</span> hotfix/BUG-456-login-crash
+</code></pre><h3 id="44-分支操作流程图">4.4 分支操作流程图 </h3>
+<h4 id="完整-git-flow-时间线视图">完整 Git Flow 时间线视图 </h4>
+<div class="mermaid">%%{init: { 'gitGraph': {'mainBranchName': 'master'}} }%%
+gitGraph
+   commit id: "init: 初始化项目" tag: "v0.1.0"
+
+   branch develop
+   checkout develop
+   commit id: "chore: 搭建项目脚手架"
+
+   branch feature-TASK-001
+   checkout feature-TASK-001
+   commit id: "feat: 插件加载引擎"
+   commit id: "feat: 对象池与反射调用"
+
+   checkout develop
+   merge feature-TASK-001 id: "merge feature-TASK-001 to develop"
+
+   branch feature-TASK-002
+   checkout feature-TASK-002
+   commit id: "feat: MVVM 基础框架"
+   commit id: "feat: ViewModel 双向绑定"
+
+   checkout develop
+   merge feature-TASK-002 id: "merge feature-TASK-002 to develop"
+
+   branch release-v1.0.0
+   checkout release-v1.0.0
+   commit id: "chore: 版本号升至 v1.0.0"
+   commit id: "fix: 发布前回归测试修复"
+
+   checkout master
+   merge release-v1.0.0 id: "merge release-v1.0.0 to master" tag: "v1.0.0"
+
+   checkout develop
+   merge release-v1.0.0 id: "sync release fixes to develop"
+
+   checkout master
+   branch hotfix-BUG-456
+   checkout hotfix-BUG-456
+   commit id: "fix: 修复登录 token 为空崩溃"
+
+   checkout master
+   merge hotfix-BUG-456 id: "merge hotfix-BUG-456 to master" tag: "v1.0.1"
+
+   checkout develop
+   merge hotfix-BUG-456 id: "sync hotfix to develop"
+</div><hr>
+<h2 id="5-分支权限管理">5. 分支权限管理 </h2>
+<h3 id="51-角色定义">5.1 角色定义 </h3>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>说明</th>
+<th>对应 GitLab 权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Owner（仓库所有者）</strong></td>
+<td>平台负责人，拥有最高权限，负责仓库配置与整体管理</td>
+<td><code>Owner</code></td>
+</tr>
+<tr>
+<td><strong>Maintainer（维护者）</strong></td>
+<td>技术负责人 / 架构师，负责 MR 最终审批与分支管理</td>
+<td><code>Maintainer</code></td>
+</tr>
+<tr>
+<td><strong>Developer（开发者）</strong></td>
+<td>功能开发人员，可创建分支、提交代码、发起 MR</td>
+<td><code>Developer</code></td>
+</tr>
+<tr>
+<td><strong>Reporter（观察者）</strong></td>
+<td>产品、测试、文档等人员，只读访问，可查阅代码和 Issue</td>
+<td><code>Reporter</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-分支权限矩阵">5.2 分支权限矩阵 </h3>
+<blockquote>
+<p>图例：✅ 允许 | ❌ 禁止 | 🔒 保护（需MR审核）</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th style="text-align:center">master</th>
+<th style="text-align:center">develop</th>
+<th style="text-align:center">release/*</th>
+<th style="text-align:center">feature/*</th>
+<th style="text-align:center">hotfix/*</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>直接 Push</strong></td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅ Developer</td>
+<td style="text-align:center">✅ Developer</td>
+</tr>
+<tr>
+<td><strong>Force Push</strong></td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+</tr>
+<tr>
+<td><strong>创建分支</strong></td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅ Maintainer</td>
+<td style="text-align:center">✅ Developer</td>
+<td style="text-align:center">✅ Maintainer</td>
+</tr>
+<tr>
+<td><strong>发起 MR 合并至</strong></td>
+<td style="text-align:center">🔒</td>
+<td style="text-align:center">🔒</td>
+<td style="text-align:center">🔒</td>
+<td style="text-align:center">✅ Developer</td>
+<td style="text-align:center">✅ Developer</td>
+</tr>
+<tr>
+<td><strong>MR 审核通过（Approve）</strong></td>
+<td style="text-align:center">Maintainer ×2</td>
+<td style="text-align:center">Maintainer ×1</td>
+<td style="text-align:center">Maintainer ×1</td>
+<td style="text-align:center">Developer ×1</td>
+<td style="text-align:center">Maintainer ×1</td>
+</tr>
+<tr>
+<td><strong>删除分支</strong></td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅ Maintainer</td>
+<td style="text-align:center">✅ MR后自动</td>
+<td style="text-align:center">✅ MR后自动</td>
+</tr>
+<tr>
+<td><strong>打 Tag</strong></td>
+<td style="text-align:center">✅ Maintainer</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+</tr>
+</tbody>
+</table>
+<h4 id="受保护分支protected-branches配置">受保护分支（Protected Branches）配置 </h4>
+<p>在 GitLab 仓库的 <strong>Settings → Repository → Protected Branches</strong> 中配置：</p>
+<table>
+<thead>
+<tr>
+<th>分支</th>
+<th>Allowed to merge</th>
+<th>Allowed to push</th>
+<th>Allowed to force push</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>master</code></td>
+<td>Maintainers</td>
+<td>No one（仅限MR）</td>
+<td>❌ 关闭</td>
+</tr>
+<tr>
+<td><code>develop</code></td>
+<td>Maintainers</td>
+<td>No one（仅限MR）</td>
+<td>❌ 关闭</td>
+</tr>
+<tr>
+<td><code>release/*</code></td>
+<td>Maintainers</td>
+<td>Maintainers</td>
+<td>❌ 关闭</td>
+</tr>
+</tbody>
+</table>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>╔══════════════════════════════════════════════════════════════════════╗
+║                        分支权限层级示意图                             ║
+╠══════════════════════════════════════════════════════════════════════╣
+║                                                                      ║
+║  🔵 master ◄─────────── 受最高保护 ─────── 仅 Maintainer 可审批合并  ║
+║      ▲                                                               ║
+║      │  ← release/* MR → 需 Maintainer × 2 审核通过方可合并          ║
+║      │  ← hotfix/*  MR → 需 Maintainer × 1 审核通过方可合并          ║
+║      │                                                               ║
+║  🟠 release/* ◄─────── 受保护 ─── Maintainer 负责创建与管理          ║
+║      ▲                                                               ║
+║      │  ← develop MR → 需 Maintainer × 1 审核通过方可创建            ║
+║      │                                                               ║
+║  🟢 develop ◄──────────── 受保护 ──────── 仅 Maintainer 可审批合并   ║
+║      ▲                                                               ║
+║      │  ← feature/* MR → 需 Developer × 1 或 Maintainer 审核         ║
+║      │  ← hotfix/*  MR → 需 Maintainer × 1 审核（同步修复）           ║
+║      │                                                               ║
+║  🟡 feature/* ──────── 开放 ──────────── Developer 可直接 Push       ║
+║  🔴 hotfix/*  ──────── 开放 ──────────── Developer 可直接 Push       ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+</code></pre><h3 id="53-合并请求mr审核规则">5.3 合并请求（MR）审核规则 </h3>
+<h4 id="mr-提交要求">MR 提交要求 </h4>
+<p>发起 MR 时，提交人须确保：</p>
+<ul>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> 分支基于<strong>最新</strong>的目标分支创建（无冲突或已解决冲突）</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> 代码已通过<strong>本地编译</strong>和<strong>单元测试</strong></li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> MR 标题符合 <a href="#6-%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83">提交规范</a>（含类型前缀）</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> MR 描述包含：变更背景、改动内容、测试说明</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> 关联对应的 <strong>Issue / 任务编号</strong></li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> 指定合适的 <strong>Reviewer（审核人）</strong></li>
+</ul>
+<h4 id="mr-审核要求">MR 审核要求 </h4>
+<p>审核人须检查：</p>
+<ul>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> 代码逻辑正确性，无明显 Bug</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> 符合平台编码规范（命名、注释、架构分层）</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> 无冗余代码、调试代码（如 <code>qDebug() &lt;&lt; "test"</code>）</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> 敏感信息未被提交（账号、密码、密钥等）</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> 涉及 <code>common</code> 子模块的修改，须额外经过<strong>平台架构组</strong>审核</li>
+</ul>
+<hr>
+<h2 id="6-提交规范">6. 提交规范 </h2>
+<p>本平台采用 <strong>Conventional Commits</strong> 规范，提交信息格式如下：</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+
+[body]
+
+[footer]
+</code></pre><h3 id="61-type-类型说明">6.1 Type 类型说明 </h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat</code></td>
+<td>新功能</td>
+<td><code>feat(login): add JWT authentication</code></td>
+</tr>
+<tr>
+<td><code>fix</code></td>
+<td>Bug 修复</td>
+<td><code>fix(plugin): fix crash on unload</code></td>
+</tr>
+<tr>
+<td><code>refactor</code></td>
+<td>代码重构（非新功能、非修复）</td>
+<td><code>refactor(mvvm): simplify binding logic</code></td>
+</tr>
+<tr>
+<td><code>perf</code></td>
+<td>性能优化</td>
+<td><code>perf(render): reduce redundant repaints</code></td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>代码格式调整（不影响逻辑）</td>
+<td><code>style: fix indentation</code></td>
+</tr>
+<tr>
+<td><code>docs</code></td>
+<td>文档更新</td>
+<td><code>docs: update API reference</code></td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>添加或修改测试</td>
+<td><code>test(container): add IoC resolution tests</code></td>
+</tr>
+<tr>
+<td><code>chore</code></td>
+<td>构建、工具链、依赖等杂项</td>
+<td><code>chore: bump common to v1.2.0</code></td>
+</tr>
+<tr>
+<td><code>ci</code></td>
+<td>CI/CD 相关</td>
+<td><code>ci: add build pipeline for release</code></td>
+</tr>
+<tr>
+<td><code>revert</code></td>
+<td>回滚提交</td>
+<td><code>revert: revert feat(login)</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-scope-范围说明">6.2 Scope 范围说明 </h3>
+<p><code>scope</code> 应对应仓库中的模块或目录，例如：</p>
+<ul>
+<li><code>common</code> — <code>core</code>、<code>mvvm</code>、<code>uibase</code>、<code>plugin</code></li>
+<li>项目仓库 — <code>home</code>、<code>settings</code>、<code>features</code>、<code>middleware</code></li>
+</ul>
+<h3 id="63-提交示例">6.3 提交示例 </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>feat(extensionsystem): implement lazy initialization for plugins
+
+延迟初始化机制减少启动时间，插件在首次使用时才触发 initialize()。
+
+Closes #TASK-123
+</code></pre><hr>
+<h2 id="7-common-子模块协作规范">7. common 子模块协作规范 </h2>
+<h3 id="71-common-仓库分支策略">7.1 common 仓库分支策略 </h3>
+<p><code>common</code> 仓库<strong>同样遵循 Git Flow 分支策略</strong>，与项目仓库保持一致。但由于 <code>common</code> 是多项目共享的基础库，有以下额外约束：</p>
+<table>
+<thead>
+<tr>
+<th>约束项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>变更发起</strong></td>
+<td>需提交 Issue 说明变更原因和影响范围</td>
+</tr>
+<tr>
+<td><strong>Breaking Change</strong></td>
+<td>必须在 MR 描述中标注 <code>BREAKING CHANGE</code>，并提前通知各项目组</td>
+</tr>
+<tr>
+<td><strong>版本 Tag</strong></td>
+<td>遵循语义化版本（SemVer）：<code>vMAJOR.MINOR.PATCH</code></td>
+</tr>
+<tr>
+<td><strong>向后兼容</strong></td>
+<td>新功能开发应尽量保持向后兼容；不兼容变更须升级主版本号</td>
+</tr>
+<tr>
+<td><strong>接口变更</strong></td>
+<td>公共接口变更须更新对应文档，并在 CHANGELOG 中记录</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-common-版本发布流程">7.2 common 版本发布流程 </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>common develop ──► release/v1.x.x ──► common master (Tag v1.x.x)
+                                           │
+                                           ▼
+                               各项目仓库更新子模块引用
+                               git submodule update --remote
+                               git commit -m "chore: bump common to v1.x.x"
+</code></pre><h3 id="73-common-分支权限额外限制">7.3 common 分支权限（额外限制） </h3>
+<p>相较项目仓库，<code>common</code> 仓库对 <code>develop</code> 分支的合并审核要求更高：</p>
+<table>
+<thead>
+<tr>
+<th>分支</th>
+<th>审核要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>master</code></td>
+<td>Maintainer × 2（必须含平台架构负责人）</td>
+</tr>
+<tr>
+<td><code>develop</code></td>
+<td>Maintainer × 2</td>
+</tr>
+<tr>
+<td><code>release/*</code></td>
+<td>Maintainer × 1</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-附录快速参考卡">8. 附录：快速参考卡 </h2>
+<h3 id="81-日常开发速查">8.1 日常开发速查 </h3>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># ── 开始新功能开发 ──────────────────────────────────────</span>
+<span class="token function">git</span> checkout develop <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> pull origin develop
+<span class="token function">git</span> checkout <span class="token parameter variable">-b</span> feature/TASK-XXX-描述
+
+<span class="token comment"># ── 提交代码 ─────────────────────────────────────────────</span>
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+<span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"feat(scope): 描述"</span>
+<span class="token function">git</span> push origin feature/TASK-XXX-描述
+
+<span class="token comment"># ── 发起 MR（GitLab UI 操作）─────────────────────────────</span>
+<span class="token comment"># 在 GitLab 中：feature/xxx → develop，指定 Reviewer</span>
+
+<span class="token comment"># ── 更新子模块（在项目仓库中）────────────────────────────</span>
+<span class="token function">git</span> submodule update <span class="token parameter variable">--init</span> <span class="token parameter variable">--recursive</span>     <span class="token comment"># 首次克隆后初始化</span>
+<span class="token function">git</span> submodule update <span class="token parameter variable">--remote</span> <span class="token parameter variable">--merge</span>       <span class="token comment"># 拉取 common 最新</span>
+</code></pre><h3 id="82-分支命名速查">8.2 分支命名速查 </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>master                            ← 生产分支（永久）
+develop                           ← 开发集成分支（永久）
+feature/TASK-123-user-login       ← 功能分支
+feature/TASK-456-plugin-manager   ← 功能分支
+release/v1.2.0                    ← 发布准备分支
+hotfix/BUG-789-crash-on-startup   ← 紧急修复分支
+</code></pre><h3 id="83-版本号规则semver">8.3 版本号规则（SemVer） </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>v MAJOR . MINOR . PATCH
+  │        │       │
+  │        │       └─ 修订号：Bug修复、向后兼容（hotfix）
+  │        └───────── 次版本号：新功能、向后兼容（feature → release）
+  └────────────────── 主版本号：破坏性变更（不向后兼容）
+</code></pre><h3 id="84-平台仓库全景图">8.4 平台仓库全景图 </h3>
+<div class="mermaid">graph LR
+    subgraph GitLab["GitLab · Aether_Platform_V2"]
+        direction TB
+
+        subgraph COMMON_REPO["common 仓库"]
+            CM["master"] --- CD["develop"]
+            CD --- CF["feature/*"]
+            CM --- CR["release/*"]
+            CM --- CH["hotfix/*"]
+        end
+
+        subgraph PROJECT_REPOS["项目仓库群（project_A / B / C ...）"]
+            PM["master"] --- PD["develop"]
+            PD --- PF["feature/*"]
+            PM --- PR["release/*"]
+            PM --- PH["hotfix/*"]
+        end
+
+        COMMON_REPO -- "子模块引用&lt;br/&gt;(Submodule)" --&gt; PROJECT_REPOS
+    end
+
+    DEV1["开发者"] --&gt; PF
+    DEV2["开发者"] --&gt; CF
+    ARCH["架构师/维护者"] --&gt;|"MR 审核"| PM
+    ARCH --&gt;|"MR 审核"| CM
+
+    style CM fill:#c0392b,color:#fff
+    style CD fill:#27ae60,color:#fff
+    style PM fill:#c0392b,color:#fff
+    style PD fill:#27ae60,color:#fff
+</div><hr>
+<blockquote>
+<p>📌 <strong>文档维护</strong>：本规范由平台架构组负责维护，如有疑问或建议，请在 GitLab 中提交 Issue 或联系平台负责人。<br>
+📅 <strong>最后更新</strong>：2026-03-10 · <strong>版本</strong>：v1.0.0</p>
+</blockquote>
+</div>
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>

@@ -1,0 +1,13 @@
+{
+  "Name": "Mes",
+  "Version": "1.0.0",
+  "Description": "MES 对接 — 配置管理、产线过站、状态与检测数据上报",
+  "Category": "UI",
+  "Required": false,
+  "Dependencies": [
+    {
+      "Name": "Core",
+      "Version": "1.0.0"
+    }
+  ]
+}

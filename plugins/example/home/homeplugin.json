@@ -1,0 +1,10 @@
+{
+    "Name"        : "Home",
+    "Version"     : "1.0.0",
+    "Description" : "Provides the Home page.",
+    "Category"    : "UI",
+    "Required"    : false,
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}

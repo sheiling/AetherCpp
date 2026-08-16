@@ -1,0 +1,29 @@
+{
+    "_comment": "默认产线工步流（FlowLoader → Scheduler 注册；原 aoi_panel_scan 链路）",
+    "name": "machine_normally",
+    "description": "配方加载 → 单轨完整检测链路（Mark/规划/采图+异步检测/汇总）",
+    "version": 1,
+    "timeoutMs": 0,
+    "enableCompensation": false,
+    "priority": 5,
+    "maxInstances": 1,
+    "requiredDevices": ["camera", "motion_x", "motion_y"],
+    "steps": {
+        "type": "control.sequential",
+        "name": "root",
+        "children": [
+            {
+                "type": "aoi.load_recipe",
+                "name": "load_recipe",
+                "timeoutMs": -1,
+                "retryCount": 0
+            },
+            {
+                "type": "aoi.track_pipeline",
+                "name": "track_pipeline",
+                "timeoutMs": -1,
+                "retryCount": 0
+            }
+        ]
+    }
+}

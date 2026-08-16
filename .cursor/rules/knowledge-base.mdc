@@ -1,0 +1,37 @@
+---
+description: 回答前优先检索 plugins/aoi/docs/knowledge-base 私有知识库，再结合工程代码
+alwaysApply: true
+---
+
+# 私有知识库检索协议（Project_Aether）
+
+## 知识库位置
+
+| 路径 | 用途 |
+| --- | --- |
+| `plugins/aoi/docs/knowledge-base/` | **知识库正文**（规范、笔记、流程，私有） |
+| `plugins/aoi/docs/knowledge-base/_index.md` | 条目目录：标题、路径、标签、摘要 |
+| `.cursor/skills/knowledge-base-search/SKILL.md` | 检索步骤与引用格式 |
+
+`plugins/aoi/docs/` 下其它文档（SOP、设计方案等）按各自 Rule/Skill 维护；**通用提问、编码规范、流程说明**优先查知识库。
+
+## 回答前必做（除纯闲聊外）
+
+1. 打开 `plugins/aoi/docs/knowledge-base/_index.md`，按问题关键词匹配 `tags` / 标题
+2. 对命中条目 **Read** 正文；未命中则在 `plugins/aoi/docs/knowledge-base/` 内 **Grep** 或语义搜索
+3. 需要写/改代码时，再读工程「Project_Aether」工作区根目录源码
+4. 回答中**引用知识库原文**并注明路径，例如：`docs/knowledge-base/cpp/C++编码规范.md`
+
+## 引用与优先级
+
+- 知识库与代码冲突：**以知识库规范为准**（除非用户明确说以当前工程为准）
+- 知识库无覆盖：明确写「知识库未覆盖」，再基于代码或通用实践，标注「推断：」
+- 禁止编造知识库中不存在的条文
+
+## 维护知识库
+
+用户新增/更新 `plugins/aoi/docs/knowledge-base/` 下文件后，应同步更新 `_index.md` 一行（id、标题、path、tags、摘要）。
+
+## 与 SOP 文档维护的关系
+
+若同时存在 `sop-maintenance` Rule：改**用户操作/架构**走 SOP 三件套；改**团队规范/编码标准**走知识库目录，不写入 SOP 除非用户要求。

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <!-- Aether full logo -->
+  <!-- Brand mark + wordmark for industrial software application -->
+
+  <!-- Brand mark (teal accent) -->
+  <g stroke="#00BCD4" fill="none">
+    <path d="M 16 48 L 38 12 L 60 48" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="26" y1="34" x2="50" y2="34" stroke-width="6" stroke-linecap="butt"/>
+  </g>
+
+  <!-- "Aether" wordmark (dark navy brand color) -->
+  <text x="76" y="30" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="bold" fill="#0D2E51">Aether</text>
+</svg>

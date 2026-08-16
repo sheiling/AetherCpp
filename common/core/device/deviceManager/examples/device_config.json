@@ -1,0 +1,405 @@
+{
+    "DeviceManager": {
+        "Camera": {
+            "CameraToup": {
+                "connOpts": {
+                    "SN": "",
+                    "connType": "CONN_BY_INDEX",
+                    "devNO": 0,
+                    "index": 0,
+                    "ip": "",
+                    "port": 0
+                },
+                "type": "CDN_TOUP"
+            },
+            "CameraGalaxy": {
+                "connOpts": {
+                    "SN": "",
+                    "connType": "CONN_BY_SN",
+                    "devNO": 0,
+                    "index": 0,
+                    "ip": "",
+                    "port": 0
+                },
+                "type": "CDN_GALAXY"
+            }
+        },
+        "Lamphouse": {
+            "LDN_CST_DPS": {
+                "connOpts": {
+                    "channelNumber": 3,
+                    "devNO": 0,
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "LDN_CST_DPS"
+            },
+            "LDN_HDPS_2C": {
+                "connOpts": {
+                    "channelNumber": 3,
+                    "devNO": 0,
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "LDN_HDPS_2C"
+            },
+            "LDN_JL_DVC": {
+                "connOpts": {
+                    "channelNumber": 3,
+                    "devNO": 0,
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "LDN_JL_DVC"
+            },
+            "LDN_LTS": {
+                "connOpts": {
+                    "channelNumber": 3,
+                    "devNO": 0,
+                    "productModel": "LTS_3DPA24",
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "LDN_LTS"
+            }
+        },
+        "MotionController": {
+            "Axis": {
+                "LoaderX": {
+                    "axisNO": 0,
+                    "axisType": 2,
+                    "cardName": "LeiShineDmc5c10",
+                    "enable": false,
+                    "equiv": 1.0,
+                    "errorBandPluse": 500,
+                    "homeDir": 1,
+                    "homeHighVel": 5000.0,
+                    "homeLowVel": 5000.0,
+                    "homeMode": 0,
+                    "homeOffset": 2.0,
+                    "homeTacc": 0.5,
+                    "homeVelMode": 1,
+                    "maxVel": 5000.0,
+                    "negativeLimit": 0.0,
+                    "positiveLimit": 0.0,
+                    "pulseUnit": 1000.0,
+                    "sPara": 5.0,
+                    "softwareLimitAction": 0,
+                    "sourceSel": 1,
+                    "startVel": 100.0,
+                    "stopVel": 1000.0,
+                    "tacc": 0.5,
+                    "tdec": 0.5
+                },
+                "LoaderY": {
+                    "axisNO": 1,
+                    "axisType": 2,
+                    "cardName": "LeiShineDmc5c10",
+                    "enable": false,
+                    "equiv": 1.0,
+                    "errorBandPluse": 500,
+                    "homeDir": 1,
+                    "homeHighVel": 5000.0,
+                    "homeLowVel": 5000.0,
+                    "homeMode": 0,
+                    "homeOffset": 2.0,
+                    "homeTacc": 0.5,
+                    "homeVelMode": 1,
+                    "maxVel": 5000.0,
+                    "negativeLimit": 0.0,
+                    "positiveLimit": 0.0,
+                    "pulseUnit": 1000.0,
+                    "sPara": 5.0,
+                    "softwareLimitAction": 0,
+                    "sourceSel": 1,
+                    "startVel": 100.0,
+                    "stopVel": 1000.0,
+                    "tacc": 0.5,
+                    "tdec": 0.5
+                },
+                "LoaderZ1": {
+                    "axisNO": 2,
+                    "axisType": 2,
+                    "cardName": "LeiShineDmc5c10",
+                    "enable": false,
+                    "equiv": 1.0,
+                    "errorBandPluse": 500,
+                    "homeDir": 1,
+                    "homeHighVel": 5000.0,
+                    "homeLowVel": 5000.0,
+                    "homeMode": 0,
+                    "homeOffset": 2.0,
+                    "homeTacc": 0.5,
+                    "homeVelMode": 1,
+                    "maxVel": 5000.0,
+                    "negativeLimit": 0.0,
+                    "positiveLimit": 0.0,
+                    "pulseUnit": 1000.0,
+                    "sPara": 5.0,
+                    "softwareLimitAction": 0,
+                    "sourceSel": 1,
+                    "startVel": 100.0,
+                    "stopVel": 1000.0,
+                    "tacc": 0.5,
+                    "tdec": 0.5
+                },
+                "LoaderZ2": {
+                    "axisNO": 3,
+                    "axisType": 2,
+                    "cardName": "LeiShineDmc5c10",
+                    "enable": false,
+                    "equiv": 1.0,
+                    "errorBandPluse": 500,
+                    "homeDir": 1,
+                    "homeHighVel": 5000.0,
+                    "homeLowVel": 5000.0,
+                    "homeMode": 0,
+                    "homeOffset": 2.0,
+                    "homeTacc": 0.5,
+                    "homeVelMode": 1,
+                    "maxVel": 5000.0,
+                    "negativeLimit": 0.0,
+                    "positiveLimit": 0.0,
+                    "pulseUnit": 1000.0,
+                    "sPara": 5.0,
+                    "softwareLimitAction": 0,
+                    "sourceSel": 1,
+                    "startVel": 100.0,
+                    "stopVel": 1000.0,
+                    "tacc": 0.5,
+                    "tdec": 0.5
+                },
+                "WaferX": {
+                    "axisNO": 4,
+                    "axisType": 2,
+                    "cardName": "LeiShineDmc5c10",
+                    "enable": false,
+                    "equiv": 1.0,
+                    "errorBandPluse": 500,
+                    "homeDir": 1,
+                    "homeHighVel": 5000.0,
+                    "homeLowVel": 5000.0,
+                    "homeMode": 0,
+                    "homeOffset": 2.0,
+                    "homeTacc": 0.5,
+                    "homeVelMode": 1,
+                    "maxVel": 5000.0,
+                    "negativeLimit": 0.0,
+                    "positiveLimit": 0.0,
+                    "pulseUnit": 1000.0,
+                    "sPara": 5.0,
+                    "softwareLimitAction": 0,
+                    "sourceSel": 1,
+                    "startVel": 100.0,
+                    "stopVel": 1000.0,
+                    "tacc": 0.5,
+                    "tdec": 0.5
+                },
+                "WaferY": {
+                    "axisNO": 5,
+                    "axisType": 2,
+                    "cardName": "LeiShineDmc5c10",
+                    "enable": false,
+                    "equiv": 1.0,
+                    "errorBandPluse": 500,
+                    "homeDir": 1,
+                    "homeHighVel": 5000.0,
+                    "homeLowVel": 5000.0,
+                    "homeMode": 0,
+                    "homeOffset": 2.0,
+                    "homeTacc": 0.5,
+                    "homeVelMode": 1,
+                    "maxVel": 5000.0,
+                    "negativeLimit": 0.0,
+                    "positiveLimit": 0.0,
+                    "pulseUnit": 1000.0,
+                    "sPara": 5.0,
+                    "softwareLimitAction": 0,
+                    "sourceSel": 1,
+                    "startVel": 100.0,
+                    "stopVel": 1000.0,
+                    "tacc": 0.5,
+                    "tdec": 0.5
+                }
+            },
+            "Card": {
+                "LeiShineBac632e": {
+                    "connOpts": {
+                        "baud": 115200,
+                        "connectNO": 0,
+                        "connectString": "127.0.0.1",
+                        "connectType": 2,
+                        "dataBit": 8,
+                        "parity": 0,
+                        "stopBit": 1
+                    },
+                    "type": "LeiShineBac632e"
+                },
+                "LeiShineDmc5c10": {
+                    "connOpts": {
+                        "baud": 115200,
+                        "connectNO": 0,
+                        "connectString": "127.0.0.1",
+                        "connectType": 2,
+                        "dataBit": 8,
+                        "parity": 0,
+                        "stopBit": 1
+                    },
+                    "type": "LeiShineDmc5c10"
+                }
+            },
+            "DeviceIo": {
+                "input1": {
+                    "cardName": "LeiShineDmc5c10",
+                    "logic": 0,
+                    "port": 1,
+                    "type": 0
+                },
+                "input2": {
+                    "cardName": "LeiShineDmc5c10",
+                    "logic": 0,
+                    "port": 1,
+                    "type": 0
+                }
+            }
+        },
+        "PressurePickup": {
+            "PressurePickupByRTU": {
+                "connOpts": {
+                    "devNO": 0,
+                    "ip": "",
+                    "port": 0,
+                    "protocolType": "RTU",
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "PPDN_UNKNOWN"
+            },
+            "PressurePickupByTCP": {
+                "connOpts": {
+                    "devNO": 0,
+                    "ip": "",
+                    "port": 0,
+                    "protocolType": "TCP",
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "PPDN_UNKNOWN"
+            }
+        },
+        "Rangefinder": {
+            "RangefinderByRTU": {
+                "connOpts": {
+                    "devNO": 0,
+                    "ip": "",
+                    "port": 0,
+                    "protocolType": "RTU",
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "RDN_UNKNOWN"
+            },
+            "RangefinderByTCP": {
+                "connOpts": {
+                    "devNO": 0,
+                    "ip": "",
+                    "port": 0,
+                    "protocolType": "TCP",
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "RDN_UNKNOWN"
+            }
+        },
+        "Scanner": {
+            "SSDN_CINO": {
+                "connOpts": {
+                    "devNO": 0,
+                    "ip": "127.0.0.1",
+                    "port": 3000,
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "SSDN_CINO"
+            },
+            "SSDN_HAIKANG": {
+                "connOpts": {
+                    "devNO": 0,
+                    "ip": "127.0.0.1",
+                    "port": 3000,
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "SSDN_HAIKANG"
+            }
+        },
+        "SoftwareScreen": {
+            "SWSDN_WIN32": {
+                "connOpts": {
+                    "devNO": 0
+                },
+                "type": "SWSDN_WIN32"
+            }
+        }
+    }
+}

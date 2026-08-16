@@ -1,0 +1,15 @@
+{
+    "Name"        : "Aoi",
+    "Version"     : "1.0.0",
+    "Description" : "AOI 固晶检测 UI — 首页、系统配置、产品配方、检测结果、复判、帮助",
+    "Category"    : "UI",
+    "Required"    : false,
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" },
+        { "Name": "Permission", "Version": "1.0.0" },
+        { "Name": "Camera", "Version": "1.0.0" },
+        { "Name": "MotionControl", "Version": "1.0.0" },
+        { "Name": "graphicsview", "Version": "1.0.0" },
+        { "Name": "VisionAlgo", "Version": "1.0.0" }
+    ]
+}

@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/">
+    <!-- Keep prefix as "/" so code can use ":/resources/..." -->
+    <file alias="resources/image/black_logo.png">image/black_logo.png</file>
+    <file alias="resources/image/white_logo.png">image/white_logo.png</file>
+    <file alias="resources/image/loginBG.png">image/loginBG.png</file>
+    <file alias="resources/fonts/fa-solid-900.ttf">fonts/fa-solid-900.ttf</file>
+  </qresource>
+</RCC>

@@ -1,0 +1,19 @@
+#ifndef __INKCOLOR_CLASSIFY_ERROR_H_
+#define __INKCOLOR_CLASSIFY_ERROR_H__
+
+//basic error---------------------------------------------- 1-99
+#include "ci_basic_error.h"
+#include "ci_frontend_modname.h"
+#include "ci_detection_modname.h"
+
+#define ALGOINKCOLORCLASSIFY_INDEX_ERROR                           ERROR_CODE(ALGOMOD_INKCOLOR_CLASSIFIER,100)// 相机索引错误
+#define ALGOINKCOLORCLASSIFY_MASK_ERROR                            ERROR_CODE(ALGOMOD_INKCOLOR_CLASSIFIER,101)// 计算区域MSAK错误
+#define ALGOINKCOLORCLASSIFY_LIGHT_CALIB_FAIL                      ERROR_CODE(ALGOMOD_INKCOLOR_CLASSIFIER,102)// 光源补偿色卡失效
+#define ALGOINKCOLORCLASSIFY_MARK_LOCATE_FAIL                      ERROR_CODE(ALGOMOD_INKCOLOR_CLASSIFIER,103)// 位置定位失败
+#define ALGOINKCOLORCLASSIFY_STDCOLOR_MOVED                        ERROR_CODE(ALGOMOD_INKCOLOR_CLASSIFIER,104)// 色卡发生偏移
+#define ALGOINKCOLORCLASSIFY_CAMERA_MOVED                          ERROR_CODE(ALGOMOD_INKCOLOR_CLASSIFIER,105)// 相机发生偏移
+#define ALGOINKCOLORCLASSIFY_MARK_CONTOUR_EMPTY                    ERROR_CODE(ALGOMOD_INKCOLOR_CLASSIFIER,106)// 模板轮廓为空
+#define ALGOINKCOLORCLASSIFY_FLAG_ERROR						       ERROR_CODE(ALGOMOD_INKCOLOR_CLASSIFIER,107)// 模板轮廓为空
+
+
+#endif

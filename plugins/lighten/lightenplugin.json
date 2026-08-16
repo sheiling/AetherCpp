@@ -1,0 +1,21 @@
+{
+  "Name": "Lighten",
+  "Version": "1.0.0",
+  "Description": "点亮检测配置界面 — 首页、系统配置、产品配方、检测结果、虚拟像素",
+  "Category": "UI",
+  "Required": false,
+  "Dependencies": [
+    {
+      "Name": "Core",
+      "Version": "1.0.0"
+    },
+    {
+      "Name": "graphicsview",
+      "Version": "1.0.0"
+    },
+    {
+      "Name": "LightenDetector",
+      "Version": "1.0.0"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+    "Name"        : "help",
+    "Version"     : "1.0.0",
+    "Description" : "帮助页面 — 版本信息、用户手册、维护手册、帮助文档",
+    "Category"    : "UI",
+    "Required"    : false,
+    "Dependencies": [
+        { "Name": "Core", "Version": "1.0.0" }
+    ]
+}

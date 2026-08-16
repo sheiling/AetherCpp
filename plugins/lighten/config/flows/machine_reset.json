@@ -1,0 +1,23 @@
+{
+    "_comment": "整机复位工步流（MachineFSM::performReset → Scheduler::submit）",
+    "name": "machine_reset",
+    "description": "Z 轴回零 → X/Y 并行回零",
+    "version": 1,
+    "timeoutMs": 0,
+    "enableCompensation": false,
+    "priority": 9,
+    "maxInstances": 1,
+    "requiredDevices": ["motion_x", "motion_y"],
+    "steps": {
+        "type": "control.sequential",
+        "name": "reset_root",
+        "children": [
+            {
+                "type": "aoi.machine_reset",
+                "name": "home_all_axes",
+                "timeoutMs": 120000,
+                "retryCount": 0
+            }
+        ]
+    }
+}

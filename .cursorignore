@@ -1,0 +1,27 @@
+# Cursor index ignore - keep plugins/aoi/docs/ and knowledge-base/ searchable
+# Edit per project; lines below are common build/cache dirs
+
+**/node_modules/
+**/.git/
+**/bin/
+**/obj/
+**/build/
+**/dist/
+**/out/
+**/.vs/
+**/.idea/
+**/*.user
+**/*.suo
+**/packages/
+**/__pycache__/
+**/.pytest_cache/
+**/*.pyc
+**/.cache/
+
+# Optional: large generated assets (uncomment if needed)
+# **/*.png
+# **/*.jpg
+
+# Do NOT ignore private knowledge
+!plugins/aoi/docs/
+!plugins/aoi/docs/knowledge-base/

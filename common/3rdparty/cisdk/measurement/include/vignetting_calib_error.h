@@ -1,0 +1,30 @@
+#ifndef __VIGNETTING_CALIB_ERROR_H__
+#define __VIGNETTING_CALIB_ERROR_H__
+
+//basic error---------------------------------------------- 1-99
+//#include "ci_errors.h"
+#include "ci_basic_error.h"
+#include "ci_frontend_modname.h"
+
+#define ALGOCALIBVIG__RATIO_ERROR                           ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,100) //光路修正缩放比例小于1或大于64
+#define ALGOCALIBVIG__IN_COS_ERROR                          ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,101) //光路修正余弦衰减小于0或大于20
+#define ALGOCALIBVIG__MISMATCH_COLOR                        ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,102) //光路修正输入shot颜色与系数颜色不匹配
+#define ALGOCALIBVIG__MISMATCH_CAM_TYPE                     ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,103) //光路修正输入shot相机类型与系数相机类型不匹配
+#define ALGOCALIBVIG__MISMATCH_LENSTYPE                     ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,104) //光路修正输入shot镜头与系数镜头不匹配
+#define ALGOCALIBVIG__MISMATCH_CIETYPE                      ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,105) //光路修正输入shot数组中滤片不匹配
+#define ALGOCALIBVIG__MISMATCH_APERTURE                     ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,106) //光路修正输入shot光圈错误
+#define ALGOCALIBVIG__MISMATCH_EXPOSURE                     ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,107) //光路修正输入shot曝光时间错误
+#define ALGOCALIBVIG__MISMATCH_CAPTURE						ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,108) //光路修正输入shot中捕获信息错误
+#define ALGOCALIBVIG__INVALID_DEVICE                        ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,109) //无效的设备信息
+#define ALGOCALIBVIG__MISMATCH_ROI_SHOT                     ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,110) //roi区域尺寸与shot.image不匹配
+#define ALGOCALIBVIG__GUASSIAN_BLUR_PARA                    ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,111) //高斯模糊滤波参数设置不合理
+#define ALGOCALIBVIG__ROIRECT_MISMATCHED					ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,112) //Vig的Rect和待修正的shot Rect不匹配
+#define ALGOCALIBVIG__INPUT_ERROR					        ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,113) //输入的shot无效，空指针或空内容
+#define ALGOCALIBVIG__INPUTPARTITION_WH_ERROR				ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,114) //设置的分区宽高有误
+#define ALGOCALIBVIG__INPUTRZSHOT_ERROR     				ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,115) //错误输入RZ
+#define ALGOCALIBVIG__INPUTVIG_ERROR     				    ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,116) //错误输入vig文件
+#define ALGOCALIBVIG__MISMATCH_ROI_SIZE                     ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,117) //roi区域尺寸超出分辨率范围
+#define ALGOCALIBVIG__MISMATCH_BACKGROUND                   ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,118) //背景图与逐点图像的信息不匹配
+#define ALGOCALIBVIG__MISMATCH_METHOD						ERROR_CODE(ALGOMOD_VIGNETTING_CALIB,119) //方法不匹配
+
+#endif

@@ -1,0 +1,2103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>user_guide.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="fz2projecttemplate-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97">fz2_project_template 用户指南</h1>
+<blockquote>
+<p><strong>基于 Qt + CMake 的插件化桌面应用开发框架</strong><br>
+版本：1.0.0 · C++17 · Qt 5.15 / Qt6</p>
+</blockquote>
+<hr>
+<h2 id="%E7%9B%AE%E5%BD%95">目录</h2>
+<ol>
+<li><a href="#1-%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#2-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B">快速开始</a>
+<ul>
+<li>2.1 <a href="#21-%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82">环境要求</a></li>
+<li>2.2 <a href="#22-%E5%85%8B%E9%9A%86%E4%B8%8E%E6%9E%84%E5%BB%BA">克隆与构建</a></li>
+<li>2.3 <a href="#23-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84">目录结构</a></li>
+</ul>
+</li>
+<li><a href="#3-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5">核心概念</a></li>
+<li><a href="#4-%E6%8F%92%E4%BB%B6%E7%B3%BB%E7%BB%9F--extensionsystem">插件系统 — ExtensionSystem</a>
+<ul>
+<li>4.1 <a href="#41-%E6%8F%92%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">插件生命周期</a></li>
+<li>4.2 <a href="#42-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%8F%92%E4%BB%B6">创建一个插件</a></li>
+<li>4.3 <a href="#43-%E6%8F%92%E4%BB%B6%E5%85%83%E6%95%B0%E6%8D%AEjson">插件元数据（JSON）</a></li>
+<li>4.4 <a href="#44-%E5%AF%B9%E8%B1%A1%E6%B1%A0">对象池</a></li>
+<li>4.5 <a href="#45-%E5%8A%A8%E6%80%81%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8--invoker">动态方法调用 — Invoker</a></li>
+</ul>
+</li>
+<li><a href="#5-ioc-%E6%9C%8D%E5%8A%A1%E5%AE%B9%E5%99%A8--container">IoC 服务容器 — Container</a>
+<ul>
+<li>5.1 <a href="#51-%E7%BB%91%E5%AE%9A%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">绑定与生命周期</a></li>
+<li>5.2 <a href="#52-%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85--serviceprovider">服务提供者 — ServiceProvider</a></li>
+<li>5.3 <a href="#53-%E4%B8%8A%E4%B8%8B%E6%96%87%E7%BB%91%E5%AE%9A">上下文绑定</a></li>
+<li>5.4 <a href="#54-%E6%A0%87%E7%AD%BE%E5%88%86%E7%BB%84">标签分组</a></li>
+<li>5.5 <a href="#55-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F--facade">外观模式 — Facade</a></li>
+<li>5.6 <a href="#56-%E5%8A%A8%E6%80%81%E5%91%BD%E5%90%8D%E7%BB%91%E5%AE%9A%E8%B7%A8%E6%8F%92%E4%BB%B6%E5%8F%8D%E5%B0%84%E8%B0%83%E7%94%A8">动态命名绑定（跨插件反射调用）</a></li>
+</ul>
+</li>
+<li><a href="#6-mvvm-%E6%9E%B6%E6%9E%84--mvvm">MVVM 架构 — mvvm</a>
+<ul>
+<li>6.1 <a href="#61-viewmodel">ViewModel</a></li>
+<li>6.2 <a href="#62-%E5%B1%9E%E6%80%A7%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%AE%A1%E9%81%93">属性中间件管道</a></li>
+<li>6.3 <a href="#63-command%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F">Command（命令模式）</a></li>
+</ul>
+</li>
+<li><a href="#7-ui-%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD--uibase">UI 基础设施 — uibase</a>
+<ul>
+<li>7.1 <a href="#71-%E6%97%A0%E8%BE%B9%E6%A1%86%E7%AA%97%E5%8F%A3--cframelesswindow">无边框窗口 — CFramelessWindow</a></li>
+<li>7.2 <a href="#72-%E5%AF%BC%E8%88%AA%E7%AE%A1%E7%90%86--navigationmanager">导航管理 — NavigationManager</a></li>
+<li>7.3 <a href="#73-%E6%9D%83%E9%99%90%E8%BF%90%E8%A1%8C%E6%97%B6--permservice">权限运行时 — PermService</a></li>
+<li>7.4 <a href="#74-%E4%B8%BB%E9%A2%98%E7%AE%A1%E7%90%86--thememanager">主题管理 — ThemeManager</a></li>
+<li>7.5 <a href="#75-%E8%AF%AD%E8%A8%80%E5%9B%BD%E9%99%85%E5%8C%96--languagemanager">语言国际化 — LanguageManager</a></li>
+</ul>
+</li>
+<li><a href="#8-cmake-%E6%9E%84%E5%BB%BA%E8%BE%85%E5%8A%A9--fz2helpers">CMake 构建辅助 — FZ2Helpers</a></li>
+<li><a href="#9-%E5%86%85%E7%BD%AE%E7%A4%BA%E4%BE%8B%E6%8F%92%E4%BB%B6">内置示例插件</a></li>
+<li><a href="#10-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5">最佳实践</a></li>
+<li><a href="#11-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">常见问题</a></li>
+</ol>
+<hr>
+<h2 id="1-%E7%AE%80%E4%BB%8B">1. 简介</h2>
+<p><strong>fz2_project_template</strong> 是一套面向桌面应用的 <strong>插件化开发框架模板</strong>，以 Qt Widgets + CMake 为基础，提供了一整套开箱即用的基础设施：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>extensionsystem</code></td>
+<td>插件加载、卸载、依赖管理、对象池、动态方法调用</td>
+</tr>
+<tr>
+<td><code>container</code></td>
+<td>Laravel 风格 IoC 服务容器（绑定/单例/上下文/Facade）</td>
+</tr>
+<tr>
+<td><code>mvvm</code></td>
+<td>ViewModel 属性绑定、中间件管道、Command 模式</td>
+</tr>
+<tr>
+<td><code>uibase</code></td>
+<td>无边框窗口、导航管理、主题/语言切换、权限控制</td>
+</tr>
+</tbody>
+</table>
+<p><strong>设计目标：</strong></p>
+<ul>
+<li>业务代码以**插件（DLL）**为单元独立开发，主程序极简</li>
+<li>插件之间通过<strong>对象池</strong>或<strong>服务容器</strong>通信，零硬依赖</li>
+<li>提供完整的 MVVM + 中间件管道，使 UI 与业务逻辑彻底解耦</li>
+<li>支持运行时<strong>主题切换</strong>、<strong>语言切换</strong>、<strong>角色权限</strong>管控</li>
+</ul>
+<hr>
+<h2 id="2-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B">2. 快速开始</h2>
+<h3 id="21-%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82">2.1 环境要求</h3>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>最低版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMake</td>
+<td>3.16</td>
+<td>构建系统</td>
+</tr>
+<tr>
+<td>Qt</td>
+<td>5.15 / 6.x</td>
+<td>优先检测 Qt6，回退 Qt5</td>
+</tr>
+<tr>
+<td>MSVC</td>
+<td>VS 2019 / 2022</td>
+<td>Windows 推荐；也可使用 GCC / Clang</td>
+</tr>
+<tr>
+<td>C++ 标准</td>
+<td>C++17</td>
+<td><code>if constexpr</code>、折叠表达式等特性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-%E5%85%8B%E9%9A%86%E4%B8%8E%E6%9E%84%E5%BB%BA">2.2 克隆与构建</h3>
+<p><strong>方式一：使用一键构建脚本（Windows）</strong></p>
+<pre class="hljs"><code><div># Release 构建
+scripts\build.bat
+
+# Debug 构建
+scripts\build.bat Debug
+
+# 先清理再构建
+scripts\build.bat clean Release
+</div></code></pre>
+<p>构建产物位于 <code>build\bin\&lt;Config&gt;\</code>，插件 DLL 在 <code>build\bin\&lt;Config&gt;\plugins\</code>。</p>
+<p><strong>方式二：手动 CMake</strong></p>
+<pre class="hljs"><code><div>cmake -S . -B build -G <span class="hljs-string">"Visual Studio 16 2019"</span> -A x64
+cmake --build build --config Release --parallel
+</div></code></pre>
+<p><strong>方式三：Visual Studio</strong></p>
+<p>用 CMake 生成后，直接打开 <code>build\PluginApp.sln</code>，默认启动项目为 <code>myapp</code>。</p>
+<h3 id="23-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84">2.3 目录结构</h3>
+<pre class="hljs"><code><div>fz2_project_template/
+├── app/                        # 可执行程序入口（main.cpp）
+├── common/                     # 平台通用代码（子模块引入）
+│   ├── cmake/
+│   │   └── FZ2Helpers.cmake    # CMake 辅助函数
+│   ├── core/
+│   │   ├── container/          # IoC 服务容器
+│   │   ├── extensionsystem/    # 插件管理引擎
+│   │   ├── communication/      # 通信协议（串口/TCP/Modbus 等）
+│   │   └── device/             # 设备管理
+│   └── ui/
+│       ├── mvvm/               # MVVM 基础库
+│       ├── uibase/             # UI 基础组件库
+│       ├── component/          # 通用控件（预留扩展）
+│       └── resources/          # 图标、样式表、翻译文件
+├── plugins/                    # 所有业务插件
+│   ├── core/                   # 核心插件（主窗口）
+│   ├── home/                   # 首页插件
+│   ├── features/               # 功能演示插件
+│   ├── settings/               # 设置插件
+│   ├── help/                   # 帮助插件
+│   ├── mvvm/                   # MVVM 示例插件
+│   ├── middleware/             # 中间件示例插件
+│   ├── invoker/                # Invoker 示例插件
+│   └── container/              # Container 示例插件
+├── config/
+│   ├── app.toml                # 应用配置
+│   └── sql/                    # 权限等资源种子 SQL
+├── docs/                       # 文档目录
+├── scripts/
+│   └── build.bat               # Windows 一键构建
+├── tests/                      # 单元测试
+└── CMakeLists.txt              # 根构建脚本
+</div></code></pre>
+<hr>
+<h2 id="3-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5">3. 核心概念</h2>
+<p>本框架有三个核心概念，理解它们是使用框架的基础：</p>
+<pre class="hljs"><code><div>┌────────────────────────────────────────────────────────────────────┐
+│                         应用程序启动                               │
+│                                                                    │
+│  main()                                                            │
+│    │                                                               │
+│    ├─ 1. 初始化 ThemeManager / LanguageManager                    │
+│    │                                                               │
+│    ├─ 2. PluginManager::loadPlugins()                             │
+│    │       扫描 plugins/ 目录 → 按依赖顺序加载 DLL                 │
+│    │       → IPlugin::initialize()  → extensionsInitialized()     │
+│    │                                                               │
+│    └─ 3. QApplication::exec()  （主事件循环）                      │
+│                                                                    │
+│  核心插件（Core）负责创建主窗口、导航栏、菜单配置                  │
+│  业务插件各自注册页面到 NavigationManager                          │
+└────────────────────────────────────────────────────────────────────┘
+</div></code></pre>
+<p><strong>三大支柱：</strong></p>
+<ol>
+<li><strong>插件（Plugin）</strong> — 所有功能模块均以 DLL 形式存在，主程序只负责启动和插件加载</li>
+<li><strong>服务容器（Container）</strong> — 插件间的服务注册与发现，彻底解耦依赖</li>
+<li><strong>MVVM + 中间件</strong> — UI 层与业务层分离，属性变更可拦截、校验、日志记录</li>
+</ol>
+<hr>
+<h2 id="4-%E6%8F%92%E4%BB%B6%E7%B3%BB%E7%BB%9F--extensionsystem">4. 插件系统 — ExtensionSystem</h2>
+<h3 id="41-%E6%8F%92%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">4.1 插件生命周期</h3>
+<p>每个插件在加载过程中会依次经历以下生命周期钩子：</p>
+<pre class="hljs"><code><div>加载 DLL
+    │
+    ▼
+IPlugin::initialize(errorString*)
+    │  在此阶段：注册服务到对象池、初始化内部状态
+    │  返回 false 则插件加载失败
+    ▼
+IPlugin::extensionsInitialized()
+    │  所有插件的 initialize() 均已完成后调用
+    │  可在此访问其他插件提供的服务
+    ▼
+IPlugin::delayedInitialize()    [可选，返回 true 表示需要延迟初始化]
+    │  在主事件循环空闲时调用，适合耗时初始化
+    ▼
+运行中...
+    │
+    ▼
+IPlugin::aboutToShutdown()      [可选]
+    │  返回 SynchronousShutdown 或 AsynchronousShutdown
+    ▼
+插件卸载
+</div></code></pre>
+<h3 id="42-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%8F%92%E4%BB%B6">4.2 创建一个插件</h3>
+<p><strong>步骤 1：继承 <code>IPlugin</code></strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// myplugin.h</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> once</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;extensionsystem/iplugin.h&gt;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPlugin</span> :</span> <span class="hljs-keyword">public</span> ExtensionSystem::IPlugin
+{
+    <span class="hljs-function">Q_OBJECT
+    <span class="hljs-title">Q_PLUGIN_METADATA</span><span class="hljs-params">(IID <span class="hljs-string">"com.example.pluginsystem.IPlugin"</span>
+                      FILE <span class="hljs-string">"myplugin.json"</span>)</span>
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">bool</span> <span class="hljs-title">initialize</span><span class="hljs-params">(QString *errorString)</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">extensionsInitialized</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">delayedInitialize</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function">ShutdownFlag <span class="hljs-title">aboutToShutdown</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>;
+};
+</div></code></pre>
+<p><strong>步骤 2：实现生命周期方法</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// myplugin.cpp</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"myplugin.h"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;extensionsystem/pluginmanager.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"myservice.h"</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">MyPlugin::initialize</span><span class="hljs-params">(QString *errorString)</span>
+</span>{
+    Q_UNUSED(errorString)
+
+    <span class="hljs-comment">// 将本插件提供的服务注册到对象池，供其他插件访问</span>
+    <span class="hljs-keyword">auto</span> *service = <span class="hljs-keyword">new</span> MyService(<span class="hljs-keyword">this</span>);
+    ExtensionSystem::PluginManager::addObject(service);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyPlugin::extensionsInitialized</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-comment">// 此时所有插件的 initialize() 均已完成</span>
+    <span class="hljs-comment">// 可以安全地从对象池获取其他插件的服务</span>
+    <span class="hljs-keyword">auto</span> *otherService = ExtensionSystem::PluginManager::getObject&lt;IOtherService&gt;();
+    <span class="hljs-keyword">if</span> (otherService) {
+        otherService-&gt;doSomething();
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">MyPlugin::delayedInitialize</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-comment">// 耗时操作放在这里，不阻塞主窗口显示</span>
+    loadHeavyResources();
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 返回 true 才会被调用</span>
+}
+
+ExtensionSystem::<span class="hljs-function">IPlugin::ShutdownFlag <span class="hljs-title">MyPlugin::aboutToShutdown</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-comment">// 同步关闭（默认）</span>
+    <span class="hljs-keyword">return</span> SynchronousShutdown;
+}
+</div></code></pre>
+<p><strong>步骤 3：添加 CMakeLists.txt</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">set</span>(PLUGIN_NAME MyPlugin)
+
+<span class="hljs-keyword">find_package</span>(Qt<span class="hljs-variable">${QT_VERSION_MAJOR}</span> REQUIRED COMPONENTS Core Widgets)
+
+fz2_collect_sources(PLUGIN_SOURCES PLUGIN_HEADERS)
+
+<span class="hljs-keyword">add_library</span>(<span class="hljs-variable">${PLUGIN_NAME}</span> SHARED
+    <span class="hljs-variable">${PLUGIN_SOURCES}</span>
+    <span class="hljs-variable">${PLUGIN_HEADERS}</span>
+    myplugin.json
+)
+
+<span class="hljs-keyword">target_compile_features</span>(<span class="hljs-variable">${PLUGIN_NAME}</span> PRIVATE cxx_std_17)
+
+<span class="hljs-keyword">target_link_libraries</span>(<span class="hljs-variable">${PLUGIN_NAME}</span> PRIVATE
+    Qt<span class="hljs-variable">${QT_VERSION_MAJOR}</span>::Core
+    Qt<span class="hljs-variable">${QT_VERSION_MAJOR}</span>::Widgets
+    extensionsystem
+    uibase
+)
+
+fz2_target_msvc_options(<span class="hljs-variable">${PLUGIN_NAME}</span>)
+fz2_setup_plugin(<span class="hljs-variable">${PLUGIN_NAME}</span> <span class="hljs-string">"plugins/myplugin"</span>)
+</div></code></pre>
+<h3 id="43-%E6%8F%92%E4%BB%B6%E5%85%83%E6%95%B0%E6%8D%AEjson">4.3 插件元数据（JSON）</h3>
+<p>每个插件目录下须有一个与 <code>FILE</code> 参数同名的 JSON 文件：</p>
+<pre class="hljs"><code><div>{
+    <span class="hljs-attr">"Name"</span>        : <span class="hljs-string">"MyPlugin"</span>,
+    <span class="hljs-attr">"Version"</span>     : <span class="hljs-string">"1.0.0"</span>,
+    <span class="hljs-attr">"Description"</span> : <span class="hljs-string">"My custom plugin"</span>,
+    <span class="hljs-attr">"Category"</span>    : <span class="hljs-string">"Business"</span>,
+    <span class="hljs-attr">"Required"</span>    : <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"Dependencies"</span>: [<span class="hljs-string">"Core"</span>]
+}
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td>string</td>
+<td>插件名（唯一标识）</td>
+</tr>
+<tr>
+<td><code>Version</code></td>
+<td>string</td>
+<td>语义化版本号</td>
+</tr>
+<tr>
+<td><code>Description</code></td>
+<td>string</td>
+<td>描述</td>
+</tr>
+<tr>
+<td><code>Category</code></td>
+<td>string</td>
+<td>分组（VS 解决方案文件夹）</td>
+</tr>
+<tr>
+<td><code>Required</code></td>
+<td>bool</td>
+<td><code>true</code> 表示不可禁用</td>
+</tr>
+<tr>
+<td><code>Dependencies</code></td>
+<td>array</td>
+<td>依赖的其他插件名，框架保证先加载依赖</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44-%E5%AF%B9%E8%B1%A1%E6%B1%A0">4.4 对象池</h3>
+<p>对象池是插件间<strong>轻量级服务共享</strong>的机制，适合简单的&quot;公告板&quot;模式。</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 注册</span>
+ExtensionSystem::PluginManager::addObject(myServiceInstance);
+
+<span class="hljs-comment">// 按类型获取第一个匹配对象</span>
+<span class="hljs-keyword">auto</span> *svc = ExtensionSystem::PluginManager::getObject&lt;IMyService&gt;();
+
+<span class="hljs-comment">// 按类型 + 条件获取</span>
+<span class="hljs-keyword">auto</span> *svc = ExtensionSystem::PluginManager::getObject&lt;IMyService&gt;(
+    [](IMyService *s) { <span class="hljs-keyword">return</span> s-&gt;name() == <span class="hljs-string">"target"</span>; }
+);
+
+<span class="hljs-comment">// 获取所有匹配对象</span>
+QList&lt;IMyService*&gt; <span class="hljs-built_in">list</span> = ExtensionSystem::PluginManager::getObjects&lt;IMyService&gt;();
+
+<span class="hljs-comment">// 从对象池移除</span>
+ExtensionSystem::PluginManager::removeObject(myServiceInstance);
+</div></code></pre>
+<blockquote>
+<p><strong>注意：</strong> 对象池不管理对象生命周期，注册者负责在适当时机调用 <code>removeObject</code> 并释放内存（通常在插件析构时）。</p>
+</blockquote>
+<h3 id="45-%E5%8A%A8%E6%80%81%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8--invoker">4.5 动态方法调用 — Invoker</h3>
+<p><code>Invoker</code> 通过 Qt 元对象系统实现<strong>运行时方法调用</strong>，无需编译期引入目标类头文件。</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;extensionsystem/invoker.h&gt;</span></span>
+
+<span class="hljs-comment">// 获取目标对象（来自对象池）</span>
+QObject *target = ExtensionSystem::PluginManager::getObjectByName(<span class="hljs-string">"CalculatorService"</span>);
+
+<span class="hljs-comment">// 无参无返回值调用</span>
+ExtensionSystem::invoke&lt;<span class="hljs-keyword">void</span>&gt;(target, <span class="hljs-string">"reset"</span>);
+
+<span class="hljs-comment">// 带参数，有返回值</span>
+<span class="hljs-keyword">int</span> sum = ExtensionSystem::invoke&lt;<span class="hljs-keyword">int</span>&gt;(target, <span class="hljs-string">"add"</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>);
+
+<span class="hljs-comment">// 两个参数</span>
+QString result = ExtensionSystem::invoke&lt;QString&gt;(target, <span class="hljs-string">"format"</span>, value, unit);
+
+<span class="hljs-comment">// 类模板版本（保持对象引用）</span>
+<span class="hljs-function">ExtensionSystem::Invoker&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">inv</span><span class="hljs-params">(target, <span class="hljs-string">"multiply"</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>)</span></span>;
+<span class="hljs-keyword">if</span> (inv.wasSuccessful()) {
+    <span class="hljs-keyword">int</span> result = inv;  <span class="hljs-comment">// 隐式转换获取结果</span>
+}
+</div></code></pre>
+<blockquote>
+<p><strong>前提条件：</strong> 目标方法必须声明为 <code>Q_INVOKABLE</code>：</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CalculatorService</span> :</span> <span class="hljs-keyword">public</span> QObject {
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function">Q_INVOKABLE <span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{ <span class="hljs-keyword">return</span> a + b; }
+    <span class="hljs-function">Q_INVOKABLE <span class="hljs-keyword">void</span> <span class="hljs-title">reset</span><span class="hljs-params">()</span> </span>{ m_value = <span class="hljs-number">0</span>; }
+};
+</div></code></pre>
+</blockquote>
+<hr>
+<h2 id="5-ioc-%E6%9C%8D%E5%8A%A1%E5%AE%B9%E5%99%A8--container">5. IoC 服务容器 — Container</h2>
+<p>服务容器参考 Laravel 框架设计，提供类型安全的依赖注入机制，特别适合<strong>跨插件服务注册与发现</strong>。</p>
+<h3 id="51-%E7%BB%91%E5%AE%9A%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">5.1 绑定与生命周期</h3>
+<p>框架支持三种绑定生命周期：</p>
+<h4 id="%E7%9E%AC%E6%80%81%E7%BB%91%E5%AE%9A-bind--%E6%AF%8F%E6%AC%A1%E8%A7%A3%E6%9E%90%E8%BF%94%E5%9B%9E%E6%96%B0%E5%AE%9E%E4%BE%8B">瞬态绑定 <code>bind</code> — 每次解析返回新实例</h4>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"container/application.h"</span></span>
+
+Container::Application app;
+
+<span class="hljs-comment">// 方式1：工厂 Lambda（接收容器引用，可递归解析依赖）</span>
+app.bind&lt;ILogger&gt;([](Container::Container&amp; c) {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;FileLogger&gt;(c.make&lt;IConfig&gt;()-&gt;get(<span class="hljs-string">"log.path"</span>));
+});
+
+<span class="hljs-comment">// 方式2：无参工厂（简单情况）</span>
+app.bind&lt;ILogger&gt;([] {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;ConsoleLogger&gt;();
+});
+
+<span class="hljs-comment">// 方式3：自动构造（Concrete 必须继承 Abstract）</span>
+app.bind&lt;ILogger, ConsoleLogger&gt;();
+</div></code></pre>
+<h4 id="%E5%8D%95%E4%BE%8B%E7%BB%91%E5%AE%9A-singleton--%E9%A6%96%E6%AC%A1%E8%A7%A3%E6%9E%90%E5%90%8E%E5%A4%8D%E7%94%A8">单例绑定 <code>singleton</code> — 首次解析后复用</h4>
+<pre class="hljs"><code><div>app.singleton&lt;IDatabase&gt;([](Container::Container&amp; c) {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;MySqlDatabase&gt;(c.make&lt;IConfig&gt;());
+});
+
+<span class="hljs-comment">// 自动构造变体</span>
+app.singleton&lt;IConfig, AppConfig&gt;();
+</div></code></pre>
+<h4 id="%E9%A2%84%E5%BB%BA%E5%AE%9E%E4%BE%8B-instance--%E6%B3%A8%E5%86%8C%E5%B7%B2%E6%9C%89%E5%AF%B9%E8%B1%A1">预建实例 <code>instance</code> — 注册已有对象</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">auto</span> config = <span class="hljs-built_in">std</span>::make_shared&lt;AppConfig&gt;(<span class="hljs-string">"config.json"</span>);
+app.instance&lt;IConfig&gt;(config);
+<span class="hljs-comment">// 此后 make&lt;IConfig&gt;() 始终返回 config</span>
+</div></code></pre>
+<h4 id="%E8%A7%A3%E6%9E%90%E6%9C%8D%E5%8A%A1">解析服务</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// 解析（自动处理生命周期）</span>
+<span class="hljs-keyword">auto</span> logger = app.make&lt;ILogger&gt;();   <span class="hljs-comment">// shared_ptr&lt;ILogger&gt;</span>
+<span class="hljs-keyword">auto</span> db     = app.make&lt;IDatabase&gt;(); <span class="hljs-comment">// shared_ptr&lt;IDatabase&gt;（单例）</span>
+</div></code></pre>
+<h4 id="%E7%BB%91%E5%AE%9A%E8%A3%85%E9%A5%B0-extend">绑定装饰 <code>extend</code></h4>
+<p>在不修改原注册代码的情况下，为已有绑定包装新行为（AOP/装饰器）：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 为所有 ILogger 实例添加时间戳前缀</span>
+app.extend&lt;ILogger&gt;([](<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;ILogger&gt; base, Container::Container&amp;) {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;TimestampLoggerDecorator&gt;(base);
+});
+</div></code></pre>
+<h3 id="52-%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85--serviceprovider">5.2 服务提供者 — ServiceProvider</h3>
+<p>将服务注册逻辑从业务代码中解耦到独立的 <strong>Provider</strong> 类中，并确保两阶段正确执行：</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"container/serviceprovider.h"</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LogServiceProvider</span> :</span> <span class="hljs-keyword">public</span> Container::ServiceProvider {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">using</span> ServiceProvider::ServiceProvider;  <span class="hljs-comment">// 继承构造函数</span>
+
+    <span class="hljs-comment">// 第一阶段：只做绑定注册，不解析其他服务</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">doRegister</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>{
+        app_.singleton&lt;ILogger&gt;([] {
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;FileLogger&gt;(<span class="hljs-string">"app.log"</span>);
+        });
+    }
+
+    <span class="hljs-comment">// 第二阶段：所有 Provider 的 doRegister() 完成后调用</span>
+    <span class="hljs-comment">// 在此可安全解析其他服务</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">boot</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">auto</span> logger = app_.make&lt;ILogger&gt;();
+        logger-&gt;info(<span class="hljs-string">"LogServiceProvider booted."</span>);
+    }
+};
+</div></code></pre>
+<p><strong>注册与启动：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">auto</span> app = <span class="hljs-built_in">std</span>::make_unique&lt;Container::Application&gt;();
+
+<span class="hljs-comment">// 链式注册 Provider</span>
+app-&gt;registerProvider&lt;ConfigServiceProvider&gt;()
+   .registerProvider&lt;LogServiceProvider&gt;()
+   .registerProvider&lt;DatabaseServiceProvider&gt;();
+
+<span class="hljs-comment">// 设置全局单例（供 Facade 使用）</span>
+Container::Application::setInstance(app.get());
+
+<span class="hljs-comment">// 一键引导：doRegister() → boot()</span>
+app-&gt;bootstrap();
+</div></code></pre>
+<p><strong>延迟加载 Provider：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HeavyServiceProvider</span> :</span> <span class="hljs-keyword">public</span> Container::ServiceProvider {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// 返回 true 表示跳过初始化阶段的 doRegister()</span>
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isDeferred</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">doRegister</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>{
+        app_.singleton&lt;IHeavyService&gt;([] {
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;HeavyServiceImpl&gt;();
+        });
+    }
+};
+</div></code></pre>
+<h3 id="53-%E4%B8%8A%E4%B8%8B%E6%96%87%E7%BB%91%E5%AE%9A">5.3 上下文绑定</h3>
+<p>为<strong>特定调用者</strong>提供不同的服务实现，实现精细化的依赖注入：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 声明：当解析 OrderController 时需要 ILogger，给它 FileLogger</span>
+app.when&lt;OrderController&gt;()
+   .needs&lt;ILogger&gt;()
+   .give&lt;FileLogger&gt;();
+
+<span class="hljs-comment">// 带工厂版本（可传入自定义初始化逻辑）</span>
+app.when&lt;ReportController&gt;()
+   .needs&lt;ILogger&gt;()
+   .give&lt;ILogger&gt;([](Container::Container&amp; c) {
+       <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;DatabaseLogger&gt;(c.make&lt;IDatabase&gt;());
+   });
+
+<span class="hljs-comment">// 解析时自动应用上下文绑定</span>
+<span class="hljs-comment">// OrderController 的构造函数中 make&lt;ILogger&gt;() 会得到 FileLogger</span>
+<span class="hljs-keyword">auto</span> order = app.make&lt;OrderController&gt;();
+</div></code></pre>
+<h3 id="54-%E6%A0%87%E7%AD%BE%E5%88%86%E7%BB%84">5.4 标签分组</h3>
+<p>将多个接口打上同一标签，批量解析：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 注册各服务</span>
+app.singleton&lt;IMailer, SmtpMailer&gt;();
+app.singleton&lt;ISmsNotifier, TwilioSmsNotifier&gt;();
+app.singleton&lt;IPushNotifier, FirebasePushNotifier&gt;();
+
+<span class="hljs-comment">// 打标签</span>
+app.tag&lt;IMailer, ISmsNotifier, IPushNotifier&gt;(<span class="hljs-string">"notifiers"</span>);
+
+<span class="hljs-comment">// 批量解析并使用</span>
+<span class="hljs-keyword">auto</span> services = app.tagged(<span class="hljs-string">"notifiers"</span>);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; svc : services) {
+    <span class="hljs-keyword">auto</span> notifier = <span class="hljs-built_in">std</span>::static_pointer_cast&lt;INotifier&gt;(svc);
+    notifier-&gt;send(message);
+}
+</div></code></pre>
+<h3 id="55-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F--facade">5.5 外观模式 — Facade</h3>
+<p><code>Facade</code> 是对 <code>Application::instance()-&gt;make&lt;T&gt;()</code> 的语法糖，提供全局静态访问：</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"container/facade.h"</span></span>
+
+<span class="hljs-comment">// 定义 Facade（最简版）</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Log</span> :</span> <span class="hljs-keyword">public</span> Container::Facade&lt;ILogger&gt; {};
+
+<span class="hljs-comment">// 带业务方法封装版</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Log</span> :</span> <span class="hljs-keyword">public</span> Container::Facade&lt;ILogger&gt; {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">info</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; msg)</span> </span>{
+        getFacadeRoot()-&gt;info(msg);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">error</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; msg)</span> </span>{
+        getFacadeRoot()-&gt;error(msg);
+    }
+};
+
+<span class="hljs-comment">// 使用（须在 Application::setInstance() 调用后）</span>
+Log::info(<span class="hljs-string">"Application started."</span>);
+Log::getFacadeRoot()-&gt;error(<span class="hljs-string">"Something went wrong."</span>);
+</div></code></pre>
+<h3 id="56-%E5%8A%A8%E6%80%81%E5%91%BD%E5%90%8D%E7%BB%91%E5%AE%9A%E8%B7%A8%E6%8F%92%E4%BB%B6%E5%8F%8D%E5%B0%84%E8%B0%83%E7%94%A8">5.6 动态命名绑定（跨插件反射调用）</h3>
+<p>当调用方<strong>不能引入</strong>被调用方的头文件时（如跨插件），使用命名绑定实现零依赖调用：</p>
+<p><strong>注册方（插件 A，知道具体类型）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 只有插件 A 需要包含 FileLogger.h</span>
+app_.singletonNamed(
+    <span class="hljs-string">"logger"</span>,                                          <span class="hljs-comment">// 字符串键</span>
+    [](Container::Container&amp;) -&gt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">void</span>&gt; {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;FileLogger&gt;(<span class="hljs-string">"app.log"</span>);
+    },
+    [](Container::MethodDispatcher&amp; d) {               <span class="hljs-comment">// 描述反射方法</span>
+        d.on(<span class="hljs-string">"info"</span>,    &amp;FileLogger::info);            <span class="hljs-comment">// void(const string&amp;)</span>
+        d.on(<span class="hljs-string">"error"</span>,   &amp;FileLogger::error);
+        d.on(<span class="hljs-string">"flush"</span>,   &amp;FileLogger::flush);           <span class="hljs-comment">// void()</span>
+        d.on(<span class="hljs-string">"isOpen"</span>,  &amp;FileLogger::isOpen);          <span class="hljs-comment">// bool() const</span>
+        d.readOnly (<span class="hljs-string">"level"</span>, &amp;FileLogger::level);      <span class="hljs-comment">// 只读属性</span>
+        d.readWrite(<span class="hljs-string">"path"</span>,  &amp;FileLogger::path, &amp;FileLogger::setPath); <span class="hljs-comment">// 读写属性</span>
+    }
+);
+</div></code></pre>
+<p><strong>调用方（插件 B，只需 container.h）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 只需包含容器头文件</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"container/container.h"</span></span>
+
+<span class="hljs-keyword">auto</span> logger = container_.makeNamed(<span class="hljs-string">"logger"</span>);
+
+<span class="hljs-keyword">if</span> (!logger) <span class="hljs-keyword">return</span>;   <span class="hljs-comment">// 服务不存在时为 false</span>
+
+<span class="hljs-comment">// 调用方法（参数用 std::any 包装）</span>
+logger.call(<span class="hljs-string">"info"</span>, { <span class="hljs-built_in">std</span>::any{<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"Hello from Plugin B"</span>)} });
+
+<span class="hljs-comment">// 读取属性</span>
+<span class="hljs-keyword">auto</span> level = <span class="hljs-built_in">std</span>::any_cast&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt;(logger.get(<span class="hljs-string">"level"</span>));
+
+<span class="hljs-comment">// 写入属性</span>
+logger.<span class="hljs-built_in">set</span>(<span class="hljs-string">"path"</span>, <span class="hljs-built_in">std</span>::any{<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"/var/log/app.log"</span>)});
+
+<span class="hljs-comment">// 安全调用（先检查方法是否存在）</span>
+<span class="hljs-keyword">if</span> (logger.hasMethod(<span class="hljs-string">"flush"</span>)) {
+    logger.call(<span class="hljs-string">"flush"</span>);
+}
+</div></code></pre>
+<blockquote>
+<p><strong>推荐：</strong> 将字符串键定义为常量，避免拼写错误：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">namespace</span> ServiceName {
+    <span class="hljs-keyword">inline</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* Logger   = <span class="hljs-string">"logger"</span>;
+    <span class="hljs-keyword">inline</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* Database = <span class="hljs-string">"database"</span>;
+}
+</div></code></pre>
+</blockquote>
+<hr>
+<h2 id="6-mvvm-%E6%9E%B6%E6%9E%84--mvvm">6. MVVM 架构 — mvvm</h2>
+<p>MVVM（Model-View-ViewModel）模式将 UI 与业务逻辑彻底分离，<code>ViewModel</code> 作为中间层管理 UI 状态，<code>View</code> 只负责显示和用户交互，<code>Model</code> 处理数据持久化。</p>
+<p><strong>核心组件：</strong></p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ViewModel</code></td>
+<td>管理 UI 状态属性、封装业务逻辑、提供属性变更通知</td>
+</tr>
+<tr>
+<td><code>DataBinding</code></td>
+<td>将 UI 控件自动绑定到 ViewModel 属性（双向/单向）</td>
+</tr>
+<tr>
+<td><code>Command</code></td>
+<td>封装用户操作，支持启用/禁用控制和中间件拦截</td>
+</tr>
+<tr>
+<td><code>IPropertyMiddleware</code></td>
+<td>属性变更中间件（日志、校验、转换）</td>
+</tr>
+<tr>
+<td><code>ICommandMiddleware</code></td>
+<td>命令执行中间件（权限、计时、审计）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="61-viewmodel">6.1 ViewModel</h3>
+<p><code>ViewModel</code> 是 MVVM 模式的核心，负责管理 UI 状态、封装业务逻辑、提供属性变更通知。</p>
+<h4 id="611-%E5%AE%9A%E4%B9%89-viewmodel">6.1.1 定义 ViewModel</h4>
+<p><strong>基础类型属性：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"mvvm/viewmodel.h"</span></span>
+
+<span class="hljs-comment">// 使用常量定义属性名（推荐，避免硬编码字符串）</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserViewModel</span> :</span> <span class="hljs-keyword">public</span> ViewModel
+{
+    Q_OBJECT
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// 属性名常量</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* PROP_USER_NAME = <span class="hljs-string">"userName"</span>;
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* PROP_USER_AGE  = <span class="hljs-string">"age"</span>;
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* PROP_IS_ACTIVE = <span class="hljs-string">"isActive"</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">UserViewModel</span><span class="hljs-params">(QObject *parent = <span class="hljs-literal">nullptr</span>)</span>
+        : <span class="hljs-title">ViewModel</span><span class="hljs-params">(parent)</span>
+    </span>{
+        <span class="hljs-comment">// 必须在构造函数中注册属性（在使用 VIEWMODEL_PROPERTY 之前）</span>
+        registerProperty(PROP_USER_NAME, QString(<span class="hljs-string">""</span>));
+        registerProperty(PROP_USER_AGE,  <span class="hljs-number">0</span>);
+        registerProperty(PROP_IS_ACTIVE, <span class="hljs-literal">false</span>);
+    }
+
+    <span class="hljs-comment">// VIEWMODEL_PROPERTY(Type, name, Name) 自动生成：</span>
+    <span class="hljs-comment">//   - Type name() const;                    // getter</span>
+    <span class="hljs-comment">//   - void setName(const Type&amp; value);      // setter（值变化时发出信号）</span>
+    VIEWMODEL_PROPERTY(QString, userName, UserName)
+    VIEWMODEL_PROPERTY(<span class="hljs-keyword">int</span>,     age,      Age)
+    VIEWMODEL_PROPERTY(<span class="hljs-keyword">bool</span>,    isActive, IsActive)
+
+signals:
+    <span class="hljs-comment">// 必须声明对应的变更信号（宏会自动 emit）</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">userNameChanged</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ageChanged</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">isActiveChanged</span><span class="hljs-params">()</span></span>;
+
+<span class="hljs-keyword">public</span> slots:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">loadUser</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QString&amp; name)</span> </span>{
+        beginBatchUpdate();  <span class="hljs-comment">// 批量更新，避免多次信号</span>
+        setUserName(name);
+        setAge(<span class="hljs-number">25</span>);
+        setIsActive(<span class="hljs-literal">true</span>);
+        endBatchUpdate();    <span class="hljs-comment">// 统一发出所有变更信号</span>
+    }
+};
+</div></code></pre>
+<p><strong>属性访问方法：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 直接使用 getter/setter（推荐）</span>
+QString name = vm-&gt;userName();
+vm-&gt;setUserName(<span class="hljs-string">"Alice"</span>);
+
+<span class="hljs-comment">// 通用属性访问（适用于动态属性名）</span>
+QVariant value = vm-&gt;getProperty(<span class="hljs-string">"userName"</span>);
+vm-&gt;setProperty(<span class="hljs-string">"userName"</span>, QVariant(<span class="hljs-string">"Bob"</span>));
+
+<span class="hljs-comment">// 安全获取（属性不存在时返回 false）</span>
+QVariant out;
+<span class="hljs-keyword">if</span> (vm-&gt;getProperty(<span class="hljs-string">"userName"</span>, out)) {
+    QString name = out.toString();
+}
+
+<span class="hljs-comment">// 检查属性是否存在</span>
+<span class="hljs-keyword">bool</span> exists = vm-&gt;hasProperty(<span class="hljs-string">"userName"</span>);
+</div></code></pre>
+<h4 id="612-%E7%BB%93%E6%9E%84%E4%BD%93%E7%B1%BB%E5%9E%8B%E5%B1%9E%E6%80%A7">6.1.2 结构体类型属性</h4>
+<p>当需要将多个相关字段作为一个整体管理时，使用结构体属性：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 1. 定义结构体并注册元类型</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">DeviceInfo</span> {</span>
+    QString name;
+    <span class="hljs-keyword">int</span>     port = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">bool</span>    connected = <span class="hljs-literal">false</span>;
+};
+Q_DECLARE_METATYPE(DeviceInfo)
+
+<span class="hljs-comment">// 2. 在 ViewModel 中注册并声明</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeviceViewModel</span> :</span> <span class="hljs-keyword">public</span> ViewModel {
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">DeviceViewModel</span><span class="hljs-params">(QObject *parent = <span class="hljs-literal">nullptr</span>)</span>
+        : <span class="hljs-title">ViewModel</span><span class="hljs-params">(parent)</span>
+    </span>{
+        <span class="hljs-comment">// 注册结构体属性（需提供默认值）</span>
+        registerProperty(<span class="hljs-string">"device"</span>, QVariant::fromValue(DeviceInfo{}));
+    }
+
+    <span class="hljs-comment">// VIEWMODEL_STRUCT_PROPERTY 生成：</span>
+    <span class="hljs-comment">//   - DeviceInfo device() const;                    // getter：返回完整结构体副本</span>
+    <span class="hljs-comment">//   - void setDevice(const DeviceInfo&amp; value);      // setter：整体替换</span>
+    <span class="hljs-comment">//   - void modifyDevice(std::function&lt;void(DeviceInfo&amp;)&gt; modifier);  // 字段级修改器</span>
+    VIEWMODEL_STRUCT_PROPERTY(DeviceInfo, device, Device)
+
+signals:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">deviceChanged</span><span class="hljs-params">()</span></span>;
+};
+
+<span class="hljs-comment">// 3. 使用方式</span>
+DeviceViewModel vm;
+
+<span class="hljs-comment">// 整体替换</span>
+DeviceInfo info;
+info.name = <span class="hljs-string">"Device1"</span>;
+info.port = <span class="hljs-number">8080</span>;
+vm.setDevice(info);
+
+<span class="hljs-comment">// 字段级修改（推荐，避免整体复制）</span>
+vm.modifyDevice([](DeviceInfo&amp; d) {
+    d.connected = <span class="hljs-literal">true</span>;
+    d.port = <span class="hljs-number">9090</span>;
+});
+</div></code></pre>
+<blockquote>
+<p><strong>注意：</strong> 若需精确去重（避免值未变时重复发信号），请在应用初始化时注册比较器：</p>
+<pre class="hljs"><code><div>QMetaType::registerComparators&lt;DeviceInfo&gt;();
+</div></code></pre>
+</blockquote>
+<h4 id="613-%E6%89%B9%E9%87%8F%E6%9B%B4%E6%96%B0">6.1.3 批量更新</h4>
+<p>当需要同时更新多个属性时，使用批量更新避免多次信号发射：</p>
+<pre class="hljs"><code><div>vm-&gt;beginBatchUpdate();
+vm-&gt;setUserName(<span class="hljs-string">"Bob"</span>);
+vm-&gt;setAge(<span class="hljs-number">30</span>);
+vm-&gt;setIsActive(<span class="hljs-literal">true</span>);
+vm-&gt;endBatchUpdate();   <span class="hljs-comment">// 在此统一发出所有变更信号（仅一次 propertyChanged）</span>
+</div></code></pre>
+<p><strong>嵌套批量更新：</strong> 框架支持嵌套调用，只有最外层 <code>endBatchUpdate()</code> 才会真正发出信号。</p>
+<h4 id="614-%E5%9C%A8-view-%E4%B8%AD%E8%BF%9E%E6%8E%A5">6.1.4 在 View 中连接</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// View 持有 ViewModel 引用</span>
+<span class="hljs-keyword">auto</span> *vm = <span class="hljs-keyword">new</span> UserViewModel(<span class="hljs-keyword">this</span>);
+
+<span class="hljs-comment">// 方式1：连接通用信号（适用于动态属性名）</span>
+connect(vm, &amp;ViewModel::propertyChanged,
+        <span class="hljs-keyword">this</span>, [<span class="hljs-keyword">this</span>](<span class="hljs-keyword">const</span> QString&amp; name, <span class="hljs-keyword">const</span> QVariant&amp; value) {
+    <span class="hljs-keyword">if</span> (name == <span class="hljs-string">"userName"</span>) {
+        m_nameLabel-&gt;setText(value.toString());
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (name == <span class="hljs-string">"age"</span>) {
+        m_ageLabel-&gt;setText(QString::number(value.toInt()));
+    }
+});
+
+<span class="hljs-comment">// 方式2：连接具名信号（推荐，更高效，编译期检查）</span>
+connect(vm, &amp;UserViewModel::userNameChanged, <span class="hljs-keyword">this</span>, [<span class="hljs-keyword">this</span>, vm]() {
+    m_nameLabel-&gt;setText(vm-&gt;userName());
+});
+connect(vm, &amp;UserViewModel::isActiveChanged, <span class="hljs-keyword">this</span>, &amp;LoginView::updateLoginState);
+
+<span class="hljs-comment">// 方式3：使用 DataBinding（见 6.2 节，最简洁）</span>
+DataBinding::bind(vm, <span class="hljs-string">"userName"</span>, m_nameEdit);
+</div></code></pre>
+<hr>
+<h3 id="62-databinding%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A">6.2 DataBinding（数据绑定）</h3>
+<p><code>DataBinding</code> 提供简洁的 API 将 UI 控件自动绑定到 ViewModel 属性，支持<strong>双向绑定</strong>、<strong>单向绑定</strong>、<strong>状态绑定</strong>和<strong>结构体字段绑定</strong>。</p>
+<h4 id="621-%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9Aviewmodel-%E2%86%94-view">6.2.1 双向绑定（ViewModel ↔ View）</h4>
+<p>双向绑定意味着：ViewModel 属性变更时自动更新控件，用户修改控件时自动更新 ViewModel。</p>
+<p><strong>支持的控件类型：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"mvvm/databinding.h"</span></span>
+
+<span class="hljs-comment">// QLineEdit（QString）</span>
+DataBinding::bind(vm, <span class="hljs-string">"userName"</span>, m_nameEdit);
+
+<span class="hljs-comment">// QSpinBox（int）</span>
+DataBinding::bind(vm, <span class="hljs-string">"age"</span>, m_ageSpinBox);
+
+<span class="hljs-comment">// QDoubleSpinBox（double）</span>
+DataBinding::bind(vm, <span class="hljs-string">"price"</span>, m_priceSpinBox);
+
+<span class="hljs-comment">// QSlider（int）</span>
+DataBinding::bind(vm, <span class="hljs-string">"volume"</span>, m_volumeSlider);
+
+<span class="hljs-comment">// QCheckBox（bool）</span>
+DataBinding::bind(vm, <span class="hljs-string">"isActive"</span>, m_activeCheckBox);
+
+<span class="hljs-comment">// QRadioButton（bool）</span>
+DataBinding::bind(vm, <span class="hljs-string">"isSelected"</span>, m_radioButton);
+
+<span class="hljs-comment">// QComboBox（当前文本，QString）</span>
+DataBinding::bind(vm, <span class="hljs-string">"category"</span>, m_categoryComboBox);
+
+<span class="hljs-comment">// QComboBox（当前索引，int）</span>
+DataBinding::bindIndex(vm, <span class="hljs-string">"selectedIndex"</span>, m_categoryComboBox);
+
+<span class="hljs-comment">// QTextEdit（QString）</span>
+DataBinding::bind(vm, <span class="hljs-string">"description"</span>, m_descTextEdit);
+
+<span class="hljs-comment">// QDateEdit（QDate）</span>
+DataBinding::bind(vm, <span class="hljs-string">"birthDate"</span>, m_birthDateEdit);
+
+<span class="hljs-comment">// QTimeEdit（QTime）</span>
+DataBinding::bind(vm, <span class="hljs-string">"startTime"</span>, m_startTimeEdit);
+
+<span class="hljs-comment">// QDateTimeEdit（QDateTime）</span>
+DataBinding::bind(vm, <span class="hljs-string">"eventTime"</span>, m_eventDateTimeEdit);
+</div></code></pre>
+<p><strong>完整示例：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserView</span> :</span> <span class="hljs-keyword">public</span> QWidget {
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setupBindings</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">auto</span> *vm = <span class="hljs-keyword">new</span> UserViewModel(<span class="hljs-keyword">this</span>);
+
+        <span class="hljs-comment">// 表单字段双向绑定</span>
+        DataBinding::bind(vm, <span class="hljs-string">"userName"</span>, m_nameEdit);
+        DataBinding::bind(vm, <span class="hljs-string">"age"</span>, m_ageSpinBox);
+        DataBinding::bind(vm, <span class="hljs-string">"email"</span>, m_emailEdit);
+        DataBinding::bind(vm, <span class="hljs-string">"isActive"</span>, m_activeCheckBox);
+
+        <span class="hljs-comment">// 日期选择</span>
+        DataBinding::bind(vm, <span class="hljs-string">"birthDate"</span>, m_birthDateEdit);
+
+        <span class="hljs-comment">// 下拉选择</span>
+        DataBinding::bind(vm, <span class="hljs-string">"country"</span>, m_countryComboBox);
+
+        <span class="hljs-comment">// 文本区域</span>
+        DataBinding::bind(vm, <span class="hljs-string">"notes"</span>, m_notesTextEdit);
+    }
+};
+</div></code></pre>
+<h4 id="622-%E5%8D%95%E5%90%91%E7%BB%91%E5%AE%9Aviewmodel-%E2%86%92-view">6.2.2 单向绑定（ViewModel → View）</h4>
+<p>单向绑定仅从 ViewModel 流向 View，适用于只读显示控件：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// QLabel（显示文本）</span>
+DataBinding::bindOneWay(vm, <span class="hljs-string">"userName"</span>, m_nameLabel);
+
+<span class="hljs-comment">// QPushButton（按钮文本）</span>
+DataBinding::bindOneWay(vm, <span class="hljs-string">"buttonText"</span>, m_actionButton);
+
+<span class="hljs-comment">// QProgressBar（进度值，int）</span>
+DataBinding::bindOneWay(vm, <span class="hljs-string">"progress"</span>, m_progressBar);
+</div></code></pre>
+<h4 id="623-%E7%8A%B6%E6%80%81%E7%BB%91%E5%AE%9A%E5%B1%9E%E6%80%A7%E9%A9%B1%E5%8A%A8%E6%8E%A7%E4%BB%B6%E7%8A%B6%E6%80%81">6.2.3 状态绑定（属性驱动控件状态）</h4>
+<p>将 bool 属性绑定到控件的 <code>enabled</code> 或 <code>visible</code> 状态：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 绑定控件可用状态（bool 属性 -&gt; enabled）</span>
+DataBinding::bindEnabled(vm, <span class="hljs-string">"canSave"</span>, m_saveButton);
+DataBinding::bindEnabled(vm, <span class="hljs-string">"isFormValid"</span>, m_submitButton);
+
+<span class="hljs-comment">// 绑定控件可见状态（bool 属性 -&gt; visible）</span>
+DataBinding::bindVisible(vm, <span class="hljs-string">"showAdvanced"</span>, m_advancedWidget);
+DataBinding::bindVisible(vm, <span class="hljs-string">"hasError"</span>, m_errorLabel);
+</div></code></pre>
+<p><strong>典型场景：</strong> 表单验证通过时启用保存按钮：</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FormViewModel</span> :</span> <span class="hljs-keyword">public</span> ViewModel {
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    VIEWMODEL_PROPERTY(<span class="hljs-keyword">bool</span>, canSave, CanSave)
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validateForm</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">bool</span> valid = !name().isEmpty() &amp;&amp; !email().isEmpty();
+        setCanSave(valid);  <span class="hljs-comment">// 自动更新按钮状态</span>
+    }
+};
+
+<span class="hljs-comment">// View 中</span>
+DataBinding::bindEnabled(vm, <span class="hljs-string">"canSave"</span>, m_saveButton);
+</div></code></pre>
+<h4 id="624-%E7%BB%93%E6%9E%84%E4%BD%93%E5%AD%97%E6%AE%B5%E7%BB%91%E5%AE%9A">6.2.4 结构体字段绑定</h4>
+<p>将结构体属性中的某个字段绑定到 UI 控件，实现字段级别的双向绑定：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 定义结构体</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Address</span> {</span>
+    QString street;
+    QString city;
+    QString zipCode;
+};
+Q_DECLARE_METATYPE(Address)
+
+<span class="hljs-comment">// ViewModel 中注册</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AddressViewModel</span> :</span> <span class="hljs-keyword">public</span> ViewModel {
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    VIEWMODEL_STRUCT_PROPERTY(Address, address, Address)
+};
+
+<span class="hljs-comment">// View 中绑定字段</span>
+AddressViewModel vm;
+
+<span class="hljs-comment">// 绑定 street 字段到 QLineEdit</span>
+DataBinding::bindStructField&lt;Address&gt;(
+    &amp;vm, <span class="hljs-string">"address"</span>,
+    [](<span class="hljs-keyword">const</span> Address &amp;a) { <span class="hljs-keyword">return</span> a.street; },        <span class="hljs-comment">// getter</span>
+    [](Address &amp;a, <span class="hljs-keyword">const</span> QString &amp;v) { a.street = v; }, <span class="hljs-comment">// setter</span>
+    m_streetEdit
+);
+
+<span class="hljs-comment">// 绑定 city 字段</span>
+DataBinding::bindStructField&lt;Address&gt;(
+    &amp;vm, <span class="hljs-string">"address"</span>,
+    [](<span class="hljs-keyword">const</span> Address &amp;a) { <span class="hljs-keyword">return</span> a.city; },
+    [](Address &amp;a, <span class="hljs-keyword">const</span> QString &amp;v) { a.city = v; },
+    m_cityEdit
+);
+
+<span class="hljs-comment">// 绑定 zipCode 字段到 QSpinBox（int）</span>
+DataBinding::bindStructField&lt;Address&gt;(
+    &amp;vm, <span class="hljs-string">"address"</span>,
+    [](<span class="hljs-keyword">const</span> Address &amp;a) { <span class="hljs-keyword">return</span> a.zipCode.toInt(); },
+    [](Address &amp;a, <span class="hljs-keyword">int</span> v) { a.zipCode = QString::number(v); },
+    m_zipSpinBox
+);
+</div></code></pre>
+<h4 id="625-%E9%80%9A%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A">6.2.5 通用属性绑定</h4>
+<p>对于框架未直接支持的控件或自定义属性，使用通用绑定：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 绑定 ViewModel 属性到任意 QObject 的 Qt 属性</span>
+DataBinding::bindProperty(
+    vm, <span class="hljs-string">"fontSize"</span>,           <span class="hljs-comment">// ViewModel 属性名</span>
+    m_label, <span class="hljs-string">"fontPointSize"</span>   <span class="hljs-comment">// Widget 属性名</span>
+);
+
+<span class="hljs-comment">// 自定义控件示例</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomSlider</span> :</span> <span class="hljs-keyword">public</span> QWidget {
+    <span class="hljs-function">Q_OBJECT
+    <span class="hljs-title">Q_PROPERTY</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value READ value WRITE setValue NOTIFY valueChanged)</span>
+    <span class="hljs-comment">// ...</span>
+}</span>;
+
+DataBinding::bindProperty(vm, <span class="hljs-string">"volume"</span>, m_customSlider, <span class="hljs-string">"value"</span>);
+</div></code></pre>
+<hr>
+<h3 id="63-command%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F">6.3 Command（命令模式）</h3>
+<p><code>Command</code> 封装用户操作，支持启用/禁用控制、命令中间件拦截，实现 UI 与业务逻辑的解耦。</p>
+<h4 id="631-functionalcommand%E5%87%BD%E6%95%B0%E5%BC%8F%E5%91%BD%E4%BB%A4">6.3.1 FunctionalCommand（函数式命令）</h4>
+<p><code>FunctionalCommand</code> 是最常用的命令类型，使用 Lambda 或函数对象定义执行逻辑：</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"mvvm/command.h"</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserViewModel</span> :</span> <span class="hljs-keyword">public</span> ViewModel {
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">UserViewModel</span><span class="hljs-params">(QObject *parent = <span class="hljs-literal">nullptr</span>)</span>
+        : <span class="hljs-title">ViewModel</span><span class="hljs-params">(parent)</span>
+    </span>{
+        <span class="hljs-comment">// 创建保存命令（带可执行条件）</span>
+        m_saveCommand = <span class="hljs-keyword">new</span> FunctionalCommand(
+            [<span class="hljs-keyword">this</span>]() { saveUser(); },              <span class="hljs-comment">// 执行函数</span>
+            [<span class="hljs-keyword">this</span>]() { <span class="hljs-keyword">return</span> canSave(); },        <span class="hljs-comment">// 可执行条件（可选）</span>
+            <span class="hljs-keyword">this</span>
+        );
+
+        <span class="hljs-comment">// 创建清除命令（无条件，始终可执行）</span>
+        m_clearCommand = <span class="hljs-keyword">new</span> FunctionalCommand(
+            [<span class="hljs-keyword">this</span>]() { clearForm(); },
+            <span class="hljs-literal">nullptr</span>,  <span class="hljs-comment">// 无条件，始终可执行</span>
+            <span class="hljs-keyword">this</span>
+        );
+
+        <span class="hljs-comment">// 监听属性变更，动态更新命令状态</span>
+        connect(<span class="hljs-keyword">this</span>, &amp;ViewModel::propertyChanged, <span class="hljs-keyword">this</span>, [<span class="hljs-keyword">this</span>]() {
+            m_saveCommand-&gt;updateCanExecute();  <span class="hljs-comment">// 重新计算 canExecute</span>
+        });
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">canSave</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> !userName().isEmpty() &amp;&amp; userAge() &gt; <span class="hljs-number">0</span>;
+    }
+
+<span class="hljs-keyword">private</span>:
+    FunctionalCommand *m_saveCommand;
+    FunctionalCommand *m_clearCommand;
+};
+</div></code></pre>
+<h4 id="632-%E5%91%BD%E4%BB%A4%E7%BB%91%E5%AE%9A%E5%88%B0%E6%8C%89%E9%92%AE">6.3.2 命令绑定到按钮</h4>
+<p><strong>方式1：使用 DataBinding（推荐）</strong></p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"mvvm/databinding.h"</span></span>
+
+<span class="hljs-comment">// 自动绑定：按钮点击 → command-&gt;run()，按钮 enabled ↔ command-&gt;canExecute()</span>
+DataBinding::bindCommand(vm-&gt;saveCommand(), m_saveButton);
+DataBinding::bindCommand(vm-&gt;clearCommand(), m_clearButton);
+</div></code></pre>
+<p><strong>方式2：手动连接</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 连接按钮点击到命令执行</span>
+connect(m_saveButton, &amp;QPushButton::clicked, vm-&gt;saveCommand(), &amp;Command::run);
+
+<span class="hljs-comment">// 连接命令状态到按钮启用状态</span>
+connect(vm-&gt;saveCommand(), &amp;Command::canExecuteChanged,
+        m_saveButton, &amp;QPushButton::setEnabled);
+m_saveButton-&gt;setEnabled(vm-&gt;saveCommand()-&gt;canExecute());  <span class="hljs-comment">// 初始状态</span>
+</div></code></pre>
+<h4 id="633-%E5%91%BD%E4%BB%A4%E4%B8%AD%E9%97%B4%E4%BB%B6">6.3.3 命令中间件</h4>
+<p>命令中间件以&quot;洋葱&quot;模式拦截命令执行，可用于<strong>权限检查</strong>、<strong>日志记录</strong>、<strong>性能计时</strong>等：</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"mvvm/imiddleware.h"</span></span>
+
+<span class="hljs-comment">// 权限检查中间件</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthCommandMiddleware</span> :</span> <span class="hljs-keyword">public</span> ICommandMiddleware
+{
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(CommandContext&amp; ctx, Next next)</span> <span class="hljs-keyword">override</span>
+    </span>{
+        <span class="hljs-comment">// 前置：权限检查</span>
+        <span class="hljs-keyword">if</span> (ctx.commandName == <span class="hljs-string">"saveUser"</span>) {
+            <span class="hljs-keyword">if</span> (!hasPermission(<span class="hljs-string">"user:write"</span>)) {
+                ctx.cancelled = <span class="hljs-literal">true</span>;
+                qWarning() &lt;&lt; <span class="hljs-string">"Permission denied:"</span> &lt;&lt; ctx.commandName;
+                <span class="hljs-keyword">return</span>;  <span class="hljs-comment">// 不调用 next，命令不会执行</span>
+            }
+        }
+
+        next(ctx);  <span class="hljs-comment">// 继续执行</span>
+
+        <span class="hljs-comment">// 后置：记录操作日志</span>
+        <span class="hljs-keyword">if</span> (!ctx.cancelled) {
+            qDebug() &lt;&lt; <span class="hljs-string">"Command executed:"</span> &lt;&lt; ctx.commandName;
+        }
+    }
+};
+
+<span class="hljs-comment">// 计时中间件</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TimingCommandMiddleware</span> :</span> <span class="hljs-keyword">public</span> ICommandMiddleware
+{
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(CommandContext&amp; ctx, Next next)</span> <span class="hljs-keyword">override</span>
+    </span>{
+        QElapsedTimer timer;
+        timer.start();
+
+        next(ctx);
+
+        qDebug() &lt;&lt; <span class="hljs-string">"Command"</span> &lt;&lt; ctx.commandName
+                 &lt;&lt; <span class="hljs-string">"took"</span> &lt;&lt; timer.elapsed() &lt;&lt; <span class="hljs-string">"ms"</span>;
+    }
+};
+
+<span class="hljs-comment">// 注册到命令</span>
+<span class="hljs-keyword">auto</span> *saveCmd = <span class="hljs-keyword">new</span> FunctionalCommand([<span class="hljs-keyword">this</span>]() { saveUser(); }, <span class="hljs-literal">nullptr</span>, <span class="hljs-keyword">this</span>);
+saveCmd-&gt;setName(<span class="hljs-string">"saveUser"</span>);
+saveCmd-&gt;setViewModel(<span class="hljs-keyword">this</span>);  <span class="hljs-comment">// 中间件可通过 ctx.viewModel 访问</span>
+
+saveCmd-&gt;addMiddleware(<span class="hljs-built_in">std</span>::make_shared&lt;TimingCommandMiddleware&gt;());  <span class="hljs-comment">// 最外层</span>
+saveCmd-&gt;addMiddleware(<span class="hljs-built_in">std</span>::make_shared&lt;AuthCommandMiddleware&gt;());   <span class="hljs-comment">// 内层</span>
+</div></code></pre>
+<p><strong>执行顺序：</strong> 中间件按注册顺序由外到内包裹，执行路径为：</p>
+<pre class="hljs"><code><div>[Timing] → 开始计时
+  [Auth] → 权限检查
+    ★ execute() 执行命令
+  [Auth] ← 记录日志
+[Timing] ← 输出耗时
+</div></code></pre>
+<h4 id="634-%E5%91%BD%E4%BB%A4%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86">6.3.4 命令状态管理</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// 手动设置可执行状态</span>
+command-&gt;setCanExecute(<span class="hljs-literal">false</span>);  <span class="hljs-comment">// 禁用命令（会发出 canExecuteChanged 信号）</span>
+
+<span class="hljs-comment">// 查询当前状态</span>
+<span class="hljs-keyword">bool</span> canExec = command-&gt;canExecute();
+
+<span class="hljs-comment">// 对于 FunctionalCommand，更新可执行状态（重新计算条件）</span>
+<span class="hljs-keyword">auto</span> *funcCmd = qobject_cast&lt;FunctionalCommand*&gt;(command);
+<span class="hljs-keyword">if</span> (funcCmd) {
+    funcCmd-&gt;updateCanExecute();
+}
+</div></code></pre>
+<hr>
+<h3 id="64-%E5%B1%9E%E6%80%A7%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%AE%A1%E9%81%93">6.4 属性中间件管道</h3>
+<p>属性中间件以&quot;洋葱&quot;模式拦截属性变更，可用于<strong>日志记录</strong>、<strong>数据校验</strong>、<strong>格式转换</strong>、<strong>审计追踪</strong>等。</p>
+<h4 id="641-%E5%AE%9E%E7%8E%B0%E5%B1%9E%E6%80%A7%E4%B8%AD%E9%97%B4%E4%BB%B6">6.4.1 实现属性中间件</h4>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"mvvm/imiddleware.h"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"mvvm/middlewarecontext.h"</span></span>
+
+<span class="hljs-comment">// 数据校验中间件</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ValidationMiddleware</span> :</span> <span class="hljs-keyword">public</span> IPropertyMiddleware
+{
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(PropertyContext&amp; ctx, Next next)</span> <span class="hljs-keyword">override</span>
+    </span>{
+        <span class="hljs-comment">// 前置处理：校验</span>
+        <span class="hljs-keyword">if</span> (ctx.propertyName == <span class="hljs-string">"age"</span>) {
+            <span class="hljs-keyword">int</span> val = ctx.newValue.toInt();
+            <span class="hljs-keyword">if</span> (val &lt; <span class="hljs-number">0</span> || val &gt; <span class="hljs-number">150</span>) {
+                ctx.cancelled = <span class="hljs-literal">true</span>;   <span class="hljs-comment">// 取消本次属性变更</span>
+                qWarning() &lt;&lt; <span class="hljs-string">"Invalid age:"</span> &lt;&lt; val;
+                <span class="hljs-keyword">return</span>;                 <span class="hljs-comment">// 不调用 next，管道在此中断</span>
+            }
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ctx.propertyName == <span class="hljs-string">"email"</span>) {
+            QString email = ctx.newValue.toString();
+            <span class="hljs-keyword">if</span> (!email.contains(<span class="hljs-string">"@"</span>)) {
+                ctx.cancelled = <span class="hljs-literal">true</span>;
+                qWarning() &lt;&lt; <span class="hljs-string">"Invalid email format:"</span> &lt;&lt; email;
+                <span class="hljs-keyword">return</span>;
+            }
+        }
+
+        next(ctx);   <span class="hljs-comment">// 继续向后传递（校验通过）</span>
+
+        <span class="hljs-comment">// 后置处理（next 返回后执行）</span>
+    }
+};
+
+<span class="hljs-comment">// 日志记录中间件</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoggingMiddleware</span> :</span> <span class="hljs-keyword">public</span> IPropertyMiddleware
+{
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(PropertyContext&amp; ctx, Next next)</span> <span class="hljs-keyword">override</span>
+    </span>{
+        qDebug() &lt;&lt; <span class="hljs-string">"[Before]"</span> &lt;&lt; ctx.propertyName
+                 &lt;&lt; <span class="hljs-string">":"</span> &lt;&lt; ctx.oldValue &lt;&lt; <span class="hljs-string">"-&gt;"</span> &lt;&lt; ctx.newValue;
+
+        next(ctx);  <span class="hljs-comment">// 继续执行</span>
+
+        qDebug() &lt;&lt; <span class="hljs-string">"[After]"</span> &lt;&lt; ctx.propertyName
+                 &lt;&lt; (ctx.cancelled ? <span class="hljs-string">"CANCELLED"</span> : <span class="hljs-string">"OK"</span>);
+    }
+};
+
+<span class="hljs-comment">// 审计追踪中间件</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuditLogMiddleware</span> :</span> <span class="hljs-keyword">public</span> IPropertyMiddleware
+{
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(PropertyContext&amp; ctx, Next next)</span> <span class="hljs-keyword">override</span>
+    </span>{
+        next(ctx);  <span class="hljs-comment">// 先执行，确保值已写入</span>
+
+        <span class="hljs-comment">// 后置：记录变更历史（仅在成功时）</span>
+        <span class="hljs-keyword">if</span> (!ctx.cancelled) {
+            QString <span class="hljs-built_in">log</span> = QString(<span class="hljs-string">"Property '%1' changed: %2 -&gt; %3"</span>)
+                          .arg(ctx.propertyName)
+                          .arg(ctx.oldValue.toString())
+                          .arg(ctx.newValue.toString());
+            writeAuditLog(<span class="hljs-built_in">log</span>);
+        }
+    }
+};
+</div></code></pre>
+<h4 id="642-%E6%B3%A8%E5%86%8C%E4%B8%AD%E9%97%B4%E4%BB%B6">6.4.2 注册中间件</h4>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ProductViewModel</span> :</span> <span class="hljs-keyword">public</span> ViewModel {
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">ProductViewModel</span><span class="hljs-params">(QObject *parent = <span class="hljs-literal">nullptr</span>)</span>
+        : <span class="hljs-title">ViewModel</span><span class="hljs-params">(parent)</span>
+    </span>{
+        registerProperty(<span class="hljs-string">"name"</span>, QString());
+        registerProperty(<span class="hljs-string">"price"</span>, <span class="hljs-number">0.0</span>);
+
+        <span class="hljs-comment">// 注册中间件（执行顺序：Logging → Validation → Audit → 实际写入）</span>
+        addPropertyMiddleware(<span class="hljs-built_in">std</span>::make_shared&lt;LoggingMiddleware&gt;());    <span class="hljs-comment">// 第 1 层（最外层）</span>
+        addPropertyMiddleware(<span class="hljs-built_in">std</span>::make_shared&lt;ValidationMiddleware&gt;());  <span class="hljs-comment">// 第 2 层</span>
+        addPropertyMiddleware(<span class="hljs-built_in">std</span>::make_shared&lt;AuditLogMiddleware&gt;());     <span class="hljs-comment">// 第 3 层（最内层）</span>
+    }
+};
+</div></code></pre>
+<p><strong>执行流程示意：</strong></p>
+<pre class="hljs"><code><div>setProperty(&quot;price&quot;, 100.0)
+    │
+    ▼
+[Logging] → 前置日志
+    │
+    ▼
+[Validation] → 校验通过
+    │
+    ▼
+[Audit] → 记录审计
+    │
+    ▼
+★ 属性写入（最深处）
+    │
+    ▼
+[Audit] ← 后置处理
+    │
+    ▼
+[Validation] ← 后置处理
+    │
+    ▼
+[Logging] ← 后置日志
+</div></code></pre>
+<h4 id="643-%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%B8%8A%E4%B8%8B%E6%96%87propertycontext">6.4.3 中间件上下文（PropertyContext）</h4>
+<p>中间件可通过 <code>PropertyContext</code> 访问属性变更的完整信息：</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PropertyContext</span> {</span>
+    QString    propertyName;  <span class="hljs-comment">// 属性名</span>
+    QVariant   oldValue;      <span class="hljs-comment">// 变更前的值（只读）</span>
+    QVariant   newValue;      <span class="hljs-comment">// 变更后的值（中间件可修改）</span>
+    ViewModel *viewModel;     <span class="hljs-comment">// 所属 ViewModel（可读取其他属性）</span>
+    <span class="hljs-keyword">bool</span>       cancelled;     <span class="hljs-comment">// true = 阻止本次属性变更</span>
+};
+</div></code></pre>
+<p><strong>修改新值示例：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FormatMiddleware</span> :</span> <span class="hljs-keyword">public</span> IPropertyMiddleware
+{
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(PropertyContext&amp; ctx, Next next)</span> <span class="hljs-keyword">override</span>
+    </span>{
+        <span class="hljs-comment">// 修改新值：自动去除首尾空格</span>
+        <span class="hljs-keyword">if</span> (ctx.propertyName == <span class="hljs-string">"userName"</span>) {
+            QString trimmed = ctx.newValue.toString().trimmed();
+            ctx.newValue = QVariant(trimmed);
+        }
+
+        next(ctx);
+    }
+};
+</div></code></pre>
+<p><strong>访问其他属性示例：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CrossPropertyValidationMiddleware</span> :</span> <span class="hljs-keyword">public</span> IPropertyMiddleware
+{
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(PropertyContext&amp; ctx, Next next)</span> <span class="hljs-keyword">override</span>
+    </span>{
+        <span class="hljs-comment">// 通过 viewModel 访问其他属性</span>
+        <span class="hljs-keyword">if</span> (ctx.propertyName == <span class="hljs-string">"endDate"</span>) {
+            QDate endDate = ctx.newValue.toDate();
+            QDate startDate = ctx.viewModel-&gt;getProperty(<span class="hljs-string">"startDate"</span>).toDate();
+            <span class="hljs-keyword">if</span> (endDate &lt; startDate) {
+                ctx.cancelled = <span class="hljs-literal">true</span>;
+                qWarning() &lt;&lt; <span class="hljs-string">"End date must be after start date"</span>;
+                <span class="hljs-keyword">return</span>;
+            }
+        }
+
+        next(ctx);
+    }
+};
+</div></code></pre>
+<hr>
+<h3 id="65-%E5%AE%8C%E6%95%B4%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B">6.5 完整使用示例</h3>
+<p>以下是一个完整的 MVVM 使用示例，展示 ViewModel、DataBinding、Command 和中间件的协同工作：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// ── ViewModel ─────────────────────────────────────────────────────────────</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ProductViewModel</span> :</span> <span class="hljs-keyword">public</span> ViewModel {
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">ProductViewModel</span><span class="hljs-params">(QObject *parent = <span class="hljs-literal">nullptr</span>)</span>
+        : <span class="hljs-title">ViewModel</span><span class="hljs-params">(parent)</span>
+    </span>{
+        <span class="hljs-comment">// 注册属性</span>
+        registerProperty(<span class="hljs-string">"name"</span>, QString());
+        registerProperty(<span class="hljs-string">"price"</span>, <span class="hljs-number">0.0</span>);
+        registerProperty(<span class="hljs-string">"stock"</span>, <span class="hljs-number">0</span>);
+        registerProperty(<span class="hljs-string">"status"</span>, QString(<span class="hljs-string">"就绪"</span>));
+
+        <span class="hljs-comment">// 注册属性中间件</span>
+        addPropertyMiddleware(<span class="hljs-built_in">std</span>::make_shared&lt;LoggingMiddleware&gt;());
+        addPropertyMiddleware(<span class="hljs-built_in">std</span>::make_shared&lt;ValidationMiddleware&gt;());
+
+        <span class="hljs-comment">// 创建命令</span>
+        m_addCommand = <span class="hljs-keyword">new</span> FunctionalCommand(
+            [<span class="hljs-keyword">this</span>]() { addProduct(); },
+            [<span class="hljs-keyword">this</span>]() { <span class="hljs-keyword">return</span> canAdd(); },
+            <span class="hljs-keyword">this</span>
+        );
+        m_addCommand-&gt;setName(<span class="hljs-string">"addProduct"</span>);
+        m_addCommand-&gt;setViewModel(<span class="hljs-keyword">this</span>);
+
+        <span class="hljs-comment">// 注册命令中间件</span>
+        m_addCommand-&gt;addMiddleware(<span class="hljs-built_in">std</span>::make_shared&lt;TimingCommandMiddleware&gt;());
+        m_addCommand-&gt;addMiddleware(<span class="hljs-built_in">std</span>::make_shared&lt;AuthCommandMiddleware&gt;());
+
+        <span class="hljs-comment">// 监听属性变更，更新命令状态</span>
+        connect(<span class="hljs-keyword">this</span>, &amp;ViewModel::propertyChanged, <span class="hljs-keyword">this</span>, [<span class="hljs-keyword">this</span>]() {
+            m_addCommand-&gt;updateCanExecute();
+        });
+    }
+
+    VIEWMODEL_PROPERTY(QString, name, Name)
+    VIEWMODEL_PROPERTY(<span class="hljs-keyword">double</span>, price, Price)
+    VIEWMODEL_PROPERTY(<span class="hljs-keyword">int</span>, stock, Stock)
+    VIEWMODEL_PROPERTY(QString, status, Status)
+
+    <span class="hljs-function">FunctionalCommand* <span class="hljs-title">addCommand</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> m_addCommand; }
+
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">canAdd</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> !name().isEmpty() &amp;&amp; price() &gt;= <span class="hljs-number">0.0</span> &amp;&amp; stock() &gt;= <span class="hljs-number">0</span>;
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addProduct</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// 业务逻辑：保存产品</span>
+        Product p;
+        p.name = name();
+        p.price = price();
+        p.stock = stock();
+        ProductRepository::save(p);
+
+        setStatus(<span class="hljs-string">"产品已添加"</span>);
+        clearForm();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">clearForm</span><span class="hljs-params">()</span> </span>{
+        beginBatchUpdate();
+        setName(<span class="hljs-string">""</span>);
+        setPrice(<span class="hljs-number">0.0</span>);
+        setStock(<span class="hljs-number">0</span>);
+        endBatchUpdate();
+    }
+
+    FunctionalCommand *m_addCommand;
+};
+
+<span class="hljs-comment">// ── View ───────────────────────────────────────────────────────────────────</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ProductView</span> :</span> <span class="hljs-keyword">public</span> QWidget {
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setupBindings</span><span class="hljs-params">()</span> </span>{
+        m_viewModel = <span class="hljs-keyword">new</span> ProductViewModel(<span class="hljs-keyword">this</span>);
+
+        <span class="hljs-comment">// 双向绑定表单字段</span>
+        DataBinding::bind(m_viewModel, <span class="hljs-string">"name"</span>, m_nameEdit);
+        DataBinding::bind(m_viewModel, <span class="hljs-string">"price"</span>, m_priceSpinBox);
+        DataBinding::bind(m_viewModel, <span class="hljs-string">"stock"</span>, m_stockSpinBox);
+
+        <span class="hljs-comment">// 单向绑定状态显示</span>
+        DataBinding::bindOneWay(m_viewModel, <span class="hljs-string">"status"</span>, m_statusLabel);
+
+        <span class="hljs-comment">// 命令绑定</span>
+        DataBinding::bindCommand(m_viewModel-&gt;addCommand(), m_addButton);
+
+        <span class="hljs-comment">// 状态绑定（表单验证通过时启用按钮）</span>
+        DataBinding::bindEnabled(m_viewModel, <span class="hljs-string">"canAdd"</span>, m_addButton);
+    }
+
+<span class="hljs-keyword">private</span>:
+    ProductViewModel *m_viewModel;
+    QLineEdit *m_nameEdit;
+    QDoubleSpinBox *m_priceSpinBox;
+    QSpinBox *m_stockSpinBox;
+    QLabel *m_statusLabel;
+    QPushButton *m_addButton;
+};
+</div></code></pre>
+<hr>
+<h3 id="66-mvvm-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5">6.6 MVVM 最佳实践</h3>
+<ol>
+<li>
+<p><strong>属性命名规范</strong></p>
+<ul>
+<li>使用常量定义属性名，避免硬编码字符串</li>
+<li>属性名使用 camelCase，与 Qt 属性系统一致</li>
+</ul>
+</li>
+<li>
+<p><strong>ViewModel 职责边界</strong></p>
+<ul>
+<li>ViewModel <strong>不应</strong>持有任何 <code>QWidget*</code> 指针</li>
+<li>ViewModel <strong>不应</strong>直接操作 UI，只通过属性变更信号通知</li>
+<li>业务逻辑放在 ViewModel 的 <code>public slots</code> 中</li>
+</ul>
+</li>
+<li>
+<p><strong>批量更新使用场景</strong></p>
+<ul>
+<li>初始化时加载多个属性</li>
+<li>表单重置时清空多个字段</li>
+<li>从外部数据源一次性更新多个属性</li>
+</ul>
+</li>
+<li>
+<p><strong>中间件设计原则</strong></p>
+<ul>
+<li>每个中间件只负责一个关注点（日志/校验/审计）</li>
+<li>中间件应是无状态的（或通过上下文传递状态）</li>
+<li>使用 <code>ctx.cancelled</code> 而非抛出异常来阻止变更</li>
+</ul>
+</li>
+<li>
+<p><strong>命令与属性联动</strong></p>
+<ul>
+<li>命令的可执行条件应基于 ViewModel 属性</li>
+<li>属性变更时调用 <code>updateCanExecute()</code> 更新命令状态</li>
+<li>使用 <code>DataBinding::bindCommand()</code> 自动同步按钮状态</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="7-ui-%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD--uibase">7. UI 基础设施 — uibase</h2>
+<h3 id="71-%E6%97%A0%E8%BE%B9%E6%A1%86%E7%AA%97%E5%8F%A3--cframelesswindow">7.1 无边框窗口 — CFramelessWindow</h3>
+<p><code>CFramelessWindow</code> 提供跨平台无边框主窗口，支持拖拽移动、调整大小、圆角等特性。</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"uibase/framelesswindow.h"</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainWindow</span> :</span> <span class="hljs-keyword">public</span> CFramelessWindow
+{
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">MainWindow</span><span class="hljs-params">(QWidget *parent = <span class="hljs-literal">nullptr</span>)</span>
+        : <span class="hljs-title">CFramelessWindow</span><span class="hljs-params">(parent)</span>
+    </span>{
+        <span class="hljs-comment">// 设置自定义标题栏（禁止系统标题栏拖拽区域与标题栏重叠）</span>
+        setTitleBar(m_titleBarWidget);
+
+        <span class="hljs-comment">// 标题栏中的按钮不触发窗口拖拽</span>
+        addIgnoreWidget(m_closeBtn);
+        addIgnoreWidget(m_minBtn);
+        addIgnoreWidget(m_maxBtn);
+
+        <span class="hljs-comment">// 允许调整大小，边缘宽度 5px</span>
+        setResizeable(<span class="hljs-literal">true</span>);
+        setResizeableAreaWidth(<span class="hljs-number">5</span>);
+
+        <span class="hljs-comment">// 圆角（像素）</span>
+        setCornerRadius(<span class="hljs-number">8</span>);
+    }
+};
+</div></code></pre>
+<h3 id="72-%E5%AF%BC%E8%88%AA%E7%AE%A1%E7%90%86--navigationmanager">7.2 导航管理 — NavigationManager</h3>
+<p>框架提供<strong>一级水平导航</strong>和<strong>二级垂直侧栏导航</strong>两种管理器。</p>
+<p><strong>一级导航（PrimaryNavigationManager）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"uibase/navigationmanager.h"</span></span>
+
+<span class="hljs-comment">// 在主窗口中初始化</span>
+<span class="hljs-keyword">auto</span> *nav = <span class="hljs-keyword">new</span> PrimaryNavigationManager(m_navBar, m_stackedLayout, <span class="hljs-keyword">this</span>);
+
+<span class="hljs-comment">// 注册导航项（id、翻译 Key、页面 Widget）</span>
+nav-&gt;addNavigation(<span class="hljs-string">"nav.home"</span>,     <span class="hljs-string">"menu.home"</span>,     homePage);
+nav-&gt;addNavigation(<span class="hljs-string">"nav.features"</span>, <span class="hljs-string">"menu.features"</span>, featuresPage);
+nav-&gt;addNavigation(<span class="hljs-string">"nav.settings"</span>, <span class="hljs-string">"menu.settings"</span>, settingsPage);
+nav-&gt;addNavigation(<span class="hljs-string">"nav.help"</span>,     <span class="hljs-string">"menu.help"</span>,     helpPage);
+
+<span class="hljs-comment">// 在导航栏右侧添加自定义控件（如主题切换按钮）</span>
+nav-&gt;addRightWidget(m_themeToggleBtn);
+
+<span class="hljs-comment">// 跳转到指定页面</span>
+nav-&gt;switchToPage(<span class="hljs-string">"nav.home"</span>);
+
+<span class="hljs-comment">// 动态显示/隐藏某导航项（权限控制）</span>
+nav-&gt;setNavItemVisible(<span class="hljs-string">"nav.settings"</span>, <span class="hljs-literal">false</span>);
+
+<span class="hljs-comment">// 监听页面切换</span>
+connect(nav, &amp;PrimaryNavigationManager::pageChanged,
+        <span class="hljs-keyword">this</span>, &amp;MainWindow::onPageChanged);
+</div></code></pre>
+<p><strong>二级导航（SecondaryNavigationManager）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 在具有二级导航的页面中使用</span>
+<span class="hljs-keyword">auto</span> *subNav = <span class="hljs-keyword">new</span> SecondaryNavigationManager(m_sideBar, m_subStackedLayout, <span class="hljs-keyword">this</span>);
+
+subNav-&gt;addNavigation(<span class="hljs-string">"sub.general"</span>,  <span class="hljs-string">"settings.general"</span>,  generalPage);
+subNav-&gt;addNavigation(<span class="hljs-string">"sub.account"</span>,  <span class="hljs-string">"settings.account"</span>,  accountPage);
+subNav-&gt;addNavigation(<span class="hljs-string">"sub.privacy"</span>,  <span class="hljs-string">"settings.privacy"</span>,  privacyPage);
+
+<span class="hljs-comment">// 动态刷新当前页</span>
+subNav-&gt;refreshCurrentPage();
+</div></code></pre>
+<h3 id="73-%E6%9D%83%E9%99%90%E8%BF%90%E8%A1%8C%E6%97%B6--permservice">7.3 权限运行时 — PermService</h3>
+<p>主导航与子页可见性由 <code>PermService</code>（<code>PS</code> 宏）根据当前用户 grants 决定。各 UI 插件在 <code>initialize()</code> 注册页面时同步调用 <code>registerNav</code> / <code>registerSubPage</code>；Permission 插件登录成功后调用 <code>reloadForUser(userId)</code>。</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"permservice.h"</span></span>
+
+<span class="hljs-comment">// 查询导航权限</span>
+<span class="hljs-keyword">if</span> (PS-&gt;canNav(QStringLiteral(<span class="hljs-string">"nav.settings"</span>))) { <span class="hljs-comment">/* ... */</span> }
+
+<span class="hljs-comment">// 查询子页 / 操作权限</span>
+<span class="hljs-keyword">if</span> (PS-&gt;canSubPage(QStringLiteral(<span class="hljs-string">"nav.settings"</span>), QStringLiteral(<span class="hljs-string">"sub.general"</span>))) { <span class="hljs-comment">/* ... */</span> }
+<span class="hljs-keyword">if</span> (PS-&gt;canAction(QStringLiteral(<span class="hljs-string">"perm.users.create"</span>))) { <span class="hljs-comment">/* ... */</span> }
+
+<span class="hljs-comment">// 响应权限变更（MainWindow 已内置 refreshNavigation）</span>
+connect(PS, &amp;PermService::permissionsChanged, <span class="hljs-keyword">this</span>, [<span class="hljs-keyword">this</span>]() {
+    refreshMyActionButtons();
+});
+</div></code></pre>
+<p>完整说明见 <code>common/plugins/permission/user_guide.md</code>。</p>
+<h3 id="74-%E4%B8%BB%E9%A2%98%E7%AE%A1%E7%90%86--thememanager">7.4 主题管理 — ThemeManager</h3>
+<p>单例主题管理器，支持亮色/暗色切换，并广播 <code>themeChanged</code> 信号：</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"uibase/thememanager.h"</span></span>
+
+<span class="hljs-comment">// 全局宏访问（等价于 ThemeManager::instance()）</span>
+TM-&gt;setTheme(ThemeManager::Light);
+TM-&gt;setTheme(ThemeManager::Dark);
+TM-&gt;toggleTheme();
+
+<span class="hljs-comment">// 查询</span>
+<span class="hljs-keyword">bool</span> isDark = TM-&gt;isDark();
+ThemeManager::Theme current = TM-&gt;currentTheme();
+
+<span class="hljs-comment">// 获取应用样式表（由 ThemeManager 内部维护）</span>
+QString qss = TM-&gt;applicationStyleSheet();
+qApp-&gt;setStyleSheet(qss);
+
+<span class="hljs-comment">// 监听主题变更</span>
+connect(TM, &amp;ThemeManager::themeChanged,
+        <span class="hljs-keyword">this</span>, [<span class="hljs-keyword">this</span>](ThemeManager::Theme t) {
+    <span class="hljs-comment">// 重新应用样式</span>
+    applyTheme(t);
+});
+</div></code></pre>
+<p><strong>推荐初始化位置：</strong> 在 <code>main()</code> 中，<code>QApplication</code> 创建后、主窗口创建前：</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])</span> </span>{
+    <span class="hljs-function">QApplication <span class="hljs-title">app</span><span class="hljs-params">(argc, argv)</span></span>;
+    TM-&gt;setTheme(ThemeManager::Light);   <span class="hljs-comment">// ← 必须在主窗口前调用</span>
+    <span class="hljs-comment">// ...</span>
+}
+</div></code></pre>
+<h3 id="75-%E8%AF%AD%E8%A8%80%E5%9B%BD%E9%99%85%E5%8C%96--languagemanager">7.5 语言国际化 — LanguageManager</h3>
+<p>内置中英文切换，通过 <code>t(key)</code> 函数查询翻译字典：</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"uibase/languagemanager.h"</span></span>
+
+<span class="hljs-comment">// 切换语言</span>
+LM-&gt;setLanguage(LanguageManager::Chinese);
+LM-&gt;setLanguage(LanguageManager::English);
+LM-&gt;toggleLanguage();
+
+<span class="hljs-comment">// 翻译（TR 宏为简写）</span>
+QString text = TR(<span class="hljs-string">"menu.home"</span>);           <span class="hljs-comment">// → "首页" 或 "Home"</span>
+QString text = TR(<span class="hljs-string">"menu.settings"</span>);       <span class="hljs-comment">// → "设置" 或 "Settings"</span>
+
+<span class="hljs-comment">// 带参数的翻译</span>
+QString msg = LM-&gt;t(<span class="hljs-string">"error.file_not_found"</span>, filePath);
+
+<span class="hljs-comment">// 监听语言变更（自动刷新 UI）</span>
+connect(LM, &amp;LanguageManager::languageChanged,
+        <span class="hljs-keyword">this</span>, &amp;MyWidget::retranslateUi);
+</div></code></pre>
+<p><strong>在 Widget 中自动响应语言切换：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyWidget::retranslateUi</span><span class="hljs-params">()</span>
+</span>{
+    m_titleLabel-&gt;setText(TR(<span class="hljs-string">"page.home.title"</span>));
+    m_saveBtn-&gt;setText(TR(<span class="hljs-string">"button.save"</span>));
+}
+</div></code></pre>
+<blockquote>
+<p><code>NavigationManager</code> 内部已连接 <code>languageChanged</code> 信号，会自动刷新导航按钮文字，无需手动处理。</p>
+</blockquote>
+<hr>
+<h2 id="8-cmake-%E6%9E%84%E5%BB%BA%E8%BE%85%E5%8A%A9--fz2helpers">8. CMake 构建辅助 — FZ2Helpers</h2>
+<p><code>common/cmake/FZ2Helpers.cmake</code> 提供四个辅助函数，简化重复的 CMake 配置：</p>
+<h3 id="fz2setuptargettarget-vsfolder"><code>fz2_setup_target(target, vs_folder)</code></h3>
+<p>设置<strong>可执行程序或共享库</strong>的输出目录，并分配到 VS 解决方案文件夹：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 输出到 bin/&lt;Config&gt;/，VS 分组到 "common/core"</span>
+fz2_setup_target(container <span class="hljs-string">"common/core"</span>)
+fz2_setup_target(extensionsystem <span class="hljs-string">"common/core"</span>)
+fz2_setup_target(uibase <span class="hljs-string">"common/ui"</span>)
+</div></code></pre>
+<h3 id="fz2setupplugintarget-vsfolder"><code>fz2_setup_plugin(target, vs_folder)</code></h3>
+<p>设置<strong>插件 DLL</strong> 的输出目录（<code>bin/&lt;Config&gt;/plugins/</code>）并清除 <code>lib</code> 前缀：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 输出到 bin/&lt;Config&gt;/plugins/，VS 分组到 "plugins/myplugin"</span>
+fz2_setup_plugin(MyPlugin <span class="hljs-string">"plugins/myplugin"</span>)
+</div></code></pre>
+<h3 id="fz2collectsourcesoutsources-outheaders"><code>fz2_collect_sources(out_sources, out_headers)</code></h3>
+<p>递归收集当前目录下所有 <code>.cpp</code> / <code>.h</code> / <code>.hpp</code> 文件，支持 <code>CONFIGURE_DEPENDS</code>（文件增减时自动触发重新配置）：</p>
+<pre class="hljs"><code><div>fz2_collect_sources(PLUGIN_SOURCES PLUGIN_HEADERS)
+
+<span class="hljs-keyword">add_library</span>(MyPlugin SHARED <span class="hljs-variable">${PLUGIN_SOURCES}</span> <span class="hljs-variable">${PLUGIN_HEADERS}</span>)
+</div></code></pre>
+<h3 id="fz2targetmsvcoptionstarget"><code>fz2_target_msvc_options(target)</code></h3>
+<p>在 MSVC 编译器下为 target 添加 <code>/utf-8 /W3</code> 编译选项：</p>
+<pre class="hljs"><code><div>fz2_target_msvc_options(MyPlugin)
+</div></code></pre>
+<hr>
+<h2 id="9-%E5%86%85%E7%BD%AE%E7%A4%BA%E4%BE%8B%E6%8F%92%E4%BB%B6">9. 内置示例插件</h2>
+<p>框架附带多个示例插件，涵盖各模块的典型用法：</p>
+<table>
+<thead>
+<tr>
+<th>插件</th>
+<th>目录</th>
+<th>演示内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Core</strong></td>
+<td><code>common/plugins/core/</code></td>
+<td>主窗口创建、无边框窗口、一级导航初始化</td>
+</tr>
+<tr>
+<td><strong>Home</strong></td>
+<td><code>plugins/home/</code></td>
+<td>最简单的单页插件实现</td>
+</tr>
+<tr>
+<td><strong>Features</strong></td>
+<td><code>plugins/features/</code></td>
+<td>带二级子导航的多页面插件</td>
+</tr>
+<tr>
+<td><strong>Settings</strong></td>
+<td><code>plugins/settings/</code></td>
+<td>设置容器（通用/账号/隐私/关于）</td>
+</tr>
+<tr>
+<td><strong>Help</strong></td>
+<td><code>plugins/help/</code></td>
+<td>帮助页面</td>
+</tr>
+<tr>
+<td><strong>MVVM</strong></td>
+<td><code>plugins/mvvm/</code></td>
+<td>ViewModel 属性绑定、DataBinding、结构体属性</td>
+</tr>
+<tr>
+<td><strong>Middleware</strong></td>
+<td><code>plugins/middleware/</code></td>
+<td>属性中间件管道（日志 + 校验）</td>
+</tr>
+<tr>
+<td><strong>Invoker</strong></td>
+<td><code>plugins/invoker/</code></td>
+<td>ExtensionSystem::Invoker 动态调用演示</td>
+</tr>
+<tr>
+<td><strong>Container</strong></td>
+<td><code>plugins/container/</code></td>
+<td>IoC 容器类型绑定 + 动态命名绑定跨插件调用</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="10-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5">10. 最佳实践</h2>
+<h3 id="%E6%8F%92%E4%BB%B6%E8%AE%BE%E8%AE%A1">插件设计</h3>
+<ul>
+<li><strong>单一职责</strong>：每个插件只负责一个业务域，避免功能蔓延</li>
+<li><strong>接口分离</strong>：对外暴露的服务应定义为纯虚接口，实现细节放在插件内部</li>
+<li><strong>避免循环依赖</strong>：使用 <code>Dependencies</code> 字段声明依赖，框架保证加载顺序</li>
+</ul>
+<h3 id="%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E9%80%89%E6%8B%A9">服务通信选择</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>简单服务共享，调用方知道接口类型</td>
+<td><code>PluginManager::getObject&lt;T&gt;()</code></td>
+</tr>
+<tr>
+<td>复杂依赖注入，需要生命周期管理</td>
+<td><code>Container::make&lt;T&gt;()</code></td>
+</tr>
+<tr>
+<td>跨插件，不能引入对方头文件</td>
+<td><code>Container::makeNamed()</code> + 反射调用</td>
+</tr>
+<tr>
+<td>运行时动态调用已知 QObject 方法</td>
+<td><code>ExtensionSystem::invoke&lt;T&gt;()</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="mvvm-%E5%88%86%E5%B1%82%E5%8E%9F%E5%88%99">MVVM 分层原则</h3>
+<pre class="hljs"><code><div>View（Widget）
+    │  只负责显示和用户输入
+    │  通过信号/槽或属性绑定连接 ViewModel
+    ↓
+ViewModel
+    │  持有 UI 状态，封装业务逻辑
+    │  不包含任何 Qt Widget 代码
+    ↓
+Model / Service
+    │  纯业务数据和服务（通过 Container 注入）
+    │  完全无 UI 依赖
+</div></code></pre>
+<ul>
+<li>ViewModel <strong>不应</strong>持有任何 <code>QWidget*</code> 指针</li>
+<li>View <strong>不应</strong>直接访问 Model/Service，必须通过 ViewModel</li>
+<li>使用<strong>中间件</strong>处理通用横切关注点（日志、校验、权限），而不是在 ViewModel 中堆砌 if-else</li>
+</ul>
+<h3 id="%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6">权限控制</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// 权限变更时刷新 UI（MainWindow 已处理导航；业务侧刷新 Command/按钮）</span>
+connect(PS, &amp;PermService::permissionsChanged, <span class="hljs-keyword">this</span>, [<span class="hljs-keyword">this</span>]() {
+    updateActionVisibility();
+});
+</div></code></pre>
+<h3 id="%E4%B8%BB%E9%A2%98%E4%B8%8E%E8%AF%AD%E8%A8%80">主题与语言</h3>
+<ul>
+<li>主题相关样式应通过 <code>ThemeManager::applicationStyleSheet()</code> 统一管理，避免硬编码颜色</li>
+<li>所有 UI 文字使用 <code>TR(&quot;key&quot;)</code> 宏，禁止硬编码中文/英文字符串</li>
+<li>Widget 重写 <code>retranslateUi()</code> 方法并连接 <code>LanguageManager::languageChanged</code> 信号</li>
+</ul>
+<hr>
+<h2 id="11-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">11. 常见问题</h2>
+<p><strong>Q: 插件加载失败，日志提示 &quot;No such file or directory&quot;</strong></p>
+<p>检查插件 DLL 及其依赖（Qt DLL、框架 DLL）是否都在 <code>bin/&lt;Config&gt;/</code> 目录下；确认 <code>Q_PLUGIN_METADATA</code> 中的 <code>IID</code> 与 <code>PluginManager::setPluginIID()</code> 设置的值完全一致。</p>
+<hr>
+<p><strong>Q: <code>Container::make&lt;T&gt;()</code> 抛出 <code>No binding found for type</code></strong></p>
+<p>检查对应的 <code>ServiceProvider::doRegister()</code> 是否已被注册到 <code>Application</code>，且 <code>bootstrap()</code> 已被调用。如果是跨 DLL 访问，确认 <code>container</code> 是以 SHARED 库编译的。</p>
+<hr>
+<p><strong>Q: Facade 调用时抛出 <code>Global instance not set</code></strong></p>
+<p>需要在调用 Facade 之前先执行 <code>Container::Application::setInstance(app.get())</code>，通常放在 <code>main()</code> 中 <code>bootstrap()</code> 之前。</p>
+<hr>
+<p><strong>Q: 语言切换后导航按钮文字没有更新</strong></p>
+<p><code>NavigationManager</code> 内部已连接 <code>LanguageManager::languageChanged</code> 信号，若注册导航时传入的 <code>titleKey</code> 在翻译字典中存在对应条目，则会自动刷新。检查 <code>LanguageManager::initTranslations()</code> 中是否有该 key 的翻译。</p>
+<hr>
+<p><strong>Q: 权限变更后页面没有隐藏</strong></p>
+<p><code>MainWindow</code> 已连接 <code>PermService::permissionsChanged</code> 并调用 <code>refreshNavigation()</code>。若自定义控件未更新，检查是否监听同一信号；并确认对应 nav/sub_page 已在插件中 <code>registerNav</code> / <code>registerSubPage</code>，且当前用户 grants 含该 key。</p>
+<hr>
+<p><strong>Q: <code>extend()</code> 对通过 <code>instance()</code> 注册的绑定无效</strong></p>
+<p><code>extend()</code> 要求原绑定有工厂函数，而 <code>instance()</code> 注册的绑定没有工厂，直接调用 <code>extend()</code> 会导致崩溃。若需要装饰，请改用 <code>singleton()</code> 或 <code>bind()</code> 方式注册原始服务。</p>
+<hr>
+<p><strong>Q: 命名绑定 <code>call()</code> 报 <code>bad_any_cast</code></strong></p>
+<p>参数的 C++ 类型必须与注册时 <code>MethodDispatcher::on()</code> 推导的参数类型完全一致（经 <code>std::decay</code> 处理后）。例如方法签名为 <code>void info(const std::string&amp;)</code>，调用时应传入 <code>std::any{std::string(&quot;msg&quot;)}</code>，而不是 <code>std::any{&quot;msg&quot;}</code>（字面量为 <code>const char*</code>，类型不匹配）。</p>
+<hr>
+<p><em>如需更深入了解 IoC 容器的设计原理，请参阅 <a href="container_design.md"><code>docs/container_design.md</code></a>。</em></p>
+
+</body>
+</html>

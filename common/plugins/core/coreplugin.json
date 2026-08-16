@@ -1,0 +1,8 @@
+{
+    "Name"        : "Core",
+    "Version"     : "1.0.0",
+    "Description" : "Core plugin providing frameless main window and navigation framework",
+    "Category"    : "Core",
+    "Required"    : true,
+    "Dependencies": []
+}

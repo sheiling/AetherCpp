@@ -1,0 +1,60 @@
+---
+
+description: Superpowers 中文版与 Aether 文档维护/知识库的分工（superpowers-zh MIT）
+
+alwaysApply: true
+
+---
+
+
+
+# Superpowers + Project_Aether 文档体系
+
+
+
+本工程 `.cursor/skills/` 使用 **[superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)**（约 20 个中文技能，含 TDD、调试、中国场景 commit/review 等），并与文档维护 skill 并存。
+
+
+
+| 来源 | 何时优先 |
+
+| --- | --- |
+
+| **sop-maintenance** | 维护 `plugins/aoi/docs/` 下设计方案、SOP 描述、操作手册 |
+
+| **knowledge-base** | 回答编码规范、通用流程（`plugins/aoi/docs/knowledge-base/`） |
+
+| **Superpowers 中文版** | 新功能开发、调试、TDD、写计划、Code Review、中文提交规范等 |
+| **code-maintenance** | 改源码时同步注释、最小 diff 排版（`.cursor/rules/code-maintenance.mdc`） |
+
+
+
+## 冲突时
+
+
+
+1. 用户当次明确指令  
+
+2. **Aether 文档 / 知识库** 维护任务  
+
+3. Superpowers 流程（brainstorming、writing-plans、test-driven-development、chinese-code-review 等）
+
+
+
+例：「按 SOP 协议更新主页」→ 只走 sop-maintenance，不要 brainstorming 重写设计。  
+
+例：「实现新模块」→ 可走 Superpowers，完成后再按 sop-maintenance 补文档。
+
+**文档落盘**：只维护 `AOI 检测软件 设计方案.md`、`AOI 检测软件 SOP描述.txt`、`AOI 检测软件 软件操作SOP.md`（及 UI 截图）；勿在 `plugins/aoi/docs/plans/` 另存 Superpowers 计划/规格附件。
+
+
+
+## 入口
+
+
+
+- 总览：`.cursor/skills/using-superpowers/SKILL.md`
+
+- 升级 vendor（可选）：`sync-superpowers.ps1 -SourceRoot <superpowers-zh 仓库根>` → 再跑 `setup.bat`
+
+

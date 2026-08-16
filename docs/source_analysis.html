@@ -1,0 +1,2677 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>source_analysis.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="fz2projecttemplate-%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90">fz2_project_template 框架源码分析</h1>
+<blockquote>
+<p><strong>深度剖析 Qt + CMake 插件化桌面应用开发框架的设计思想与实现原理</strong><br>
+版本：1.0.0 · C++17 · Qt 5.15 / Qt6</p>
+</blockquote>
+<hr>
+<h2 id="%E7%9B%AE%E5%BD%95">目录</h2>
+<ol>
+<li><a href="#1-%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88">整体架构概览</a>
+<ul>
+<li>1.1 <a href="#11-%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%E5%9B%BE">分层架构图</a></li>
+<li>1.2 <a href="#12-%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB">模块依赖关系</a></li>
+<li>1.3 <a href="#13-%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99">核心设计原则</a></li>
+</ul>
+</li>
+<li><a href="#2-%E6%8F%92%E4%BB%B6%E7%B3%BB%E7%BB%9F--extensionsystem">插件系统 — ExtensionSystem</a>
+<ul>
+<li>2.1 <a href="#21-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3">设计思想</a></li>
+<li>2.2 <a href="#22-%E6%A8%A1%E5%9D%97%E7%B1%BB%E5%9B%BE%E5%85%B3%E7%B3%BB">模块类图关系</a></li>
+<li>2.3 <a href="#23-%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B">核心数据模型</a></li>
+<li>2.4 <a href="#24-%E6%8F%92%E4%BB%B6%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90">插件加载流程源码分析</a></li>
+<li>2.5 <a href="#25-%E4%BE%9D%E8%B5%96%E8%A7%A3%E6%9E%90%E7%AE%97%E6%B3%95">依赖解析算法</a></li>
+<li>2.6 <a href="#26-%E5%AF%B9%E8%B1%A1%E6%B1%A0%E6%9C%BA%E5%88%B6">对象池机制</a></li>
+<li>2.7 <a href="#27-%E5%BB%B6%E8%BF%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%BA%E5%88%B6">延迟初始化机制</a></li>
+<li>2.8 <a href="#28-invoker-%E5%8F%8D%E5%B0%84%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6">Invoker 反射调用机制</a></li>
+</ul>
+</li>
+<li><a href="#3-ioc-%E6%9C%8D%E5%8A%A1%E5%AE%B9%E5%99%A8--container">IoC 服务容器 — Container</a>
+<ul>
+<li>3.1 <a href="#31-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3">设计思想</a></li>
+<li>3.2 <a href="#32-%E6%A8%A1%E5%9D%97%E7%B1%BB%E5%9B%BE%E5%85%B3%E7%B3%BB">模块类图关系</a></li>
+<li>3.3 <a href="#33-%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B-binding">核心数据模型 Binding</a></li>
+<li>3.4 <a href="#34-container-%E7%B1%BB%E5%9E%8B%E8%A7%A3%E6%9E%90%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90">Container 类型解析源码分析</a></li>
+<li>3.5 <a href="#35-singleton-%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5%E5%8A%A0%E9%94%81">Singleton 双重检查加锁</a></li>
+<li>3.6 <a href="#36-%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E6%A3%80%E6%B5%8B">循环依赖检测</a></li>
+<li>3.7 <a href="#37-%E4%B8%8A%E4%B8%8B%E6%96%87%E7%BB%91%E5%AE%9A%E5%AE%9E%E7%8E%B0">上下文绑定实现</a></li>
+<li>3.8 <a href="#38-extend-%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F">extend() 装饰器模式</a></li>
+<li>3.9 <a href="#39-tag-%E6%A0%87%E7%AD%BE%E7%B3%BB%E7%BB%9F">tag() 标签系统</a></li>
+<li>3.10 <a href="#310-application-%E4%B8%8E-serviceprovider-%E5%8D%8F%E4%BD%9C">Application 与 ServiceProvider 协作</a></li>
+<li>3.11 <a href="#311-facade-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F%E5%AE%9E%E7%8E%B0">Facade 外观模式实现</a></li>
+<li>3.12 <a href="#312-%E5%8A%A8%E6%80%81%E5%91%BD%E5%90%8D%E7%BB%91%E5%AE%9A%E4%B8%8E%E5%8F%8D%E5%B0%84%E8%B0%83%E7%94%A8">动态命名绑定与反射调用</a></li>
+</ul>
+</li>
+<li><a href="#4-mvvm-%E6%9E%B6%E6%9E%84--mvvm">MVVM 架构 — mvvm</a>
+<ul>
+<li>4.1 <a href="#41-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3">设计思想</a></li>
+<li>4.2 <a href="#42-%E6%A8%A1%E5%9D%97%E7%B1%BB%E5%9B%BE%E5%85%B3%E7%B3%BB">模块类图关系</a></li>
+<li>4.3 <a href="#43-viewmodel-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90">ViewModel 源码分析</a></li>
+<li>4.4 <a href="#44-%E5%B1%9E%E6%80%A7%E5%AE%8F%E5%B1%95%E5%BC%80%E5%88%86%E6%9E%90">属性宏展开分析</a></li>
+<li>4.5 <a href="#45-%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%AE%A1%E9%81%93%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">中间件管道实现原理</a></li>
+<li>4.6 <a href="#46-command-%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%E5%AE%9E%E7%8E%B0">Command 命令模式实现</a></li>
+<li>4.7 <a href="#47-databinding-%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E5%AE%9E%E7%8E%B0">DataBinding 双向绑定实现</a></li>
+</ul>
+</li>
+<li><a href="#5-ui-%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD--uibase">UI 基础设施 — uibase</a>
+<ul>
+<li>5.1 <a href="#51-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3">设计思想</a></li>
+<li>5.2 <a href="#52-%E6%A8%A1%E5%9D%97%E7%B1%BB%E5%9B%BE%E5%85%B3%E7%B3%BB">模块类图关系</a></li>
+<li>5.3 <a href="#53-%E5%AF%BC%E8%88%AA%E7%AE%A1%E7%90%86%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90">导航管理器源码分析</a></li>
+<li>5.4 <a href="#54-thememanager-%E4%B8%BB%E9%A2%98%E7%AE%A1%E7%90%86">ThemeManager 主题管理</a></li>
+<li>5.5 <a href="#55-languagemanager-%E5%9B%BD%E9%99%85%E5%8C%96">LanguageManager 国际化</a></li>
+<li>5.6 <a href="#56-permservice-%E6%9D%83%E9%99%90%E8%BF%90%E8%A1%8C%E6%97%B6">PermService 权限运行时</a></li>
+<li>5.7 <a href="#57-pagewidget-%E6%87%92%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2">PageWidget 懒加载页面</a></li>
+<li>5.8 <a href="#58-cframelesswindow-%E6%97%A0%E8%BE%B9%E6%A1%86%E7%AA%97%E5%8F%A3">CFramelessWindow 无边框窗口</a></li>
+<li>5.9 <a href="#59-imainwindowservice-%E4%B8%BB%E7%AA%97%E5%8F%A3%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3">IMainWindowService 主窗口服务接口</a></li>
+</ul>
+</li>
+<li><a href="#6-%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF%E5%85%A8%E6%99%AF%E5%88%86%E6%9E%90">执行链路全景分析</a>
+<ul>
+<li>6.1 <a href="#61-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E5%85%A8%E9%93%BE%E8%B7%AF">应用程序启动全链路</a></li>
+<li>6.2 <a href="#62-%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8%E4%B8%8E-provider-%E5%BC%95%E5%AF%BC%E9%93%BE%E8%B7%AF">容器启动与 Provider 引导链路</a></li>
+<li>6.3 <a href="#63-%E6%9C%8D%E5%8A%A1%E8%A7%A3%E6%9E%90%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF-maket">服务解析执行链路 make&lt;T&gt;()</a></li>
+<li>6.4 <a href="#64-named-binding-%E5%8A%A8%E6%80%81%E8%B0%83%E7%94%A8%E9%93%BE%E8%B7%AF">Named Binding 动态调用链路</a></li>
+<li>6.5 <a href="#65-mvvm-%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E9%93%BE%E8%B7%AF">MVVM 页面加载链路</a></li>
+<li>6.6 <a href="#66-viewmodel-%E5%B1%9E%E6%80%A7%E5%8F%98%E6%9B%B4%E9%93%BE%E8%B7%AF">ViewModel 属性变更链路</a></li>
+<li>6.7 <a href="#67-%E5%B1%9E%E6%80%A7%E5%8F%98%E6%9B%B4%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF-setproperty">属性变更执行链路 setProperty()</a></li>
+<li>6.8 <a href="#68-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF-commandrun">命令执行链路 Command::run()</a></li>
+<li>6.9 <a href="#69-%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF">主题切换执行链路</a></li>
+<li>6.10 <a href="#610-%E5%AF%BC%E8%88%AA%E5%88%87%E6%8D%A2%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF">导航切换执行链路</a></li>
+<li>6.11 <a href="#611-databinding-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81%E9%93%BE%E8%B7%AF">DataBinding 双向数据流链路</a></li>
+<li>6.12 <a href="#612-%E6%9D%83%E9%99%90%E5%8F%98%E6%9B%B4%E4%B8%8E%E5%AF%BC%E8%88%AA%E8%81%94%E5%8A%A8%E9%93%BE%E8%B7%AF">权限变更与导航联动链路</a></li>
+</ul>
+</li>
+<li><a href="#7-%E5%85%B3%E9%94%AE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93">关键设计模式总结</a>
+<ul>
+<li>7.1 <a href="#71-%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">全局使用的设计模式</a></li>
+<li>7.2 <a href="#72-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E5%AF%B9%E6%AF%94">线程安全策略对比</a></li>
+<li>7.3 <a href="#73-c17-%E7%89%B9%E6%80%A7%E8%BF%90%E7%94%A8">C++17 特性运用</a></li>
+<li>7.4 <a href="#74-%E6%89%A9%E5%B1%95%E6%80%A7%E8%AE%BE%E8%AE%A1%E8%A6%81%E7%82%B9">扩展性设计要点</a></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="1-%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88">1. 整体架构概览</h2>
+<h3 id="11-%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%E5%9B%BE">1.1 分层架构图</h3>
+<pre class="hljs"><code><div>┌─────────────────────────────────────────────────────────────┐
+│                        应用层 (app/)                         │
+│            main.cpp — 初始化 QApplication + PluginManager    │
+└────────────────────────────┬────────────────────────────────┘
+                             │ 加载插件
+┌────────────────────────────▼────────────────────────────────┐
+│                       插件层 (plugins/)                      │
+│  core/    mvvm/    container/    middleware/    invoker/      │
+│  各插件实现具体业务，通过 IPlugin 接口注入框架                  │
+└────────────────────────────┬────────────────────────────────┘
+                             │ 依赖
+┌────────────────────────────▼────────────────────────────────┐
+│                    公共基础层 (common/)                       │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │  core/extensionsystem  — 插件加载 / 对象池 / 依赖管理   │  │
+│  │  core/container        — IoC 容器 / ServiceProvider    │  │
+│  ├───────────────────────────────────────────────────────┤  │
+│  │  ui/mvvm               — ViewModel / DataBinding / Cmd │  │
+│  │  ui/uibase             — 主题 / 导航 / 权限 / 国际化    │  │
+│  └───────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+</div></code></pre>
+<h3 id="12-%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB">1.2 模块依赖关系</h3>
+<pre class="hljs"><code><div>app
+ └─ ExtensionSystem (pluginmanager)
+      └─ PluginSpec / IPlugin
+           └─ 各业务插件 (core, mvvm, container...)
+                ├─ container (Application / ServiceProvider / Facade)
+                │    └─ Container / Binding / NamedBinding / MethodDispatcher / ServiceHandle
+                └─ mvvm (ViewModel / DataBinding / Command)
+                     ├─ middlewarepipeline (PropertyMiddlewarePipeline / CommandMiddlewarePipeline)
+                     └─ uibase (ThemeManager / NavigationManager / PermService...)
+</div></code></pre>
+<h3 id="13-%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99">1.3 核心设计原则</h3>
+<table>
+<thead>
+<tr>
+<th>原则</th>
+<th>实现方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>关注点分离</strong></td>
+<td>插件系统 / IoC 容器 / MVVM / UI 基础设施各自独立</td>
+</tr>
+<tr>
+<td><strong>依赖倒置</strong></td>
+<td>高层模块依赖抽象接口（<code>IPlugin</code>、<code>ILogger</code> 等）</td>
+</tr>
+<tr>
+<td><strong>开闭原则</strong></td>
+<td>插件机制让功能扩展无需修改核心</td>
+</tr>
+<tr>
+<td><strong>单一职责</strong></td>
+<td>每个类只有一个明确职责（<code>PluginSpec</code> 只描述插件元数据）</td>
+</tr>
+<tr>
+<td><strong>面向接口编程</strong></td>
+<td>服务通过接口注册，调用方不依赖具体实现类</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-%E6%8F%92%E4%BB%B6%E7%B3%BB%E7%BB%9F--extensionsystem">2. 插件系统 — ExtensionSystem</h2>
+<h3 id="21-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3">2.1 设计思想</h3>
+<p>插件系统 <code>ExtensionSystem</code>，核心思想是<strong>将应用功能以 DLL 插件形式动态加载</strong>，通过 JSON 元数据描述插件信息，通过 <code>IPlugin</code> 接口规范插件生命周期。</p>
+<p><strong>三大核心问题：</strong></p>
+<ol>
+<li><strong>如何发现插件？</strong> — 扫描指定目录下的动态库，读取 Qt 插件元数据中的 IID 和 JSON 信息</li>
+<li><strong>如何排序加载？</strong> — 拓扑排序（DFS）解析依赖关系，先依赖后主体</li>
+<li><strong>如何管理生命周期？</strong> — 状态机模型，8 个状态严格单向流转</li>
+</ol>
+<h3 id="22-%E6%A8%A1%E5%9D%97%E7%B1%BB%E5%9B%BE%E5%85%B3%E7%B3%BB">2.2 模块类图关系</h3>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+class PluginManager {
+  +instance()
+  +setPluginPaths(paths)
+  +setPluginIID(iid)
+  +loadPlugins()
+  +shutdown()
+  +addObject(obj)
+  +removeObject(obj)
+  +getObject~T~()
+}
+
+class PluginManagerPrivate {
+  -pluginSpecs
+  -pluginCategories
+  -allObjects
+  -delayedInitializeQueue
+  -asynchronousPlugins
+  +loadPlugins()
+  +loadQueue()
+  +loadPlugin(spec, state)
+  +readPluginPaths()
+  +nextDelayedInitialize()
+}
+
+class PluginSpec {
+  +name()
+  +version()
+  +category()
+  +dependencies()
+  +dependencySpecs()
+  +plugin()
+  +state()
+  +hasError()
+}
+
+class PluginSpecPrivate {
+  -loader
+  -plugin
+  -dependencySpecs
+  -state
+  -hasError
+  +read(file)
+  +resolveDependencies(specs)
+  +loadLibrary()
+  +initializePlugin()
+  +initializeExtensions()
+  +delayedInitialize()
+  +stop()
+  +kill()
+}
+
+class IPlugin {
+  <<interface>>
+  +initialize(errorString)
+  +extensionsInitialized()
+  +delayedInitialize()
+  +aboutToShutdown()
+  +asynchronousShutdownFinished()
+}
+
+PluginManager --> PluginManagerPrivate : Pimpl
+PluginManagerPrivate --> PluginSpec : 管理多个
+PluginSpec --> PluginSpecPrivate : Pimpl
+PluginSpecPrivate --> IPlugin : 持有插件实例
+IPlugin --> PluginSpec : 反向获取 pluginSpec()
+PluginManager --> QObject : 对象池管理
+PluginSpec --> PluginSpec : 依赖关系
+</div></code></pre>
+<h4 id="%E5%85%B3%E7%B3%BB%E8%A7%A3%E8%AF%BB">关系解读</h4>
+<ul>
+<li><code>PluginManager</code> 是公共入口，<code>PluginManagerPrivate</code> 负责真正的扫描、排序、加载、关闭。</li>
+<li><code>PluginSpec</code> 是“插件描述符”，不是插件本身；真正插件实例是 <code>IPlugin</code> 子类对象。</li>
+<li><code>PluginSpecPrivate</code> 负责把“文件系统中的 DLL”转成“内存中的 IPlugin 实例”。</li>
+<li><code>PluginManager</code> 同时承担 <strong>对象池管理器</strong> 角色，因此它不仅管插件，也管跨插件共享对象。</li>
+</ul>
+<h3 id="23-%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B">2.3 核心数据模型</h3>
+<p><strong><code>PluginSpec</code> — 插件描述符（状态机）：</strong></p>
+<pre class="hljs"><code><div>Invalid → Read → Resolved → Loaded → Initialized → Running → Stopped → Deleted
+</div></code></pre>
+<p>每个状态对应一项操作：</p>
+<table>
+<thead>
+<tr>
+<th>状态迁移</th>
+<th>触发操作</th>
+<th>核心函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Invalid → Read</code></td>
+<td>读取 DLL 元数据</td>
+<td><code>PluginSpecPrivate::read()</code></td>
+</tr>
+<tr>
+<td><code>Read → Resolved</code></td>
+<td>解析依赖引用</td>
+<td><code>PluginSpecPrivate::resolveDependencies()</code></td>
+</tr>
+<tr>
+<td><code>Resolved → Loaded</code></td>
+<td>加载动态库</td>
+<td><code>PluginSpecPrivate::loadLibrary()</code></td>
+</tr>
+<tr>
+<td><code>Loaded → Initialized</code></td>
+<td>调用 <code>initialize()</code></td>
+<td><code>PluginSpecPrivate::initializePlugin()</code></td>
+</tr>
+<tr>
+<td><code>Initialized → Running</code></td>
+<td>调用 <code>extensionsInitialized()</code></td>
+<td><code>PluginSpecPrivate::initializeExtensions()</code></td>
+</tr>
+<tr>
+<td><code>Running → Stopped</code></td>
+<td>调用 <code>aboutToShutdown()</code></td>
+<td><code>PluginSpecPrivate::stop()</code></td>
+</tr>
+<tr>
+<td><code>Stopped → Deleted</code></td>
+<td><code>delete plugin</code></td>
+<td><code>PluginSpecPrivate::kill()</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>PluginManagerPrivate</code> — 管理器私有实现（Pimpl 模式）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// common/core/extensionsystem/pluginmanager_p.h</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PluginManagerPrivate</span> :</span> <span class="hljs-keyword">public</span> QObject {
+    QHash&lt;QString, QList&lt;PluginSpec*&gt;&gt; pluginCategories; <span class="hljs-comment">// 按类别分组</span>
+    QList&lt;PluginSpec*&gt;  pluginSpecs;       <span class="hljs-comment">// 所有插件描述符</span>
+    QStringList         pluginPaths;       <span class="hljs-comment">// 搜索路径</span>
+    QString             pluginIID;         <span class="hljs-comment">// 有效 IID（用于过滤）</span>
+    QList&lt;QObject*&gt;     allObjects;        <span class="hljs-comment">// 对象池</span>
+    QTimer             *delayedInitializeTimer; <span class="hljs-comment">// 延迟初始化定时器</span>
+    QList&lt;PluginSpec*&gt;  delayedInitializeQueue; <span class="hljs-comment">// 延迟初始化队列</span>
+    QList&lt;PluginSpec*&gt;  asynchronousPlugins;    <span class="hljs-comment">// 异步关闭的插件</span>
+    QEventLoop         *shutdownEventLoop;      <span class="hljs-comment">// 异步关闭事件循环</span>
+    <span class="hljs-keyword">mutable</span> QReadWriteLock m_lock;         <span class="hljs-comment">// 对象池读写锁</span>
+};
+</div></code></pre>
+<blockquote>
+<p><strong>Pimpl 模式作用：</strong> <code>PluginManager</code> 对外暴露稳定的公共接口，所有实现细节和成员变量封装在 <code>PluginManagerPrivate</code> 中，降低头文件依赖，加快编译速度。</p>
+</blockquote>
+<h3 id="24-%E6%8F%92%E4%BB%B6%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90">2.4 插件加载流程源码分析</h3>
+<p><strong><code>PluginManagerPrivate::loadPlugins()</code> — 核心加载流程：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// pluginmanager.cpp:329</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PluginManagerPrivate::loadPlugins</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-comment">// 第一步：拓扑排序生成加载队列（依赖优先）</span>
+    QList&lt;PluginSpec*&gt; <span class="hljs-built_in">queue</span> = loadQueue();
+    
+    <span class="hljs-comment">// 第二步：加载动态库（Resolved → Loaded）</span>
+    foreach (PluginSpec *spec, <span class="hljs-built_in">queue</span>) {
+        loadPlugin(spec, PluginSpec::Loaded);      <span class="hljs-comment">// QPluginLoader::load()</span>
+    }
+    
+    <span class="hljs-comment">// 第三步：调用 initialize()（Loaded → Initialized）</span>
+    foreach (PluginSpec *spec, <span class="hljs-built_in">queue</span>) {
+        loadPlugin(spec, PluginSpec::Initialized); <span class="hljs-comment">// plugin-&gt;initialize()</span>
+    }
+    
+    <span class="hljs-comment">// 第四步：反向遍历调用 extensionsInitialized()（Initialized → Running）</span>
+    <span class="hljs-comment">// 注意：使用 reverseForeach，确保依赖方先完成 extensionsInitialized</span>
+    Utils::reverseForeach(<span class="hljs-built_in">queue</span>, [<span class="hljs-keyword">this</span>](PluginSpec *spec) {
+        loadPlugin(spec, PluginSpec::Running);
+        <span class="hljs-keyword">if</span> (spec-&gt;state() == PluginSpec::Running) {
+            delayedInitializeQueue.append(spec);  <span class="hljs-comment">// 加入延迟初始化队列</span>
+        } <span class="hljs-keyword">else</span> {
+            spec-&gt;d-&gt;kill();   <span class="hljs-comment">// 初始化失败，立即清理</span>
+        }
+    });
+    
+    <span class="hljs-comment">// 第五步：启动延迟初始化定时器（20ms 间隔，不阻塞主线程）</span>
+    delayedInitializeTimer = <span class="hljs-keyword">new</span> QTimer;
+    delayedInitializeTimer-&gt;setInterval(<span class="hljs-number">20</span>); <span class="hljs-comment">// DELAYED_INITIALIZE_INTERVAL</span>
+    delayedInitializeTimer-&gt;setSingleShot(<span class="hljs-literal">true</span>);
+    connect(delayedInitializeTimer, &amp;QTimer::timeout,
+            <span class="hljs-keyword">this</span>, &amp;PluginManagerPrivate::nextDelayedInitialize);
+    delayedInitializeTimer-&gt;start();
+}
+</div></code></pre>
+<p><strong>关键设计：<code>loadPlugin()</code> 的状态守卫：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// pluginmanager.cpp:459</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PluginManagerPrivate::loadPlugin</span><span class="hljs-params">(PluginSpec *spec, PluginSpec::State destState)</span>
+</span>{
+    <span class="hljs-comment">// ── 状态守卫：只处理"当前状态恰好比目标状态少1"的插件 ──</span>
+    <span class="hljs-keyword">if</span> (spec-&gt;hasError() || spec-&gt;state() != destState - <span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span>;
+    <span class="hljs-comment">// ...</span>
+}
+</div></code></pre>
+<p>这个单行守卫确保每个插件按顺序单向推进状态，<strong>任何跳步或重复调用都被安全忽略</strong>。</p>
+<p><strong><code>PluginSpecPrivate::loadLibrary()</code> — 动态库加载与 IPlugin 获取：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// pluginspec.cpp:514</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">PluginSpecPrivate::loadLibrary</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-comment">// 使用 Qt 的 QPluginLoader 加载 DLL</span>
+    <span class="hljs-keyword">if</span> (!loader.load()) {
+        hasError = <span class="hljs-literal">true</span>;
+        errorString = QDir::toNativeSeparators(filePath) + <span class="hljs-string">": "</span> + loader.errorString();
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    
+    <span class="hljs-comment">// 将加载的 QObject 实例转型为 IPlugin</span>
+    <span class="hljs-keyword">auto</span> *pluginObject = qobject_cast&lt;IPlugin*&gt;(loader.instance());
+    <span class="hljs-keyword">if</span> (!pluginObject) {
+        hasError = <span class="hljs-literal">true</span>;
+        errorString = <span class="hljs-string">"Plugin is not valid (does not derive from IPlugin)"</span>;
+        loader.unload();
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    
+    state  = PluginSpec::Loaded;
+    plugin = pluginObject;
+    plugin-&gt;d-&gt;pluginSpec = q;   <span class="hljs-comment">// 反向引用：IPlugin → PluginSpec</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+</div></code></pre>
+<blockquote>
+<p><strong>设计要点：</strong> <code>QPluginLoader</code> 自动处理跨平台符号解析；<code>qobject_cast</code> 提供安全的运行时类型检查；若转型失败立即卸载 DLL，防止野指针。</p>
+</blockquote>
+<h3 id="25-%E4%BE%9D%E8%B5%96%E8%A7%A3%E6%9E%90%E7%AE%97%E6%B3%95">2.5 依赖解析算法</h3>
+<p><code>loadQueue()</code> 使用<strong>深度优先搜索（DFS）拓扑排序</strong>确保依赖先于主体加载：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// pluginmanager.cpp:408</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">PluginManagerPrivate::loadQueue</span><span class="hljs-params">(PluginSpec *spec,
+        QList&lt;PluginSpec*&gt; &amp;<span class="hljs-built_in">queue</span>,
+        QList&lt;PluginSpec*&gt; &amp;circularityCheckQueue)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">queue</span>.contains(spec))
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;   <span class="hljs-comment">// 已处理过，跳过</span>
+
+    <span class="hljs-comment">// ── 环形依赖检测 ──</span>
+    <span class="hljs-keyword">if</span> (circularityCheckQueue.contains(spec)) {
+        spec-&gt;d-&gt;hasError = <span class="hljs-literal">true</span>;
+        <span class="hljs-comment">// 构造详细的循环路径错误信息...</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    circularityCheckQueue.append(spec);   <span class="hljs-comment">// 入栈（DFS 访问路径）</span>
+
+    <span class="hljs-comment">// ── 递归处理所有依赖（Required 类型）──</span>
+    <span class="hljs-function">QHashIterator&lt;PluginDependency, PluginSpec*&gt; <span class="hljs-title">it</span><span class="hljs-params">(spec-&gt;dependencySpecs())</span></span>;
+    <span class="hljs-keyword">while</span> (it.hasNext()) {
+        it.next();
+        <span class="hljs-keyword">if</span> (it.key().type == PluginDependency::Test) <span class="hljs-keyword">continue</span>;
+        PluginSpec *depSpec = it.value();
+        <span class="hljs-keyword">if</span> (!loadQueue(depSpec, <span class="hljs-built_in">queue</span>, circularityCheckQueue)) {
+            <span class="hljs-comment">// 依赖加载失败，传播错误</span>
+            spec-&gt;d-&gt;hasError = <span class="hljs-literal">true</span>;
+            spec-&gt;d-&gt;errorString = <span class="hljs-string">"Cannot load plugin because dependency failed..."</span>;
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+    }
+    
+    <span class="hljs-built_in">queue</span>.append(spec);   <span class="hljs-comment">// 后序：依赖先入队，自身后入队</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+</div></code></pre>
+<p><strong>算法特性：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong> O(V + E)，V 为插件数，E 为依赖边数</li>
+<li><strong>循环检测：</strong> <code>circularityCheckQueue</code> 维护当前 DFS 路径，O(1) 判断是否在路径中</li>
+<li><strong>幂等性：</strong> <code>queue.contains(spec)</code> 防止同一插件被加入两次</li>
+</ul>
+<p><strong><code>resolveDependencies()</code> — 依赖名称解析：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// pluginspec.cpp:473</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">PluginSpecPrivate::resolveDependencies</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QList&lt;PluginSpec*&gt; &amp;specs)</span>
+</span>{
+    QHash&lt;PluginDependency, PluginSpec*&gt; resolvedDependencies;
+    
+    foreach (<span class="hljs-keyword">const</span> PluginDependency &amp;dependency, dependencies) {
+        <span class="hljs-comment">// 在所有已扫描的插件中查找能满足此依赖的 PluginSpec</span>
+        PluginSpec *<span class="hljs-keyword">const</span> found = Utils::findOrDefault(specs, 
+            [&amp;dependency](PluginSpec *spec) {
+                <span class="hljs-keyword">return</span> spec-&gt;provides(dependency.name, dependency.version);
+            });
+        
+        <span class="hljs-keyword">if</span> (!found) {
+            <span class="hljs-keyword">if</span> (dependency.type == PluginDependency::Required) {
+                hasError = <span class="hljs-literal">true</span>;
+                errorString += <span class="hljs-string">"Could not resolve dependency '"</span> + dependency.name + <span class="hljs-string">"'"</span>;
+            }
+            <span class="hljs-keyword">continue</span>;   <span class="hljs-comment">// Optional 依赖找不到也不报错</span>
+        }
+        resolvedDependencies.insert(dependency, found);
+    }
+    
+    dependencySpecs = resolvedDependencies;
+    state = PluginSpec::Resolved;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+</div></code></pre>
+<h3 id="26-%E5%AF%B9%E8%B1%A1%E6%B1%A0%E6%9C%BA%E5%88%B6">2.6 对象池机制</h3>
+<p>对象池是插件间通信的核心纽带，基于 <strong><code>QReadWriteLock</code> 实现线程安全</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// pluginmanager.cpp:287</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PluginManagerPrivate::addObject</span><span class="hljs-params">(QObject *obj)</span>
+</span>{
+    {
+        <span class="hljs-function">QWriteLocker <span class="hljs-title">lock</span><span class="hljs-params">(&amp;m_lock)</span></span>;   <span class="hljs-comment">// 写操作加写锁</span>
+        <span class="hljs-keyword">if</span> (obj == <span class="hljs-literal">nullptr</span> || allObjects.contains(obj)) {
+            qWarning() &lt;&lt; <span class="hljs-string">"..."</span>;
+            <span class="hljs-keyword">return</span>;
+        }
+        allObjects.append(obj);
+    }
+    emit q-&gt;objectAdded(obj);   <span class="hljs-comment">// 信号在锁外发出（避免死锁）</span>
+}
+</div></code></pre>
+<p><strong>模板查询方法（<code>PluginManager::getObject&lt;T&gt;</code>）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// pluginmanager.h (模板实现)</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-function"><span class="hljs-keyword">static</span> T *<span class="hljs-title">getObject</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-function">QReadLocker <span class="hljs-title">lock</span><span class="hljs-params">(listLock())</span></span>;   <span class="hljs-comment">// 读操作加读锁（允许并发读）</span>
+    <span class="hljs-keyword">const</span> QList&lt;QObject *&gt; all = allObjects();
+    <span class="hljs-keyword">for</span> (QObject *obj : all) {
+        <span class="hljs-keyword">if</span> (T *result = qobject_cast&lt;T *&gt;(obj))
+            <span class="hljs-keyword">return</span> result;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+}
+
+<span class="hljs-comment">// 带谓词的过滤版本</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span> Predicate&gt;
+<span class="hljs-function"><span class="hljs-keyword">static</span> T *<span class="hljs-title">getObject</span><span class="hljs-params">(Predicate predicate)</span>
+</span>{
+    <span class="hljs-function">QReadLocker <span class="hljs-title">lock</span><span class="hljs-params">(listLock())</span></span>;
+    <span class="hljs-keyword">const</span> QList&lt;QObject *&gt; all = allObjects();
+    <span class="hljs-keyword">for</span> (QObject *obj : all) {
+        <span class="hljs-keyword">if</span> (T *result = qobject_cast&lt;T *&gt;(obj))
+            <span class="hljs-keyword">if</span> (predicate(result))
+                <span class="hljs-keyword">return</span> result;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+}
+
+<span class="hljs-comment">// 获取所有匹配对象</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-function"><span class="hljs-keyword">static</span> QList&lt;T *&gt; <span class="hljs-title">getObjects</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-function">QReadLocker <span class="hljs-title">lock</span><span class="hljs-params">(listLock())</span></span>;
+    QList&lt;T *&gt; results;
+    <span class="hljs-keyword">const</span> QList&lt;QObject *&gt; all = allObjects();
+    <span class="hljs-keyword">for</span> (QObject *obj : all) {
+        <span class="hljs-keyword">if</span> (T *result = qobject_cast&lt;T *&gt;(obj))
+            results.append(result);
+    }
+    <span class="hljs-keyword">return</span> results;
+}
+</div></code></pre>
+<blockquote>
+<p><strong>设计思想：</strong> 利用 Qt 的元对象系统（<code>qobject_cast</code>）在运行时按类型查找对象，实现了<strong>无需修改框架即可扩展的跨插件通信</strong>。插件只需向对象池注册，其他插件通过接口类型即可获取。</p>
+</blockquote>
+<h3 id="27-%E5%BB%B6%E8%BF%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%BA%E5%88%B6">2.7 延迟初始化机制</h3>
+<p><code>delayedInitialize()</code> 设计用于<strong>应用启动后的轻量化延迟任务</strong>，避免阻塞主窗口显示：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// pluginmanager.cpp:221</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PluginManagerPrivate::nextDelayedInitialize</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">while</span> (!delayedInitializeQueue.isEmpty()) {
+        PluginSpec *spec = delayedInitializeQueue.takeFirst();
+        <span class="hljs-keyword">bool</span> delay = spec-&gt;d-&gt;delayedInitialize();  <span class="hljs-comment">// 调用插件的 delayedInitialize()</span>
+        <span class="hljs-keyword">if</span> (delay)
+            <span class="hljs-keyword">break</span>;   <span class="hljs-comment">// 插件返回 true 表示需要再延迟一次（分批处理）</span>
+    }
+    <span class="hljs-keyword">if</span> (delayedInitializeQueue.isEmpty()) {
+        m_isInitializationDone = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">delete</span> delayedInitializeTimer;
+        emit q-&gt;initializationDone();
+    } <span class="hljs-keyword">else</span> {
+        delayedInitializeTimer-&gt;start();   <span class="hljs-comment">// 重新启动 20ms 后再执行下一批</span>
+    }
+}
+</div></code></pre>
+<p><strong>设计精妙之处：</strong></p>
+<ul>
+<li>使用 <code>QTimer::setSingleShot(true)</code> + 手动重启，而非 <code>setInterval</code> 自动触发，确保每批任务执行完毕后再调度下一批，<strong>彻底避免任务堆积</strong></li>
+<li>插件通过返回值 <code>true/false</code> 控制是否需要继续延迟（协作式调度）</li>
+</ul>
+<h3 id="28-invoker-%E5%8F%8D%E5%B0%84%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6">2.8 Invoker 反射调用机制</h3>
+<p><code>ExtensionSystem::Invoker&lt;Result&gt;</code> 是一个<strong>基于 Qt 元对象系统的运行时方法调用工具</strong>，用于跨插件安全调用 Qt slot：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// invoker.h — 核心实现</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InvokerBase</span>
+{</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// 添加调用参数（最多 10 个）</span>
+    <span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;
+    <span class="hljs-title">void</span> <span class="hljs-title">addArgument</span>(<span class="hljs-title">const</span> <span class="hljs-title">T</span> &amp;<span class="hljs-title">t</span>) {</span>
+        arg[lastArg++] = QGenericArgument(typeName&lt;T&gt;(), &amp;t);
+    }
+    
+    <span class="hljs-comment">// 设置返回值容器</span>
+    <span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;
+    <span class="hljs-title">void</span> <span class="hljs-title">setReturnValue</span>(<span class="hljs-title">T</span> &amp;<span class="hljs-title">t</span>) {</span>
+        useRet = <span class="hljs-literal">true</span>;
+        ret = QGenericReturnArgument(typeName&lt;T&gt;(), &amp;t);
+    }
+    
+    <span class="hljs-comment">// 使用 QMetaObject::invokeMethod 调用 slot</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">invoke</span><span class="hljs-params">(QObject *target, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *slot)</span></span>;
+    
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">wasSuccessful</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+};
+
+<span class="hljs-comment">// 带返回值的模板特化</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Result</span>&gt;
+<span class="hljs-title">class</span> <span class="hljs-title">Invoker</span> :</span> <span class="hljs-keyword">public</span> InvokerBase
+{
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// 0 参数调用</span>
+    Invoker(QObject *target, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *slot) {
+        setReturnValue(result);
+        InvokerBase::invoke(target, slot);
+    }
+    
+    <span class="hljs-comment">// 1 参数调用</span>
+    <span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T0</span>&gt;
+    <span class="hljs-title">Invoker</span>(<span class="hljs-title">QObject</span> *<span class="hljs-title">target</span>, <span class="hljs-title">const</span> <span class="hljs-title">char</span> *<span class="hljs-title">slot</span>, <span class="hljs-title">const</span> <span class="hljs-title">T0</span> &amp;<span class="hljs-title">t0</span>) {</span>
+        setReturnValue(result);
+        addArgument(t0);
+        InvokerBase::invoke(target, slot);
+    }
+    
+    <span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">Result</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> result; }  <span class="hljs-comment">// 隐式转换提取结果</span>
+<span class="hljs-keyword">private</span>:
+    Result result;
+};
+</div></code></pre>
+<p><strong>便捷调用函数：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 无返回值调用</span>
+ExtensionSystem::invoke&lt;<span class="hljs-keyword">void</span>&gt;(target, <span class="hljs-string">"mySlot"</span>, arg1, arg2);
+
+<span class="hljs-comment">// 有返回值调用</span>
+QString result = ExtensionSystem::invoke&lt;QString&gt;(target, <span class="hljs-string">"getVersion"</span>);
+</div></code></pre>
+<blockquote>
+<p><strong>与 MethodDispatcher 的区别：</strong> <code>Invoker</code> 基于 Qt 元对象系统，需要 <code>QObject</code> 目标且 slot 必须用 <code>Q_INVOKABLE</code> 或 <code>slots</code> 声明；<code>MethodDispatcher</code> 基于 <code>std::any</code>，不依赖 Qt 元对象，更适用于 C++ 接口的跨插件零依赖调用。</p>
+</blockquote>
+<hr>
+<h2 id="3-ioc-%E6%9C%8D%E5%8A%A1%E5%AE%B9%E5%99%A8--container">3. IoC 服务容器 — Container</h2>
+<h3 id="31-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3">3.1 设计思想</h3>
+<p>Container 模块受 Laravel 框架的服务容器启发，用 C++17 模板元编程实现了一套<strong>类型安全的依赖注入容器</strong>。</p>
+<p><strong>核心设计目标：</strong></p>
+<ol>
+<li><strong>类型安全</strong>：通过 <code>std::type_index</code> 和模板参数在编译期保证类型正确性</li>
+<li><strong>生命周期管理</strong>：三种绑定类型（Transient/Singleton/Instance）满足不同场景</li>
+<li><strong>解耦</strong>：调用方只依赖抽象接口，不引入具体实现的头文件</li>
+<li><strong>跨插件零依赖调用</strong>：通过命名绑定 + <code>MethodDispatcher</code> 实现运行时反射</li>
+</ol>
+<p><strong>类型擦除的核心技巧：</strong> 所有工厂函数统一使用 <code>std::function&lt;std::shared_ptr&lt;void&gt;(Container&amp;)&gt;</code> 签名，在注册时擦除具体类型信息，在解析时用 <code>static_pointer_cast&lt;Abstract&gt;</code> 恢复类型。</p>
+<h3 id="32-%E6%A8%A1%E5%9D%97%E7%B1%BB%E5%9B%BE%E5%85%B3%E7%B3%BB">3.2 模块类图关系</h3>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+class Container {
+  +bind~T~()
+  +singleton~T~()
+  +instance~T~()
+  +extend~T~()
+  +make~T~()
+  +when~T~()
+  +tag(label)
+  +tagged(label)
+  +bindNamed(name)
+  +makeNamed(name)
+  #resolve(binding, key)
+  #resolveNamed(binding)
+  #onBindingNotFound(key)
+}
+
+class Application {
+  +registerProvider~Provider~()
+  +registerProviders()
+  +bootProviders()
+  +bootstrap()
+  +instance()
+  +setInstance(app)
+  #onBindingNotFound(key)
+}
+
+class ServiceProvider {
+  <<abstract>>
+  +doRegister()
+  +boot()
+  +isDeferred()
+}
+
+class ContextualBindingBuilder {
+  +needs~T~()
+  +give~T~()
+}
+
+class Binding {
+  +factory
+  +type
+  +resolved
+  +instance
+}
+
+class NamedBinding {
+  +factory
+  +type
+  +resolved
+  +instance
+  +dispatcher
+}
+
+class MethodDispatcher {
+  +registerMethod(name, fn)
+  +on(name, method)
+  +invoke(name, instance, args)
+}
+
+class ServiceHandle {
+  +call(method, args)
+  +get(name)
+  +set(name, value)
+  +as~T~()
+}
+
+class Facade~T~ {
+  +getFacadeRoot()
+  +resolve()
+}
+
+Application --|> Container
+ServiceProvider --> Application : 依赖 app_
+Container --> Binding : 类型绑定表
+Container --> NamedBinding : 命名绑定表
+Container --> ContextualBindingBuilder : 构造器
+NamedBinding --> MethodDispatcher : 可选分发器
+Container --> ServiceHandle : 返回动态句柄
+Facade~T~ --> Application : 静态访问入口
+</div></code></pre>
+<h4 id="%E5%85%B3%E7%B3%BB%E8%A7%A3%E8%AF%BB">关系解读</h4>
+<ul>
+<li><code>Application</code> 不是简单的别名，而是 <code>Container</code> 的 <strong>运行期增强版</strong>。</li>
+<li><code>ServiceProvider</code> 把“注册逻辑”模块化，避免所有服务都堆在 <code>main.cpp</code>。</li>
+<li><code>NamedBinding + MethodDispatcher + ServiceHandle</code> 形成一条完整的“跨插件弱类型调用链”。</li>
+<li><code>Facade&lt;T&gt;</code> 只是一个很薄的静态门面，本质仍回到 <code>Application::instance()-&gt;make&lt;T&gt;()</code>。</li>
+</ul>
+<h3 id="33-%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B-binding">3.3 核心数据模型 Binding</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// common/core/container/binding.h</span>
+
+<span class="hljs-comment">// ── 工厂函数类型：类型擦除后的统一签名 ──</span>
+<span class="hljs-keyword">using</span> FactoryFn = <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">void</span>&gt;(Container&amp;)&gt;;
+
+<span class="hljs-comment">// ── 生命周期枚举 ──</span>
+<span class="hljs-keyword">enum</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BindingType</span> {</span>
+    Transient,  <span class="hljs-comment">// 每次 make() 创建新实例</span>
+    Singleton,  <span class="hljs-comment">// 首次 make() 创建，后续复用</span>
+    Instance    <span class="hljs-comment">// 外部注入的已有实例</span>
+};
+
+<span class="hljs-comment">// ── 绑定描述符 ──</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Binding</span> {</span>
+    FactoryFn   factory;                      <span class="hljs-comment">// 工厂函数</span>
+    BindingType type    = BindingType::Transient;
+    <span class="hljs-keyword">bool</span>        resolved = <span class="hljs-literal">false</span>;             <span class="hljs-comment">// Singleton 是否已初始化</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">void</span>&gt; instance;           <span class="hljs-comment">// 缓存的单例 / 预建实例</span>
+};
+</div></code></pre>
+<h3 id="34-container-%E7%B1%BB%E5%9E%8B%E8%A7%A3%E6%9E%90%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90">3.4 Container 类型解析源码分析</h3>
+<p><strong><code>bind&lt;Abstract&gt;()</code> — 注册绑定（模板，header-only）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// container.h:82</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Abstract&gt;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bind</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::function&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;Abstract&gt;(Container&amp;)&gt; factory)</span>
+</span>{
+    Binding b;
+    <span class="hljs-comment">// ── 关键：类型擦除 ──</span>
+    <span class="hljs-comment">// 外层 lambda 将 shared_ptr&lt;Abstract&gt; 装入 shared_ptr&lt;void&gt;</span>
+    <span class="hljs-comment">// std::type_index 作为 key 保留类型信息</span>
+    b.factory = [f = <span class="hljs-built_in">std</span>::move(factory)](Container&amp; c) -&gt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">void</span>&gt; {
+        <span class="hljs-keyword">return</span> f(c);   <span class="hljs-comment">// shared_ptr&lt;Abstract&gt; 隐式转换为 shared_ptr&lt;void&gt;</span>
+    };
+    b.type = BindingType::Transient;
+    typeBindings_[<span class="hljs-built_in">std</span>::type_index(<span class="hljs-keyword">typeid</span>(Abstract))] = <span class="hljs-built_in">std</span>::move(b);
+}
+</div></code></pre>
+<p><strong><code>make&lt;Abstract&gt;()</code> — 解析服务（模板，header-only）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// container.h:203</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Abstract&gt;
+<span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;Abstract&gt; <span class="hljs-title">make</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">auto</span>  key   = <span class="hljs-built_in">std</span>::type_index(<span class="hljs-keyword">typeid</span>(Abstract));
+    <span class="hljs-keyword">auto</span>&amp; <span class="hljs-built_in">stack</span> = resolutionStack();   <span class="hljs-comment">// thread_local，每线程独立解析栈</span>
+
+    <span class="hljs-comment">// ── 1. 循环依赖检测 ──────────────────────────────────────────────</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">std</span>::find(<span class="hljs-built_in">stack</span>.begin(), <span class="hljs-built_in">stack</span>.end(), key) != <span class="hljs-built_in">stack</span>.end()) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-built_in">std</span>::runtime_error(<span class="hljs-string">"[Container] Circular dependency detected for: "</span>
+                                 + <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-keyword">typeid</span>(Abstract).name()));
+    }
+
+    <span class="hljs-comment">// ── 2. 检查上下文绑定（优先级高于普通绑定）──────────────────────</span>
+    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">stack</span>.empty()) {
+        <span class="hljs-keyword">auto</span> callerKey = <span class="hljs-built_in">stack</span>.back();   <span class="hljs-comment">// 当前调用方类型</span>
+        <span class="hljs-keyword">auto</span> ctxIt = contextualBindings_.find(callerKey);
+        <span class="hljs-keyword">if</span> (ctxIt != contextualBindings_.end()) {
+            <span class="hljs-keyword">auto</span> needsIt = ctxIt-&gt;second.find(key);
+            <span class="hljs-keyword">if</span> (needsIt != ctxIt-&gt;second.end()) {
+                <span class="hljs-comment">// 命中上下文绑定，使用专属工厂</span>
+                <span class="hljs-built_in">stack</span>.push_back(key);
+                <span class="hljs-keyword">auto</span> ptr = needsIt-&gt;second(*<span class="hljs-keyword">this</span>);
+                <span class="hljs-built_in">stack</span>.pop_back();
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::static_pointer_cast&lt;Abstract&gt;(ptr);
+            }
+        }
+    }
+
+    <span class="hljs-comment">// ── 3. 普通绑定查找 ──────────────────────────────────────────────</span>
+    <span class="hljs-keyword">auto</span> it = typeBindings_.find(key);
+    <span class="hljs-keyword">if</span> (it == typeBindings_.end()) {
+        onBindingNotFound(key);   <span class="hljs-comment">// 钩子：触发 Deferred ServiceProvider</span>
+        it = typeBindings_.find(key);
+        <span class="hljs-keyword">if</span> (it == typeBindings_.end()) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-built_in">std</span>::runtime_error(<span class="hljs-string">"[Container] No binding found for type: "</span>
+                                     + <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-keyword">typeid</span>(Abstract).name()));
+        }
+    }
+    
+    <span class="hljs-comment">// ── 4. 解析并还原类型 ──</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::static_pointer_cast&lt;Abstract&gt;(resolve(it-&gt;second, key));
+}
+</div></code></pre>
+<h3 id="35-singleton-%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5%E5%8A%A0%E9%94%81">3.5 Singleton 双重检查加锁</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// container.cpp:24</span>
+<span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">void</span>&gt; <span class="hljs-title">Container::resolve</span><span class="hljs-params">(Binding&amp; binding, <span class="hljs-built_in">std</span>::type_index key)</span>
+</span>{
+    <span class="hljs-keyword">switch</span> (binding.type) {
+    
+    <span class="hljs-keyword">case</span> BindingType::Instance:
+        <span class="hljs-keyword">return</span> binding.instance;   <span class="hljs-comment">// 直接返回</span>
+    
+    <span class="hljs-keyword">case</span> BindingType::Singleton: {
+        <span class="hljs-comment">// ── 双重检查加锁（Double-Checked Locking）──</span>
+        <span class="hljs-comment">//</span>
+        <span class="hljs-comment">// 第一次检查（无锁快速路径）：</span>
+        <span class="hljs-comment">//   99% 的情况下单例已构建，直接返回，无需竞争锁。</span>
+        <span class="hljs-comment">//   读 bool 在主流平台是近原子操作，足够安全。</span>
+        <span class="hljs-comment">//</span>
+        <span class="hljs-keyword">if</span> (!binding.resolved) {
+            
+            <span class="hljs-comment">// 第二次检查（持锁，防止竞态）：</span>
+            <span class="hljs-comment">//   极少数首次并发调用时，进入此分支竞争互斥锁。</span>
+            <span class="hljs-comment">//   使用 recursive_mutex：工厂内部可再次调用 make()，</span>
+            <span class="hljs-comment">//   允许同线程重入而不死锁。</span>
+            <span class="hljs-function"><span class="hljs-built_in">std</span>::lock_guard&lt;<span class="hljs-built_in">std</span>::recursive_mutex&gt; <span class="hljs-title">lock</span><span class="hljs-params">(mutex_)</span></span>;
+            <span class="hljs-keyword">if</span> (!binding.resolved) {   <span class="hljs-comment">// 持锁后二次确认</span>
+                <span class="hljs-keyword">auto</span>&amp; <span class="hljs-built_in">stack</span> = resolutionStack();
+                <span class="hljs-built_in">stack</span>.push_back(key);
+                binding.instance = binding.factory(*<span class="hljs-keyword">this</span>);
+                binding.resolved = <span class="hljs-literal">true</span>;
+                <span class="hljs-built_in">stack</span>.pop_back();
+            }
+        }
+        <span class="hljs-keyword">return</span> binding.instance;
+    }
+    
+    <span class="hljs-keyword">case</span> BindingType::Transient:
+    <span class="hljs-keyword">default</span>: {
+        <span class="hljs-comment">// 瞬态：每次创建新实例，无共享状态，无需加锁</span>
+        <span class="hljs-keyword">auto</span>&amp; <span class="hljs-built_in">stack</span> = resolutionStack();
+        <span class="hljs-built_in">stack</span>.push_back(key);
+        <span class="hljs-keyword">auto</span> result = binding.factory(*<span class="hljs-keyword">this</span>);
+        <span class="hljs-built_in">stack</span>.pop_back();
+        <span class="hljs-keyword">return</span> result;
+    }
+    }
+}
+</div></code></pre>
+<p><strong>为什么用 <code>recursive_mutex</code> 而非 <code>mutex</code>？</strong><br>
+工厂函数内部可能调用 <code>container.make&lt;T2&gt;()</code>，而 <code>T2</code> 的工厂又可能调用 <code>make&lt;T3&gt;()</code>。若使用普通 <code>mutex</code>，同线程重入会造成死锁。<code>recursive_mutex</code> 允许同一线程多次加锁，从而支持这种嵌套解析场景。</p>
+<h3 id="36-%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E6%A3%80%E6%B5%8B">3.6 循环依赖检测</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// container.cpp:16（thread_local 解析栈）</span>
+<span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::type_index&gt;&amp; <span class="hljs-title">Container::resolutionStack</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">thread_local</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::type_index&gt; s_stack;
+    <span class="hljs-keyword">return</span> s_stack;
+}
+</div></code></pre>
+<p><strong><code>thread_local</code> 的作用：</strong></p>
+<ul>
+<li>每个线程拥有<strong>独立的解析栈</strong>，多线程并发调用 <code>make&lt;T&gt;()</code> 时各线程的 push/pop 互不干扰</li>
+<li>使用<strong>函数内 <code>thread_local</code> 静态变量</strong>，是 C++11 保证线程安全初始化的惯用做法</li>
+</ul>
+<p><strong>检测逻辑：</strong></p>
+<pre class="hljs"><code><div>make&lt;A&gt;() → stack: [A]
+  make&lt;B&gt;() → stack: [A, B]
+    make&lt;A&gt;() → stack: [A, B] 中已有 A → 抛出 CircularDependencyException
+</div></code></pre>
+<h3 id="37-%E4%B8%8A%E4%B8%8B%E6%96%87%E7%BB%91%E5%AE%9A%E5%AE%9E%E7%8E%B0">3.7 上下文绑定实现</h3>
+<p>上下文绑定通过 <strong>Builder 模式（链式调用）+ <code>std::type_index</code> 二维映射</strong> 实现：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// container.h:376（ContextualBindingBuilder）</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ContextualBindingBuilder</span> {</span>
+    Container&amp;      container_;
+    <span class="hljs-built_in">std</span>::type_index whenType_;   <span class="hljs-comment">// "当解析 A 时"</span>
+    <span class="hljs-built_in">std</span>::type_index needsType_;  <span class="hljs-comment">// "需要 B"</span>
+
+    <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Give&gt;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">give</span><span class="hljs-params">()</span> </span>{
+        FactoryFn fn = [](Container&amp;) -&gt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">void</span>&gt; {
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;Give&gt;();
+        };
+        <span class="hljs-comment">// 存入二维映射：contextualBindings_[when][needs] = factory</span>
+        container_.contextualBindings_[whenType_][needsType_] = <span class="hljs-built_in">std</span>::move(fn);
+    }
+};
+</div></code></pre>
+<p><strong>使用方式：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 当 OrderController 需要 ILogger 时，给它 FileLogger</span>
+container.when&lt;OrderController&gt;()
+         .needs&lt;ILogger&gt;()
+         .give&lt;FileLogger&gt;();
+
+<span class="hljs-comment">// 而当 UserController 需要 ILogger 时，给它 DatabaseLogger</span>
+container.when&lt;UserController&gt;()
+         .needs&lt;ILogger&gt;()
+         .give([](Container&amp; c){ <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;DatabaseLogger&gt;(c.make&lt;IDatabase&gt;()); });
+</div></code></pre>
+<blockquote>
+<p><strong>解析栈的双重用途：</strong> 解析栈不仅用于循环依赖检测，还用于上下文绑定中<strong>识别调用方身份</strong>（<code>stack.back()</code> 即当前调用者）。</p>
+</blockquote>
+<h3 id="38-extend-%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F">3.8 extend() 装饰器模式</h3>
+<p><code>extend()</code> 是对已注册绑定的<strong>装饰/扩展</strong>，典型用于 AOP（面向切面编程）：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// container.h:162</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Abstract&gt;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">extend</span><span class="hljs-params">(
+    <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;Abstract&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;Abstract&gt;, Container&amp;)&gt; decorator)</span>
+</span>{
+    <span class="hljs-keyword">auto</span> key = <span class="hljs-built_in">std</span>::type_index(<span class="hljs-keyword">typeid</span>(Abstract));
+    <span class="hljs-keyword">auto</span> it  = typeBindings_.find(key);
+    
+    <span class="hljs-comment">// Instance 绑定已是固化实例，无法再包裹工厂</span>
+    <span class="hljs-keyword">if</span> (it-&gt;second.type == BindingType::Instance) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-built_in">std</span>::runtime_error(<span class="hljs-string">"[Container::extend] Cannot extend an Instance binding..."</span>);
+    }
+
+    <span class="hljs-comment">// 保存原工厂，用新工厂包裹</span>
+    FactoryFn original = it-&gt;second.factory;
+    it-&gt;second.factory = [original, dec = <span class="hljs-built_in">std</span>::move(decorator)](Container&amp; c) -&gt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">void</span>&gt;
+    {
+        <span class="hljs-keyword">auto</span> base = <span class="hljs-built_in">std</span>::static_pointer_cast&lt;Abstract&gt;(original(c));
+        <span class="hljs-keyword">return</span> dec(base, c);   <span class="hljs-comment">// 将原始实例传入装饰器</span>
+    };
+    
+    <span class="hljs-comment">// 已缓存的单例需要重置（让装饰器生效）</span>
+    it-&gt;second.resolved = <span class="hljs-literal">false</span>;
+    it-&gt;second.instance.reset();
+}
+</div></code></pre>
+<p><strong>使用场景（日志代理）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 在 FileLogger 外层包裹 LoggingProxy（添加时间戳等）</span>
+app.extend&lt;ILogger&gt;([](<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;ILogger&gt; base, Container&amp;) {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;LoggingProxy&gt;(base);
+});
+</div></code></pre>
+<h3 id="39-tag-%E6%A0%87%E7%AD%BE%E7%B3%BB%E7%BB%9F">3.9 tag() 标签系统</h3>
+<p>标签系统实现<strong>批量解析同一接口的多个实现</strong>（C++17 折叠表达式）：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// container.h:257 — 注册标签</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span>... Abstracts&gt;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">tag</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; label)</span>
+</span>{
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::type_index&gt; indices;
+    (indices.push_back(<span class="hljs-built_in">std</span>::type_index(<span class="hljs-keyword">typeid</span>(Abstracts))), ...);  <span class="hljs-comment">// C++17 折叠</span>
+    typeTags_[label] = <span class="hljs-built_in">std</span>::move(indices);
+}
+
+<span class="hljs-comment">// container.h:269 — 类型化解析（推荐）</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Base&gt;
+<span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;Base&gt;&gt; <span class="hljs-title">taggedAs</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; label)</span>
+</span>{
+    <span class="hljs-keyword">auto</span> raw = tagged(label);
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;Base&gt;&gt; result;
+    result.reserve(raw.size());
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; v : raw)
+        result.push_back(<span class="hljs-built_in">std</span>::static_pointer_cast&lt;Base&gt;(v));
+    <span class="hljs-keyword">return</span> result;
+}
+</div></code></pre>
+<p><strong>使用场景（事件处理器批量注册）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 注册多个处理器到同一标签</span>
+app.bind&lt;MouseEventHandler&gt;();
+app.bind&lt;KeyboardEventHandler&gt;();
+app.tag&lt;MouseEventHandler, KeyboardEventHandler&gt;(<span class="hljs-string">"event-handlers"</span>);
+
+<span class="hljs-comment">// 批量解析所有处理器</span>
+<span class="hljs-keyword">auto</span> handlers = app.taggedAs&lt;IEventHandler&gt;(<span class="hljs-string">"event-handlers"</span>);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; h : handlers) h-&gt;initialize();
+</div></code></pre>
+<h3 id="310-application-%E4%B8%8E-serviceprovider-%E5%8D%8F%E4%BD%9C">3.10 Application 与 ServiceProvider 协作</h3>
+<p><strong>两阶段引导（Bootstrap）的必要性：</strong></p>
+<p>若只有一个阶段，<code>doRegister()</code> 阶段就可以调用 <code>make&lt;T&gt;()</code>，但此时其他 Provider 可能尚未注册，导致解析失败。两阶段设计确保所有服务先注册，再使用。</p>
+<pre class="hljs"><code><div>registerProviders()                 bootProviders()
+    │                                   │
+    ├─ Provider1.doRegister()           ├─ Provider1.boot()  ← 可安全 make&lt;T&gt;()
+    ├─ Provider2.doRegister()           ├─ Provider2.boot()
+    └─ Provider3.doRegister()           └─ Provider3.boot()
+</div></code></pre>
+<p><strong>延迟加载 Provider（Deferred）的实现：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// application.cpp:46</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Application::onBindingNotFound</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::type_index <span class="hljs-comment">/*key*/</span>)</span>
+</span>{
+    <span class="hljs-comment">// 遍历所有尚未注册的 Deferred Provider</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; provider : providers_) {
+        <span class="hljs-keyword">if</span> (provider-&gt;isDeferred()
+            &amp;&amp; deferredRegistered_.find(provider.get()) == deferredRegistered_.end())
+        {
+            provider-&gt;doRegister();
+            deferredRegistered_.insert(provider.get());  <span class="hljs-comment">// 防重入</span>
+        }
+    }
+}
+</div></code></pre>
+<p><strong>设计取舍说明：</strong><br>
+此处采用&quot;批量触发所有 Deferred Provider&quot;而非&quot;精准匹配&quot;的策略，原因是不要求 Provider 实现 <code>provides()</code> 方法自报其注册的类型，简化接口。代价是首次 miss 时有一次完整遍历，在插件数量不多的场景下完全可接受。</p>
+<h3 id="311-facade-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F%E5%AE%9E%E7%8E%B0">3.11 Facade 外观模式实现</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// common/core/container/facade.h</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Abstract&gt;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Facade</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;Abstract&gt; <span class="hljs-title">getFacadeRoot</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> Application::instance()-&gt;make&lt;Abstract&gt;();
+    }
+    <span class="hljs-function"><span class="hljs-keyword">static</span> Abstract* <span class="hljs-title">resolve</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> getFacadeRoot().get();
+    }
+<span class="hljs-keyword">protected</span>:
+    Facade()  = <span class="hljs-keyword">delete</span>;   <span class="hljs-comment">// 禁止实例化</span>
+    ~Facade() = <span class="hljs-keyword">delete</span>;
+};
+</div></code></pre>
+<p><strong>设计精简之处：</strong></p>
+<ul>
+<li>整个 Facade 只有两个方法，本质是 <code>Application::instance()-&gt;make&lt;T&gt;()</code> 的语法糖</li>
+<li><code>protected</code> 删除构造函数，强制 <code>Facade</code> 作为纯静态工具类使用</li>
+<li>具体 Facade 子类只需一行：<code>class Log : public Facade&lt;ILogger&gt; {};</code></li>
+</ul>
+<h3 id="312-%E5%8A%A8%E6%80%81%E5%91%BD%E5%90%8D%E7%BB%91%E5%AE%9A%E4%B8%8E%E5%8F%8D%E5%B0%84%E8%B0%83%E7%94%A8">3.12 动态命名绑定与反射调用</h3>
+<p><strong><code>MethodDispatcher</code> — 类型擦除的方法分发表：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// namedservice.h:41</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MethodDispatcher</span> {</span>
+    <span class="hljs-comment">// 底层调用签名：void 指针 + 参数列表 → 任意返回值</span>
+    <span class="hljs-keyword">using</span> InvokeFn = <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-built_in">std</span>::any(<span class="hljs-keyword">void</span>* instance, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::any&gt; args)&gt;;
+    
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>, InvokeFn&gt; methods_;
+};
+</div></code></pre>
+<p><strong>成员函数注册的模板魔法（以1参数为例）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// namedservice.h:92</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Svc, <span class="hljs-keyword">typename</span> Ret, <span class="hljs-keyword">typename</span> A1&gt;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">on</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; name, Ret (Svc::*method)(A1))</span>
+</span>{
+    registerMethod(name, [method, name](<span class="hljs-keyword">void</span>* inst, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::any&gt; args) -&gt; <span class="hljs-built_in">std</span>::any {
+        <span class="hljs-comment">// 1. 将 void* 转回 Svc*（注册时已知类型）</span>
+        <span class="hljs-keyword">auto</span>* svc = <span class="hljs-keyword">static_cast</span>&lt;Svc*&gt;(inst);
+        <span class="hljs-comment">// 2. 从 std::any 中提取参数（类型擦除）</span>
+        <span class="hljs-keyword">auto</span>  a1  = <span class="hljs-built_in">std</span>::any_cast&lt;<span class="hljs-built_in">std</span>::<span class="hljs-keyword">decay_t</span>&lt;A1&gt;&gt;(args.at(<span class="hljs-number">0</span>));
+        <span class="hljs-comment">// 3. 调用实际成员函数</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">constexpr</span> (<span class="hljs-built_in">std</span>::is_void_v&lt;Ret&gt;) {
+            (svc-&gt;*method)(<span class="hljs-built_in">std</span>::move(a1));
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::any{};
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::any{(svc-&gt;*method)(<span class="hljs-built_in">std</span>::move(a1))};
+        }
+    });
+}
+</div></code></pre>
+<p><strong>属性 get/set 便捷注册：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 只读属性</span>
+d.readOnly(<span class="hljs-string">"level"</span>, &amp;FileLogger::level);   <span class="hljs-comment">// 自动注册 "get:level"</span>
+
+<span class="hljs-comment">// 读写属性</span>
+d.readWrite(<span class="hljs-string">"minLevel"</span>, &amp;FileLogger::minLevel, &amp;FileLogger::setMinLevel);
+<span class="hljs-comment">// 自动注册 "get:minLevel" 和 "set:minLevel"</span>
+</div></code></pre>
+<p><strong>调用链示意：</strong></p>
+<pre class="hljs"><code><div>调用方（不知道 FileLogger 类型）
+    ↓  handle.call(&quot;info&quot;, {&quot;hello&quot;})
+ServiceHandle::call()
+    ↓  dispatcher-&gt;invoke(&quot;info&quot;, rawPtr, {&quot;hello&quot;})
+MethodDispatcher::invoke()
+    ↓  从 methods_ 找到 &quot;info&quot; 对应的 InvokeFn
+InvokeFn（注册时 capture 了 &amp;FileLogger::info）
+    ↓  any_cast&lt;string&gt;(args[0])
+    ↓  static_cast&lt;FileLogger*&gt;(inst)-&gt;info(&quot;hello&quot;)
+实际执行
+</div></code></pre>
+<hr>
+<h2 id="4-mvvm-%E6%9E%B6%E6%9E%84--mvvm">4. MVVM 架构 — mvvm</h2>
+<h3 id="41-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3">4.1 设计思想</h3>
+<p>MVVM 模块基于 Qt 的信号槽机制构建，核心思想是：</p>
+<ul>
+<li><strong>ViewModel</strong> 以 <code>QHash&lt;QString, QVariant&gt;</code> 作为统一属性存储，用 <code>propertyChanged</code> 信号作为变更通知总线</li>
+<li><strong>DataBinding</strong> 将 Qt 控件的信号/槽自动连接到 ViewModel，消除手动同步代码</li>
+<li><strong>中间件管道</strong>以责任链 + 洋葱模式实现属性变更/命令执行的 AOP 横切关注点</li>
+</ul>
+<h3 id="42-%E6%A8%A1%E5%9D%97%E7%B1%BB%E5%9B%BE%E5%85%B3%E7%B3%BB">4.2 模块类图关系</h3>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+class ViewModel {
+  +getProperty(name)
+  +setProperty(name, value)
+  +registerProperty(name, defaultValue)
+  +beginBatchUpdate()
+  +endBatchUpdate()
+  +addPropertyMiddleware(mw)
+  +propertyChanged(name, value)
+}
+
+class DataBinding {
+  +bind(vm, name, widget)
+  +bindOneWay(vm, name, widget)
+  +bindEnabled(vm, name, widget)
+  +bindVisible(vm, name, widget)
+  +bindCommand(cmd, button)
+  +bindStructField(...)
+}
+
+class Command {
+  +execute()
+  +canExecute()
+  +setCanExecute(bool)
+  +setName(name)
+  +setViewModel(vm)
+  +addMiddleware(mw)
+  +run()
+  +canExecuteChanged(bool)
+}
+
+class FunctionalCommand {
+  -m_executeFunc
+  -m_canExecuteFunc
+  +execute()
+  +canExecute()
+  +updateCanExecute()
+}
+
+class PropertyMiddlewarePipeline {
+  +add(mw)
+  +run(ctx, terminal)
+  -dispatchAt(index, ctx, terminal)
+}
+
+class CommandMiddlewarePipeline {
+  +add(mw)
+  +run(ctx, terminal)
+  -dispatchAt(index, ctx, terminal)
+}
+
+class IPropertyMiddleware {
+  <<interface>>
+  +process(ctx, next)
+}
+
+class ICommandMiddleware {
+  <<interface>>
+  +process(ctx, next)
+}
+
+class PropertyContext {
+  +propertyName
+  +oldValue
+  +newValue
+  +viewModel
+  +cancelled
+}
+
+class CommandContext {
+  +commandName
+  +viewModel
+  +cancelled
+}
+
+FunctionalCommand --|> Command
+ViewModel --> PropertyMiddlewarePipeline
+Command --> CommandMiddlewarePipeline
+PropertyMiddlewarePipeline --> IPropertyMiddleware
+CommandMiddlewarePipeline --> ICommandMiddleware
+PropertyMiddlewarePipeline --> PropertyContext
+CommandMiddlewarePipeline --> CommandContext
+DataBinding --> ViewModel
+DataBinding --> Command
+</div></code></pre>
+<h4 id="%E5%85%B3%E7%B3%BB%E8%A7%A3%E8%AF%BB">关系解读</h4>
+<ul>
+<li><code>ViewModel</code> 是状态中心，<code>DataBinding</code> 是连接器，<code>Command</code> 是动作封装器。</li>
+<li>中间件并不直接附着在控件上，而是附着在 <code>ViewModel</code> 和 <code>Command</code> 上。</li>
+<li><code>PropertyContext</code> / <code>CommandContext</code> 是横切逻辑的数据载体，体现了 AOP 风格设计。</li>
+</ul>
+<h3 id="43-viewmodel-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90">4.3 ViewModel 源码分析</h3>
+<p><strong>属性存储：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// viewmodel.h:84</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ViewModel</span> :</span> <span class="hljs-keyword">public</span> QObject {
+    QHash&lt;QString, QVariant&gt;   m_properties;       <span class="hljs-comment">// 核心存储：O(1) 查找</span>
+    <span class="hljs-keyword">bool</span>                       m_inBatchUpdate;    <span class="hljs-comment">// 批量更新标志</span>
+    QHash&lt;QString, QVariant&gt;   m_pendingChanges;   <span class="hljs-comment">// 批量更新暂存</span>
+    PropertyMiddlewarePipeline m_propertyPipeline; <span class="hljs-comment">// 中间件管道</span>
+};
+</div></code></pre>
+<p><strong><code>setProperty()</code> — 属性写入的两条路径：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// viewmodel.cpp:28</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ViewModel::setProperty</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QString &amp;propertyName, <span class="hljs-keyword">const</span> QVariant &amp;value)</span>
+</span>{
+    <span class="hljs-keyword">auto</span> it = m_properties.find(propertyName);
+    <span class="hljs-keyword">if</span> (it == m_properties.end()) <span class="hljs-keyword">return</span>;   <span class="hljs-comment">// 未注册的属性直接忽略</span>
+    <span class="hljs-keyword">if</span> (it.value() == value) <span class="hljs-keyword">return</span>;        <span class="hljs-comment">// 值未变，不触发信号</span>
+
+    <span class="hljs-keyword">if</span> (m_propertyPipeline.isEmpty()) {
+        <span class="hljs-comment">// ── 快速路径（无中间件）──</span>
+        it.value() = value;
+        <span class="hljs-keyword">if</span> (m_inBatchUpdate) {
+            m_pendingChanges[propertyName] = value;  <span class="hljs-comment">// 暂存，不立即发信号</span>
+        } <span class="hljs-keyword">else</span> {
+            emit propertyChanged(propertyName, value);
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// ── 中间件路径（洋葱模式）──</span>
+        PropertyContext ctx(propertyName, it.value(), value, <span class="hljs-keyword">this</span>);
+        m_propertyPipeline.run(ctx, [<span class="hljs-keyword">this</span>, &amp;it](PropertyContext &amp;c) {
+            <span class="hljs-keyword">if</span> (!c.cancelled) {
+                it.value() = c.newValue;   <span class="hljs-comment">// 使用中间件可能修改过的新值</span>
+                <span class="hljs-keyword">if</span> (m_inBatchUpdate) {
+                    m_pendingChanges[c.propertyName] = c.newValue;
+                } <span class="hljs-keyword">else</span> {
+                    emit propertyChanged(c.propertyName, c.newValue);
+                }
+            }
+        });
+    }
+}
+</div></code></pre>
+<p><strong>性能优化分析：</strong></p>
+<ul>
+<li><code>m_propertyPipeline.isEmpty()</code> 快速路径：大多数 ViewModel 不使用中间件，直接走 O(1) 写入，避免中间件链的函数调用开销</li>
+<li><code>if (it.value() == value) return</code> 去重判断：防止相同值触发不必要的信号发射</li>
+</ul>
+<p><strong>批量更新实现：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// viewmodel.cpp:77</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ViewModel::endBatchUpdateImpl</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">if</span> (!m_inBatchUpdate) <span class="hljs-keyword">return</span>;
+    m_inBatchUpdate = <span class="hljs-literal">false</span>;
+    
+    <span class="hljs-comment">// 一次性发出所有暂存的变更信号</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it = m_pendingChanges.constBegin(); it != m_pendingChanges.constEnd(); ++it)
+        <span class="hljs-function">emit <span class="hljs-title">propertyChanged</span><span class="hljs-params">(it.key(), it.value())</span></span>;
+    m_pendingChanges.clear();
+}
+</div></code></pre>
+<blockquote>
+<p><strong>设计说明：</strong> <code>m_pendingChanges</code> 是 <code>QHash</code>，同一属性的多次变更只保留最终值，自然实现了&quot;批量去重&quot;语义。</p>
+</blockquote>
+<h3 id="44-%E5%B1%9E%E6%80%A7%E5%AE%8F%E5%B1%95%E5%BC%80%E5%88%86%E6%9E%90">4.4 属性宏展开分析</h3>
+<p><code>VIEWMODEL_PROPERTY(QString, userName, UserName)</code> 展开后：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 等效于：</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function">QString <span class="hljs-title">userName</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> getProperty(<span class="hljs-string">"userName"</span>).value&lt;QString&gt;();
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setUserName</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QString &amp;value)</span> </span>{
+        <span class="hljs-keyword">if</span> (userName() != value) {
+            setProperty(<span class="hljs-string">"userName"</span>, QVariant::fromValue(value));  <span class="hljs-comment">// 通过管道写入</span>
+            <span class="hljs-function">emit <span class="hljs-title">userNameChanged</span><span class="hljs-params">()</span></span>;        <span class="hljs-comment">// 具名信号（编译期检查，更高效）</span>
+            <span class="hljs-function">emit <span class="hljs-title">propertyChanged</span><span class="hljs-params">(<span class="hljs-string">"userName"</span>, QVariant::fromValue(value))</span></span>;  <span class="hljs-comment">// 通用信号</span>
+        }
+    }
+<span class="hljs-keyword">private</span>:
+</div></code></pre>
+<p><strong>宏的双信号设计：</strong></p>
+<ul>
+<li><code>userNameChanged()</code> — 具名信号，供 View 精确连接，无需判断属性名，由编译器验证</li>
+<li><code>propertyChanged(name, value)</code> — 通用信号，供 <code>DataBinding</code> 等基础设施监听所有属性变更</li>
+</ul>
+<p><code>VIEWMODEL_STRUCT_PROPERTY(DeviceInfo, device, Device)</code> 额外生成 <code>modifyDevice()</code>：</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">modifyDevice</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">void</span>(DeviceInfo&amp;)&gt; modifier)</span> </span>{
+    DeviceInfo current = device();
+    modifier(current);   <span class="hljs-comment">// 原地修改结构体</span>
+    setDevice(current);  <span class="hljs-comment">// 整体替换触发信号</span>
+}
+</div></code></pre>
+<p>这个方法让调用方可以以 <strong>&quot;字段级修改&quot;的形式操作结构体</strong>，而框架内部仍以&quot;整体替换&quot;的方式发信号，简化了复杂结构体属性的使用。</p>
+<h3 id="45-%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%AE%A1%E9%81%93%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">4.5 中间件管道实现原理</h3>
+<p><strong><code>PropertyMiddlewarePipeline::dispatchAt()</code> — 递归索引分发：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// middlewarepipeline.cpp:45</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PropertyMiddlewarePipeline::dispatchAt</span><span class="hljs-params">(
+    <span class="hljs-built_in">std</span>::<span class="hljs-keyword">size_t</span> index, PropertyContext &amp;ctx, <span class="hljs-keyword">const</span> Terminal &amp;terminal)</span> <span class="hljs-keyword">const</span>
+</span>{
+    <span class="hljs-keyword">if</span> (index &gt;= m_middlewares.size()) {
+        <span class="hljs-comment">// ── 链条末端：执行属性写入终端逻辑 ──</span>
+        <span class="hljs-keyword">if</span> (terminal) terminal(ctx);
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> &amp;mw = m_middlewares[index];
+    <span class="hljs-comment">// ── 为当前中间件构造 next 函数 ──</span>
+    <span class="hljs-comment">// next 是一个 lambda，调用时递归进入下一层</span>
+    mw-&gt;process(ctx, [<span class="hljs-keyword">this</span>, index, terminal](PropertyContext &amp;c) {
+        dispatchAt(index + <span class="hljs-number">1</span>, c, terminal);
+    });
+}
+</div></code></pre>
+<p><strong>执行流程（以 2 个中间件为例）：</strong></p>
+<pre class="hljs"><code><div>dispatchAt(0)
+└─ MW[0].process(ctx, next0)        ← MW[0] 前置逻辑
+    └─ next0(ctx)
+        └─ dispatchAt(1)
+            └─ MW[1].process(ctx, next1)   ← MW[1] 前置逻辑
+                └─ next1(ctx)
+                    └─ dispatchAt(2)
+                        └─ terminal(ctx)   ← 实际写入属性
+                ← MW[1] 后置逻辑
+    ← MW[0] 后置逻辑
+</div></code></pre>
+<p><strong>设计对比：</strong> 相比常见的&quot;遍历调用 <code>preProcess()</code> + <code>postProcess()</code>&quot;的两段式中间件，本框架采用<strong>单函数 <code>process(ctx, next)</code> 的洋葱模式</strong>，让中间件作者能在 <code>next()</code> 前后任意插入逻辑，且可以通过不调用 <code>next()</code> 来完全中断管道，更加灵活。</p>
+<h3 id="46-command-%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%E5%AE%9E%E7%8E%B0">4.6 Command 命令模式实现</h3>
+<p><strong><code>Command::run()</code> — 经中间件管道的执行路径：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// command.cpp</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Command::run</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">if</span> (!canExecute()) <span class="hljs-keyword">return</span>;   <span class="hljs-comment">// 快速路径：不可执行直接返回</span>
+    
+    <span class="hljs-keyword">if</span> (m_cmdPipeline.isEmpty()) {
+        execute();   <span class="hljs-comment">// 无中间件，直接执行</span>
+        <span class="hljs-keyword">return</span>;
+    }
+    
+    <span class="hljs-comment">// 经中间件管道执行</span>
+    <span class="hljs-function">CommandContext <span class="hljs-title">ctx</span><span class="hljs-params">(m_name, m_viewModel)</span></span>;
+    m_cmdPipeline.run(ctx, [<span class="hljs-keyword">this</span>](CommandContext &amp;c) {
+        <span class="hljs-keyword">if</span> (!c.cancelled) {
+            execute();   <span class="hljs-comment">// 中间件未取消，执行实际命令</span>
+        }
+    });
+}
+</div></code></pre>
+<p><strong><code>FunctionalCommand</code> — 函数式命令实现：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// command.h:90</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FunctionalCommand</span> :</span> <span class="hljs-keyword">public</span> Command {
+    <span class="hljs-keyword">using</span> ExecuteFunction    = <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">void</span>()&gt;;
+    <span class="hljs-keyword">using</span> CanExecuteFunction = <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">bool</span>()&gt;;
+
+    ExecuteFunction    m_executeFunc;
+    CanExecuteFunction m_canExecuteFunc;
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">execute</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">if</span> (m_executeFunc) m_executeFunc();
+    }
+    
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">canExecute</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">if</span> (m_canExecuteFunc)
+            <span class="hljs-keyword">return</span> Command::canExecute() &amp;&amp; m_canExecuteFunc();
+        <span class="hljs-keyword">return</span> Command::canExecute();
+    }
+    
+    <span class="hljs-comment">// 重新计算可执行状态并发出信号</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">updateCanExecute</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">bool</span> can = canExecute();
+        <span class="hljs-keyword">if</span> (can != m_canExecute) {
+            m_canExecute = can;
+            <span class="hljs-function">emit <span class="hljs-title">canExecuteChanged</span><span class="hljs-params">(can)</span></span>;
+        }
+    }
+};
+</div></code></pre>
+<h3 id="47-databinding-%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E5%AE%9E%E7%8E%B0">4.7 DataBinding 双向绑定实现</h3>
+<p><strong>以 <code>QLineEdit</code> 双向绑定为例分析实现原理：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// databinding.cpp</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">DataBinding::bind</span><span class="hljs-params">(ViewModel *viewModel, <span class="hljs-keyword">const</span> QString &amp;propertyName, QLineEdit *lineEdit)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (!viewModel || !lineEdit || !viewModel-&gt;hasProperty(propertyName)) <span class="hljs-keyword">return</span>;
+    
+    <span class="hljs-comment">// ── ViewModel → View（初始值同步）──</span>
+    lineEdit-&gt;setText(viewModel-&gt;getProperty(propertyName).toString());
+    
+    <span class="hljs-comment">// ── ViewModel → View（变更监听）──</span>
+    QObject::connect(viewModel, &amp;ViewModel::propertyChanged, lineEdit,
+        [lineEdit, propertyName](<span class="hljs-keyword">const</span> QString &amp;name, <span class="hljs-keyword">const</span> QVariant &amp;val) {
+            <span class="hljs-keyword">if</span> (name == propertyName) {
+                <span class="hljs-comment">// 防止 View → ViewModel → propertyChanged → View 的信号回路</span>
+                <span class="hljs-keyword">if</span> (lineEdit-&gt;text() != val.toString()) {
+                    lineEdit-&gt;setText(val.toString());
+                }
+            }
+        });
+    
+    <span class="hljs-comment">// ── View → ViewModel（用户输入）──</span>
+    QObject::connect(lineEdit, &amp;QLineEdit::textChanged, viewModel,
+        [viewModel, propertyName](<span class="hljs-keyword">const</span> QString &amp;text) {
+            viewModel-&gt;setProperty(propertyName, text);
+        });
+}
+</div></code></pre>
+<p><strong>结构体字段绑定（<code>bindStructField&lt;T&gt;</code>）的工作原理：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// databinding.h:128（模板实现）</span>
+<span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> Struct&gt;
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">bindStructField</span><span class="hljs-params">(ViewModel *vm, <span class="hljs-keyword">const</span> QString &amp;structProp,
+                            <span class="hljs-built_in">std</span>::function&lt;QString(<span class="hljs-keyword">const</span> Struct &amp;)&gt; getField,
+                            <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">void</span>(Struct &amp;, <span class="hljs-keyword">const</span> QString &amp;)&gt; setField,
+                            QLineEdit *widget)</span>
+</span>{
+    <span class="hljs-comment">// 初始化同步</span>
+    widget-&gt;setText(getField(vm-&gt;getProperty(structProp).value&lt;Struct&gt;()));
+    
+    <span class="hljs-comment">// ViewModel → View（整体结构体更新后，提取字段显示）</span>
+    QObject::connect(vm, &amp;ViewModel::propertyChanged, widget,
+        [widget, structProp, getField](<span class="hljs-keyword">const</span> QString &amp;name, <span class="hljs-keyword">const</span> QVariant &amp;val) {
+            <span class="hljs-keyword">if</span> (name == structProp)
+                widget-&gt;setText(getField(val.value&lt;Struct&gt;()));  <span class="hljs-comment">// 提取字段</span>
+        });
+    
+    <span class="hljs-comment">// View → ViewModel（修改字段后整体写回）</span>
+    QObject::connect(widget, &amp;QLineEdit::textChanged, vm,
+        [vm, structProp, setField](<span class="hljs-keyword">const</span> QString &amp;text) {
+            Struct s = vm-&gt;getProperty(structProp).value&lt;Struct&gt;();  <span class="hljs-comment">// 读取完整结构体</span>
+            setField(s, text);                                        <span class="hljs-comment">// 修改字段</span>
+            vm-&gt;setProperty(structProp, QVariant::fromValue(s));      <span class="hljs-comment">// 整体写回</span>
+        });
+}
+</div></code></pre>
+<blockquote>
+<p><strong>设计亮点：</strong> 结构体字段绑定通过 lambda 的&quot;读→改→写&quot;模式，在保持 ViewModel 以整体结构体为单位发信号的前提下，为 UI 层提供了细粒度的字段级操作接口，两者职责分离完美。</p>
+</blockquote>
+<hr>
+<h2 id="5-ui-%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD--uibase">5. UI 基础设施 — uibase</h2>
+<h3 id="51-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3">5.1 设计思想</h3>
+<p>uibase 提供框架级的 UI 基础服务，均采用<strong>单例模式</strong>管理全局状态。各管理器通过信号通知变更，UI 组件通过连接信号自动响应，避免直接持有管理器引用的耦合。</p>
+<table>
+<thead>
+<tr>
+<th>管理器</th>
+<th>设计模式</th>
+<th>通信方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ThemeManager</code></td>
+<td>Singleton</td>
+<td><code>themeChanged</code> 信号</td>
+</tr>
+<tr>
+<td><code>LanguageManager</code></td>
+<td>Singleton</td>
+<td><code>languageChanged</code> 信号</td>
+</tr>
+<tr>
+<td><code>PermService</code></td>
+<td>Singleton</td>
+<td><code>permissionsChanged</code> 信号</td>
+</tr>
+<tr>
+<td><code>PrimaryNavigationManager</code></td>
+<td>对象实例</td>
+<td><code>pageChanged</code> 信号</td>
+</tr>
+<tr>
+<td><code>SecondaryNavigationManager</code></td>
+<td>对象实例</td>
+<td><code>pageChanged</code> 信号</td>
+</tr>
+<tr>
+<td><code>CFramelessWindow</code></td>
+<td>窗口实例</td>
+<td>Qt 窗口事件</td>
+</tr>
+<tr>
+<td><code>PageWidget</code></td>
+<td>页面实例</td>
+<td><code>onLoad</code>/<code>onShow</code>/<code>onHide</code> 虚函数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-%E6%A8%A1%E5%9D%97%E7%B1%BB%E5%9B%BE%E5%85%B3%E7%B3%BB">5.2 模块类图关系</h3>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+class PageWidget {
+  +onLoad()
+  +retranslateUi()
+  +applyTheme()
+  +setPageId(id)
+  +setPageTitle(title)
+}
+
+class ThemeManager {
+  +instance()
+  +setTheme(theme)
+  +toggleTheme()
+  +applicationStyleSheet()
+  +themeChanged(theme)
+}
+
+class LanguageManager {
+  +instance()
+  +switchLanguage(...)
+  +languageChanged()
+}
+
+class PermService {
+  +instance()
+  +canNav(key)
+  +canSubPage(nav, sub)
+  +canAction(key)
+  +reloadForUser(userId)
+  +permissionsChanged()
+}
+
+class PrimaryNavigationManager {
+  +addNavigation(id, titleKey, page)
+  +switchToPage(id)
+  +setNavItemVisible(id, visible)
+  +pageChanged(id)
+}
+
+class SecondaryNavigationManager {
+  +addNavigation(id, titleKey, page)
+  +switchToPage(id)
+  +setNavItemVisible(id, visible)
+  +pageChanged(id)
+}
+
+class NavigationItem {
+  +id
+  +titleKey
+  +page
+  +button
+}
+
+PrimaryNavigationManager --> NavigationItem : 管理多个
+SecondaryNavigationManager --> NavigationItem : 管理多个
+NavigationItem --> PageWidget : 持有页面
+PrimaryNavigationManager --> QStackedLayout : 切页容器
+SecondaryNavigationManager --> QStackedLayout : 切页容器
+ThemeManager --> QObject
+LanguageManager --> QObject
+PermService --> QObject
+PageWidget --> ThemeManager : 监听主题
+PageWidget --> LanguageManager : 监听语言
+</div></code></pre>
+<h4 id="%E5%85%B3%E7%B3%BB%E8%A7%A3%E8%AF%BB">关系解读</h4>
+<ul>
+<li><code>PageWidget</code> 是页面抽象基类，导航管理器负责“让谁显示”，页面自身负责“显示后做什么”。</li>
+<li>导航项不只是配置项，还绑定了运行期对象：按钮和页面实例。</li>
+<li><code>ThemeManager</code>、<code>LanguageManager</code>、<code>PermService</code> 不是业务对象，而是全局 UI 环境管理器。</li>
+</ul>
+<h3 id="53-%E5%AF%BC%E8%88%AA%E7%AE%A1%E7%90%86%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90">5.3 导航管理器源码分析</h3>
+<p><code>PrimaryNavigationManager</code> 和 <code>SecondaryNavigationManager</code> 均持有：</p>
+<ul>
+<li><code>QWidget* m_navBar</code> — 导航按钮容器</li>
+<li><code>QStackedLayout* m_contentLayout</code> — 页面堆栈布局</li>
+<li><code>QMap&lt;QString, NavigationItem&gt; m_items</code> — 有序导航项映射（<code>QMap</code> 保证插入顺序）</li>
+</ul>
+<p><strong>动态显示/隐藏的实现逻辑：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PrimaryNavigationManager::setNavItemVisible</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QString &amp;id, <span class="hljs-keyword">bool</span> visible)</span>
+</span>{
+    <span class="hljs-keyword">auto</span> it = m_items.find(id);
+    <span class="hljs-keyword">if</span> (it == m_items.end()) <span class="hljs-keyword">return</span>;
+    
+    it-&gt;button-&gt;setVisible(visible);   <span class="hljs-comment">// 隐藏按钮（页面仍保留在堆栈中）</span>
+    
+    <span class="hljs-comment">// 若隐藏的是当前激活页，自动跳转到第一个可见页</span>
+    <span class="hljs-keyword">if</span> (!visible &amp;&amp; m_currentPageId == id) {
+        switchToFirstVisible();
+    }
+}
+</div></code></pre>
+<blockquote>
+<p><strong>设计说明：</strong> 页面不从 <code>QStackedLayout</code> 中移除，只隐藏按钮。这样：1）避免频繁的布局重建开销；2）页面状态得以保留；3）重新显示时无需重新加载。</p>
+</blockquote>
+<h3 id="54-thememanager-%E4%B8%BB%E9%A2%98%E7%AE%A1%E7%90%86">5.4 ThemeManager 主题管理</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// thememanager.h</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThemeManager</span> :</span> <span class="hljs-keyword">public</span> QObject {
+    Q_OBJECT
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">enum</span> Theme { Light, Dark };
+    <span class="hljs-function"><span class="hljs-keyword">static</span> ThemeManager *<span class="hljs-title">instance</span><span class="hljs-params">()</span></span>;   <span class="hljs-comment">// Meyer's Singleton</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setTheme</span><span class="hljs-params">(Theme theme)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">toggleTheme</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function">QString <span class="hljs-title">applicationStyleSheet</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+
+signals:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">themeChanged</span><span class="hljs-params">(ThemeManager::Theme newTheme)</span></span>;
+    
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">ThemeManager</span><span class="hljs-params">(QObject *parent = <span class="hljs-literal">nullptr</span>)</span></span>;   <span class="hljs-comment">// 私有构造函数</span>
+    Theme m_theme;
+};
+
+<span class="hljs-comment">// 全局访问宏（简化调用）</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> TM (ThemeManager::instance())</span>
+</div></code></pre>
+<p><strong>Meyer's Singleton 实现（线程安全）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-function">ThemeManager *<span class="hljs-title">ThemeManager::instance</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">static</span> ThemeManager instance;   <span class="hljs-comment">// C++11 保证静态局部变量的线程安全初始化</span>
+    <span class="hljs-keyword">return</span> &amp;instance;
+}
+</div></code></pre>
+<h3 id="55-languagemanager-%E5%9B%BD%E9%99%85%E5%8C%96">5.5 LanguageManager 国际化</h3>
+<p><code>LanguageManager</code> 内置了一个 <code>QHash&lt;QString, QPair&lt;QString, QString&gt;&gt;</code> 翻译字典，键为翻译键，值为中英文对：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// languagemanager.h</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LanguageManager</span> :</span> <span class="hljs-keyword">public</span> QObject {
+    Language m_language;
+    QHash&lt;QString, QPair&lt;QString, QString&gt;&gt; m_dict;  <span class="hljs-comment">// key → (中文, English)</span>
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// 翻译查询：根据 key 返回当前语言的文本</span>
+    <span class="hljs-function">QString <span class="hljs-title">t</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QString &amp;key)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-comment">// 带参数翻译：支持 %1 占位符替换</span>
+    <span class="hljs-function">QString <span class="hljs-title">t</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QString &amp;key, <span class="hljs-keyword">const</span> QString &amp;arg1)</span> <span class="hljs-keyword">const</span></span>;
+};
+</div></code></pre>
+<p><strong>全局宏简化调用：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> LM  (LanguageManager::instance())</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> TR(key) (LanguageManager::instance()-&gt;t(key))</span>
+
+<span class="hljs-comment">// 使用：</span>
+button-&gt;setText(TR(<span class="hljs-string">"nav.home"</span>));   <span class="hljs-comment">// 自动返回当前语言文本</span>
+</div></code></pre>
+<h3 id="56-permservice-%E6%9D%83%E9%99%90%E8%BF%90%E8%A1%8C%E6%97%B6">5.6 PermService 权限运行时</h3>
+<p><code>PermService</code>（<code>PS</code> 宏）提供导航、子页与操作的 grants 查询。各 UI 插件注册页面时调用 <code>registerNav</code> / <code>registerSubPage</code>；Permission 插件实现 <code>IPermInterface</code> 后端，登录后 <code>reloadForUser(userId)</code> 加载授权并 <code>emit permissionsChanged()</code>。</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// MainWindow::computeNavVisible</span>
+<span class="hljs-keyword">return</span> PS-&gt;canNav(navPageId);
+
+<span class="hljs-comment">// 登录成功（LoginViewModel）</span>
+ps-&gt;reloadForUser(result.session.userId);
+</div></code></pre>
+<blockquote>
+<p>已于 2026-06 移除 <code>PermissionManager</code>、<code>MenuConfigManager</code> 及 <code>menu.json</code> / <code>roles.json</code>。</p>
+</blockquote>
+<h3 id="57-pagewidget-%E6%87%92%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2">5.7 PageWidget 懒加载页面</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// pagewidget.h</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PageWidget</span> :</span> <span class="hljs-keyword">public</span> QWidget {
+<span class="hljs-keyword">protected</span>:
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onLoad</span><span class="hljs-params">()</span>        </span>{}   <span class="hljs-comment">// 首次显示时调用一次（初始化资源）</span>
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onShow</span><span class="hljs-params">()</span>        </span>{}   <span class="hljs-comment">// 每次显示时调用</span>
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onHide</span><span class="hljs-params">()</span>        </span>{}   <span class="hljs-comment">// 每次隐藏时调用</span>
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">retranslateUi</span><span class="hljs-params">()</span> </span>{}   <span class="hljs-comment">// 语言切换时调用</span>
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">applyTheme</span><span class="hljs-params">()</span>    </span>{}   <span class="hljs-comment">// 主题切换时调用</span>
+    
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ensureLoaded</span><span class="hljs-params">()</span></span>;   <span class="hljs-comment">// 触发懒加载（内部检查 m_loaded）</span>
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isLoaded</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> m_loaded; }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">bool</span> m_loaded = <span class="hljs-literal">false</span>;
+};
+</div></code></pre>
+<p><strong>懒加载执行时机：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PageWidget::showEvent</span><span class="hljs-params">(QShowEvent *event)</span>
+</span>{
+    ensureLoaded();   <span class="hljs-comment">// 首次显示时触发 onLoad()</span>
+    onShow();         <span class="hljs-comment">// 每次显示都触发</span>
+    QWidget::showEvent(event);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PageWidget::ensureLoaded</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">if</span> (!m_loaded) {
+        m_loaded = <span class="hljs-literal">true</span>;
+        onLoad();   <span class="hljs-comment">// 只调用一次</span>
+    }
+}
+</div></code></pre>
+<p><strong>PageWidget 的生命周期响应链：</strong></p>
+<pre class="hljs"><code><div>导航切换 switchToPage(id)
+    → QStackedLayout 切换显示页面
+    → PageWidget::showEvent()
+        → ensureLoaded() → onLoad()（首次）
+        → onShow()（每次）
+
+LanguageManager::languageChanged 信号
+    → PageWidget::onLanguageChanged() 槽
+    → retranslateUi()（子类实现）
+
+ThemeManager::themeChanged 信号
+    → PageWidget::onThemeChanged() 槽
+    → applyTheme()（子类实现）
+</div></code></pre>
+<h3 id="58-cframelesswindow-%E6%97%A0%E8%BE%B9%E6%A1%86%E7%AA%97%E5%8F%A3">5.8 CFramelessWindow 无边框窗口</h3>
+<p><code>CFramelessWindow</code> 继承自 <code>QMainWindow</code>，通过平台特定方式实现无边框 + 自定义拖拽：</p>
+<p><strong>Windows 实现原理（Win32 消息拦截）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Windows 下拦截原生消息</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CFramelessWindow::nativeEvent</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QByteArray &amp;eventType, 
+                                    <span class="hljs-keyword">void</span> *message, <span class="hljs-keyword">long</span> *result)</span>
+</span>{
+    <span class="hljs-comment">// 处理 WM_NCHITTEST 消息，根据鼠标位置返回：</span>
+    <span class="hljs-comment">// HTCAPTION — 标题栏区域（可拖拽）</span>
+    <span class="hljs-comment">// HTLEFT/RIGHT/TOP/BOTTOM — 调整大小边界</span>
+    <span class="hljs-comment">// 白名单控件（按钮等）返回 HTCLIENT，不参与拖拽</span>
+}
+</div></code></pre>
+<p><strong>关键特性：</strong></p>
+<ul>
+<li><code>setTitleBar(QWidget*)</code> — 指定自定义标题栏区域（可拖动）</li>
+<li><code>addIgnoreWidget(QWidget*)</code> — 将控件加入白名单，不响应拖拽</li>
+<li><code>setCornerRadius(int)</code> — 设置窗口圆角（通过 <code>SetWindowRgn</code> 实现）</li>
+<li><code>setResizeable(bool)</code> — 控制窗口是否可调整大小</li>
+</ul>
+<p><strong>macOS 实现原理（鼠标事件处理）：</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// macOS 下通过重写鼠标事件实现拖拽</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CFramelessWindow::mousePressEvent</span><span class="hljs-params">(QMouseEvent *event)</span> </span>{
+    m_bMousePressed = <span class="hljs-literal">true</span>;
+    m_MousePos = event-&gt;globalPos();
+    m_WindowPos = <span class="hljs-keyword">this</span>-&gt;pos();
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CFramelessWindow::mouseMoveEvent</span><span class="hljs-params">(QMouseEvent *event)</span> </span>{
+    <span class="hljs-keyword">if</span> (m_bMousePressed) {
+        QPoint diff = event-&gt;globalPos() - m_MousePos;
+        <span class="hljs-keyword">this</span>-&gt;move(m_WindowPos + diff);   <span class="hljs-comment">// 跟随鼠标移动窗口</span>
+    }
+}
+</div></code></pre>
+<h3 id="59-imainwindowservice-%E4%B8%BB%E7%AA%97%E5%8F%A3%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3">5.9 IMainWindowService 主窗口服务接口</h3>
+<p><code>IMainWindowService</code> 是一个<strong>纯接口</strong>（不继承 <code>QObject</code>），通过 <code>Q_DECLARE_INTERFACE</code> 声明，实现了跨插件的主窗口服务访问：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// imainwindowservice.h</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IMainWindowService</span>
+{</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addPage</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QString &amp;id, <span class="hljs-keyword">const</span> QString &amp;titleKey,
+                         PageWidget *page, <span class="hljs-keyword">int</span> order = <span class="hljs-number">100</span>)</span> </span>= <span class="hljs-number">0</span>;
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> PageWithSubNav *<span class="hljs-title">addContainerPage</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QString &amp;id,
+                                             <span class="hljs-keyword">const</span> QString &amp;titleKey,
+                                             <span class="hljs-keyword">int</span> order = <span class="hljs-number">100</span>)</span> </span>= <span class="hljs-number">0</span>;
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">finalizeNavigation</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setPageVisible</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QString &amp;id, <span class="hljs-keyword">bool</span> visible)</span> </span>= <span class="hljs-number">0</span>;
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> QWidget *<span class="hljs-title">mainWindowWidget</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;
+};
+
+Q_DECLARE_INTERFACE(IMainWindowService,
+                    <span class="hljs-string">"com.example.pluginsystem.IMainWindowService/1.0"</span>)
+</div></code></pre>
+<p><strong>跨插件访问模式：</strong></p>
+<pre class="hljs"><code><div>CorePlugin 创建 MainWindow（实现 IMainWindowService）
+    → PluginManager::addObject(mainWindow)     [注册到对象池]
+
+其他插件（如 HomePlugin::initialize()）:
+    → IMainWindowService *mws = 
+          PluginManager::getObject&lt;IMainWindowService&gt;()
+    → mws-&gt;addPage(&quot;home&quot;, &quot;nav.home&quot;, new HomePage(), 10)
+
+CorePlugin::extensionsInitialized():
+    → mws-&gt;finalizeNavigation()   // 所有插件注册完毕后，构建导航并显示窗口
+</div></code></pre>
+<hr>
+<h2 id="6-%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF%E5%85%A8%E6%99%AF%E5%88%86%E6%9E%90">6. 执行链路全景分析</h2>
+<h3 id="61-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E5%85%A8%E9%93%BE%E8%B7%AF">6.1 应用程序启动全链路</h3>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+participant Main as main.cpp
+participant PM as PluginManager
+participant PMP as PluginManagerPrivate
+participant PS as PluginSpec
+participant PSP as PluginSpecPrivate
+participant PL as IPlugin
+
+Main->>PM: setPluginIID()
+Main->>PM: setPluginPaths()
+PM->>PMP: readPluginPaths()
+PMP->>PSP: read(file)
+PMP->>PSP: resolveDependencies(specs)
+
+Main->>PM: loadPlugins()
+PM->>PMP: loadPlugins()
+PMP->>PMP: loadQueue()
+PMP->>PSP: loadLibrary()
+PSP->>PL: QPluginLoader.instance()
+PMP->>PSP: initializePlugin()
+PSP->>PL: initialize()
+PMP->>PSP: initializeExtensions()
+PSP->>PL: extensionsInitialized()
+PMP->>PMP: nextDelayedInitialize()
+PMP->>PSP: delayedInitialize()
+PSP->>PL: delayedInitialize()
+</div></code></pre>
+<h4 id="%E5%85%B3%E9%94%AE%E7%82%B9">关键点</h4>
+<ol>
+<li><strong>扫描和加载是两阶段</strong>：<code>setPluginPaths()</code> 只是扫描并构建 <code>PluginSpec</code>，真正加载发生在 <code>loadPlugins()</code>。</li>
+<li><strong>依赖先解析、后加载</strong>：因此插件能在进入 <code>Loaded</code> 前就知道自己是否有机会成功。</li>
+<li><strong>状态推进是逐阶段批处理</strong>：先全部 <code>Loaded</code>，再全部 <code>Initialized</code>，再全部 <code>Running</code>。</li>
+<li><strong><code>extensionsInitialized()</code> 逆序调用</strong>：这意味着依赖图下游插件可以在该阶段看到更完整的依赖环境。</li>
+</ol>
+<pre class="hljs"><code><div>main()
+│
+├─ QApplication app(argc, argv)          // Qt 事件循环基础
+├─ TM-&gt;setTheme(ThemeManager::Light)     // 初始化主题（主窗口创建前）
+│
+├─ ExtensionSystem::PluginManager pluginManager
+├─ PluginManager::setPluginIID(&quot;com.example.pluginsystem.IPlugin&quot;)
+├─ PluginManager::setPluginPaths({appDir + &quot;/plugins&quot;})
+│
+└─ PluginManager::loadPlugins()
+   │
+   ├─ [1] PluginManagerPrivate::readPluginPaths()
+   │       扫描 plugins/ 目录，读取每个 DLL 的 Qt 插件元数据
+   │       → 为每个有效 DLL 创建 PluginSpec（state: Invalid → Read）
+   │
+   ├─ [2] PluginManagerPrivate::resolveDependencies()
+   │       遍历所有 PluginSpec，调用 resolveDependencies()
+   │       将依赖名字符串解析为 PluginSpec* 指针（state: Read → Resolved）
+   │
+   ├─ [3] QList&lt;PluginSpec*&gt; queue = loadQueue()
+   │       DFS 拓扑排序，生成按依赖关系排好序的加载队列
+   │       同时检测循环依赖
+   │
+   ├─ [4] 遍历 queue，对每个 spec 执行 loadPlugin(spec, Loaded)
+   │       → QPluginLoader::load() 加载 DLL
+   │       → qobject_cast&lt;IPlugin*&gt; 获取插件实例
+   │       → state: Resolved → Loaded
+   │
+   ├─ [5] 遍历 queue，对每个 spec 执行 loadPlugin(spec, Initialized)
+   │       → spec-&gt;d-&gt;initializePlugin()
+   │           → plugin-&gt;initialize(&amp;errorString)
+   │               [CorePlugin::initialize()]
+   │                 → 创建 MainWindow
+   │                 → MainWindow 注册到 PluginManager 对象池
+   │               [ContainerPlugin::initialize()]
+   │                 → 创建 Application，注册 ServiceProvider
+   │                 → app-&gt;bootstrap()（registerProviders + bootProviders）
+   │               [MvvmPlugin::initialize()]
+   │                 → 通过 PluginManager::getObject&lt;IMainWindowService&gt;()
+   │                   获取主窗口，注册 MVVM 示例页面
+   │       → state: Loaded → Initialized
+   │
+   ├─ [6] 反向遍历 queue，对每个 spec 执行 loadPlugin(spec, Running)
+   │       → spec-&gt;d-&gt;initializeExtensions()
+   │           → plugin-&gt;extensionsInitialized()
+   │               [CorePlugin::extensionsInitialized()]
+   │                 → mws-&gt;finalizeNavigation()
+   │                     → PermService::canNav 门控，按 order 排序，添加导航项
+   │                     → mainWindow-&gt;show()  [显示主窗口]
+   │       → 成功则加入 delayedInitializeQueue
+   │       → state: Initialized → Running
+   │
+   ├─ [7] 启动 QTimer（20ms 后触发）
+   │       → nextDelayedInitialize()
+   │           → 依次调用 plugin-&gt;delayedInitialize()
+   │           → 全部完成后 emit initializationDone()
+   │
+   └─ app.exec()   [进入 Qt 事件循环]
+
+app.exec() 返回后：
+│
+└─ pluginManager.shutdown()
+   │
+   ├─ stopAll()   → 调用每个插件的 aboutToShutdown()
+   │                  异步关闭的插件等待 asynchronousShutdownFinished 信号
+   └─ deleteAll() → delete plugin，卸载 DLL
+</div></code></pre>
+<h3 id="62-%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8%E4%B8%8E-provider-%E5%BC%95%E5%AF%BC%E9%93%BE%E8%B7%AF">6.2 容器启动与 Provider 引导链路</h3>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+participant Caller as main/Plugin
+participant App as Application
+participant Provider as ServiceProvider
+participant C as Container
+
+Caller->>App: registerProvider<Provider>()
+Caller->>App: bootstrap()
+App->>App: registerProviders()
+loop all providers
+  App->>Provider: doRegister()
+  Provider->>C: bind/singleton/instance
+end
+App->>App: bootProviders()
+loop all providers
+  App->>Provider: boot()
+  Provider->>C: make<T>() (此时安全)
+end
+</div></code></pre>
+<h4 id="%E4%B8%A4%E9%98%B6%E6%AE%B5%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%BB%B7%E5%80%BC">两阶段设计的价值</h4>
+<ul>
+<li><code>doRegister()</code> 只做声明，不做使用。</li>
+<li><code>boot()</code> 才做依赖其他服务的初始化动作。</li>
+<li>这让 Provider 之间不必依赖注册顺序的偶然性。</li>
+</ul>
+<h3 id="63-%E6%9C%8D%E5%8A%A1%E8%A7%A3%E6%9E%90%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF-maket">6.3 服务解析执行链路 make&lt;T&gt;()</h3>
+<pre class="hljs"><code><div>调用方：auto logger = app.make&lt;ILogger&gt;();
+│
+├─ [模板实例化] key = type_index(typeid(ILogger))
+│
+├─ [循环依赖检测] resolutionStack() 中是否已有 key？
+│     YES → throw runtime_error(&quot;Circular dependency detected&quot;)
+│     NO  → 继续
+│
+├─ [上下文绑定检查] stack 非空？
+│     YES → callerKey = stack.back()
+│           contextualBindings_[callerKey][key] 存在？
+│             YES → push key → 调用上下文工厂 → pop key → return
+│             NO  → 继续
+│
+├─ [普通绑定查找] typeBindings_.find(key)
+│     MISS → onBindingNotFound(key)   [Application 触发 Deferred Provider]
+│             → 遍历 providers_，调用未注册的 Deferred Provider.doRegister()
+│             → 重新查找 typeBindings_.find(key)
+│               STILL MISS → throw runtime_error(&quot;No binding found&quot;)
+│     HIT  → 继续
+│
+└─ [解析] resolve(binding, key)
+     │
+     ├─ BindingType::Instance   → 直接返回 binding.instance
+     │
+     ├─ BindingType::Singleton  → binding.resolved？
+     │     YES → 直接返回 binding.instance（无锁快速路径）
+     │     NO  → 加锁(recursive_mutex)
+     │             binding.resolved？（二次确认）
+     │             NO  → push key → 调用 factory → binding.resolved=true → pop key
+     │           → 返回 binding.instance
+     │
+     └─ BindingType::Transient  → push key → 调用 factory → pop key → 返回新实例
+          │
+          └─ factory(*this) 内部可能再次调用 make&lt;T2&gt;()，继续递归上述流程
+
+最终：static_pointer_cast&lt;ILogger&gt;(void_ptr) → 返回 shared_ptr&lt;ILogger&gt;
+</div></code></pre>
+<h3 id="64-named-binding-%E5%8A%A8%E6%80%81%E8%B0%83%E7%94%A8%E9%93%BE%E8%B7%AF">6.4 Named Binding 动态调用链路</h3>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+participant PluginA as 注册方
+participant App as Application
+participant MD as MethodDispatcher
+participant PluginB as 调用方
+participant SH as ServiceHandle
+
+PluginA->>App: singletonNamed("logger", factory, setup)
+App->>MD: on("info", &FileLogger::info)
+
+PluginB->>App: makeNamed("logger")
+App-->>PluginB: ServiceHandle(instance, dispatcher)
+PluginB->>SH: call("info", {any("hello")})
+SH->>MD: invoke("info", instance, args)
+MD->>MD: any_cast + static_cast
+MD-->>SH: result(any)
+</div></code></pre>
+<h4 id="%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF">适用场景</h4>
+<ul>
+<li>跨插件调用时不希望直接暴露具体类头文件。</li>
+<li>插件间需要一定动态性，但又不想引入完整脚本引擎。</li>
+</ul>
+<h4 id="%E4%BB%A3%E4%BB%B7">代价</h4>
+<ul>
+<li>运行期错误替代了部分编译期错误。</li>
+<li><code>std::any_cast</code> 参数类型不匹配时会在运行期抛异常。</li>
+</ul>
+<h3 id="65-mvvm-%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E9%93%BE%E8%B7%AF">6.5 MVVM 页面加载链路</h3>
+<p>以 <code>plugins/mvvm/deviceview.cpp</code> 为例：</p>
+<pre class="hljs"><code><div>导航切到 DeviceView
+  -&gt; PageWidget::onLoad()
+     -&gt; 创建设备页 ViewModel
+     -&gt; setupUi() 构建控件
+     -&gt; setupBindings() 建立绑定
+        -&gt; bindStructField(DeviceInfo, ...)
+        -&gt; bindStructField(SensorConfig, ...)
+        -&gt; bind(volume, slider)
+        -&gt; bindOneWay(progress, progressBar)
+        -&gt; bindVisible(alertVisible, alertGroup)
+        -&gt; bindCommand(apply/reset/simulate)
+</div></code></pre>
+<p>这个页面很适合作为 MVVM 模块的样板，因为它同时覆盖了：</p>
+<ol>
+<li>结构体字段绑定。</li>
+<li>基础控件双向绑定。</li>
+<li>单向状态展示。</li>
+<li>手动补充复杂字段绑定。</li>
+<li>命令与按钮连接。</li>
+</ol>
+<h3 id="66-viewmodel-%E5%B1%9E%E6%80%A7%E5%8F%98%E6%9B%B4%E9%93%BE%E8%B7%AF">6.6 ViewModel 属性变更链路</h3>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+participant UI as Widget
+participant DB as DataBinding
+participant VM as ViewModel
+participant PP as PropertyMiddlewarePipeline
+
+UI->>DB: textChanged/valueChanged...
+DB->>VM: setProperty(name, value)
+VM->>VM: 检查属性是否已注册
+VM->>VM: 检查值是否变化
+alt 无中间件
+  VM->>VM: 写入 m_properties
+  VM-->>UI: emit propertyChanged(name, value)
+else 有中间件
+  VM->>PP: run(ctx, terminal)
+  PP->>PP: dispatchAt(...)
+  PP->>VM: terminal(ctx)
+  VM->>VM: 写入最终值
+  VM-->>UI: emit propertyChanged(name, newValue)
+end
+</div></code></pre>
+<h4 id="%E9%87%8D%E8%A6%81%E7%BB%86%E8%8A%82">重要细节</h4>
+<ul>
+<li>未注册属性会被忽略，这要求 ViewModel 子类在构造期显式 <code>registerProperty()</code>。</li>
+<li>有中间件时，最终写入值取自 <code>ctx.newValue</code>，因此校验、格式化、纠偏都可放在中间件中。</li>
+<li>批量更新场景下，信号不会立即发射，而是进入 <code>m_pendingChanges</code>。</li>
+</ul>
+<h3 id="67-%E5%B1%9E%E6%80%A7%E5%8F%98%E6%9B%B4%E9%93%BE%E8%B7%AF-setproperty">6.7 属性变更链路 setProperty()</h3>
+<pre class="hljs"><code><div>UI 控件（QLineEdit）用户输入
+│
+└─ DataBinding 连接：textChanged → vm-&gt;setProperty(&quot;name&quot;, text)
+   │
+   └─ ViewModel::setProperty(&quot;name&quot;, newValue)
+      │
+      ├─ [前置守卫] m_properties.find(&quot;name&quot;) → 未找到？return
+      ├─ [去重检查] it.value() == newValue？return（值未变）
+      │
+      ├─ [路径选择] m_propertyPipeline.isEmpty()？
+      │   │
+      │   ├─ YES（无中间件，快速路径）
+      │   │   it.value() = newValue
+      │   │   m_inBatchUpdate？
+      │   │     YES → m_pendingChanges[&quot;name&quot;] = newValue（暂存）
+      │   │     NO  → emit propertyChanged(&quot;name&quot;, newValue)
+      │   │
+      │   └─ NO（有中间件，洋葱模式路径）
+      │       PropertyContext ctx(&quot;name&quot;, oldValue, newValue, this)
+      │       m_propertyPipeline.run(ctx, terminal)
+      │       │
+      │       └─ dispatchAt(0, ctx, terminal)
+      │           ├─ MW[0].process(ctx, next0)
+      │           │   [前置：日志/校验/审计等]
+      │           │   next0(ctx) → dispatchAt(1, ctx, terminal)
+      │           │   ├─ MW[1].process(ctx, next1)
+      │           │   │   next1(ctx) → dispatchAt(2, ctx, terminal)
+      │           │   │   └─ terminal(ctx)  [实际写入]
+      │           │   │       ctx.cancelled？
+      │           │   │         NO  → it.value() = ctx.newValue
+      │           │   │               emit propertyChanged(...)
+      │           │   │         YES → 不写入
+      │           │   └─ [后置处理]
+      │           └─ [后置处理]
+      │
+      └─ emit propertyChanged(&quot;name&quot;, newValue)
+         │
+         ├─ DataBinding 监听 → 更新其他绑定控件
+         ├─ ViewModel 具名信号 nameChanged() 触发
+         └─ 业务逻辑槽函数响应
+</div></code></pre>
+<h3 id="68-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF-commandrun">6.8 命令执行链路 Command::run()</h3>
+<pre class="hljs"><code><div>QPushButton 点击
+│
+└─ DataBinding::bindCommand 连接：clicked → command-&gt;run()
+   │
+   └─ Command::run()
+      │
+      ├─ [快速守卫] !canExecute()？return
+      │
+      ├─ m_cmdPipeline.isEmpty()？
+      │   YES → execute()（直接执行）return
+      │
+      └─ NO（有中间件）
+          CommandContext ctx(m_name, m_viewModel)
+          m_cmdPipeline.run(ctx, terminal)
+          │
+          └─ dispatchAt(0, ctx, terminal)
+              ├─ MW[0].process(ctx, next0)
+              │   [权限检查中间件]
+              │   ctx.cancelled = !PS-&gt;canAction(m_name)
+              │   if (!ctx.cancelled) next0(ctx)
+              │   ├─ MW[1].process(ctx, next1)
+              │   │   [日志中间件]
+              │   │   qDebug() &lt;&lt; &quot;before&quot; &lt;&lt; m_name
+              │   │   next1(ctx)
+              │   │   └─ terminal(ctx)
+              │   │       !ctx.cancelled → execute()
+              │   │           FunctionalCommand → m_executeFunc()
+              │   │           [实际业务逻辑执行]
+              │   └─ [后置：记录执行结果]
+              └─ [后置]
+</div></code></pre>
+<h3 id="69-%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF">6.9 主题切换执行链路</h3>
+<pre class="hljs"><code><div>用户操作（点击主题切换按钮）
+│
+└─ TM-&gt;toggleTheme()
+   │
+   └─ ThemeManager::setTheme(newTheme)
+      │
+      ├─ m_theme = newTheme
+      └─ emit themeChanged(newTheme)
+         │
+         ├─ MainWindow 连接 themeChanged →
+         │       qApp-&gt;setStyleSheet(TM-&gt;applicationStyleSheet())
+         │       → 所有 Qt 控件自动重绘（样式表全局应用）
+         │
+         ├─ PageWidget::onThemeChanged() →
+         │       调用当前页面的 applyTheme()（子类覆盖）
+         │
+         └─ 其他自定义组件的 themeChanged 连接
+</div></code></pre>
+<h3 id="610-%E5%AF%BC%E8%88%AA%E5%88%87%E6%8D%A2%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF">6.10 导航切换执行链路</h3>
+<pre class="hljs"><code><div>用户点击导航按钮
+│
+└─ NavigationManager::onButtonClicked()（slot）
+   │
+   ├─ 找出点击的按钮对应的 NavigationItem
+   └─ switchToPage(id)
+      │
+      ├─ m_currentPageId = id
+      ├─ m_contentLayout-&gt;setCurrentWidget(item.page)   // 切换 QStackedLayout
+      ├─ updateButtonStates()   // 更新按钮选中状态样式
+      │
+      ├─ item.page-&gt;ensureLoaded()
+      │   └─ 首次调用 → m_loaded=true → onLoad()（子类初始化数据）
+      │
+      └─ emit pageChanged(id)
+         └─ 其他组件响应页面切换事件
+</div></code></pre>
+<h3 id="611-databinding-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81%E9%93%BE%E8%B7%AF">6.11 DataBinding 双向数据流链路</h3>
+<pre class="hljs"><code><div>───── ViewModel → View 方向（属性驱动控件）─────
+
+ViewModel::setProperty(&quot;price&quot;, 99.9)
+    → emit propertyChanged(&quot;price&quot;, 99.9)
+    → DataBinding 内部连接的 lambda（捕获了 propertyName 和 widget）
+        if (name == &quot;price&quot;)
+            lineEdit-&gt;setText(&quot;99.9&quot;)      // 避免回路（检查 text() != val）
+
+───── View → ViewModel 方向（控件驱动属性）─────
+
+QLineEdit::textChanged(&quot;99.9&quot;) [用户输入]
+    → DataBinding 内部连接的 lambda
+        vm-&gt;setProperty(&quot;price&quot;, &quot;99.9&quot;)
+    → ViewModel::setProperty() 流程（见 6.3）
+        → emit propertyChanged(&quot;price&quot;, &quot;99.9&quot;)
+        → 其他绑定了 &quot;price&quot; 的控件同步更新（如 QLabel 显示实时值）
+
+───── 结构体字段绑定特殊路径 ─────
+
+QLineEdit::textChanged(&quot;New City&quot;) [city 字段]
+    → bindStructField&lt;Address&gt; 内部 lambda
+        Address s = vm-&gt;getProperty(&quot;address&quot;).value&lt;Address&gt;()  // 读整体
+        setField(s, &quot;New City&quot;)   // s.city = &quot;New City&quot;
+        vm-&gt;setProperty(&quot;address&quot;, QVariant::fromValue(s))       // 写整体
+    → emit propertyChanged(&quot;address&quot;, ...)
+        → 所有绑定了 &quot;address&quot; 结构体的其他字段控件同步更新
+</div></code></pre>
+<h3 id="612-%E6%9D%83%E9%99%90%E5%8F%98%E6%9B%B4%E4%B8%8E%E5%AF%BC%E8%88%AA%E8%81%94%E5%8A%A8%E9%93%BE%E8%B7%AF">6.12 权限变更与导航联动链路</h3>
+<pre class="hljs"><code><div>PS-&gt;reloadForUser(userId)
+│
+├─ PermPermissionBackend 加载 grants（含祖先 key 展开）
+│
+└─ emit permissionsChanged()
+   │
+   └─ MainWindow::refreshNavigation()
+      │
+      ├─ computeNavVisible(titleKey) → PS-&gt;canNav
+      └─ primaryNavManager-&gt;setNavItemVisible(id, visible)
+</div></code></pre>
+<hr>
+<h2 id="7-%E5%85%B3%E9%94%AE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93">7. 关键设计模式总结</h2>
+<h3 id="71-%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">7.1 全局使用的设计模式</h3>
+<table>
+<thead>
+<tr>
+<th>设计模式</th>
+<th>使用位置</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pimpl（指针实现）</strong></td>
+<td><code>PluginManager</code> / <code>PluginSpec</code></td>
+<td>隐藏实现细节，降低编译依赖</td>
+</tr>
+<tr>
+<td><strong>状态机</strong></td>
+<td><code>PluginSpec::State</code></td>
+<td>规范插件生命周期，防止非法操作</td>
+</tr>
+<tr>
+<td><strong>DFS 拓扑排序</strong></td>
+<td><code>PluginManagerPrivate::loadQueue()</code></td>
+<td>保证依赖先于主体加载</td>
+</tr>
+<tr>
+<td><strong>模板类型擦除</strong></td>
+<td><code>Container::bind/make</code></td>
+<td>在保持类型安全的同时存储异构对象</td>
+</tr>
+<tr>
+<td><strong>双重检查加锁</strong></td>
+<td><code>Container::resolve(Singleton)</code></td>
+<td>线程安全的单例初始化</td>
+</tr>
+<tr>
+<td><strong>Builder（链式）</strong></td>
+<td><code>ContextualBindingBuilder</code></td>
+<td>构建复杂的上下文绑定规则</td>
+</tr>
+<tr>
+<td><strong>Facade（外观）</strong></td>
+<td><code>Container::Facade&lt;T&gt;</code></td>
+<td>提供全局静态访问点，隐藏容器细节</td>
+</tr>
+<tr>
+<td><strong>Decorator（装饰）</strong></td>
+<td><code>Container::extend()</code></td>
+<td>AOP 代理，无需修改原始绑定</td>
+</tr>
+<tr>
+<td><strong>责任链（洋葱）</strong></td>
+<td><code>PropertyMiddlewarePipeline</code></td>
+<td>可组合的属性变更拦截器</td>
+</tr>
+<tr>
+<td><strong>Command（命令）</strong></td>
+<td><code>Command / FunctionalCommand</code></td>
+<td>封装操作，解耦 UI 与业务逻辑</td>
+</tr>
+<tr>
+<td><strong>Observer（观察者）</strong></td>
+<td><code>ViewModel::propertyChanged</code></td>
+<td>Qt 信号槽实现的属性变更通知</td>
+</tr>
+<tr>
+<td><strong>Singleton</strong></td>
+<td><code>ThemeManager</code> / <code>LanguageManager</code> 等</td>
+<td>全局唯一管理器实例</td>
+</tr>
+<tr>
+<td><strong>Template Method</strong></td>
+<td><code>IPlugin</code> / <code>PageWidget</code> 生命周期方法</td>
+<td>框架控制流程，子类填充具体实现</td>
+</tr>
+<tr>
+<td><strong>Strategy（策略）</strong></td>
+<td><code>BindingType::Transient/Singleton/Instance</code></td>
+<td>可替换的对象创建策略</td>
+</tr>
+<tr>
+<td><strong>Service Locator</strong></td>
+<td><code>PluginManager</code> 对象池</td>
+<td>跨插件运行时类型查找</td>
+</tr>
+<tr>
+<td><strong>Two-Phase Init</strong></td>
+<td><code>ServiceProvider::doRegister/boot</code></td>
+<td>防止注册阶段相互依赖</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E5%AF%B9%E6%AF%94">7.2 线程安全策略对比</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>机制</th>
+<th>保护范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PluginManager</code> 对象池</td>
+<td><code>QReadWriteLock</code></td>
+<td>addObject / removeObject / getObject 并发</td>
+</tr>
+<tr>
+<td><code>Container</code> Singleton</td>
+<td><code>std::recursive_mutex</code> + 双重检查</td>
+<td>首次构建单例</td>
+</tr>
+<tr>
+<td><code>Container</code> 解析栈</td>
+<td><code>thread_local</code></td>
+<td>每线程独立解析链，无竞态</td>
+</tr>
+<tr>
+<td><code>PluginManager</code> 初始化</td>
+<td>主线程串行（Qt 事件循环）</td>
+<td>插件加载阶段不并发</td>
+</tr>
+<tr>
+<td><code>ThemeManager</code> 等单例</td>
+<td>Meyer's Singleton（C++11 静态局部变量）</td>
+<td>首次初始化线程安全</td>
+</tr>
+</tbody>
+</table>
+<h3 id="73-c17-%E7%89%B9%E6%80%A7%E8%BF%90%E7%94%A8">7.3 C++17 特性运用</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>使用位置</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>if constexpr</code></td>
+<td><code>MethodDispatcher::on()</code></td>
+<td>编译期分支处理 void 返回类型</td>
+</tr>
+<tr>
+<td>折叠表达式 <code>(expr, ...)</code></td>
+<td><code>Container::tag&lt;A,B,C&gt;()</code></td>
+<td>可变参数模板展开</td>
+</tr>
+<tr>
+<td><code>std::any</code></td>
+<td><code>MethodDispatcher</code> 参数/返回值</td>
+<td>类型擦除的通用值容器</td>
+</tr>
+<tr>
+<td><code>std::type_index</code></td>
+<td><code>Container</code> 类型键</td>
+<td>运行时类型标识</td>
+</tr>
+<tr>
+<td>结构化绑定（<code>auto&amp;[k,v]</code>）</td>
+<td>部分遍历代码</td>
+<td>简化 pair/tuple 遍历</td>
+</tr>
+<tr>
+<td><code>thread_local</code></td>
+<td><code>Container::resolutionStack()</code></td>
+<td>线程本地存储</td>
+</tr>
+<tr>
+<td><code>std::decay_t&lt;T&gt;</code></td>
+<td><code>MethodDispatcher::on()</code> 参数提取</td>
+<td>移除引用/CV 限定的类型变换</td>
+</tr>
+<tr>
+<td><code>static_assert</code></td>
+<td><code>Container::bind&lt;A,C&gt;()</code></td>
+<td>编译期继承关系验证</td>
+</tr>
+</tbody>
+</table>
+<h3 id="74-%E6%89%A9%E5%B1%95%E6%80%A7%E8%AE%BE%E8%AE%A1%E8%A6%81%E7%82%B9">7.4 扩展性设计要点</h3>
+<ol>
+<li><strong>插件发现无需重新编译</strong>：<code>setPluginPaths()</code> + 扫描 DLL 元数据，新增插件只需将 DLL 放入目录</li>
+<li><strong>服务替换无需修改调用方</strong>：IoC 容器的绑定可被覆盖，测试时替换为 Mock 实现</li>
+<li><strong>中间件可热插拔</strong>：<code>addPropertyMiddleware()</code> / <code>clearPropertyMiddleware()</code> 随时增减</li>
+<li><strong>上下文绑定精细化</strong>：同一接口可对不同调用方提供不同实现，无需修改被调用方代码</li>
+<li><strong>延迟加载 Provider</strong>：标记为 <code>isDeferred()</code> 的 Provider 仅在首次使用时初始化，降低启动时间</li>
+<li><strong>权限数据库存储</strong>：角色与 grants 由 Permission 插件 + SQL 种子维护，登录后 <code>reloadForUser</code> 加载</li>
+<li><strong>页面懒加载</strong>：<code>PageWidget::onLoad()</code> 仅在首次显示时调用，避免启动时加载全部页面资源</li>
+<li><strong>extend() 装饰器</strong>：在不修改原始绑定的前提下，通过包装工厂动态添加 AOP 横切关注点</li>
+<li><strong>tag() 批量解析</strong>：将同接口的多个实现归组，支持&quot;广播式&quot;批量初始化/调用</li>
+</ol>
+<hr>
+<p><em>文档生成时间：2026-03-10 · 基于 fz2_project_template 1.0.0 源码</em></p>
+
+</body>
+</html>

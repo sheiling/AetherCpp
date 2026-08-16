@@ -1,0 +1,59 @@
+{
+  "name": "stepctrl_warmup",
+  "description": "步骤控制器示例 — 预热（串行 + 并行 + 嵌套串行，叶子为脚本步骤）",
+  "version": 1,
+  "steps": {
+    "type": "control.sequential",
+    "name": "warmup_root",
+    "children": [
+      {
+        "type": "control.script",
+        "name": "串行_上电稳定",
+        "script": "stepctrl_wu_power_stable",
+        "timeoutMs": 10000
+      },
+      {
+        "type": "control.parallel",
+        "name": "并行_多路自检",
+        "children": [
+          {
+            "type": "control.script",
+            "name": "并行_通道A",
+            "script": "stepctrl_wu_ch_a_check",
+            "timeoutMs": 10000
+          },
+          {
+            "type": "control.script",
+            "name": "并行_通道B",
+            "script": "stepctrl_wu_ch_b_check",
+            "timeoutMs": 10000
+          },
+          {
+            "type": "control.script",
+            "name": "并行_通道C",
+            "script": "stepctrl_wu_ch_c_check",
+            "timeoutMs": 10000
+          }
+        ]
+      },
+      {
+        "type": "control.sequential",
+        "name": "串行_收尾子流程",
+        "children": [
+          {
+            "type": "control.script",
+            "name": "收尾_步骤1",
+            "script": "stepctrl_wu_tail_prepare",
+            "timeoutMs": 10000
+          },
+          {
+            "type": "control.script",
+            "name": "收尾_步骤2",
+            "script": "stepctrl_wu_tail_confirm",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    ]
+  }
+}

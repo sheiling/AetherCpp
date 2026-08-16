@@ -1,0 +1,20 @@
+#ifndef __MODEL_PROCESSOR_ERRORS_H__
+#define __MODEL_PROCESSOR_ERRORS_H__
+#include "ci_basic_error.h"
+#include "ci_frontend_modname.h"
+#include "ci_detection_modname.h"
+
+
+#define ALGOERROR_MODEL_PROCESSOR_NAME_EXIST                    ERROR_CODE(ALGOMOD_MODEL_PROCESSOR,100)  //model name 已经存在
+#define ALGOERROR_MODEL_PROCESSOR_NAME_NOT_EXIST                ERROR_CODE(ALGOMOD_MODEL_PROCESSOR,101)  //model name 不存在
+#define ALGOERROR_MODEL_PROCESSOR_INPUT_EMPTY					ERROR_CODE(ALGOMOD_MODEL_PROCESSOR,103)  //输入为空
+
+#define ALGOERROR_MODEL_PROCESSOR_INPUT_NULLPTR					ERROR_CODE(ALGOMOD_MODEL_PROCESSOR,104)  //输入为空指针
+#define ALGOERROR_MODEL_PROCESSOR_INPUT_OUT_OF_RANGE			ERROR_CODE(ALGOMOD_MODEL_PROCESSOR,105)  //输入为空指针
+
+
+
+
+
+
+#endif

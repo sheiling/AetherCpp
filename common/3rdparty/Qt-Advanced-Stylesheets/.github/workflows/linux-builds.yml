@@ -1,0 +1,40 @@
+name: linux-builds
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build_ubuntu_2204:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache Qt
+      id: cache-qt-6-4
+      uses: actions/cache@v3
+      with:
+        path: Qt/6.4.2
+        key: ${{ runner.os }}-QtCache-Qt6-4
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '6.4.2'
+        host: 'linux'
+        target: 'desktop'
+        install-deps: true
+        cached: ${{ steps.cache-qt-6-4.outputs.cache-hit }}
+        setup-python: true
+        tools: ''
+        tools-only: false
+        dir: 'Qt'  # This ensures Qt is installed in ./Qt
+
+    - name: Ubuntu and Qt version
+      run: |
+        cat /etc/issue
+        echo number of processors: $(nproc)
+        qmake -v
+    - name: qmake
+      run: qmake
+    - name: make
+      run: make -j$(nproc)

@@ -1,0 +1,753 @@
+{
+    "DeviceManager": {
+        "Camera": {
+            "AOI检测相机": {
+                "connOpts": {
+                    "SN": "DA6037867",
+                    "configFile": "",
+                    "connType": "CONN_BY_SN",
+                    "devNO": 0,
+                    "index": 0,
+                    "ip": "",
+                    "port": 0
+                },
+                "deviceName": "",
+                "pixelFormat": "BayerBG8",
+                "reConnectAuto": true,
+                "reverseX": true,
+                "reverseY": true,
+                "type": "CDN_MVS"
+            }
+        },
+        "Colorimeter": null,
+        "DisplayControl": null,
+        "FlashDetect": null,
+        "HardwareScreen": null,
+        "ImageCaptureList": {
+            "AOI检测相机": {
+                "axisNames": [
+                    "X轴",
+                    "Y轴",
+                    "Z轴"
+                ],
+                "cameraName": "AOI检测相机",
+                "delayTime": 1000,
+                "lightChannelData": [
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100
+                ],
+                "lightName": ""
+            }
+        },
+        "Lamphouse": {
+            "AOI相机光源": {
+                "connOpts": {
+                    "channelNumber": 1,
+                    "devNO": 0,
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM5",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 100000,
+                        "stopBit_": 1
+                    }
+                },
+                "type": "LDN_MV_LE200"
+            }
+        },
+        "MotionController": {
+            "Axis": {
+                "X轴": {
+                    "axisNO": 0,
+                    "axisType": 1,
+                    "cardName": "运控卡1",
+                    "driverType": 1,
+                    "enable": true,
+                    "encoderType": 0,
+                    "equiv": 1.0,
+                    "errorBandPluse": 500.0,
+                    "homeDir": 1,
+                    "homeEdgeType": 3,
+                    "homeHighVel": 50000.0,
+                    "homeLowVel": 20000.0,
+                    "homeMode": "Origin_FindHome",
+                    "homeOffset": 2.0,
+                    "homePinLogic": -1,
+                    "homeSourceSel": 1,
+                    "homeTacc": 0.5,
+                    "homeVelMode": 1,
+                    "jogVelRatio": 0.1,
+                    "maxVel": 50.0,
+                    "moduleName": "",
+                    "negativeLimit": 0.0,
+                    "positiveLimit": 0.0,
+                    "pulseUnit": 1.0,
+                    "sPara": 0.1,
+                    "slaveID": 0,
+                    "softwareLimitAction": 0,
+                    "sourceSelLimit": 1,
+                    "startVel": 300000.0,
+                    "stopVel": 1000.0,
+                    "tacc": 0.05,
+                    "tdec": 0.05,
+                    "unitType": 1
+                },
+                "Y轴": {
+                    "axisNO": 1,
+                    "axisType": 1,
+                    "cardName": "运控卡1",
+                    "driverType": 1,
+                    "enable": true,
+                    "encoderType": 0,
+                    "equiv": 1.0,
+                    "errorBandPluse": 500.0,
+                    "homeDir": 1,
+                    "homeEdgeType": 3,
+                    "homeHighVel": 50000.0,
+                    "homeLowVel": 20000.0,
+                    "homeMode": "Origin_FindHome",
+                    "homeOffset": 2.0,
+                    "homePinLogic": -1,
+                    "homeSourceSel": 1,
+                    "homeTacc": 0.5,
+                    "homeVelMode": 1,
+                    "jogVelRatio": 0.1,
+                    "maxVel": 50.0,
+                    "moduleName": "",
+                    "negativeLimit": 0.0,
+                    "positiveLimit": 0.0,
+                    "pulseUnit": 1.0,
+                    "sPara": 0.2,
+                    "slaveID": 0,
+                    "softwareLimitAction": 0,
+                    "sourceSelLimit": 1,
+                    "startVel": 300000.0,
+                    "stopVel": 1000.0,
+                    "tacc": 0.05,
+                    "tdec": 0.05,
+                    "unitType": 1
+                },
+                "Z轴": {
+                    "axisNO": 2,
+                    "axisType": 1,
+                    "cardName": "运控卡1",
+                    "driverType": 1,
+                    "enable": true,
+                    "encoderType": 0,
+                    "equiv": 1.0,
+                    "errorBandPluse": 500.0,
+                    "homeDir": 1,
+                    "homeEdgeType": 3,
+                    "homeHighVel": 50000.0,
+                    "homeLowVel": 20000.0,
+                    "homeMode": "Origin_FindHome",
+                    "homeOffset": 2.0,
+                    "homePinLogic": -1,
+                    "homeSourceSel": 1,
+                    "homeTacc": 0.5,
+                    "homeVelMode": 1,
+                    "jogVelRatio": 0.1,
+                    "maxVel": 50.0,
+                    "moduleName": "",
+                    "negativeLimit": 0.0,
+                    "positiveLimit": 0.0,
+                    "pulseUnit": 1.0,
+                    "sPara": 0.1,
+                    "slaveID": 0,
+                    "softwareLimitAction": 0,
+                    "sourceSelLimit": 1,
+                    "startVel": 10000.0,
+                    "stopVel": 1000.0,
+                    "tacc": 0.05,
+                    "tdec": 0.05,
+                    "unitType": 1
+                },
+                "轨道移动": {
+                    "axisNO": 3,
+                    "axisType": 2,
+                    "cardName": "运控卡1",
+                    "driverType": 0,
+                    "enable": true,
+                    "encoderType": 0,
+                    "equiv": 1.0,
+                    "errorBandPluse": 500.0,
+                    "homeDir": 1,
+                    "homeEdgeType": 3,
+                    "homeHighVel": 8000.0,
+                    "homeLowVel": 2000.0,
+                    "homeMode": "Origin_FindHome",
+                    "homeOffset": 2.0,
+                    "homePinLogic": -1,
+                    "homeSourceSel": 1,
+                    "homeTacc": 0.5,
+                    "homeVelMode": 1,
+                    "jogVelRatio": 0.05,
+                    "maxVel": 500000.0,
+                    "moduleName": "",
+                    "negativeLimit": 0.0,
+                    "positiveLimit": 0.0,
+                    "pulseUnit": 1.0,
+                    "sPara": 0.1,
+                    "slaveID": 0,
+                    "softwareLimitAction": 0,
+                    "sourceSelLimit": 1,
+                    "startVel": 100.0,
+                    "stopVel": 1000.0,
+                    "tacc": 0.1,
+                    "tdec": 0.1,
+                    "unitType": 0
+                }
+            },
+            "Card": {
+                "运控卡1": {
+                    "connOpts": {
+                        "baud": 115200,
+                        "configfile": "",
+                        "connectNO": 0,
+                        "connectString": "192.168.5.11",
+                        "connectType": 2,
+                        "dataBit": 8,
+                        "parity": 0,
+                        "stopBit": 1
+                    },
+                    "type": "LeiShineNmc"
+                }
+            },
+            "DeviceAd": null,
+            "DeviceIo": {
+                "AOI位侧面压紧气缸到位": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 15,
+                    "type": 1
+                },
+                "AOI位侧面压紧气缸到位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 19,
+                    "type": 0
+                },
+                "AOI位侧面压紧气缸原位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 18,
+                    "type": 0
+                },
+                "AOI位检测位感应光电": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 1,
+                    "type": 0
+                },
+                "AOI位良品出料感应光电": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 2,
+                    "type": 0
+                },
+                "AOI位进料感应光电": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 0,
+                    "type": 0
+                },
+                "AOI位进料皮带传送启停": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 28,
+                    "type": 1
+                },
+                "AOI位进料皮带传送方向切换": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 29,
+                    "type": 1
+                },
+                "AOI位阻挡气缸1到位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 21,
+                    "type": 0
+                },
+                "AOI位阻挡气缸1原位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 20,
+                    "type": 0
+                },
+                "AOI位阻挡气缸1和2到位": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 17,
+                    "type": 1
+                },
+                "AOI位阻挡气缸2到位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 23,
+                    "type": 0
+                },
+                "AOI位阻挡气缸2原位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 22,
+                    "type": 0
+                },
+                "AOI位顶升气缸到位": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 13,
+                    "type": 1
+                },
+                "AOI位顶升气缸到位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 17,
+                    "type": 0
+                },
+                "AOI位顶升气缸原位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 16,
+                    "type": 0
+                },
+                "AOI位顶升气缸真空吸": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 20,
+                    "type": 1
+                },
+                "AOI位顶升气缸真空吸检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 24,
+                    "type": 0
+                },
+                "EMO-01": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 1,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 10,
+                    "type": 0
+                },
+                "EMO-02": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 11,
+                    "type": 0
+                },
+                "PC门磁1状态": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "门磁",
+                    "node": 0,
+                    "port": 50,
+                    "type": 0
+                },
+                "PC门磁2状态": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "门磁",
+                    "node": 0,
+                    "port": 51,
+                    "type": 0
+                },
+                "三色灯-红": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 3,
+                    "type": 1
+                },
+                "三色灯-绿": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 1,
+                    "type": 1
+                },
+                "三色灯-黄": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 2,
+                    "type": 1
+                },
+                "上游NG信号": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "上下游",
+                    "node": 0,
+                    "port": 33,
+                    "type": 0
+                },
+                "上游OK信号": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "上下游",
+                    "node": 0,
+                    "port": 32,
+                    "type": 0
+                },
+                "上游有板信号": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "上下游",
+                    "node": 0,
+                    "port": 31,
+                    "type": 0
+                },
+                "下游请求放料": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "上下游",
+                    "node": 0,
+                    "port": 36,
+                    "type": 0
+                },
+                "停止按钮": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 13,
+                    "type": 0
+                },
+                "停止按钮灯": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 6,
+                    "type": 1
+                },
+                "允许放板机放料": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "上下游",
+                    "node": 0,
+                    "port": 31,
+                    "type": 1
+                },
+                "前安全门": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "门磁",
+                    "node": 0,
+                    "port": 4,
+                    "type": 0
+                },
+                "前安全门2": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "门磁",
+                    "node": 0,
+                    "port": 5,
+                    "type": 0
+                },
+                "后安全门": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "门磁",
+                    "node": 0,
+                    "port": 6,
+                    "type": 0
+                },
+                "后安全门2": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "门磁",
+                    "node": 0,
+                    "port": 7,
+                    "type": 0
+                },
+                "启动按钮": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 12,
+                    "type": 0
+                },
+                "启动按钮灯": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 5,
+                    "type": 1
+                },
+                "复位按钮": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 14,
+                    "type": 0
+                },
+                "复位按钮灯": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 7,
+                    "type": 1
+                },
+                "安全继电器报警": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 8,
+                    "type": 0
+                },
+                "当前出料产品NG信号": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "上下游",
+                    "node": 0,
+                    "port": 33,
+                    "type": 1
+                },
+                "当前出料产品OK信号": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "上下游",
+                    "node": 0,
+                    "port": 32,
+                    "type": 1
+                },
+                "手动": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 1,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 15,
+                    "type": 0
+                },
+                "旋转气缸1到位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 27,
+                    "type": 0
+                },
+                "旋转气缸1原位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 26,
+                    "type": 0
+                },
+                "旋转气缸1和2到位": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 23,
+                    "type": 1
+                },
+                "旋转气缸2到位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 29,
+                    "type": 0
+                },
+                "旋转气缸2原位检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "",
+                    "node": 0,
+                    "port": 28,
+                    "type": 0
+                },
+                "本机有板信号": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "上下游",
+                    "node": 0,
+                    "port": 34,
+                    "type": 1
+                },
+                "气压检测": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 3,
+                    "type": 0
+                },
+                "温控表报警": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 9,
+                    "type": 0
+                },
+                "照明灯": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 8,
+                    "type": 1
+                },
+                "电控柜门磁1状态": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "门磁",
+                    "node": 0,
+                    "port": 48,
+                    "type": 0
+                },
+                "电控柜门磁2状态": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "门磁",
+                    "node": 0,
+                    "port": 49,
+                    "type": 0
+                },
+                "蜂鸣器": {
+                    "cardName": "运控卡1",
+                    "extend": 0,
+                    "logic": 0,
+                    "moduleName": "系统",
+                    "node": 0,
+                    "port": 4,
+                    "type": 1
+                }
+            }
+        },
+        "PressurePickup": null,
+        "Rangefinder": null,
+        "Scanner": {
+            "扫码器": {
+                "connOpts": {
+                    "devNO": 0,
+                    "ip": "192.168.100.56",
+                    "port": 2001,
+                    "serialInfo": {
+                        "baud_": 115200,
+                        "com_": "COM10",
+                        "dataBit_": 8,
+                        "parity_": "None",
+                        "rspTimeout_": 1000000,
+                        "slaveID_": 1,
+                        "stopBit_": 1
+                    }
+                },
+                "deviceName": "",
+                "type": "SSDN_HAIKANG"
+            }
+        },
+        "SoftwareScreen": null
+    }
+}

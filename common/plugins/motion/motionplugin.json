@@ -1,0 +1,13 @@
+{
+  "Name": "motion",
+  "Version": "1.0.0",
+  "Description": "运控调试 — 输入输出控制、轴运动控制、产线 IO 工步",
+  "Category": "UI",
+  "Required": false,
+  "Dependencies": [
+    {
+      "Name": "Core",
+      "Version": "1.0.0"
+    }
+  ]
+}
