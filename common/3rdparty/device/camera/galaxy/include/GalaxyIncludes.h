@@ -2,8 +2,8 @@
 /**
 \file		GalaxyIncludes.h
 \brief		Master include for GxIAPICPP
-\Date       2022-06-23
-\Version    1.2.2206.9231
+\Date       2023-10-24
+\Version    1.2.2310.9241
 */
 //------------------------------------------------------------------------
 #pragma once
@@ -13,7 +13,7 @@
 #include "GXSmartPtr.h"
 
 #include "IGXFactory.h"
-#include "GXDeviceInfo.h"
+#include "IGXDeviceInfo.h"
 #include "IGXDevice.h"
 #include "IDeviceOfflineEventHandler.h"
 
@@ -34,6 +34,10 @@
 
 #include "IGXImageFormatConvert.h"
 #include "IGXImageSpecialFunction.h"
+
+#include "IGXInterface.h"
+#include "IGXInterfaceInfo.h"
+#include "GXInterfaceInfoVector.h"
 
 #include "GXStringCPP.h"
 #include "GXStringVector.h"

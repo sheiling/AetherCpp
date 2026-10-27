@@ -61,9 +61,9 @@ public:
     \param  pLut                [in&out] Lookup table. Users need to apply for memory in advance.The 
                                         memory size is also lookup table length(nLutLength),should be 
                                         obtained through the interface 
-                                        GetRegisterFeature(“LUTValueAll”)->GetLength(),e.g.                          
+                                        GetRegisterFeature("LUTValueAll")->GetLength(),e.g.                          
     \param  pnLutLength   [in] Lookup table length(unit:byte),which should be obtained through
-                                       the interface GetRegisterFeature(“LUTValueAll”)->GetLength(), e.g. 
+                                       the interface GetRegisterFeature("LUTValueAll")->GetLength(), e.g. 
 
     \return void
     */

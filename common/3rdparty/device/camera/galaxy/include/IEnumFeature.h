@@ -9,8 +9,10 @@
 #pragma once
 #include "GXStringCPP.h"
 #include "GXStringVector.h"
+#include "GXEnumItemVector.h"
 #include "GXIAPIBase.h"
 #include "GXSmartPtr.h"
+#include <vector>
 
 
 class GXIAPICPP_API IEnumFeature
@@ -44,6 +46,30 @@ public:
 	*/
 	//--------------------------------------------------------- 
 	virtual void SetValue(const GxIAPICPP::gxstring& strValue) = 0;
+
+	//---------------------------------------------------------
+	/**
+	\brief      Set the current value of the enum feature
+	\param      [in]strValue      the value write
+	*/
+	//--------------------------------------------------------- 
+	virtual void SetEnumValue(int64_t i64Value) = 0;
+
+	//---------------------------------------------------------
+	/**
+	\brief      Get the current value of the enum feature
+	\param      [in]strValue      the value write
+	*/
+	//--------------------------------------------------------- 
+	virtual GX_ENUM_ITEM_VALUE GetEnumValue() = 0;
+
+	//---------------------------------------------------------
+	/**
+	\brief      Get the current values of the enum feature
+	\param      [in]strValue      the value write
+	*/
+	//--------------------------------------------------------- 
+	virtual GxIAPICPP::gxenumitem_vector GetEnumItemList() = 0;
 };
 
 template class GXIAPICPP_API  GXSmartPtr<IEnumFeature>;

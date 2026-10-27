@@ -9,7 +9,7 @@
 #include <common/3rdparty/nlohmann/json.hpp>
 #include "../core/flow_types.h"
 #include "../context/flow_context.h"
-// #include "../command/command_dispatcher.h"
+#include "../command/command_dispatcher.h"
 
 namespace scheduler {
 
