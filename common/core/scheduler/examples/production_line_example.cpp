@@ -18,6 +18,7 @@
 #include <chrono>
 #include <atomic>
 #include <random>
+#include <windows.h> // 需要包含此头文件
 
 // 调度核心
 #include "../engine/scheduler.h"
@@ -868,6 +869,8 @@ static void demoH_ButtonMonitor() {
 // ============================================================
 
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
     std::cout << "===================================================\n"
               << "  调度引擎 & 状态机 综合示例\n"
               << "===================================================\n\n";

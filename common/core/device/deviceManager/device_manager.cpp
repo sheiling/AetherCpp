@@ -39,7 +39,7 @@
 #ifdef BUILD_DEVICE_FLASH_DETECT
 #include <common/core/device/flashDetect/flashDetect_by_serial/flash_detect_by_serial.h>
 #endif
-
+//                 auto type_name = obj.at("type").get<common::device::##deviceName##DevType>();
 #define DEVICE_FROM_JSON(deviceJSON,deviceName,memberName) \
 do{\
     if (deviceJSON.contains(#deviceName) && !deviceJSON[#deviceName].is_null()){\
@@ -48,7 +48,7 @@ do{\
             std::string deviceKey = it.key();\
             const json& obj = it.value();\
             if (obj.contains("type") && !obj["type"].is_null()){\
-                auto type_name = obj.at("type").get<common::device::##deviceName##DevType>();\
+                auto type_name = obj.at("type").get<common::device::deviceName##DevType>();\
                 auto ptr = create##deviceName##Instance(type_name);\
                 if (ptr){\
                     ptr->reflectFromJson(obj);\
@@ -249,7 +249,7 @@ int DeviceManager::Init() {
     return (this->connAllDev());
 }
 
-void DeviceManager::Release() 
+void DeviceManager::Release()
 {
 #ifdef BUILD_DEVICE_FLASH_DETECT
     std::shared_lock<std::shared_mutex> lock(m_flashDetectMutex_);
@@ -395,7 +395,7 @@ void DeviceManager::reflectFromJson(const json& j)
     fromJson(j, "MotionController", m_motionController_);
 #endif
 #if defined(BUILD_CAMERA_MVS) || defined(BUILD_CAMERA_GALAXY) || defined(BUILD_CAMERA_TOUP) || defined(BUILD_CAMERA_VC)
-    DEVICE_FROM_JSON(j, Camera, camera)
+    //DEVICE_FROM_JSON(j, Camera, camera)
 #endif
 #ifdef BUILD_DEVICE_LAMPHOUSE
     DEVICE_FROM_JSON(j, Lamphouse, lamphouse);
@@ -525,9 +525,10 @@ void DeviceManager::reflectToJsonPreserveOrder(ordered_json &deviceManager) cons
             writeDevicePoolSection(section, m_colorimeterPool_, m_colorimeterMutex_);
         } else if (key == "FlashDetect") {
             writeDevicePoolSection(section, m_flashDetectPool_, m_flashDetectMutex_);
-        } else if (key == "ImageCaptureList") {
-            writeDevicePoolSection(section, m_imageCapturePool_, m_imageCaptureMutex_);
         }
+        // else if (key == "ImageCaptureList") {
+        //     writeDevicePoolSection(section, m_imageCapturePool_, m_imageCaptureMutex_);
+        // }
     };
 
     ordered_json updated = ordered_json::object();
@@ -644,25 +645,25 @@ const std::shared_ptr<common::device::FlashDetectBase> DeviceManager::FlashDetec
     }
     return flashDetect;
 }
-const std::shared_ptr<common::device::ImageCapture> DeviceManager::ImageCaptureHandler(const std::string &key) const
-{
-    std::shared_lock<std::shared_mutex> lock(m_imageCaptureMutex_);
-    std::shared_ptr<common::device::ImageCapture> imageCapture = nullptr;
-    auto                                          iter         = m_imageCapturePool_.find(key);
-    if (iter != m_imageCapturePool_.end()) {
-        imageCapture = iter->second;
-    }
-    return imageCapture;
-}
+// const std::shared_ptr<common::device::ImageCapture> DeviceManager::ImageCaptureHandler(const std::string &key) const
+// {
+//     std::shared_lock<std::shared_mutex> lock(m_imageCaptureMutex_);
+//     std::shared_ptr<common::device::ImageCapture> imageCapture = nullptr;
+//     auto                                          iter         = m_imageCapturePool_.find(key);
+//     if (iter != m_imageCapturePool_.end()) {
+//         imageCapture = iter->second;
+//     }
+//     return imageCapture;
+// }
 #pragma endregion 获取操作句柄
- 
+
 
 #pragma region 设备添加与删除
 void DeviceManager::addCamera(const std::string& name, common::device::CameraDevType type)
 {
-    auto ptr = createCameraInstance(type); 
-    if (ptr) 
-        addDeviceModule("Camera", name, std::move(ptr), m_cameraMutex_, m_cameraPool_); 
+    auto ptr = createCameraInstance(type);
+    if (ptr)
+        addDeviceModule("Camera", name, std::move(ptr), m_cameraMutex_, m_cameraPool_);
 }
 void DeviceManager::removeCamera(const std::string& name)
 {
@@ -810,11 +811,11 @@ const std::vector<std::string>  DeviceManager::getLightSourceNameList()
 const std::vector<std::string> DeviceManager::getImageCaptureNameList()
 {
     std::vector<std::string>            vec;
-    std::shared_lock<std::shared_mutex> lock(m_imageCaptureMutex_);
-    for (const auto &[key, val] : m_imageCapturePool_)
-    {
-        vec.push_back(key);
-    }
+    // std::shared_lock<std::shared_mutex> lock(m_imageCaptureMutex_);
+    // for (const auto &[key, val] : m_imageCapturePool_)
+    // {
+    //     vec.push_back(key);
+    // }
     return vec;
 }
 
@@ -961,7 +962,7 @@ std::unique_ptr<common::device::SoftwareScreenBase> DeviceManager::createSoftwar
 std::unique_ptr<common::device::ColorimeterBase> DeviceManager::createColorimeterInstance(common::device::ColorimeterDevType type)
 {
      std::unique_ptr<common::device::ColorimeterBase> colorimeter = nullptr;
-    switch (type) 
+    switch (type)
     {
 #ifdef BUILD_COLORIMETER_KONICA
         case common::device::ColorimeterDevType::KONICA_MINOLTA:    colorimeter = std::make_unique<common::device::KonicaColorimeter>(); break;

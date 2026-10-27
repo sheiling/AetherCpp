@@ -13,6 +13,7 @@
 #include <thread>
 #include <chrono>
 #include <atomic>
+#include <windows.h> // 需要包含此头文件
 
 #include "../step/flow_builder.h"
 #include "../engine/scheduler.h"
@@ -361,6 +362,9 @@ void example6_priority_scheduling() {
 
 // ── main ──────────────────────────────────────────────────────
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+
     std::cout << "========================================\n";
     std::cout << "  调度引擎示例程序\n";
     std::cout << "  Automated Device Process Scheduler Demo\n";

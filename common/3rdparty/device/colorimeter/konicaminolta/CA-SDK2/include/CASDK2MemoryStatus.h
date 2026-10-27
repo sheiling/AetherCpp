@@ -1,4 +1,4 @@
-//
+﻿//
 //  CASDK2MemoryStatus.h
 //
 //  Copyright (c) 2016 KONICA MINOLTA, INC.
@@ -18,6 +18,7 @@ typedef struct tagCASDK2MemoryStatus
     int lProbeSNOR;
     char sModelName[17];
     int lCalMode;
+    int lNDCalMode;
     char sIDName[11];
     char sComment[51];
     int lDisplayMode;
@@ -87,6 +88,7 @@ typedef struct tagCASDK2MemoryStatus
         lProbeSNOR = -1;
         memset(sModelName, 0, (sizeof(sModelName) + 0) * sizeof(sModelName[0]));
         lCalMode = -1;
+        lNDCalMode = -1;
         memset(sIDName, 0, (sizeof(sIDName) + 0) * sizeof(sIDName[0]));
         memset(sComment, 0, (sizeof(sComment) + 0) * sizeof(sComment[0]));
         lDisplayMode = -1;

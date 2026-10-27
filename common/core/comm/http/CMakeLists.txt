@@ -22,7 +22,7 @@ target_compile_features(${_tgt} PUBLIC cxx_std_17)
 
 target_compile_definitions(${_tgt}
     PRIVATE
-        HTTP_COMM_LIBRARY
+    HTTP_COMM_LIBRARY
 )
 
 set(LIBHV_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../../3rdparty/libhv")

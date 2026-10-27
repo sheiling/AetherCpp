@@ -2,8 +2,8 @@
 /**
 \file		IImageProcessConfig.h
 \brief		Definition of the IImageProcessConfig interface
-\Date       2019-10-09
-\Version    1.1.1910.9091
+\Date       2023-12-22
+\Version    1.1.2312.9221
 */
 //------------------------------------------------------------------------
 #pragma once
@@ -283,8 +283,6 @@ public:
 	*/
 	//---------------------------------------------------------
 	virtual COLOR_TRANSFORM_FACTOR GetUserCCParam() = 0; 
-
-
 
 };
 

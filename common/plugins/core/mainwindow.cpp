@@ -344,8 +344,7 @@ void MainWindow::setupUi()
     connect(TM, &ThemeManager::themeChanged,       this, &MainWindow::onThemeChanged);
 
     // ── 6. 连接权限运行时服务 ─────────────────────────────────────────────
-    connect(PS, &PermService::permissionsChanged,
-            this, &MainWindow::onPermissionsChanged);
+    connect(PS, &PermService::permissionsChanged, this, &MainWindow::onPermissionsChanged);
 
     applyTitleBarThemeStyle(m_titleBar);
 }

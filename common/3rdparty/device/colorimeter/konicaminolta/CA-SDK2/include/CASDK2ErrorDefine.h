@@ -1,4 +1,4 @@
-//
+﻿//
 //  CASDK2ErrorDefine.h
 //
 //  Copyright (c) 2016 KONICA MINOLTA, INC.
@@ -82,6 +82,11 @@
 #define IDS_ERR_SDK_INCORRECTHWSETUP    441
 #define IDS_ERR_SDK_INVALIDDSPMODEARGUMENT 442
 #define IDS_ERR_SDK_USERDATANOTSET      443
+#define IDS_ERR_SDK_INCORRECTDEVICEFW   444
+#define IDS_ERR_SDK_FREQOUTOFRANGE      445
+#define IDS_ERR_SDK_UNSUPPORTEDAPI      446
+#define IDS_ERR_SDK_DIFFERENTCALIBTYPE  447
+#define IDS_ERR_SDK_INVALIDMULTICONDITION 448
 
 #define IDS_ERR_CA                      500
 #define IDS_ERR_CA_1                    501
@@ -148,16 +153,18 @@
 #define IDS_ERR_SDK_OLD                     0
 #define IDS_ERR_SDK_OLD_1                   1
 #define IDS_ERR_SDK_OLD_2                   2
-#define IDS_ERR_SDK_OLD_4                   4
 #define IDS_ERR_SDK_OLD_3                   3
+#define IDS_ERR_SDK_OLD_4                   4
 #define IDS_ERR_SDK_OLD_5                   5
 #define IDS_ERR_SDK_OLD_6                   6
 #define IDS_ERR_SDK_OLD_7                   7
+#define IDS_ERR_SDK_OLD_8                   8
+#define IDS_ERR_SDK_OLD_9                   9
 #define IDS_ERR_SDK_OLD_EXEC_NO_ZERO_CAL    10
-#define IDS_ERR_SDK_OLD_HOLD_ERR            15
+#define IDS_ERR_SDK_OLD_15                  15
 #define IDS_ERR_SDK_OLD_INVALID_SYNC_FREQ   20
 #define IDS_ERR_SDK_OLD_OVER_MEAS_RANGE     22
-#define IDS_ERR_SDK_OLD_OFFSET_ERR          23
+#define IDS_ERR_SDK_OLD_23                  23
 #define IDS_ERR_SDK_OLD_MEAS_VAL_OVER       50
 #define IDS_ERR_SDK_OLD_INVALID_SYNC_FREQ_OR_MODE 51
 #define IDS_ERR_SDK_OLD_FLCKR_MEAS          53
@@ -169,3 +176,12 @@
 #define IDS_ERR_SDK_OLD_69                  69
 #define IDS_ERR_SDK_OLD_70                  70
 #define IDS_ERR_SDK_OLD_71                  71
+
+#define IDS_ERR_SDK_SVM						80
+#define IDS_ERR_SDK_OLD_81                  81
+#define IDS_ERR_SDK_OLD_82                  82
+#define IDS_ERR_SDK_OLD_83                  83
+#define IDS_ERR_SDK_OLD_84                  84
+#define IDS_ERR_SDK_OLD_85                  85
+#define IDS_ERR_SDK_OLD_86                  86
+#define IDS_ERR_SDK_OLD_87                  87

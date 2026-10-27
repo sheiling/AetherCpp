@@ -83,7 +83,7 @@ message(STATUS "[app] Configuring...")
 add_subdirectory(app)
 
 # 3. 所有插件
-add_subdirectory(plugins)
+# add_subdirectory(plugins)
 
 # 4. 单元测试
 # message(STATUS "[tests] Configuring...")

@@ -1,4 +1,4 @@
-
+ï»¿
 #ifndef _MV_CAMERA_CTRL_H_
 #define _MV_CAMERA_CTRL_H_
 
@@ -63,77 +63,196 @@ extern "C" {
 #endif 
 
 
-/****************************** ch: ÕªÒª | en: Instructions**********************************************/
+/****************************** ch: æ‘˜è¦ | en: Instructions**********************************************/
 
 /** 
-*   @~chinese
-*     ¸ÃÍ·ÎÄ¼şÖ÷Òª°üº¬9²¿·Ö£º
-*     1.SDK³õÊ¼»¯
-*     2.Ïà»úµÄÅäÖÃ(Ã¶¾Ù/´ò¿ª/¹Ø±Õ£©ºÍÈ¡Á÷½Ó¿Ú
-*     3.²É¼¯¿¨µÄÅäÖÃ(Ã¶¾Ù/´ò¿ª/¹Ø±Õ£©
-*     4.Ïà»ú/²É¼¯¿¨ÊôĞÔÍòÄÜÅäÖÃ½Ó¿Ú&¶ÁĞ´¼Ä´æÆ÷½Ó¿Ú
-*     5.Ïà»ú/²É¼¯¿¨ Éı¼¶
-*     6.Ïà»úºÍ²É¼¯¿¨ ×¢²áÒì³£»Øµ÷ºÍÊÂ¼ş½Ó¿Ú
-*     7.½öGigEÉè±¸Ö§³ÖµÄ½Ó¿Ú
-*     8.½öCameraLink Éè±¸Ö§³ÖµÄ½Ó¿Ú
-*     9.½öU3VÉè±¸Ö§³ÖµÄ½Ó¿Ú
-*     10.GenTLÏà¹Ø½Ó¿Ú
-*     11.Í¼Ïñ±£´æ¡¢¸ñÊ½×ª»»µÈÏà¹Ø½Ó¿Ú
+ *   @~chinese
+ *     è¯¥å¤´æ–‡ä»¶ä¸»è¦åŒ…å«14éƒ¨åˆ†ï¼š
+ *     0.å›è°ƒå‡½æ•°å®šä¹‰
+ *     1.SDKåˆå§‹åŒ–
+ *     2.ç›¸æœºçš„é…ç½®(æšä¸¾/æ‰“å¼€/å…³é—­ï¼‰å’Œå–æµæ¥å£
+ *     3.é‡‡é›†å¡çš„é…ç½®(æšä¸¾/æ‰“å¼€/å…³é—­ï¼‰
+ *     4.ç›¸æœº/é‡‡é›†å¡å±æ€§ä¸‡èƒ½é…ç½®æ¥å£&è¯»å†™å¯„å­˜å™¨æ¥å£
+ *     5.ç›¸æœº/é‡‡é›†å¡ å‡çº§
+ *     6.ç›¸æœºå’Œé‡‡é›†å¡ æ³¨å†Œå¼‚å¸¸å›è°ƒå’Œäº‹ä»¶æ¥å£
+ *     7.ä»…GigE Visionè®¾å¤‡æ”¯æŒçš„æ¥å£
+ *     8.ä»…CameraLink è®¾å¤‡æ”¯æŒçš„æ¥å£
+ *     9.ä»…USB3 Visionè®¾å¤‡æ”¯æŒçš„æ¥å£
+ *     10.GenTLç›¸å…³æ¥å£
+ *     11.å›¾åƒä¿å­˜ã€æ ¼å¼è½¬æ¢ç­‰ç›¸å…³æ¥å£
+ *     12.é€‚ç”¨äºæ”¯æŒä¸²å£é€šä¿¡çš„è®¾å¤‡æ¥å£
+ *     13.é€‚ç”¨äºæ”¯æŒæ¶²æ€é•œå¤´çš„è®¾å¤‡æ¥å£
 
-*   @~english
-*     The document mainly consists of nine parts:
-*     1.SDK Initialization
-*     2.Camera control and streaming¡¤
-*     3.Frame grabber control¡¤
-*     4.Camera/Frame grabberattribute nodes set and obtained universal interface
-*     5.Camera/Frame grabber  upgrade and read-write register memory interface
-*     6.Camera/Frame grabber  Enrol abnormal callbacks and event interface
-*     7.Only support GigE device interface
-*     8.Only support camlink device interface
-*     9.Only support U3V device interface
-*     10.Only support GenTL device interface
-*     11.Related image save and format convert interface
+ *   @~english
+ *     This header file mainly includes 14 sections:
+ *     0.Callback function definition
+ *     1.SDK initialization
+ *     2.Camera configuration (enumeration/open/close) and streaming API
+ *     3.Frame grabber configuration (enumeration/open/close)
+ *     4.Universal property configuration API & register read/write API for cameras/frame grabbers
+ *     5.Firmware upgrade for cameras/frame grabbers
+ *     6.Exception callback registration and event API for cameras and frame grabbers
+ *     7.API exclusively for GigE Vision devices
+ *     8.API exclusively for CameraLink devices
+ *     9.API exclusively for USB3 Vision (U3V) devices
+ *     10.GenTL-related API
+ *     11.Image saving and format conversion API
+ *     12.API for devices supporting serial communication
+ *     13.API for devices supporting liquid lens
 **/
 
 
+/*******************Part0 ch: å›è°ƒå‡½æ•°å®šä¹‰ | en: Callback function definition*******************/
 
-
-/**************************Part1 ch: SDK ³õÊ¼»¯ | en: SDK Initialization ******************************************/
+/// \addtogroup å›è°ƒå‡½æ•°å®šä¹‰
+/// @{
 
 /********************************************************************//**
  *  @~chinese
- *  @brief    ³õÊ¼»¯SDK
- *  @return   ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
+ *  @brief  å–å›¾å›è°ƒå‡½æ•°
+ *  @param  pData                       [OUT]           å›¾åƒæ•°æ®æŒ‡é’ˆ
+ *  @param  pFrameInfo                  [OUT]           å›¾åƒä¿¡æ¯ç»“æ„ä½“
+ *  @param  pUser                       [OUT]           ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
 
  *  @~english
- *  @brief  Initialize SDK  
- *  @return  Success, return MV_OK. Failure, return error code   
+ *  @brief  Image Callback function
+ *  @param  pData                       [OUT]           It refers to the pointer to image data. 
+ *  @param  pFrameInfo                  [OUT]           It refers to the image information structure. 
+ *  @param  pUser                       [OUT]           It refers to the user-defined variable.
+*****************************************************************************/
+typedef void(__stdcall *MvImageCallbackEx)(unsigned char * pData, MV_FRAME_OUT_INFO_EX* pFrameInfo, void* pUser);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  å–å›¾å›è°ƒå‡½æ•°
+ *  @param  pstFrame                    [OUT]           å›¾åƒæ•°æ®å’Œå›¾åƒä¿¡æ¯
+ *  @param  pUser                       [OUT]           ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+ *  @param  bAutoFree                   [OUT]           true-å›è°ƒå‡½æ•°é€€å‡ºåè‡ªåŠ¨é‡Šæ”¾å›¾åƒç¼“å­˜ï¼Œfalse-å›è°ƒç»“æŸä¸é‡Šæ”¾å›¾åƒç¼“å­˜ï¼Œéœ€è°ƒç”¨ MV_CC_FreeImageBuffer() 
+
+
+ *  @~english
+ *  @brief  Image callback function
+ *  @param  pstFrame                    [OUT]           It refers to the image data and information.
+ *  @param  pUser                       [OUT]           It refers to the user-defined variable. 
+ *  @param  bAutoFree                   [OUT]           Whether to release image buffer automatically after callback is completed. 
+                                                       true: the image buffer is released automatically after callback is completed, 
+                                                       false: the image buffer cannot be released automatically, and it is required to call MV_CC_FreeImageBuffer(). 
+
+*****************************************************************************/
+typedef void(__stdcall *MvImageCallbackEx2)(MV_FRAME_OUT* pstFrame, void *pUser, bool bAutoFree);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  äº‹ä»¶å›è°ƒå‡½æ•°
+ *  @param  pEventInfo                  [OUT]           äº‹ä»¶ä¿¡æ¯
+ *  @param  pUser                       [OUT]           ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+
+ *  @~english
+ *  @brief  Event callback function
+ *  @param  pEventInfo                  [OUT]           It refers to the event information.
+ *  @param  pUser                       [OUT]           It refers to the user-defined variable.
+*****************************************************************************/
+typedef void(__stdcall *MvEventCallback)(MV_EVENT_OUT_INFO * pEventInfo, void* pUser);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  æµå¼‚å¸¸å›è°ƒå‡½æ•°
+ *  @param  pstStreamExceptionInfo      [OUT]           æµå¼‚å¸¸ä¿¡æ¯
+ *  @param  pUser                       [OUT]           ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+
+ *  @~english
+ *  @brief  Stream exception callback function.
+ *  @param  pstStreamExceptionInfo      [OUT]           It refers to the stream exception information. 
+ *  @param  pUser                       [OUT]           It refers to the user-defined variable. 
+*****************************************************************************/
+typedef void(__stdcall *MvStreamExceptionCallback)(MV_CC_STREAM_EXCEPTION_INFO* pstStreamExceptionInfo, void* pUser);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  å¼‚å¸¸æ¶ˆæ¯å›è°ƒ
+ *  @param  nMsgType                    [OUT]           å¼‚å¸¸ç±»å‹
+ *  @param  pUser                       [OUT]           ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+
+ *  @~english
+ *  @brief  Exception callback function. 
+ *  @param  nMsgType                    [OUT]           It refers to the exception type.
+ *  @param  pUser                       [OUT]           It refers to the user-defined variable. 
+*****************************************************************************/
+typedef void(__stdcall *MvExceptionCallback)(unsigned int nMsgType, void *pUser);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  æ¶²æ€é•œå¤´æ­£å¸¸æ¶ˆæ¯å›è°ƒ
+ *  @param  pLiquidLensMsg              [OUT]           æ¶²æ€é•œå¤´ä¸Šä¼ çš„æ¶ˆæ¯
+ *  @param  pUser                       [OUT]           ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+
+ *  @~english
+ *  @brief  Liquid lens normal message callback function.
+ *  @param  pLiquidLensMsg              [OUT]           It refers to the uploaded message of liquid lens uploaded.
+ *  @param  pUser                       [OUT]           It refers to the user-defined variable. 
+*****************************************************************************/
+typedef void(__stdcall *MvLiquidLensMsgCallback)(MV_CC_LIQUIDLENS_MSG* pLiquidLensMsg, void* pUser);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  æ¶²æ€é•œå¤´å¼‚å¸¸æ¶ˆæ¯å›è°ƒ
+ *  @param  pLiquidLensMsg              [OUT]           æ¶²æ€é•œå¤´ä¸Šä¼ çš„æ¶ˆæ¯
+ *  @param  pUser                       [OUT]           ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+
+ *  @~english
+ *  @brief  Liquid lens exception message callback function. 
+ *  @param  pLiquidLensMsg              [OUT]           It refers to the uploaded message of liquid lens uploaded.
+ *  @param  pUser                       [OUT]           It refers to the user-defined variable. 
+*****************************************************************************/
+typedef void(__stdcall *MvLiquidLensExceptionCallback)(MV_CC_LIQUIDLENS_EXCEPTION_MSG* pLiquidLensMsg, void* pUser);
+/// @}
+
+/**************************Part1 ch: SDK åˆå§‹åŒ– | en: SDK Initialization ******************************************/
+
+/// \addtogroup SDKåˆå§‹åŒ–
+/// @{
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief    åˆå§‹åŒ–SDK
+ *  @return   æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+
+ *  @~english
+ *  @brief   Initializes SDK resources.  
+ *  @return  Returns MV_OK for success, and returns corresponding error code for failure.  
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_Initialize();
 
 /********************************************************************//**
  *  @~chinese
- *  @brief    ·´³õÊ¼»¯SDK£¬ÊÍ·Å×ÊÔ´
- *  @return   ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks  mainº¯ÊıÍË³öÇ°µ÷ÓÃ
+ *  @brief    ååˆå§‹åŒ–SDKï¼Œé‡Šæ”¾èµ„æº
+ *  @return   æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks  mainå‡½æ•°é€€å‡ºå‰è°ƒç”¨
 
  *  @~english
- *  @brief   Terminate SDK  
- *  @return  Success, return MV_OK. Failure, return error code   
- *  @remarks  Called before the main function exits
+ *  @brief   Releases SDK resources. 
+ *  @return  Returns MV_OK for success, and returns corresponding error code for failure.  
+ *  @remarks Call this API before exiting the main function. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_Finalize();
 
+/// @}
+
+/// \addtogroup SDKç‰ˆæœ¬ä¿¡æ¯
+/// @{
+
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡SDK°æ±¾ºÅ
- *  @return ·µ»Ø4×Ö½Ú°æ±¾ºÅ
-            |Ö÷    |´Î    |ĞŞÕı  |  ²âÊÔ|
-             8bits  8bits  8bits  8bits
- *  @remarks ±ÈÈç·µ»ØÖµÎª0x01000001£¬¼´SDK°æ±¾ºÅÎªV1.0.0.1¡£
+ *  @brief  è·å–SDKç‰ˆæœ¬å·
+ *  @return è¿”å›4å­—èŠ‚ç‰ˆæœ¬å·
+                |  ä¸»   |   æ¬¡  |  ä¿®æ­£  |  æµ‹è¯• |
+                | :---: | :---: | :---: | :---: | 
+                | 8bits | 8bits | 8bits | 8bits |
+ *  @remarks \li æ¯”å¦‚è¿”å›å€¼ä¸º0x01000001ï¼Œå³SDKç‰ˆæœ¬å·ä¸ºV1.0.0.1ã€‚
+             \li  MV_CC_GetSDKVersion() å¼•å…¥å¤´æ–‡ä»¶ã€Libæ–‡ä»¶åï¼ŒSDKç¯å¢ƒæ­å»ºå®Œæ¯•ï¼Œå¯ç›´æ¥è°ƒç”¨ã€‚
  
  *  @~english
- *  @brief  Get SDK Version
+ *  @brief  Gets SDK Version
  *  @return Always return 4 Bytes of version number 
             |Main    |Sub    |Rev  |  Test|
              8bits  8bits  8bits  8bits
@@ -141,168 +260,244 @@ MV_CAMCTRL_API int __stdcall MV_CC_Finalize();
  ************************************************************************/
 MV_CAMCTRL_API unsigned int __stdcall MV_CC_GetSDKVersion();
 
+/// @}
 
 
 
-/**************************Part2 ch: Ïà»úµÄ¿ØÖÆºÍÈ¡Á÷  | en: Camera control and streaming******************************************/
+/**************************Part2 ch: ç›¸æœºçš„æ§åˆ¶å’Œå–æµ  | en: Camera control and streaming******************************************/
 
+/// \addtogroup ç›¸æœºåˆå§‹åŒ–
+/// @{
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Ã¶¾ÙÉè±¸
- *  @param  nTLayerType                 [IN]            Ã¶¾Ù´«Êä²ã, ²ÎÊı¶¨Òå²Î¼ûCameraParams.h¶¨Òå, Èç: #define MV_GIGE_DEVICE 0x00000001 GigEÉè±¸
- *  @param  pstDevList                  [IN][OUT]       Éè±¸ÁĞ±í
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks Éè±¸ÁĞ±íµÄÄÚ´æÊÇÔÚSDKÄÚ²¿·ÖÅäµÄ£¬¶àÏß³Ìµ÷ÓÃ¸Ã½Ó¿ÚÊ±»á½øĞĞÉè±¸ÁĞ±íÄÚ´æµÄÊÍ·ÅºÍÉêÇë,½¨Òé¾¡Á¿±ÜÃâ¶àÏß³ÌÃ¶¾Ù²Ù×÷¡£
- *  @remarks ²ÎÊıÃ¶¾Ù´«Êä²ã£¬ÊÊÅä´«ÈëMV_GIGE_DEVICE¡¢MV_1394_DEVICE¡¢MV_USB_DEVICE¡¢MV_CAMERALINK_DEVICE£»MV_GIGE_DEVICE¸Ã²ÎÊı
-             ´«³öËùÓĞGiGEÏà¹ØµÄÉè±¸ĞÅÏ¢£¨°üº¬ĞéÄâGiGEºÍGenTLÏÂµÄGiGEÉè±¸£©£¬MV_USB_DEVICE¸Ã²ÎÊı´«³öËùÓĞUSBÉè±¸£¬°üº¬ĞéÄâUSBÉè±¸¡£
-
+ *  @brief  æšä¸¾è®¾å¤‡
+ *  @param  nTLayerType                 [IN]            æšä¸¾ä¼ è¾“å±‚, å‚æ•°å®šä¹‰å‚è§CameraParams.hå®šä¹‰
+                | ä¼ è¾“å±‚åè®®ç±»å‹å®šä¹‰ | å€¼ | è¯´æ˜ |
+                | :--- | :---: | :--- | 
+                | \ref MV_UNKNOW_DEVICE | 0x00000000 | æœªçŸ¥è®¾å¤‡ç±»å‹ |
+                | \ref MV_GIGE_DEVICE | 0x00000001 | GigE Visionè®¾å¤‡ |
+                | \ref MV_1394_DEVICE | 0x00000002 | 1394-a/bè®¾å¤‡ |
+                | \ref MV_USB_DEVICE | 0x00000004 | USB3 Visionè®¾å¤‡ |
+                | \ref MV_CAMERALINK_DEVICE | 0x00000008 | ä¸²å£è®¾å¤‡ï¼ŒåŒ…å«Camera Linkè®¾å¤‡å’Œä¸²å£å…‰æºæ§åˆ¶å™¨ |
+                | \ref MV_VIR_GIGE_DEVICE | 0x00000010 | è™šæ‹ŸGigE Visionè®¾å¤‡ |
+                | \ref MV_VIR_USB_DEVICE | 0x00000020 | è™šæ‹ŸUSB3 Visionè®¾å¤‡ |
+                | \ref MV_GENTL_GIGE_DEVICE | 0x00000040 | è‡ªç ”ç½‘å¡ä¸‹GigEè®¾å¤‡ |
+                | \ref MV_GENTL_CAMERALINK_DEVICE | 0x00000080 | CameraLinkè®¾å¤‡ |
+                | \ref MV_GENTL_CXP_DEVICE | 0x00000100 | CoaXPressè®¾å¤‡ |
+                | \ref MV_GENTL_XOF_DEVICE | 0x00000200 | XoFè®¾å¤‡ |
+                | \ref MV_GENTL_VIR_DEVICE | 0x00000800 | è™šæ‹Ÿè®¾å¤‡ |
+ *  @param  pstDevList                  [IN][OUT]       è®¾å¤‡åˆ—è¡¨
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li è®¾å¤‡åˆ—è¡¨çš„å†…å­˜æ˜¯åœ¨SDKå†…éƒ¨åˆ†é…çš„ï¼Œå¤šçº¿ç¨‹è°ƒç”¨è¯¥æ¥å£æ—¶ä¼šè¿›è¡Œè®¾å¤‡åˆ—è¡¨å†…å­˜çš„é‡Šæ”¾å’Œç”³è¯·ï¼Œå»ºè®®å°½é‡é¿å…å¤šçº¿ç¨‹æšä¸¾æ“ä½œã€‚\n
+ *           \li å‚æ•°æšä¸¾ä¼ è¾“å±‚ï¼Œé€‚é…ä¼ å…¥MV_GIGE_DEVICEã€MV_1394_DEVICEã€MV_USB_DEVICEã€MV_CAMERALINK_DEVICEï¼›MV_GIGE_DEVICEè¯¥å‚æ•°ä¼ å‡ºæ‰€æœ‰GiGEç›¸å…³çš„è®¾å¤‡ä¿¡æ¯ï¼ˆåŒ…å«è™šæ‹ŸGiGEå’ŒGenTLä¸‹çš„GiGEè®¾å¤‡ï¼‰ï¼ŒMV_USB_DEVICEè¯¥å‚æ•°ä¼ å‡ºæ‰€æœ‰USB3 Visionè®¾å¤‡ï¼ŒåŒ…å«è™šæ‹ŸUSB3 Visionè®¾å¤‡ã€‚\n
+ *           \li GE1104 é‡‡é›†å¡ä¸‹çš„ç›¸æœºä»…æ”¯æŒé€šè¿‡ MV_GIGE_DEVICE ç±»å‹æšä¸¾ï¼Œä¸æ”¯æŒä½¿ç”¨MV_GENTL_GIGE_DEVICEã€‚
+ 
  *  @~english
- *  @brief  Enumerate Device
- *  @param  nTLayerType                 [IN]            Enumerate TLs, Refer to the 'CameraParams.h' for parameter definitions, for example, #define MV_GIGE_DEVICE 0x00000001
- *  @param  pstDevList                  [IN][OUT]       Device List
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks The memory of the device list is allocated within the SDK. When the interface is invoked by multiple threads, the memory of the device list will be released and applied
-             It is recommended to avoid multithreaded enumeration operations as much as possible.
- *  @remarks Transmission layer of enumeration, param only include MV_GIGE_DEVICE¡¢MV_1394_DEVICE¡¢MV_USB_DEVICE¡¢MV_CAMERALINK_DEVICE;
-             MV_GIGE_DEVICE can output virtual and GenTL GiGE devices, MV_USB_DEVICE can output all USB devices, include virtual usb devices.
+ *  @brief  Enumerates devices, including cameras connected to frame grabbers.
+ *  @param  nTLayerType                 [IN]            It refers to the transport layer protocol type. For more details, refer to CameraParams.h. for example, #define MV_GIGE_DEVICE 0x00000001
+ *  @param  pstDevList                  [IN][OUT]       It refers to the device list. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks The memory of device list is internally allocated. When this API is called in multiple threads, the SDK will release and apply for the device list memory. 
+             It is recommended to avoid multithreaded enumeration operations.
+ *  @remarks For the parameter nTLayerType, the following parameters are supported: MV_GIGE_DEVICE, MV_1394_DEVICE, MV_USB_DEVICE, and MV_CAMERALINK_DEVICE. 
+             MV_GIGE_DEVICE sends out information of all GigE devices (including virtual GigE devices and GigE devices of GenTL), and MV_USB_DEVICE sends out information of USB devices (including virtual USB devices).
+ *  @remarks Cameras under the GE1104 frame grabber can only be enumerated via MV_GIGE_DEVICE; MV_GENTL_GIGE_DEVICE is not supported.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_EnumDevices(IN unsigned int nTLayerType, IN OUT MV_CC_DEVICE_INFO_LIST* pstDevList);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ¸ù¾İ³§ÉÌÃû×ÖÃ¶¾ÙÉè±¸
- *  @param  nTLayerType                 [IN]            Ã¶¾Ù´«Êä²ã, ²ÎÊı¶¨Òå²Î¼ûCameraParams.h¶¨Òå, Èç: #define MV_GIGE_DEVICE 0x00000001 GigEÉè±¸
- *  @param  pstDevList                  [IN][OUT]       Éè±¸ÁĞ±í
- *  @param  strManufacturerName         [IN]            ³§ÉÌÃû×Ö
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ²ÎÊıÃ¶¾Ù´«Êä²ã£¬ÊÊÅä´«ÈëMV_GIGE_DEVICE¡¢MV_1394_DEVICE¡¢MV_USB_DEVICE¡¢MV_CAMERALINK_DEVICE£»MV_GIGE_DEVICE¸Ã²ÎÊı
-            ´«³öËùÓĞGiGEÏà¹ØµÄÉè±¸ĞÅÏ¢£¨°üº¬ĞéÄâGiGEºÍGenTLÏÂµÄGiGEÉè±¸£©£¬MV_USB_DEVICE¸Ã²ÎÊı´«³öËùÓĞUSBÉè±¸£¬°üº¬ĞéÄâUSBÉè±¸¡£
- *  @remarks Éè±¸ÁĞ±íµÄÄÚ´æÊÇÔÚSDKÄÚ²¿·ÖÅäµÄ£¬¶àÏß³Ìµ÷ÓÃ¸Ã½Ó¿ÚÊ±»á½øĞĞÉè±¸ÁĞ±íÄÚ´æµÄÊÍ·ÅºÍÉêÇë,½¨Òé¾¡Á¿±ÜÃâ¶àÏß³ÌÃ¶¾Ù²Ù×÷¡£
+ *  @brief  æ ¹æ®å‚å•†åå­—æšä¸¾è®¾å¤‡
+ *  @param  nTLayerType                 [IN]            æšä¸¾ä¼ è¾“å±‚ï¼Œå‚æ•°å®šä¹‰å‚è§CameraParams.h
+            | ä¼ è¾“å±‚åè®®ç±»å‹å®šä¹‰ | å€¼ | è¯´æ˜ |
+            | :--- | :---: | :--- | 
+            | \ref MV_UNKNOW_DEVICE | 0x00000000 | æœªçŸ¥è®¾å¤‡ç±»å‹ |
+            | \ref MV_GIGE_DEVICE | 0x00000001 | GigE Visionè®¾å¤‡ |
+            | \ref MV_1394_DEVICE | 0x00000002 | 1394-a/bè®¾å¤‡ |
+            | \ref MV_USB_DEVICE | 0x00000004 | USB3 Visionè®¾å¤‡ |
+            | \ref MV_CAMERALINK_DEVICE | 0x00000008 | ä¸²å£è®¾å¤‡ï¼ŒåŒ…å«Camera Linkè®¾å¤‡å’Œä¸²å£å…‰æºæ§åˆ¶å™¨ |
+            | \ref MV_VIR_GIGE_DEVICE | 0x00000010 | è™šæ‹ŸGigE Visionè®¾å¤‡ |
+            | \ref MV_VIR_USB_DEVICE | 0x00000020 | è™šæ‹ŸUSB3 Visionè®¾å¤‡ |
+            | \ref MV_GENTL_GIGE_DEVICE | 0x00000040 | è‡ªç ”ç½‘å¡ä¸‹GigEè®¾å¤‡ |
+            | \ref MV_GENTL_CAMERALINK_DEVICE | 0x00000080 | CameraLinkè®¾å¤‡ |
+            | \ref MV_GENTL_CXP_DEVICE | 0x00000100 | CoaXPressè®¾å¤‡ |
+            | \ref MV_GENTL_XOF_DEVICE | 0x00000200 | XoFè®¾å¤‡ |
+            | \ref MV_GENTL_VIR_DEVICE | 0x00000800 | è™šæ‹Ÿè®¾å¤‡ |
+ *  @param  pstDevList                  [IN][OUT]       è®¾å¤‡åˆ—è¡¨
+ *  @param  strManufacturerName         [IN]            å‚å•†åå­—
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li å‚æ•°æšä¸¾ä¼ è¾“å±‚ï¼Œé€‚é…ä¼ å…¥MV_GIGE_DEVICEã€MV_1394_DEVICEã€MV_USB_DEVICEã€MV_CAMERALINK_DEVICEï¼›MV_GIGE_DEVICEè¯¥å‚æ•°ä¼ å‡ºæ‰€æœ‰GigE Visionç›¸å…³çš„è®¾å¤‡ä¿¡æ¯ï¼ˆåŒ…å«è™šæ‹ŸGigE Visionå’ŒGenTLä¸‹çš„GigE Visionè®¾å¤‡ï¼‰ï¼ŒMV_USB_DEVICEè¯¥å‚æ•°ä¼ å‡ºæ‰€æœ‰USB3 Visionè®¾å¤‡ï¼ŒåŒ…å«è™šæ‹ŸUSB3 Visionè®¾å¤‡ã€‚\n
+ *           \li è®¾å¤‡åˆ—è¡¨çš„å†…å­˜æ˜¯åœ¨SDKå†…éƒ¨åˆ†é…çš„ï¼Œå¤šçº¿ç¨‹è°ƒç”¨è¯¥æ¥å£æ—¶ä¼šè¿›è¡Œè®¾å¤‡åˆ—è¡¨å†…å­˜çš„é‡Šæ”¾å’Œç”³è¯·,å»ºè®®å°½é‡é¿å…å¤šçº¿ç¨‹æšä¸¾æ“ä½œã€‚\n
+ *           \li MV_GENTL_GIGE_DEVICEã€MV_GENTL_CAMERALINK_DEVICEã€MV_GENTL_CXP_DEVICEã€MV_GENTL_XOF_DEVICEä¼ è¾“å±‚å¯ä»¥è¿”å›å¯¹é‡‡é›†å¡ä¸‹çš„ç›¸æœºä¿¡æ¯ã€‚
+ *           \li GE1104 é‡‡é›†å¡ä¸‹çš„ç›¸æœºä»…æ”¯æŒé€šè¿‡MV_GIGE_DEVICEç±»å‹æšä¸¾ï¼Œä¸æ”¯æŒä½¿ç”¨MV_GENTL_GIGE_DEVICEã€‚
 
  *  @~english
- *  @brief  Enumerate device according to manufacture name
- *  @param  nTLayerType                 [IN]            Transmission layer of enumeration, , Refer to the 'CameraParams.h' for parameter definitions, for example, #define MV_GIGE_DEVICE 0x00000001
- *  @param  pstDevList                  [IN][OUT]       Device list
- *  @param  strManufacturerName         [IN]            Manufacture Name
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Transmission layer of enumeration, param only include MV_GIGE_DEVICE¡¢MV_1394_DEVICE¡¢MV_USB_DEVICE¡¢MV_CAMERALINK_DEVICE;
-             MV_GIGE_DEVICE can output virtual and GenTL GiGE devices, MV_USB_DEVICE can output all USB devices, include virtual usb devices.
- *  @remarks The memory of the device list is allocated within the SDK. When the interface is invoked by multiple threads, the memory of the device list will be released and applied.
-             It is recommended to avoid multithreaded enumeration operations as much as possible.
+ *  @brief  Enumerates devices according to manufacturers.
+ *  @param  nTLayerType                 [IN]            It refers to the transport layer protocol type. For more details, refer to CameraParams.h. for example, #define MV_GIGE_DEVICE 0x00000001
+ *  @param  pstDevList                  [IN][OUT]       It refers to the device list.
+ *  @param  strManufacturerName         [IN]            It refers to the manufacturers. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks For the parameter nTLayerType, the following parameters are supported: MV_GIGE_DEVICE, MV_1394_DEVICE, MV_USB_DEVICE, and MV_CAMERALINK_DEVICE. 
+             MV_GIGE_DEVICE sends out information of all GigE devices (including virtual GigE devices and GigE devices of GenTL), and MV_USB_DEVICE sends out information of USB devices (including virtual USB devices).
+ *  @remarks The memory of device list is internally allocated. When this API is called in multiple threads, the SDK will release and apply for the device list memory. 
+             It is recommended to avoid multithreaded enumeration operations.
+ *  @remarks Cameras under the GE1104 frame grabber can only be enumerated via MV_GIGE_DEVICE; MV_GENTL_GIGE_DEVICE is not supported.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_EnumDevicesEx(IN unsigned int nTLayerType, IN OUT MV_CC_DEVICE_INFO_LIST* pstDevList, IN const char* strManufacturerName);
 
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Ã¶¾ÙÉè±¸À©Õ¹£¨¿ÉÖ¸¶¨ÅÅĞò·½Ê½Ã¶¾Ù¡¢¸ù¾İ³§ÉÌÃû×Ö¹ıÂË£©
- *  @param  nTLayerType                 [IN]            Ã¶¾Ù´«Êä²ã£¨Çø·ÖÃ¿Ò»ÖÖ´«Êä²ãÀàĞÍ£¬²»ñîºÏ£©, ²ÎÊı¶¨Òå²Î¼ûCameraParams.h¶¨Òå, Èç: #define MV_GIGE_DEVICE 0x00000001 GigEÉè±¸
- *  @param  pstDevList                  [IN][OUT]       Éè±¸ÁĞ±í
- *  @param  strManufacturerName         [IN]            ³§ÉÌÃû×Ö£¨¿É´«NULL£¬¼´²»¹ıÂË£©
- *  @param  enSortMethod                [IN]            ÅÅĞò·½Ê½
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks Éè±¸ÁĞ±íµÄÄÚ´æÊÇÔÚSDKÄÚ²¿·ÖÅäµÄ£¬¶àÏß³Ìµ÷ÓÃ¸Ã½Ó¿ÚÊ±»á½øĞĞÉè±¸ÁĞ±íÄÚ´æµÄÊÍ·ÅºÍÉêÇë,½¨Òé¾¡Á¿±ÜÃâ¶àÏß³ÌÃ¶¾Ù²Ù×÷
-             strManufacturerName¿É´«ÈëNULL£¬Èô´«ÈëNULLÔò·µ»ØÅÅºÃĞòµÄËùÓĞÉè±¸ÁĞ±í,Èô²»ÎªNULLÔòÖ»·µ»ØÅÅºÃĞòµÄÖ¸¶¨³§ÉÌÉè±¸ÁĞ±í¡£
+ *  @brief  æšä¸¾è®¾å¤‡æ‰©å±•ï¼ˆå¯æŒ‡å®šæ’åºæ–¹å¼æšä¸¾ã€æ ¹æ®å‚å•†åå­—è¿‡æ»¤ï¼‰
+ *  @param  nTLayerType                 [IN]            æšä¸¾ä¼ è¾“å±‚ï¼ˆåŒºåˆ†æ¯ä¸€ç§ä¼ è¾“å±‚ç±»å‹ï¼Œä¸è€¦åˆï¼‰ï¼Œå‚æ•°å®šä¹‰å‚è§CameraParams.h
+            | ä¼ è¾“å±‚åè®®ç±»å‹å®šä¹‰ | å€¼ | è¯´æ˜ |
+            | :--- | :---: | :--- | 
+            | \ref MV_UNKNOW_DEVICE | 0x00000000 | æœªçŸ¥è®¾å¤‡ç±»å‹ |
+            | \ref MV_GIGE_DEVICE | 0x00000001 | GigEè®¾å¤‡ |
+            | \ref MV_1394_DEVICE | 0x00000002 | 1394-a/bè®¾å¤‡ |
+            | \ref MV_USB_DEVICE | 0x00000004 | USB3 Visionè®¾å¤‡ |
+            | \ref MV_CAMERALINK_DEVICE | 0x00000008 | ä¸²å£è®¾å¤‡ï¼ŒåŒ…å«Camera Linkè®¾å¤‡å’Œä¸²å£å…‰æºæ§åˆ¶å™¨ |
+            | \ref MV_VIR_GIGE_DEVICE | 0x00000010 | è™šæ‹ŸGigEè®¾å¤‡ |
+            | \ref MV_VIR_USB_DEVICE | 0x00000020 | è™šæ‹ŸUSB3 Visionè®¾å¤‡ |
+            | \ref MV_GENTL_GIGE_DEVICE | 0x00000040 | è‡ªç ”ç½‘å¡ä¸‹GigEè®¾å¤‡ |
+            | \ref MV_GENTL_CAMERALINK_DEVICE | 0x00000080 | CameraLinkè®¾å¤‡ |
+            | \ref MV_GENTL_CXP_DEVICE | 0x00000100 | CoaXPressè®¾å¤‡ |
+            | \ref MV_GENTL_XOF_DEVICE | 0x00000200 | XoFè®¾å¤‡ |
+            | \ref MV_GENTL_VIR_DEVICE | 0x00000800 | è™šæ‹Ÿè®¾å¤‡ |
+ *  @param  pstDevList                  [IN][OUT]       è®¾å¤‡åˆ—è¡¨
+ *  @param  strManufacturerName         [IN]            å‚å•†åå­—ï¼ˆå¯ä¼ NULLï¼Œå³ä¸è¿‡æ»¤ï¼‰
+ *  @param  enSortMethod                [IN]            æ’åºæ–¹å¼
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li è®¾å¤‡åˆ—è¡¨çš„å†…å­˜æ˜¯åœ¨SDKå†…éƒ¨åˆ†é…çš„ï¼Œå¤šçº¿ç¨‹è°ƒç”¨è¯¥æ¥å£æ—¶ä¼šè¿›è¡Œè®¾å¤‡åˆ—è¡¨å†…å­˜çš„é‡Šæ”¾å’Œç”³è¯·ï¼Œå»ºè®®å°½é‡é¿å…å¤šçº¿ç¨‹æšä¸¾æ“ä½œã€‚
+             \li strManufacturerNameå¯ä¼ å…¥NULLï¼Œè‹¥ä¼ å…¥NULLåˆ™è¿”å›æ’å¥½åºçš„æ‰€æœ‰è®¾å¤‡åˆ—è¡¨ï¼Œè‹¥ä¸ä¸ºNULLåˆ™åªè¿”å›æ’å¥½åºçš„æŒ‡å®šå‚å•†è®¾å¤‡åˆ—è¡¨ã€‚\n
+             \li MV_GENTL_GIGE_DEVICEã€MV_GENTL_CAMERALINK_DEVICEã€MV_GENTL_CXP_DEVICEã€MV_GENTL_XOF_DEVICEä¼ è¾“å±‚å¯ä»¥è¿”å›å¯¹é‡‡é›†å¡ä¸‹çš„ç›¸æœºä¿¡æ¯ã€‚\n
+ *  @note    MV_CC_EnumDevicesEx2() ä¸ MV_CC_EnumDevicesEx() æ¥å£çš„å·®å¼‚å¦‚ä¸‹ï¼š
+            \li  MV_CC_EnumDevicesEx() ä¼ å…¥MV_GIGE_DEVICEï¼Œé™¤äº†æšä¸¾ç½‘æ®µå†…çš„ç½‘å£ç›¸æœºä»¥å¤–ï¼Œè¿˜ä¼šæšä¸¾è™šæ‹Ÿç½‘å£ç›¸æœºå’Œè‡ªç ”é‡‡é›†å¡ä¸‹çš„ç½‘å£ç›¸æœºï¼›è‹¥ä¼ å…¥MV_USB_DEVICEï¼Œåˆ™ä¼šæšä¸¾USBå£ç›¸æœºå’Œè™šæ‹ŸUSBå£ç›¸æœºã€‚\n
+            \li MV_CC_EnumDevicesEx2() ä¼ å…¥MV_GIGE_DEVICEï¼Œä»…æšä¸¾ç½‘æ®µå†…çš„ç½‘å£ç›¸æœºï¼›è‹¥ä¼ å…¥MV_USB_DEVICEï¼Œåˆ™ä»…æšä¸¾USBå£ç›¸æœºã€‚\n
+            \li  MV_CC_EnumDevicesEx2() å¤šå‡ºæ’åºçš„åŠŸèƒ½ï¼Œç”±å‚æ•°MV_SORT_METHOD enSortMethodå†³å®šæ’åºæ–¹å¼ã€‚
+            \li GE1104 é‡‡é›†å¡ä¸‹çš„ç›¸æœºä»…æ”¯æŒé€šè¿‡MV_GIGE_DEVICEç±»å‹æšä¸¾ï¼Œä¸æ”¯æŒä½¿ç”¨MV_GENTL_GIGE_DEVICEã€‚
 
  *  @~english
- *  @brief  Enumerate device according to the specified ordering
- *  @param  nTLayerType                 [IN]            Transmission layer of enumeration(All layer protocol type can input), Refer to the 'CameraParams.h' for parameter definitions, for example, #define MV_GIGE_DEVICE 0x00000001
- *  @param  pstDevList                  [IN][OUT]       Device list
- *  @param  strManufacturerName         [IN]            Manufacture Name
- *  @param  enSortMethod                [IN]            Sorting Method
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks The memory of the device list is allocated within the SDK. When the interface is invoked by multiple threads, the memory of the device list will be released and applied.
-             It is recommended to avoid multithreaded enumeration operations as much as possible.
-             strManufacturerName can be passed in NULL,if NULL is passed in, it will return the sorted list of all devices.
-             If it is not NULL,it will only return the sorted list of the specified manufacturer's devices.
+ *  @brief  Enumerates devices, supporting enumerating devices by specified sorting method and filtering by manufacturer name. 
+ *  @param  nTLayerType                 [IN]            It refers to the transport layer protocol type. For more details, refer to CameraParams.h. for example, #define MV_GIGE_DEVICE 0x00000001
+ *  @param  pstDevList                  [IN][OUT]       It refers to the device list. 
+ *  @param  strManufacturerName         [IN]            It refers to the name of the manufacturer (NULL means not filtering). 
+ *  @param  enSortMethod                [IN]            It refers to the sorting type. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks The memory of device list is internally allocated. When this API is called in multiple threads, the SDK will release and apply for the device list memory. 
+             It is recommended to avoid multithreaded enumeration operations.
+             strManufacturerName can be set to NULL, which indicates enumerating all devices according to the specified sorting type; 
+             if not set to NULL, the sorted device list of specified manufacturers will be returned.
+             Cameras under the GE1104 frame grabber can only be enumerated via MV_GIGE_DEVICE; MV_GENTL_GIGE_DEVICE is not supported.
+
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_EnumDevicesEx2(IN unsigned int nTLayerType, IN OUT MV_CC_DEVICE_INFO_LIST* pstDevList, IN const char* strManufacturerName, IN MV_SORT_METHOD enSortMethod);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Éè±¸ÊÇ·ñ¿ÉÁ¬½Ó
- *  @param  pstDevInfo                  [IN]            Éè±¸ĞÅÏ¢½á¹¹Ìå
- *  @param  nAccessMode                 [IN]            ·ÃÎÊÈ¨ÏŞ,²ÎÊı¶¨Òå²Î¼ûCameraParams.h¶¨Òå, Èç:#define MV_ACCESS_Exclusive 1   £¨¸Ã²ÎÊı:½ö¶Ô MV_GIGE_DEVICE/MV_GENTL_GIGE_DEVICE ÀàĞÍµÄÉè±¸ÓĞĞ§£©
- *  @remarks GIGEÏà»ú: ¶ÁÈ¡Éè±¸CCP¼Ä´æÆ÷µÄÖµ£¬ÅĞ¶Ïµ±Ç°×´Ì¬ÊÇ·ñ¾ßÓĞÄ³ÖÖ·ÃÎÊÈ¨ÏŞ
-             Èç¹ûÉè±¸(MV_GENTL_GIGE_DEVICE/MV_GENTL_GIGE_DEVICE)²»Ö§³ÖMV_ACCESS_ExclusiveWithSwitch¡¢MV_ACCESS_ControlWithSwitch¡¢MV_ACCESS_ControlSwitchEnableÕâÈıÖÖÄ£Ê½£¬½Ó¿Ú·µ»Øfalse¡££¨Ä¿Ç°Éè±¸²»Ö§³ÖÕâ3ÖÖÇÀÕ¼Ä£Ê½£¬¹ú¼ÊÉÏÖ÷Á÷µÄ³§ÉÌµÄÉè±¸Ò²¶¼Ôİ²»Ö§³ÖÕâ3ÖÖÄ£Ê½¡££©
-             MV_GIGE_DEVICE/MV_GENTL_GIGE_DEVICE ÀàĞÍÉè±¸£º°´ÕÕnAccessMode£¬·µ»Øµ±Ç°ÊÇ·ñ¿ÉÒÔ±»Á¬½Ó;
-             ¸Ã½Ó¿ÚÖ§³Ö ĞéÄâÏà»ú£¬U3VÏà»ú£¬cxp, xof, cameralink²É¼¯¿¨Ïà»ú, nAccessModeÎŞĞ§£¬Èç¹ûÏà»úÃ»ÓĞ±»Á¬½Ó·µ»Øtrue£¬ Èç¹ûÉè±¸±»µÚÈı·½Á¬½Ó£¬Ôò·µ»Øfalse
-             ¸Ã½Ó¿Ú²»Ö§³ÖCameraLinkÉè±¸(·µ»Øfalse)
- *  @~english
- *  @brief  Is the device accessible
- *  @param  pstDevInfo                  [IN]            Device Information Structure
- *  @param  nAccessMode                 [IN]            Access Right, Refer to the 'CameraParams.h' for parameter definitions, for example, #define MV_ACCESS_Exclusive 1  (This parameter is only valid for devices of type MV_GIGE-DEVICE/MV_GENTL_GIGE-DEVICE)
- *  @return Access, return true. Not access, return false
- *  @remarks Read device CCP register value and determine current access permission.
-            If the device (MV_GENTL_GIGE_DEVICE/MV_GENTL_GIGE_DEVICE) does not support the MV_ACCESS_ExclusiveWithSwitch, MV_ACCESS_ControlWithSwitch, and MV_ACCESS_ControlSwitchEnableWithKey modes, the interface returns false. (At present, the device does not support these three preemptive modes, and the devices of mainstream international manufacturers do not currently support these three modes.)
-            MV_GIGE_DEVICE/MV_GENTL_GIGE_DEVICE type device: returns whether it can be connected according to nAccessMode;
-            This interface supports virtual cameras, U3V cameras, cxp, xof, cameralink capture card cameras, nAccessMode is invalid. If the camera is not connected, it returns true. If the device is connected by a third party, it returns false
-            This interface does not support CameraLink devices (returns false)
- **************************************************************************/
-MV_CAMCTRL_API bool __stdcall MV_CC_IsDeviceAccessible(IN MV_CC_DEVICE_INFO* pstDevInfo, IN unsigned int nAccessMode);
+ *  @brief  é€šè¿‡é‡‡é›†å¡å¥æŸ„æšä¸¾è®¾å¤‡
+ *  @param  handle                    [IN]            é‡‡é›†å¡å¥æŸ„
+ *  @param  pstDevList                [OUT]           è®¾å¤‡åˆ—è¡¨
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li è®¾å¤‡åˆ—è¡¨çš„å†…å­˜æ˜¯åœ¨SDKå†…éƒ¨åˆ†é…çš„ï¼Œå¤šçº¿ç¨‹è°ƒç”¨è¯¥æ¥å£æ—¶ä¼šè¿›è¡Œè®¾å¤‡åˆ—è¡¨å†…å­˜çš„é‡Šæ”¾å’Œç”³è¯·ï¼Œ\n
+            \li å»ºè®®å°½é‡é¿å…å¤šçº¿ç¨‹æšä¸¾æ“ä½œã€‚
 
+ *  @~english
+ *  @brief  Enumerates devices by frame grabber handle. 
+ *  @param  handle                   [IN]            It refers to the frame grabber handle. 
+ *  @param  pstDevList               [OUT]           It refers to the device list. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks The memory of device list is internally allocated. When this API is called in multiple threads, the SDK will release and apply for the device list memory. It is recommended to avoid multithreaded enumeration operations.
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_EnumDevicesByInterface(IN void* handle, OUT MV_CC_DEVICE_INFO_LIST* pstDevList);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ´´½¨Éè±¸¾ä±ú
- *  @param  handle                      [IN][OUT]       Éè±¸¾ä±ú
- *  @param  pstDevInfo                  [IN]            Éè±¸ĞÅÏ¢½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸ù¾İÊäÈëµÄÉè±¸ĞÅÏ¢£¬´´½¨¿âÄÚ²¿±ØĞëµÄ×ÊÔ´ºÍ³õÊ¼»¯ÄÚ²¿Ä£¿é
-             Í¨¹ı¸Ã½Ó¿Ú´´½¨¾ä±ú£¬µ÷ÓÃSDK½Ó¿Ú£¬»áÄ¬ÈÏÉú³ÉSDKÈÕÖ¾ÎÄ¼ş£¬Èç¹û²»ĞèÒªÉú³ÉÈÕÖ¾ÎÄ¼ş£¬¿ÉÒÔ½«ÈÕÖ¾ÅäÖÃÎÄ¼şÖĞµÄÈÕÖ¾µÈ¼¶¸Ä³Éoff
+ *  @brief  è®¾å¤‡æ˜¯å¦å¯è¿æ¥
+ *  @param  pstDevInfo                  [IN]            è®¾å¤‡ä¿¡æ¯ç»“æ„ä½“
+ *  @param  nAccessMode                 [IN]            è®¿é—®æƒé™ï¼Œå‚æ•°å®šä¹‰å‚è§CameraParams.hå®šä¹‰ 
+                |   å®å®šä¹‰  |  å®å®šä¹‰å€¼   |  å«ä¹‰  | 
+                | :--- | :---: | :--- | 
+                | \ref MV_ACCESS_Exclusive | 1 | ç‹¬å æƒé™ï¼Œå…¶ä»–APPåªå…è®¸è¯»CCPå¯„å­˜å™¨ |
+                | \ref MV_ACCESS_ExclusiveWithSwitch | 2 | å¯ä»¥ä»5æ¨¡å¼ä¸‹æŠ¢å æƒé™ï¼Œç„¶åä»¥ç‹¬å æƒé™æ‰“å¼€ |
+                | \ref MV_ACCESS_Control | 3 | æ§åˆ¶æƒé™ï¼Œå…¶ä»–APPå…è®¸è¯»æ‰€æœ‰å¯„å­˜å™¨ |
+                | \ref MV_ACCESS_ControlWithSwitch | 4 | å¯ä»¥ä»5æ¨¡å¼ä¸‹æŠ¢å æƒé™ï¼Œç„¶åä»¥æ§åˆ¶æƒé™æ‰“å¼€ |
+                | \ref MV_ACCESS_ControlSwitchEnable | 5 | ä»¥å¯è¢«æŠ¢å çš„æ§åˆ¶æƒé™æ‰“å¼€ |
+                | \ref MV_ACCESS_ControlSwitchEnableWithKey | 6 | å¯ä»¥ä»5æ¨¡å¼ä¸‹æŠ¢å æƒé™ï¼Œç„¶åä»¥å¯è¢«æŠ¢å çš„æ§åˆ¶æƒé™æ‰“å¼€ |
+                | \ref MV_ACCESS_Monitor | 7 | è¯»æ¨¡å¼æ‰“å¼€è®¾å¤‡ï¼Œé€‚ç”¨äºæ§åˆ¶æƒé™ä¸‹ |
+ *  @return è‹¥è®¾å¤‡å¯è¾¾ï¼Œè¿”å›trueï¼›è‹¥è®¾å¤‡ä¸å¯è¾¾ï¼Œè¿”å›falseã€‚
+ *  @remarks \li GigE Visionç›¸æœº: è¯»å–è®¾å¤‡CCPå¯„å­˜å™¨çš„å€¼ï¼Œåˆ¤æ–­å½“å‰çŠ¶æ€æ˜¯å¦å…·æœ‰æŸç§è®¿é—®æƒé™ã€‚\n
+             å¦‚æœè®¾å¤‡(MV_GENTL_GIGE_DEVICE/MV_GENTL_GIGE_DEVICE)ä¸æ”¯æŒMV_ACCESS_ExclusiveWithSwitchã€MV_ACCESS_ControlWithSwitchã€MV_ACCESS_ControlSwitchEnableã€MV_ACCESS_ControlSwitchEnableWithKeyè¿™å››ç§æ¨¡å¼ï¼Œæ¥å£è¿”å›falseã€‚ï¼ˆç›®å‰è®¾å¤‡ä¸æ”¯æŒè¿™4ç§æŠ¢å æ¨¡å¼ï¼Œå›½é™…ä¸Šä¸»æµçš„å‚å•†çš„è®¾å¤‡ä¹Ÿéƒ½æš‚ä¸æ”¯æŒè¿™4ç§æ¨¡å¼ã€‚ï¼‰
+             \li GigE Vision/GenTL ç±»å‹è®¾å¤‡ï¼šæŒ‰ç…§nAccessModeï¼Œè¿”å›å½“å‰æ˜¯å¦å¯ä»¥è¢«è¿æ¥;
+             @note
+             \li è¯¥æ¥å£æ”¯æŒè™šæ‹Ÿç›¸æœºï¼ŒUSB3 Visionç›¸æœºï¼ŒCXP, XoF, CameraLinké‡‡é›†å¡ç›¸æœº, nAccessModeæ— æ•ˆï¼Œå¦‚æœç›¸æœºæ²¡æœ‰è¢«è¿æ¥è¿”å›trueï¼Œ å¦‚æœè®¾å¤‡è¢«ç¬¬ä¸‰æ–¹è¿æ¥ï¼Œåˆ™è¿”å›false
+             \li è¯¥æ¥å£ä¸æ”¯æŒCameraLinkè®¾å¤‡(è¿”å›false)
+ *  @~english
+ *  @brief  Checks if the specified device can be accessed. 
+ *  @param  pstDevInfo                  [IN]            It refers to device information. 
+ *  @param  nAccessMode                 [IN]             It refers to access mode. Refer to the 'CameraParams.h' for parameter definitions, for example, #define MV_ACCESS_Exclusive 1  (This parameter is only valid for devices of type MV_GIGE-DEVICE/MV_GENTL_GIGE-DEVICE)
+ *  @return Returns true for accessible status, and false for inaccessible status.
+ *  @remarks You can read the device CCP register value to check the current access permission. 
+             Return false if the device(MV_GENTL_GIGE_DEVICE/MV_GENTL_GIGE_DEVICE)  does not support the modes MV_ACCESS_ExclusiveWithSwitch, MV_ACCESS_ControlWithSwitch, MV_ACCESS_ControlSwitchEnable and MV_ACCESS_ControlSwitchEnableWithKey. Currently, the device does not support the 4 modes, neither do the devices from other mainstream manufacturers. 
+             This API supports virtual cameras, USB3 Vision cameras, CoaXPress (CXP), XoF, and CameraLink frame grabber cameras. The nAccessMode parameter has no actual effect. It returns true if the camera is not connected, and false if the device is occupied by a third party.
+             This API does not support CameraLink devices (returns false).
+ **************************************************************************/
+MV_CAMCTRL_API bool __stdcall MV_CC_IsDeviceAccessible(IN MV_CC_DEVICE_INFO* pstDevInfo, IN unsigned int nAccessMode);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  åˆ›å»ºè®¾å¤‡å¥æŸ„
+ *  @param  handle                      [IN][OUT]       è®¾å¤‡å¥æŸ„
+ *  @param  pstDevInfo                  [IN]            è®¾å¤‡ä¿¡æ¯ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li æ ¹æ®è¾“å…¥çš„è®¾å¤‡ä¿¡æ¯ï¼Œåˆ›å»ºåº“å†…éƒ¨å¿…é¡»çš„èµ„æºå’Œåˆå§‹åŒ–å†…éƒ¨æ¨¡å—ã€‚\n
+             \li é€šè¿‡è¯¥æ¥å£åˆ›å»ºå¥æŸ„ï¼Œè°ƒç”¨SDKæ¥å£ï¼Œä¼šé»˜è®¤ç”ŸæˆSDKæ—¥å¿—æ–‡ä»¶ï¼Œå¦‚æœä¸éœ€è¦ç”Ÿæˆæ—¥å¿—æ–‡ä»¶ï¼Œå¯ä»¥å°†æ—¥å¿—é…ç½®æ–‡ä»¶ä¸­çš„æ—¥å¿—ç­‰çº§æ”¹æˆoffã€‚
  
  *  @~english
- *  @brief  Create Device Handle
- *  @param  handle                      [IN][OUT]       Device handle
- *  @param  pstDevInfo                  [IN]            Device Information Structure
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Create required resources within library and initialize internal module according to input device information. 
-             By creating a handle through this interface and calling the SDK interface, SDK log files will be generated by default. If no log file needs to be generated, the log level in the log configuration file can be changed to off
+ *  @brief  Creates a device handle. 
+ *  @param  handle                      [IN][OUT]       It refers to the device handle. 
+ *  @param  pstDevInfo                  [IN]            It refers to device information. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Create required resources within library and initialize internal module according to input device information.
+             SDK log file will be created by default when you call the API to create the device handle. If log file generation is not required, you can set the log level to off in the log configuration file.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_CreateHandle(IN OUT void ** handle, IN const MV_CC_DEVICE_INFO* pstDevInfo);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Ïú»ÙÉè±¸¾ä±ú
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks MV_CC_DestroyHandle Èç¹û´«Èë²É¼¯¿¨¾ä±ú£¬ÆäĞ§¹ûºÍ MV_CC_DestroyInterface ÏàÍ¬;
- 
- *  @~english
- *  @brief  Destroy Device Handle
- *  @param  handle                      [IN]            Device handle
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks If MV_CC_DestroyHandle passes in "Frame grabber handle", the effect is the same as the MV_CC_DestroyInterface
- ************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_DestroyHandle(IN void * handle);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ´ò¿ªÉè±¸
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nAccessMode                 [IN]            ·ÃÎÊÈ¨ÏŞ, ²ÎÊı¶¨Òå²Î¼ûCameraParams.h¶¨Òå, Èç:#define MV_ACCESS_Exclusive 1  £¨½ö¶Ô MV_GIGE_DEVICE/MV_GENTL_GIGE_DEVICE ÀàĞÍµÄÉè±¸ÓĞĞ§£©
- *  @param  nSwitchoverKey              [IN]            ÇĞ»»·ÃÎÊÈ¨ÏŞÊ±µÄÃÜÔ¿                                                        £¨½ö¶Ô MV_GIGE_DEVICE ÀàĞÍµÄÉè±¸ÓĞĞ§£©
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸ù¾İÉèÖÃµÄÉè±¸²ÎÊı£¬ÕÒµ½¶ÔÓ¦µÄÉè±¸£¬Á¬½ÓÉè±¸, µ÷ÓÃ½Ó¿ÚÊ±¿É²»´«ÈënAccessModeºÍnSwitchoverKey£¬´ËÊ±Ä¬ÈÏÉè±¸·ÃÎÊÄ£Ê½Îª¶ÀÕ¼È¨ÏŞ¡£
-            MV_GIGE_DEVICE ÀàĞÍÉè±¸£¬Ä¿Ç°Ïà»ú¹Ì¼şÔİ²»Ö§³ÖMV_ACCESS_ExclusiveWithSwitch¡¢MV_ACCESS_ControlWithSwitch¡¢MV_ACCESS_ControlSwitchEnable¡¢MV_ACCESS_ControlSwitchEnableWithKeyÕâËÄÖÖÇÀÕ¼Ä£Ê½, SDK½Ó¿ÚÖ§³ÖÉèÖÃ
-            MV_GENTL_GIGE_DEVICE Éè±¸Ö»Ö§³Ö nAccessMode ÊÇ MV_ACCESS_Exclusive ¡¢MV_ACCESS_Control ¡¢MV_ACCESS_MonitorÈ¨ÏŞ
-            ¶ÔÓÚU3VÉè±¸£¬CXP,Cameralink(MV_CAMERALINK_DEVICE¡¢MV_GENTL_CAMERALINK_DEVICE), XofÉè±¸, ĞéÄâGEV, ĞéÄâU3VÉè±¸£ºnAccessMode¡¢nSwitchoverKeyÕâÁ½¸ö²ÎÊıÎŞĞ§£» Ä¬ÈÏÒÔ¿ØÖÆÈ¨ÏŞ´ò¿ªÉè±¸;
-            ¸Ã½Ó¿ÚÖ§³ÖÍø¿ÚÉè±¸²»Ã¶¾ÙÖ±½Ó´ò¿ª£¬²»Ö§³ÖU¿ÚºÍGenTLÉè±¸²»Ã¶¾Ù´ò¿ªÉè±¸
+ *  @brief  æ‰“å¼€è®¾å¤‡
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nAccessMode                 [IN]            è®¿é—®æƒé™, å‚æ•°å®šä¹‰å‚è§CameraParams.hå®šä¹‰ 
+                |   å®å®šä¹‰  |  å®å®šä¹‰å€¼   |  å«ä¹‰  | 
+                | :--- | :---: | :--- | 
+                | \ref MV_ACCESS_Exclusive | 1 | ç‹¬å æƒé™ï¼Œå…¶ä»–APPåªå…è®¸è¯»CCPå¯„å­˜å™¨ |
+                | \ref MV_ACCESS_ExclusiveWithSwitch | 2 | å¯ä»¥ä»5æ¨¡å¼ä¸‹æŠ¢å æƒé™ï¼Œç„¶åä»¥ç‹¬å æƒé™æ‰“å¼€ |
+                | \ref MV_ACCESS_Control | 3 | æ§åˆ¶æƒé™ï¼Œå…¶ä»–APPå…è®¸è¯»æ‰€æœ‰å¯„å­˜å™¨ |
+                | \ref MV_ACCESS_ControlWithSwitch | 4 | å¯ä»¥ä»5æ¨¡å¼ä¸‹æŠ¢å æƒé™ï¼Œç„¶åä»¥æ§åˆ¶æƒé™æ‰“å¼€ |
+                | \ref MV_ACCESS_ControlSwitchEnable | 5 | ä»¥å¯è¢«æŠ¢å çš„æ§åˆ¶æƒé™æ‰“å¼€ |
+                | \ref MV_ACCESS_ControlSwitchEnableWithKey | 6 | å¯ä»¥ä»5æ¨¡å¼ä¸‹æŠ¢å æƒé™ï¼Œç„¶åä»¥å¯è¢«æŠ¢å çš„æ§åˆ¶æƒé™æ‰“å¼€ |
+                | \ref MV_ACCESS_Monitor | 7 | è¯»æ¨¡å¼æ‰“å¼€è®¾å¤‡ï¼Œé€‚ç”¨äºæ§åˆ¶æƒé™ä¸‹ |
+ *  @param  nSwitchoverKey              [IN]            åˆ‡æ¢è®¿é—®æƒé™æ—¶çš„å¯†é’¥                                                        ï¼ˆä»…å¯¹ GigE Vision ç±»å‹çš„è®¾å¤‡æœ‰æ•ˆï¼‰
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks æ ¹æ®è®¾ç½®çš„è®¾å¤‡å‚æ•°ï¼Œæ‰¾åˆ°å¯¹åº”çš„è®¾å¤‡ï¼Œè¿æ¥è®¾å¤‡, è°ƒç”¨æ¥å£æ—¶å¯ä¸ä¼ å…¥nAccessModeå’ŒnSwitchoverKeyï¼Œæ­¤æ—¶é»˜è®¤è®¾å¤‡è®¿é—®æ¨¡å¼ä¸ºç‹¬å æƒé™ã€‚\n
+            \li GigE Vision ç±»å‹è®¾å¤‡ï¼Œç›®å‰ç›¸æœºå›ºä»¶æš‚ä¸æ”¯æŒMV_ACCESS_ExclusiveWithSwitchã€MV_ACCESS_ControlWithSwitchã€MV_ACCESS_ControlSwitchEnableã€MV_ACCESS_ControlSwitchEnableWithKeyè¿™å››ç§æŠ¢å æ¨¡å¼, å¯é€šè¿‡SDKæ¥å£è®¾ç½®ã€‚\n
+            \li MV_GENTL_GIGE_DEVICE è®¾å¤‡åªæ”¯æŒ nAccessMode æ˜¯ MV_ACCESS_Exclusive ã€MV_ACCESS_Control ã€MV_ACCESS_Monitoræƒé™ã€‚\n
+            \li å¯¹äºUSB3 Visionè®¾å¤‡ï¼ŒCXPï¼ŒCameralink(MV_CAMERALINK_DEVICEã€MV_GENTL_CAMERALINK_DEVICE)ï¼ŒXoFè®¾å¤‡ï¼Œè™šæ‹ŸGigE Visionï¼Œè™šæ‹ŸUSB3 Visionè®¾å¤‡ï¼šnAccessModeã€nSwitchoverKeyè¿™ä¸¤ä¸ªå‚æ•°æ— æ•ˆï¼› é»˜è®¤ä»¥æ§åˆ¶æƒé™æ‰“å¼€è®¾å¤‡ã€‚\n
+            \li è¯¥æ¥å£æ”¯æŒç½‘å£è®¾å¤‡ä¸æšä¸¾ç›´æ¥æ‰“å¼€ï¼Œä¸æ”¯æŒUå£å’ŒGenTLè®¾å¤‡ä¸æšä¸¾æ‰“å¼€è®¾å¤‡ã€‚\n
 
   *  @~english
-  *  @brief  Open Device
-  *  @param  handle                      [IN]            Device handle
-  *  @param  nAccessMode                 [IN]            Access Right, Refer to the 'CameraParams.h' for parameter definitions, for example, #define MV_ACCESS_Exclusive 1 (Effective only for the device type of MV_GIGE_DEVICE/MV_GENTL_GIGE_DEVICE)
-  *  @param  nSwitchoverKey              [IN]            Switch key of access right                                                                                        (Effective only for the device type of MV_GIGE_DEVICE)
-  *  @return Success, return MV_OK. Failure, return error code
-  *  @remarks Find specific device and connect according to set device parameters.When calling the interface, the input of nAccessMode and nSwitchoverKey is optional, 
-             and the device access mode is exclusive. The device type of MV_GIGE_DEVICE, Currently the device firmware does not support the following preemption modes:
-             MV_ACCESS_ExclusiveWithSwitch, MV_ACCESS_ControlWithSwitch, MV_ACCESS_ControlSwitchEnable, MV_ACCESS_ControlSwitchEnableWithKey; SDK Interface will return MV_OK.
-             The device type of MV_GENTL_GIGE_DEVICE, only support nAccessMode as MV_ACCESS_Exclusive, MV_ACCESS_Control, MV_ACCESS_Monitor;
-             For USB3Vision device, CXP device, Cameralink device(MV_CAMERALINK_DEVICE¡¢MV_GENTL_CAMERALINK_DEVICE), Xof device, virtual GEV devoce, virtual U3V device, 
-             nAccessMode, nSwitchoverKey are invalid. Open device with MV_ACCESS_Control in default.
-             This Interface support open without enumeration by GEV device£¬USB device and GenTL device don't support .
+  *  @brief  Turns on the device. 
+  *  @param  handle                      [IN]            It refers to the device handle. 
+  *  @param  nAccessMode                 [IN]            It refers to access mode. Refer to the 'CameraParams.h'.
+  *  @param  nSwitchoverKey              [IN]            It refers to the secret key for switching access permission.  (only valid for devices of type MV_GIGE_DEVICE.)
+  *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+  *  @remarks You can find the device and connect it according to the configured device parameters. 
+              The parameters nAccessMode and nSwitchoverKey are optional, and the device access mode is exclusive permission by default. 
+              For GigE devices, the camera firmware does not support the following preemption modes: MV_ACCESS_ExclusiveWithSwitch, MV_ACCESS_ControlWithSwitch, MV_ACCESS_ControlSwitchEnable, and MV_ACCESS_ControlSwitchEnableWithKey.
+              For GenTL devices, the camera firmware only supports the following modes: MV_ACCESS_Exclusive, MV_ACCESS_Control, and MV_ACCESS_Monitor. 
+              For USB3 Vision, CXP, camera link, XoF, virtual GEV, and virtual USB3 Vision devices, the parameters nAccessMode and nSwitchoverKey are invalid, and the device is opened with control permission via MV_ACCESS_Control by default. 
+              This API allows turning on GigE devices without enumeration, but it does not suport turning on USB or GenTL devices without enumeration. 
  ************************************************************************/
 #ifndef __cplusplus
 MV_CAMCTRL_API int __stdcall MV_CC_OpenDevice(IN void* handle, IN unsigned int nAccessMode, IN unsigned short nSwitchoverKey);
@@ -312,2388 +507,3046 @@ MV_CAMCTRL_API int __stdcall MV_CC_OpenDevice(IN void* handle, IN unsigned int n
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ¹Ø±ÕÉè±¸
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks Í¨¹ıMV_CC_OpenDeviceÁ¬½ÓÉè±¸ºó£¬¿ÉÒÔÍ¨¹ı¸Ã½Ó¿Ú¶Ï¿ªÉè±¸Á¬½Ó£¬ÊÍ·Å×ÊÔ´
+ *  @brief  åˆ¤æ–­è®¾å¤‡æ˜¯å¦å¤„äºè¿æ¥çŠ¶æ€
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return è‹¥è®¾å¤‡å¤„äºè¿æ¥çŠ¶æ€ï¼Œè¿”å›trueï¼›æ²¡è¿æ¥æˆ–å¤±å»è¿æ¥ï¼Œè¿”å›false
  
  *  @~english
- *  @brief  Close Device
- *  @param  handle                      [IN]            Device handle
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After connecting to device through MV_CC_OpenDevice, use this interface to disconnect and release resources.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_CloseDevice(IN void* handle);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ÅĞ¶ÏÉè±¸ÊÇ·ñ´¦ÓÚÁ¬½Ó×´Ì¬
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @return Éè±¸´¦ÓÚÁ¬½Ó×´Ì¬£¬·µ»Øtrue£»Ã»Á¬½Ó»òÊ§È¥Á¬½Ó£¬·µ»Øfalse
- 
- *  @~english
- *  @brief  Is The Device Connected
- *  @param  handle                      [IN]            Device handle
- *  @return Connected, return true. Not Connected or DIsconnected, return false
+ *  @brief  Checks if the camera is connected. 
+ *  @param  handle                      [IN]             It refers to the device handle. 
+ *  @return Returns true if the device is connected, and returns false if the device is not connected or disconnected. 
  ***********************************************************************/
 MV_CAMCTRL_API bool __stdcall MV_CC_IsDeviceConnected(IN void* handle);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ×¢²áÍ¼ÏñÊı¾İ»Øµ÷
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  cbOutput                    [IN]            »Øµ÷º¯ÊıÖ¸Õë
- *  @param  pUser                       [IN]            ÓÃ»§×Ô¶¨Òå±äÁ¿
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks Í¨¹ı¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃÍ¼ÏñÊı¾İ»Øµ÷º¯Êı£¬ÔÚMV_CC_CreateHandleÖ®ºó¼´¿Éµ÷ÓÃ, Í¼ÏñÊı¾İ²É¼¯ÓĞÁ½ÖÖ·½Ê½£¬Á½ÖÖ·½Ê½²»ÄÜ¸´ÓÃ£º
-             ·½Ê½Ò»£ºµ÷ÓÃMV_CC_RegisterImageCallBackExÉèÖÃÍ¼ÏñÊı¾İ»Øµ÷º¯Êı£¬È»ºóµ÷ÓÃMV_CC_StartGrabbing¿ªÊ¼²É¼¯£¬²É¼¯µÄÍ¼ÏñÊı¾İÔÚÉèÖÃµÄ»Øµ÷º¯ÊıÖĞ·µ»Ø
-             ·½Ê½¶ş£ºµ÷ÓÃMV_CC_StartGrabbing¿ªÊ¼²É¼¯£¬È»ºóÔÚÓ¦ÓÃ²ãÑ­»·µ÷ÓÃMV_CC_GetOneFrameTimeout»ñÈ¡Ö¸¶¨ÏñËØ¸ñÊ½µÄÖ¡Êı¾İ£¬
-             »ñÈ¡Ö¡Êı¾İÊ±ÉÏ²ãÓ¦ÓÃ³ÌĞòĞèÒª¸ù¾İÖ¡ÂÊ¿ØÖÆºÃµ÷ÓÃ¸Ã½Ó¿ÚµÄÆµÂÊ¡£
-             ¸Ã½Ó¿Ú²»Ö§³ÖMV_CAMERALINK_DEVICE ÀàĞÍµÄÉè±¸¡£
+ *  @brief  è·å–è®¾å¤‡ä¿¡æ¯ï¼Œå–æµä¹‹å‰è°ƒç”¨
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstDevInfo                  [IN][OUT]       è¿”å›ç»™è°ƒç”¨è€…æœ‰å…³è®¾å¤‡ä¿¡æ¯ç»“æ„ä½“æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li æ”¯æŒç”¨æˆ·åœ¨æ‰“å¼€è®¾å¤‡åè·å–è®¾å¤‡ä¿¡æ¯ï¼Œä¸æ”¯æŒé€šè¿‡GenTLè®¾å¤‡ä¿¡æ¯åˆ›å»ºçš„è®¾å¤‡ã€‚ \n
+             \li è‹¥è¯¥è®¾å¤‡æ˜¯GigEè®¾å¤‡ï¼Œåˆ™è°ƒç”¨è¯¥æ¥å£å­˜åœ¨é˜»å¡é£é™©ï¼Œå› æ­¤ä¸å»ºè®®åœ¨å–æµè¿‡ç¨‹ä¸­è°ƒç”¨è¯¥æ¥å£ã€‚
  
  *  @~english
- *  @brief  Register the image callback function
- *  @param  handle                      [IN]            Device handle
- *  @param  cbOutput                    [IN]            Callback function pointer
- *  @param  pUser                       [IN]            User defined variable
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After MV_CC_CreateHandle, call this interface to set image data callback function.There are two available image data acquisition modes, and cannot be used together:
-             Mode 1: Call MV_CC_RegisterImageCallBack to set image data callback function, and then callMV_CC_StartGrabbing to start acquiring. The acquired image data will return in the set callback function.
-             Mode 2: Call MV_CC_StartGrabbing to start acquiring, and then call MV_CC_GetOneFrameTimeout repeatedly in application layer to get frame data of specified pixel format. When getting frame data,
-             the frequency of calling this interface should be controlled by upper layer application according to frame rate.
-             This interface does not support devices of type MV_CAMERALINK_DEVICE
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_RegisterImageCallBackEx(IN void* handle, 
-                                                         IN void(__stdcall* cbOutput)(unsigned char * pData, MV_FRAME_OUT_INFO_EX* pFrameInfo, void* pUser), IN void* pUser);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ¿ªÊ¼È¡Á÷
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿Ú²»Ö§³ÖMV_CAMERALINK_DEVICE ÀàĞÍµÄÉè±¸¡£
- 
- *  @~english
- *  @brief  Start Grabbing
- *  @param  handle                      [IN]            Device handle
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface does not support devices of type MV_CAMERALINK_DEVICE
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_StartGrabbing(IN void* handle);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  Í£Ö¹È¡Á÷
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿Ú²»Ö§³ÖMV_CAMERALINK_DEVICE ÀàĞÍµÄÉè±¸¡£
- 
- *  @~english
- *  @brief  Stop Grabbing
- *  @param  handle                      [IN]            Device handle
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface does not support devices of type MV_CAMERALINK_DEVICE
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_StopGrabbing(IN void* handle);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  Ê¹ÓÃÄÚ²¿»º´æ»ñÈ¡Ò»Ö¡Í¼Æ¬£¨ÓëMV_CC_Display²»ÄÜÍ¬Ê±Ê¹ÓÃ£©
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstFrame                    [IN][OUT]       Í¼ÏñÊı¾İºÍÍ¼ÏñĞÅÏ¢
- *  @param  nMsec                       [IN]            µÈ´ı³¬Ê±Ê±¼ä£¬ÊäÈëINFINITEÊ±±íÊ¾ÎŞÏŞµÈ´ı£¬Ö±µ½ÊÕµ½Ò»Ö¡Êı¾İ»òÕßÍ£Ö¹È¡Á÷
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks µ÷ÓÃ¸Ã½Ó¿Ú»ñÈ¡Í¼ÏñÊı¾İÖ¡Ö®Ç°ĞèÒªÏÈµ÷ÓÃMV_CC_StartGrabbingÆô¶¯Í¼Ïñ²É¼¯¡£¸Ã½Ó¿ÚÎªÖ÷¶¯Ê½»ñÈ¡Ö¡Êı¾İ£¬ÉÏ²ãÓ¦ÓÃ³ÌĞòĞèÒª¸ù¾İÖ¡ÂÊ£¬¿ØÖÆºÃµ÷ÓÃ¸Ã½Ó¿ÚµÄÆµÂÊ,
-             ¸Ã½Ó¿ÚÖ§³ÖÉèÖÃ³¬Ê±Ê±¼ä£¬SDKÄÚ²¿µÈ´ıÖ±µ½ÓĞÊı¾İÊ±·µ»Ø£¬¿ÉÒÔÔö¼ÓÈ¡Á÷Æ½ÎÈĞÔ£¬ÊÊºÏÓÃÓÚ¶ÔÆ½ÎÈĞÔÒªÇó½Ï¸ßµÄ³¡ºÏ¡£
-             ¸Ã½Ó¿ÚÓëMV_CC_FreeImageBufferÅäÌ×Ê¹ÓÃ£¬µ±´¦ÀíÍêÈ¡µ½µÄÊı¾İºó£¬ĞèÒªÓÃMV_CC_FreeImageBuffer½Ó¿Ú½«pFrameÄÚµÄÊı¾İÖ¸ÕëÈ¨ÏŞ½øĞĞÊÍ·Å¡£
-             ¸Ã½Ó¿ÚÓëMV_CC_GetOneFrameTimeoutÏà±È£¬ÓĞ×Å¸ü¸ßµÄĞ§ÂÊ¡£ÇÒÆäÈ¡Á÷»º´æµÄ·ÖÅäÊÇÓÉsdkÄÚ²¿×Ô¶¯·ÖÅäµÄ£¬¶øMV_CC_GetOneFrameTimeout½Ó¿ÚÊÇĞèÒª¿Í»§×ÔĞĞ·ÖÅä¡£
-             ¸Ã½Ó¿ÚÔÚµ÷ÓÃMV_CC_DisplayºóÎŞ·¨È¡Á÷¡£
-             ¸Ã½Ó¿Ú¶ÔÓÚU3V¡¢GIGEÉè±¸¾ù¿ÉÖ§³Ö¡£
-             ¸Ã½Ó¿Ú²»Ö§³ÖCameraLinkÉè±¸¡£
- 
- *  @~english
- *  @brief  Get a frame of an image using an internal cache
- *  @param  handle                      [IN]            Device handle
- *  @param  pstFrame                    [IN][OUT]       Image data and image information
- *  @param  nMsec                       [IN]            Waiting timeout
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Before calling this API to get image data frame, you should call MV_CC_StartGrabbing to start image acquisition.
-             This API can get frame data actively, the upper layer program should control the frequency of calling this API according to the frame rate. This API support setting timeout, and SDK will wait to return until data appears. This function will increase the streaming stability, which can be used in the situation with high stability requirement. 
-             This API and MV_CC_FreeImageBuffer should be called in pairs, after processing the acquired data, you should call MV_CC_FreeImageBuffer to release the data pointer permission of pFrame. 
-             This interface is more efficient than MV_CC_GetOneFrameTimeout. The allocation of the stream cache is automatically allocated within the SDK.The MV_CC_GetOneFrameTimeout interface needs to be allocated by customers themselves. 
-             This API cannot be called to stream after calling MV_CC_Display.
-             This API is not supported by CameraLink device. 
-             This API is supported by both USB3 vision camera and GigE camera. 
- *****************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_GetImageBuffer(IN void* handle, IN OUT MV_FRAME_OUT* pstFrame, IN unsigned int nMsec);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ÊÍ·ÅÍ¼Ïñ»º´æ(´Ë½Ó¿ÚÓÃÓÚÊÍ·Å²»ÔÙÊ¹ÓÃµÄÍ¼Ïñ»º´æ£¬ÓëMV_CC_GetImageBufferÅäÌ×Ê¹ÓÃ)
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstFrame                    [IN]            Í¼ÏñÊı¾İºÍÍ¼ÏñÊı¾İ
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÓëMV_CC_GetImageBufferÅäÌ×Ê¹ÓÃ£¬Ê¹ÓÃMV_CC_GetImageBuffer½Ó¿ÚÈ¡µ½µÄÍ¼ÏñÊı¾İpFrame£¬ĞèÒªÓÃMV_CC_FreeImageBuffer½Ó¿Ú½øĞĞÈ¨ÏŞÊÍ·Å
-             ¸Ã½Ó¿ÚÈ¡Á÷Ğ§ÂÊ¸ßÓÚGetOneFrameTimeout½Ó¿Ú
-			 µ±GetImageBuffer²»½øĞĞFreeImageBufferÊ±£¬×î´óÊä³öÍ¼Ïñ¸öÊıÎªµ±Ç°ÅäÖÃÏÂSDKµÄ»º´æ½Úµã¸öÊı(ÓÃ»§¿ÉÒÔµ÷ÓÃSetImageNode½Ó¿Ú£¬µ÷½ÚSDKµÄ»º´æ¸öÊı£©
-             ¸Ã½Ó¿Ú¶ÔÓÚU3V¡¢GIGEÉè±¸¾ù¿ÉÖ§³Ö
-             ¸Ã½Ó¿Ú²»Ö§³ÖCameraLinkÉè±¸¡£
- 
- *  @~english
- *  @brief  Free image buffer(this interface can free image buffer, used with MV_CC_GetImageBuffer)
- *  @param  handle                      [IN]            Device handle
- *  @param  pstFrame                    [IN]            Image data and image information
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks MV_CC_FreeImageBuffer and MV_CC_GetImageBuffer API call in pairs, before calling MV_CC_GetImageBuffer to get image data pFrame, you should call MV_CC_FreeImageBuffer to release the permission.
-             Compared with API MV_CC_GetOneFrameTimeout
-             The API has higher efficiency of image acquisition. The max. number of nodes can be outputted is same as the "nNum" of  the current configuration of the SDK's cache (users can call the SetImageNode interface to adjust the SDK's cache count)
-             The API is not supported by CameraLink device.
-             The API is supported by both USB3 vision camera and GigE camera. 
- **********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_FreeImageBuffer(IN void* handle, IN MV_FRAME_OUT* pstFrame);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ²ÉÓÃ³¬Ê±»úÖÆ»ñÈ¡Ò»Ö¡Í¼Æ¬£¬SDKÄÚ²¿µÈ´ıÖ±µ½ÓĞÊı¾İÊ±·µ»Ø
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pData                       [IN][OUT]       Í¼ÏñÊı¾İ½ÓÊÕÖ¸Õë
- *  @param  nDataSize                   [IN]            ½ÓÊÕ»º´æ´óĞ¡
- *  @param  pstFrameInfo                [IN][OUT]       Í¼ÏñĞÅÏ¢½á¹¹Ìå
- *  @param  nMsec                       [IN]            µÈ´ı³¬Ê±Ê±¼ä
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks µ÷ÓÃ¸Ã½Ó¿Ú»ñÈ¡Í¼ÏñÊı¾İÖ¡Ö®Ç°ĞèÒªÏÈµ÷ÓÃMV_CC_StartGrabbingÆô¶¯Í¼Ïñ²É¼¯
-             ¸Ã½Ó¿ÚÎªÖ÷¶¯Ê½»ñÈ¡Ö¡Êı¾İ£¬ÉÏ²ãÓ¦ÓÃ³ÌĞòĞèÒª¸ù¾İÖ¡ÂÊ£¬¿ØÖÆºÃµ÷ÓÃ¸Ã½Ó¿ÚµÄÆµÂÊ
-             ¸Ã½Ó¿ÚÖ§³ÖÉèÖÃ³¬Ê±Ê±¼ä£¬SDKÄÚ²¿µÈ´ıÖ±µ½ÓĞÊı¾İÊ±·µ»Ø£¬¿ÉÒÔÔö¼ÓÈ¡Á÷Æ½ÎÈĞÔ£¬ÊÊºÏÓÃÓÚ¶ÔÆ½ÎÈĞÔÒªÇó½Ï¸ßµÄ³¡ºÏ
-             ¸Ã½Ó¿Ú¶ÔÓÚU3V¡¢GIGEÉè±¸¾ù¿ÉÖ§³Ö
-             ¸Ã½Ó¿Ú²»Ö§³ÖCameraLinkÉè±¸¡£
- 
- *  @~english
- *  @brief  Timeout mechanism is used to get image, and the SDK waits inside until the data is returned
- *  @param  handle                      [IN]            Device handle
- *  @param  pData                       [IN][OUT]       Image data receiving buffer
- *  @param  nDataSize                   [IN]            Buffer size
- *  @param  pstFrameInfo                [IN][OUT]       Image information structure
- *  @param  nMsec                       [IN]            Waiting timeout
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Before calling this API to get image data frame, call MV_CC_StartGrabbing to start image acquisition.
-             This API can get frame data actively, the upper layer program should control the frequency of calling this API according to the frame rate.
-             This API supports setting timeout, SDK will wait to return until data appears. This function will increase the streaming stability, which can be used in the situation with high stability requirement.
-             Both the USB3Vision and GIGE camera can support this API.
-             This API is not supported by CameraLink device.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_GetOneFrameTimeout(IN void* handle, IN OUT unsigned char* pData , IN unsigned int nDataSize, IN OUT MV_FRAME_OUT_INFO_EX* pstFrameInfo, IN unsigned int nMsec);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  Çå³ıÈ¡Á÷Êı¾İ»º´æ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÔÊĞíÓÃ»§ÔÚ²»Í£Ö¹È¡Á÷µÄÊ±ºò£¬¾ÍÄÜÇå³ı»º´æÖĞ²»ĞèÒªµÄÍ¼Ïñ
-             ¸Ã½Ó¿ÚÔÚÁ¬ĞøÄ£Ê½ÇĞ´¥·¢Ä£Ê½ºó£¬¿ÉÒÔÇå³ıÀúÊ·Êı¾İ¡£
-             ¸Ã½Ó¿ÚÄ¿Ç°Ö»ÄÜÇå³ıSDKÄÚ²¿µÄÍ¼Ïñ»º´æ£¬²É¼¯¿¨ÄÚµÄ»º´æ»¹ÎŞ·¨Çå³ı¡£
- 
- *  @~english
- *  @brief  if Image buffers has retrieved the data£¬Clear them
- *  @param  handle                      [IN]            Device handle
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface allows user to clear the unnecessary images from the buffer memory without stopping acquisition.
-             This interface allows user to clear previous data after switching from continuous mode to trigger mode. 
-             This interface can only clear the image cache inside the SDK, and the cache in the Frame grabber cannot be cleared.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_ClearImageBuffer(IN void* handle);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  »ñÈ¡µ±Ç°Í¼Ïñ»º´æÇøµÄÓĞĞ§Í¼Ïñ¸öÊı
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnValidImageNum             [IN][OUT]       µ±Ç°Í¼Ïñ»º´æÇøÖĞÓĞĞ§Í¼Ïñ¸öÊıµÄÖ¸Õë
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÖ»Í³¼ÆSDKÄÚ²¿µÄÓĞĞ§Í¼Ïñ¸öÊı£¬²»°üÀ¨²É¼¯¿¨»º´æÄÚµÄÓĞĞ§Í¼Ïñ¸öÊı
- 
- *  @~english
- *  @brief  Get the number of valid images in the current image buffer
- *  @param  handle                      [IN]            Device handle
- *  @param  pnValidImageNum             [IN][OUT]       The number of valid images in the current image buffer
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface only counts the number of valid images inside the SDK, not including the number of valid images in the capture card cache.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_GetValidImageNum(IN void* handle, IN OUT unsigned int *pnValidImageNum);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ÏÔÊ¾Ò»Ö¡Í¼Ïñ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  hWnd                        [IN]            ´°¿Ú¾ä±ú
- *  @param  pstDisplayInfo              [IN]            Í¼ÏñĞÅÏ¢
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÖ§³ÖäÖÈ¾¿í¸ß´óĞ¡ÖÁintÀàĞÍ
- *           äÖÈ¾Ä£Ê½ÎªD3DÊ±£¬Ö§³ÖµÄ×î´ó·Ö±æÂÊÎª16384 * 163840
- 
- *  @~english
- *  @brief  Display one frame image
- *  @param  handle                      [IN]            Device handle
- *  @param  hWnd                        [IN]            HWND
- *  @param  pstDisplayInfo              [IN]            Frame Info
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks The rendering supports width and height to int type.
- *           When the render mode is D3D, the maximum resolution supported is 16384 * 163840.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_DisplayOneFrameEx(IN void* handle, IN void* hWnd, IN MV_DISPLAY_FRAME_INFO_EX* pstDisplayInfo);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ÏÔÊ¾Ò»Ö¡Í¼Ïñ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  hWnd                        [IN]            ´°¿Ú¾ä±ú
- *  @param  pstImage                    [IN]            Í¼ÏñĞÅÏ¢
- *  @param  enRenderMode                [IN]            äÖÈ¾·½Ê½£¬Windows:0-GDI 1-D3D 2-OpenGL Linux:0-OpenGL       
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks WindowsÏÂ£¬¿ÉÑ¡ÔñOpenGLäÖÈ¾Ä£Ê½£¬Ö§³ÖPixelType_Gvsp_RGB8_Packed£¬PixelType_Gvsp_BGR8_Packed£¬PixelType_Gvsp_Mono8ÈıÖÖÏñËØ¸ñÊ½Í¼Ïñ´óĞ¡³¬¹ı4GBµÄäÖÈ¾£¬×¢ÒâLinuxÏÂ²»Ö§³Ö£¬ÆäËûäÖÈ¾Ä£Ê½²»Ö§³Ö¡£
-             ÈôÍ¼Ïñ´óĞ¡Î´³¬¹ı4GB£¬Ö§³Ö¿í¸ß´óĞ¡ÖÁintÀàĞÍ
-             µ÷ÓÃÊ±ĞèÒªÊäÈëMV_CC_IMAGE½á¹¹ÌåÖĞnImageLenµÄÖµ
-			 äÖÈ¾Ä£Ê½ÎªD3DÊ±£¬Ö§³ÖµÄ×î´ó·Ö±æÂÊÎª16384 * 163840
- 
- *  @~english
- *  @brief  Display one frame image
- *  @param  handle                      [IN]            Device handle
- *  @param  hWnd                        [IN]            HWND
- *  @param  pstImage                    [IN]            Frame Info
- *  @param  enRenderMode                [IN]            Render mode, Windows:0-GDI 1-D3D 2-OpenGL Linux:0-OpenGL
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Under Windows, OpenGL rendering mode can be selected, supporting three pixel formats: PixelType_Gvsp_RGB8_Packed£¬PixelType_Gvsp_BGR8_Packed£¬and PixelType_Gvsp_Mono8 for rendering images with a size exceeding 4GB. 
-             Note that, rendering images with a size exceeding 4GB is not supported under Linux, and other rendering modes are not supported.
-			 If the image size does not exceed 4GB, the rendering supports width and height to int type.
-			 When the render mode is D3D, the maximum resolution supported is 16384 * 163840.
-             When calling, the value of nImageLen in the MV_CC_IMAGE structure needs to be input.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_DisplayOneFrameEx2(IN void* handle, IN void* hWnd, IN MV_CC_IMAGE* pstImage, unsigned int enRenderMode);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ÉèÖÃSDKÄÚ²¿Í¼Ïñ»º´æ½Úµã¸öÊı£¬´óÓÚµÈÓÚ1£¬ÔÚ×¥Í¼Ç°µ÷ÓÃ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nNum                        [IN]            »º´æ½Úµã¸öÊı
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks µ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃSDKÄÚ²¿Í¼Ïñ»º´æ½Úµã¸öÊı£¬ÔÚµ÷ÓÃMV_CC_StartGrabbing¿ªÊ¼×¥Í¼Ç°µ÷ÓÃ¡£
-             ²»Í¬Ïà»úÒòÎªÈ¡Á÷·½Ê½²»Í¬£¬²»µ÷ÓÃMV_CC_SetImageNodeNum½Ó¿ÚÇé¿öÏÂ£¬Ä¬ÈÏ²»Í¬Ïà»úÄ¬ÈÏ»º´æ½Úµã¸öÊı²»Í¬£º±ÈÈç Ë«UÄÚ²¿·ÖÅäÄ¬ÈÏ3¸ö½Úµã
-             SDKÊµ¼Ê·ÖÅäµÄ½Úµã¸öÊı = SDKÄÚ²¿Ô¤·ÖÅäµÄ¸öÊı + ÓÃ»§·ÖÅäµÄ½Úµã(MV_CC_SetImageNodeNum);
-             ¸Ã½Ó¿Ú²»Ö§³ÖMV_CAMERALINK_DEVICE ÀàĞÍµÄÉè±¸¡£
-             ¸Ã½Ó¿Ú½ö¶ÔSDKÄÚ²¿·ÖÅä»º´æÄ£Ê½ÓĞĞ§£¬Íâ²¿·ÖÅä»º´æÄ£Ê½£¨¼´µ÷ÓÃMV_CC_RegisterBuffer£©ÎŞĞ§;
- 
- *  @~english
- *  @brief  Set the number of the internal image cache nodes in SDK, Greater than or equal to 1, to be called before the capture
- *  @param  handle                      [IN]            Device handle
- *  @param  nNum                        [IN]            Image Node Number
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Call this interface to set the number of SDK internal image buffer nodes. The interface should be called before calling MV_CC_StartGrabbing for capturing. 
-			 Due to different stream retrieval methods, different cameras default to different cache nodes by default when not calling the MV_CC_SetImageNodeNum interface. For example, for dual U internal allocation, the default number of cache nodes is 3
-             The actual number of nodes allocated by the SDK = the number of pre allocated nodes within the SDK + the number of nodes allocated by the user (MV_CC_SetImageNodeNum)
-             This interface does not support devices of type MV_CAMERALINK_DEVICE
-             This interface is only valid for the SDK's internal allocation cache mode, and the external allocation cache mode (i.e., calling MV_CC_RegisterBuffer) is invalid;
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_SetImageNodeNum(IN void* handle, IN unsigned int nNum);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ÉèÖÃÈ¡Á÷²ßÂÔ£¨¸Ã½Ó¿ÚÖ»Ö§³ÖwindowsÆ½Ì¨£©
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  enGrabStrategy              [IN]            ²ßÂÔÃ¶¾ÙÖµ
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿Ú¶¨ÒåÁËËÄÖÖÈ¡Á÷²ßÂÔ£¬ÓÃ»§¿ÉÒÔ¸ù¾İÊµ¼ÊĞèÇó½øĞĞÑ¡Ôñ¡£¾ßÌåÃèÊöÈçÏÂ£º
-             OneByOne:´Ó¾Éµ½ĞÂÒ»Ö¡Ò»Ö¡µÄ´ÓÊä³ö»º´æÁĞ±íÖĞ»ñÈ¡Í¼Ïñ£¬´ò¿ªÉè±¸ºóÄ¬ÈÏÎª¸Ã²ßÂÔ
-             LatestImagesOnly:½ö´ÓÊä³ö»º´æÁĞ±íÖĞ»ñÈ¡×îĞÂµÄÒ»Ö¡Í¼Ïñ£¬Í¬Ê±Çå¿ÕÊä³ö»º´æÁĞ±í
-             LatestImages:´ÓÊä³ö»º´æÁĞ±íÖĞ»ñÈ¡×îĞÂµÄOutputQueueSizeÖ¡Í¼Ïñ£¬ÆäÖĞOutputQueueSize·¶Î§Îª1-ImageNodeNum£¬¿ÉÓÃMV_CC_SetOutputQueueSize½Ó¿ÚÉèÖÃ£¬ImageNodeNumÄ¬ÈÏÎª1£¬
-                          ¿ÉÓÃMV_CC_SetImageNodeNum½Ó¿ÚÉèÖÃ OutputQueueSizeÉèÖÃ³É1µÈÍ¬ÓÚLatestImagesOnly²ßÂÔ£¬OutputQueueSizeÉèÖÃ³ÉImageNodeNumµÈÍ¬ÓÚOneByOne²ßÂÔ
-             UpcomingImage:ÔÚµ÷ÓÃÈ¡Á÷½Ó¿ÚÊ±ºöÂÔÊä³ö»º´æÁĞ±íÖĞËùÓĞÍ¼Ïñ£¬²¢µÈ´ıÉè±¸¼´½«Éú³ÉµÄÒ»Ö¡Í¼Ïñ¡£
-			 ¸Ã²ßÂÔÖ§³ÖMV_GIGE_DEVICE¡¢MV_USB_DEVICEÉè±¸£¬×¢ÒâMV_USB_DEVICEÉè±¸²»Ö§³Ö MV_GrabStrategy_UpcomingImage Ä£Ê½£»
-			 Í¬Ê±¸Ã²ßÂÔÒ²²»Ö§³ÖMV_CAMERALINK_DEVICE¡¢MV_1394_DEVICE¡¢GenTLÀàĞÍµÄÉè±¸£»
- 
- *  @~english
- *  @brief  Set Grab Strategy£¨This interface only supports windows platform£©
- *  @param  handle                      [IN]            Device handle
- *  @param  enGrabStrategy              [IN]            The value of Grab Strategy
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface is set by four image acquisition approaches, the user may choose one as needed. Specific details are as followed: 
-             OneByOne:Obtain image from output cache list frame by frame in order, this function is default strategy when device is on.
-             LatestImagesOnly:Obtain the latest image from output cache list only, meanwhile clear output cache list.
-             LatestImages:Obtain the latest OutputQueueSize image from output cache list, the range of OutputQueueSize is 1-ImageNodeNum, 
-                          the user may set the value of MV_CC_SetOutputQueueSizeinterface,the default value of ImageNodeNum is 1,
-                          If the user usesMV_CC_SetImageNodeNuminterface to set up OutputQueueSize,when the value of OutputQueueSize is set to be 1, 
-                          the function will be same as LatestImagesOnly; if the value of OutputQueueSize is set to be ImageNodeNum, the function will be same as OneByOne.
-             UpcomingImage:Ignore all images in output cache list when calling image acuiqisiotn interface, wait the next upcoming image generated. 
-			 This API support MV_GIGE_DEVICE,MV_USB_DEVICE device, notication:MV_USB_DEVICE device not support MV_GrabStrategy_UpcomingImage
-			 This API not support MV_CAMERALINK_DEVICE,MV_1394_DEVICE,GenTL device.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_SetGrabStrategy(IN void* handle, IN MV_GRAB_STRATEGY enGrabStrategy);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ÉèÖÃÊä³ö»º´æ¸öÊı£¨¸Ã½Ó¿ÚÖ»Ö§³ÖwindowsÆ½Ì¨£¬Ö»ÓĞÔÚMV_GrabStrategy_LatestImages²ßÂÔÏÂ²ÅÓĞĞ§£¬·¶Î§£º1-ImageNodeNum£©
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nOutputQueueSize            [IN]            Êä³ö»º´æ¸öÊı
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚĞèÓëLatestImagesÈ¡Á÷²ßÂÔÅäÌ×µ÷ÓÃ£¬ÓÃÓÚÉèÖÃLatestImages²ßÂÔÏÂ×î¶àÔÊĞí»º´æÍ¼ÏñµÄ¸öÊı¡£¿ÉÒÔÔÚÈ¡Á÷¹ı³ÌÖĞ¶¯Ì¬µ÷½ÚÊä³ö»º´æ¸öÊı
- *            ÈôÎªË«U¿ÚÏà»ú£¬nOutputQueueSize×îĞ¡Ó¦ÉèÖÃÎª2
- 
- *  @~english
- *  @brief  Set The Size of Output Queue(This interface only supports windows platform, Only work under the strategy of MV_GrabStrategy_LatestImages£¬rang£º1-ImageNodeNum)
- *  @param  handle                      [IN]            Device handle
- *  @param  nOutputQueueSize            [IN]            The Size of Output Queue
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface must be used with LatestImages Grab strategy, it is used for setting the maximum allowance queue size of the image under the LatestImages strategy.
-             The user may change the output queue size while grabbing images.
- *           The DoubleUsb Device nOutputQueueSize at least 2
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_SetOutputQueueSize(IN void* handle, IN unsigned int nOutputQueueSize);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  »ñÈ¡Éè±¸ĞÅÏ¢£¬È¡Á÷Ö®Ç°µ÷ÓÃ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstDevInfo                  [IN][OUT]       ·µ»Ø¸øµ÷ÓÃÕßÓĞ¹ØÉè±¸ĞÅÏ¢½á¹¹ÌåÖ¸Õë
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Ö§³ÖÓÃ»§ÔÚ´ò¿ªÉè±¸ºó»ñÈ¡Éè±¸ĞÅÏ¢£¬²»Ö§³ÖGenTLÉè±¸
-             Èô¸ÃÉè±¸ÊÇGigEÉè±¸£¬Ôòµ÷ÓÃ¸Ã½Ó¿Ú´æÔÚ×èÈû·çÏÕ£¬Òò´Ë²»½¨ÒéÔÚÈ¡Á÷¹ı³ÌÖĞµ÷ÓÃ¸Ã½Ó¿Ú¡£
- 
- *  @~english
- *  @brief  Get device information
- *  @param  handle                      [IN]            Device handle
- *  @param  pstDevInfo                  [IN][OUT]       Structure pointer of device information
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks The API support users to access device information after opening the device£¬don't support GenTL Devices
-             If the device is a GigE camera, there is a blocking risk in calling the interface, so it is not recommended to call the interface during the fetching process. 
+ *  @brief  Gets device information, used before image grabbing. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstDevInfo                  [IN][OUT]       It refers to the pointer to device information structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after MV_CC_OpenDevice() to get the device information.The API does not support devices created using GenTL device information.
+             For a GigE device, there is a blocking risk when calling the API, so it is not recommended to call the API during image grabbing. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetDeviceInfo(IN void * handle, IN OUT MV_CC_DEVICE_INFO* pstDevInfo);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡¸÷ÖÖÀàĞÍµÄĞÅÏ¢
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstInfo                     [IN][OUT]       ·µ»Ø¸øµ÷ÓÃÕßÓĞ¹ØÉè±¸¸÷ÖÖÀàĞÍµÄĞÅÏ¢½á¹¹ÌåÖ¸Õë
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ½Ó¿ÚÀïÃæÊäÈëĞèÒª»ñÈ¡µÄĞÅÏ¢ÀàĞÍ£¨Ö¸¶¨MV_ALL_MATCH_INFO½á¹¹ÌåÖĞµÄnTypeÀàĞÍ£©£¬»ñÈ¡¶ÔÓ¦µÄĞÅÏ¢£¨ÔÚMV_ALL_MATCH_INFO½á¹¹ÌåÖĞpInfoÀï·µ»Ø£©
-             ¸Ã½Ó¿ÚµÄµ÷ÓÃÇ°ÖÃÌõ¼şÈ¡¾öÓÚËù»ñÈ¡µÄĞÅÏ¢ÀàĞÍ£¬»ñÈ¡GigEÉè±¸µÄMV_MATCH_TYPE_NET_DETECTĞÅÏ¢ĞèÔÚ¿ªÆô×¥Í¼Ö®ºóµ÷ÓÃ£¬»ñÈ¡U3VÉè±¸µÄMV_MATCH_TYPE_USB_DETECTĞÅÏ¢ĞèÔÚ´ò¿ªÉè±¸Ö®ºóµ÷ÓÃ
-             ĞÅÏ¢ÀàĞÍ MV_MATCH_TYPE_NET_DETECT ¶ÔÓ¦½á¹¹ÌåMV_MATCH_INFO_NET_DETECT£¬ Ö»Ö§³ÖMV_GIGE_DEVICEÏà»ú/MV_GENTL_GIGE_DEVICEÏà»ú
-             ĞÅÏ¢ÀàĞÍ MV_MATCH_TYPE_USB_DETECT ¶ÔÓ¦½á¹¹ÌåMV_MATCH_INFO_USB_DETECT£¬ Ö»Ö§³ÖMV_USB_DEVICE ÀàĞÍÏà»ú
-             ¸Ã½Ó¿Ú²»Ö§³ÖMV_CAMERALINK_DEVICEÉè±¸¡£
+ *  @brief  è·å–å„ç§ç±»å‹çš„ä¿¡æ¯
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstInfo                     [IN][OUT]       è¿”å›ç»™è°ƒç”¨è€…æœ‰å…³è®¾å¤‡å„ç§ç±»å‹çš„ä¿¡æ¯ç»“æ„ä½“æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li æ¥å£é‡Œé¢è¾“å…¥éœ€è¦è·å–çš„ä¿¡æ¯ç±»å‹ï¼ˆæŒ‡å®š MV_ALL_MATCH_INFO ç»“æ„ä½“ä¸­çš„nTypeç±»å‹ï¼‰ï¼Œè·å–å¯¹åº”çš„ä¿¡æ¯ï¼ˆåœ¨ MV_ALL_MATCH_INFO ç»“æ„ä½“ä¸­pInfoé‡Œè¿”å›ï¼‰ã€‚\n
+            \li è¯¥æ¥å£çš„è°ƒç”¨å‰ç½®æ¡ä»¶å–å†³äºæ‰€è·å–çš„ä¿¡æ¯ç±»å‹ï¼Œè·å–GigEè®¾å¤‡çš„ \ref MV_MATCH_TYPE_NET_DETECT ä¿¡æ¯éœ€åœ¨å¼€å¯æŠ“å›¾ä¹‹åè°ƒç”¨ï¼Œè·å–USB3 Visionè®¾å¤‡çš„ \ref MV_MATCH_TYPE_USB_DETECT ä¿¡æ¯éœ€åœ¨æ‰“å¼€è®¾å¤‡ä¹‹åè°ƒç”¨ã€‚\n
+            \li ä¿¡æ¯ç±»å‹ MV_MATCH_TYPE_NET_DETECT å¯¹åº”ç»“æ„ä½“\ref MV_MATCH_INFO_NET_DETECT ï¼Œ åªæ”¯æŒMV_GIGE_DEVICEç›¸æœº/MV_GENTL_GIGE_DEVICEç›¸æœºã€‚ \n
+            \li ä¿¡æ¯ç±»å‹ MV_MATCH_TYPE_USB_DETECT å¯¹åº”ç»“æ„ä½“\ref MV_MATCH_INFO_USB_DETECT ï¼Œ åªæ”¯æŒMV_USB_DEVICE ç±»å‹ç›¸æœºã€‚ \n
+            @note è¯¥æ¥å£ä¸æ”¯æŒMV_CAMERALINK_DEVICEè®¾å¤‡ã€‚
  
  *  @~english
- *  @brief  Get various type of information
- *  @param  handle                      [IN]            Device handle
- *  @param  pstInfo                     [IN][OUT]       Structure pointer of various type of information
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Input required information type (specify nType in structure MV_ALL_MATCH_INFO) in the interface and get corresponding information (return in pInfo of structure MV_ALL_MATCH_INFO)
-             The calling precondition of this interface is determined by obtained information type. Call after enabling capture to get MV_MATCH_TYPE_NET_DETECT information of GigE device,
-             and call after starting device to get MV_MATCH_TYPE_USB_DETECT information of USB3Vision device.
+ *  @brief  Gets information of all types. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstInfo                     [IN][OUT]       It refers to the pointer to information structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Input required information type (specify nType in structure MV_ALL_MATCH_INFO ), and get corresponding information (returned via pInfo in structure MV_ALL_MATCH_INFO ).
+             The calling precondition of this API is determined by the required information type. To obtain MV_MATCH_TYPE_NET_DETECT information of GigE devices, this API should be called after image grabbing starts. To obtain MV_MATCH_TYPE_USB_DETECT information of USB3 Vision devices, this API should be called after the device is turned on.
              The information type MV_MATCH_TYPE_NET_DETECT corresponds to the structure MV_MATCH_INFO_NET_DETECT, which only supports  cameras of  MV_GIGE_DEVICE and MV_GENTL_GIGE_DEVICE types
              The information type MV_MATCH_TYPE_USB_DETECT corresponds to the structure MV_MATCH_INFO_USB_DETECT, which only supports cameras of MV_USB_DEVICE type
              This API is not supported by MV_CAMERALINK_DEVICE device. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetAllMatchInfo(IN void* handle, IN OUT MV_ALL_MATCH_INFO* pstInfo);
 
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  å…³é—­è®¾å¤‡
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks é€šè¿‡ MV_CC_OpenDevice() è¿æ¥è®¾å¤‡åï¼Œå¯ä»¥é€šè¿‡è¯¥æ¥å£æ–­å¼€è®¾å¤‡è¿æ¥ï¼Œé‡Šæ”¾èµ„æºã€‚
+ 
+ *  @~english
+ *  @brief  Turns off the device. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API is used to disconnect the device and release resources. 
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_CloseDevice(IN void* handle);
 
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  é”€æ¯è®¾å¤‡å¥æŸ„
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è‹¥å‘æœ¬æ¥å£ä¼ å…¥é‡‡é›†å¡å¥æŸ„ï¼Œå…¶æ•ˆæœå’Œ MV_CC_DestroyInterface() ç›¸åŒ;
+ 
+ *  @~english
+ *  @brief  Destroys the device handle. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks If a frame grabber handle is passed to MV_CC_DestroyHandle, its effect is identical to MV_CC_DestroyInterface.
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_DestroyHandle(IN void * handle);
 
+/// @}
 
-/**************************Part3 ch: ²É¼¯¿¨µÄÅäÖÃ  | en: Frame grabber control ******************************************/
+/// \addtogroup å›¾åƒé‡‡é›†
+/// @{
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  æ³¨å†Œå›¾åƒæ•°æ®å›è°ƒ
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  cbOutput                    [IN]            å›è°ƒå‡½æ•°æŒ‡é’ˆ
+ *  @param  pUser                       [IN]            ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks é€šè¿‡è¯¥æ¥å£å¯ä»¥è®¾ç½®å›¾åƒæ•°æ®å›è°ƒå‡½æ•°ï¼Œåœ¨ MV_CC_CreateHandle() ä¹‹åå³å¯è°ƒç”¨ã€‚ \n
+ *  @remarks å›¾åƒæ•°æ®é‡‡é›†æœ‰ä¸¤ç§æ–¹å¼ï¼Œä¸¤ç§æ–¹å¼ä¸èƒ½å¤ç”¨ï¼š \n
+ *          \li è°ƒç”¨ MV_CC_RegisterImageCallBackEx() è®¾ç½®å›¾åƒæ•°æ®å›è°ƒå‡½æ•°ï¼Œç„¶åè°ƒç”¨ MV_CC_StartGrabbing() å¼€å§‹é‡‡é›†ï¼Œé‡‡é›†çš„å›¾åƒæ•°æ®åœ¨è®¾ç½®çš„å›è°ƒå‡½æ•°ä¸­è¿”å›ã€‚ \n 
+ *          \li è°ƒç”¨ MV_CC_StartGrabbing() å¼€å§‹é‡‡é›†ï¼Œç„¶ååœ¨åº”ç”¨å±‚å¾ªç¯è°ƒç”¨ MV_CC_GetImageBuffer() å’Œ MV_CC_FreeImageBuffer() è·å–æŒ‡å®šåƒç´ æ ¼å¼çš„å¸§æ•°æ®ï¼Œè·å–å¸§æ•°æ®æ—¶ä¸Šå±‚åº”ç”¨ç¨‹åºéœ€è¦æ ¹æ®å¸§ç‡æ§åˆ¶å¥½è°ƒç”¨è¯¥æ¥å£çš„é¢‘ç‡ã€‚ \n
+ *          @note è¯¥æ¥å£ä¸æ”¯æŒ \ref MV_CAMERALINK_DEVICE ç±»å‹è®¾å¤‡ã€‚
+
+ *  @~english
+ *  @brief  Registers an image data callback (extended API 1).
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  cbOutput                    [IN]            It refers to the pointer to the callback function. 
+ *  @param  pUser                       [IN]            It refers to user-defined variable. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Before calling this API to register an image data callback, you should call the API MV_CC_CreateHandle().
+             There are two image acquisition methods, and the two methods cannot be used together:
+             Method  1:  Call MV_CC_RegisterImageCallBackEx() to register an image data callback, and then call MV_CC_StartGrabbing() to start image acquisition. The collected image data will be returned in the configured callback function. 
+             Method  2: Call MV_CC_StartGrabbing() to start image acquisition, and the call MV_CC_GetOneFrameTimeout() repeatedly in application layer to get frame data in specified pixel format. When getting frame data, the upper application program should control the frequency of calling this API according to frame rate. 
+             This API is not supported by devices with MV_CAMERALINK_DEVICE
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_RegisterImageCallBackEx(IN void* handle, IN MvImageCallbackEx cbOutput, IN void* pUser);
 
 /********************************************************************//**
 *  @~chinese
-*  @brief   Ã¶¾Ù²É¼¯¿¨
-*  @param   nTLayerType        [IN]             ²É¼¯¿¨½Ó¿ÚÀàĞÍ eg: (MV_GIGE_INTERFACE | MV_CAMERALINK_INTERFACE | MV_CXP_INTERFACE| MV_XOF_INTERFACE£©
-*  @param   pInterfaceInfoList [IN][OUT]       ²É¼¯¿¨ÁĞ±í
-*  @return  ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
-*  @remarks ¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+*  @brief  æ³¨å†Œå›¾åƒæ•°æ®å›è°ƒ
+*  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+*  @param  cbOutput                    [IN]            å›è°ƒå‡½æ•°æŒ‡é’ˆ
+*  @param  bAutoFree                   [IN]            å›¾åƒç¼“å­˜è‡ªåŠ¨å›æ”¶æ ‡è®°
+  \li trueï¼šå›è°ƒç»“æŸåï¼Œå›¾åƒç¼“å­˜ä¼šè¢«SDKå›æ”¶
+  \li falseï¼šå›è°ƒç»“æŸåï¼Œéœ€è¦è°ƒç”¨ MV_CC_FreeImageBuffer() æ¥å£æ‰èƒ½å›æ”¶å›¾åƒç¼“å­˜
+*  @param  pUser                       [IN]            ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+*  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç 
+*  @remarks \li é€šè¿‡è¯¥æ¥å£å¯ä»¥è®¾ç½®å›¾åƒæ•°æ®å›è°ƒå‡½æ•°ï¼Œåœ¨ MV_CC_CreateHandle() ä¹‹åå³å¯è°ƒç”¨ã€‚
+            \li è¯¥æ¥å£ä¸æ”¯æŒ \ref MV_CAMERALINK_DEVICE ç±»å‹çš„è®¾å¤‡ã€‚
+            \li è¯¥æ–¹å¼ä¸ MV_CC_RegisterImageCallBackEx() ç­‰æ³¨å†Œå›¾åƒå›è°ƒå‡½æ•°çš„æ¥å£äº’æ–¥ï¼› 
+            \li è¯¥æ¥å£ä¸ MV_CC_GetImageBuffer() ã€ MV_CC_GetOneFrameTimeout() ç­‰ä¸»åŠ¨å–æµæ¥å£äº’æ–¥ï¼› 
+            \li è¯¥æ¥å£ä¸­ \ref MvImageCallbackEx2 çš„â€œMV_FRAME_OUT* pstFrameâ€ä¸ºSDKå†…éƒ¨å˜é‡ã€‚å¦‚éœ€åœ¨å›è°ƒå‡½æ•°å¤–ä½¿ç”¨ï¼Œæ‚¨éœ€æµ…æ‹·è´pstFrameç»“æ„ä½“(ä¸éœ€è¦æ‹·è´å›¾åƒæ•°æ®)ã€‚
 
-*  @~english
-*  @brief   enum Frame grabber
-*  @param   nTLayerType         [IN]             Frame grabber Type eg: (MV_GIGE_INTERFACE | MV_CAMERALINK_INTERFACE | MV_CXP_INTERFACE| MV_XOF_INTERFACE£©
-*  @param   pInterfaceInfoList   [IN][OUT]       Frame grabbe List
-*  @return  Success, return MV_OK. Failure, return error code
-*  @remarks This API do not support arm and Linux32 platform.
+ *  @~english
+ *  @brief  Registers an image data callback (extended API 2). 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  cbOutput                    [IN]            It refers to the pointer to the callback function. 
+ *  @param  bAutoFree                   [IN]            It refers to the mark for automatic releasing of image buffer. (true:The image buffer will be released and reused by SDK after callback. false:After callback, it is required to call MV_CC_FreeImageBuffer() to release and reuse the image buffer.)
+ *  @param  pUser                       [IN]            It refers to the user-defined variable. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Before calling this API to register an image data callback, you should call the API MV_CC_CreateHandle().
+            When getting frame data, the upper application program should control the frequency of calling this API according to frame rate. 
+            This API is not supported by devices with MV_CAMERALINK_DEVICE.
+            The pstFrame parameter in the callback function is an internal temporary variable of the SDK, and its content must be copied before it can be used outside the callback.
+***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_RegisterImageCallBackEx2(IN void* handle, IN MvImageCallbackEx2 cbOutput, IN void* pUser, IN bool bAutoFree);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  å¼€å§‹å–æµ
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£ä¸æ”¯æŒ \ref MV_CAMERALINK_DEVICE ç±»å‹çš„è®¾å¤‡ã€‚
+ 
+ *  @~english
+ *  @brief  Starts image grabbing. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks This API is not supported by MV_CAMERALINK_DEVICE.
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_StartGrabbing(IN void* handle);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  åœæ­¢å–æµ
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£ä¸æ”¯æŒ \ref MV_CAMERALINK_DEVICE ç±»å‹çš„è®¾å¤‡ã€‚
+ 
+ *  @~english
+ *  @brief  Stops image grabbing. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks This API is not supported by MV_CAMERALINK_DEVICE.
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_StopGrabbing(IN void* handle);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è·å–ä¸€å¸§å›¾ç‰‡ï¼ˆä¸ MV_CC_Display() ä¸èƒ½åŒæ—¶ä½¿ç”¨ï¼‰
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstFrame                    [IN][OUT]       å›¾åƒæ•°æ®å’Œå›¾åƒä¿¡æ¯
+ *  @param  nMsec                       [IN]            ç­‰å¾…è¶…æ—¶æ—¶é—´ï¼Œè¾“å…¥INFINITEæ—¶è¡¨ç¤ºæ— é™ç­‰å¾…ï¼Œç›´åˆ°æ”¶åˆ°ä¸€å¸§æ•°æ®æˆ–è€…åœæ­¢å–æµ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li è°ƒç”¨è¯¥æ¥å£è·å–å›¾åƒæ•°æ®å¸§ä¹‹å‰éœ€è¦å…ˆè°ƒç”¨ MV_CC_StartGrabbing() å¯åŠ¨å›¾åƒé‡‡é›†ã€‚è¯¥æ¥å£ä¸ºä¸»åŠ¨å¼è·å–å¸§æ•°æ®ï¼Œä¸Šå±‚åº”ç”¨ç¨‹åºéœ€è¦æ ¹æ®å¸§ç‡ï¼Œæ§åˆ¶å¥½è°ƒç”¨è¯¥æ¥å£çš„é¢‘ç‡ã€‚è¯¥æ¥å£æ”¯æŒè®¾ç½®è¶…æ—¶æ—¶é—´ï¼ŒSDKå†…éƒ¨ç­‰å¾…ç›´åˆ°æœ‰æ•°æ®æ—¶è¿”å›ï¼Œå¯ä»¥å¢åŠ å–æµå¹³ç¨³æ€§ï¼Œé€‚åˆç”¨äºå¯¹å¹³ç¨³æ€§è¦æ±‚è¾ƒé«˜çš„åœºåˆã€‚ \n
+             \li è¯¥æ¥å£ä¸ MV_CC_FreeImageBuffer() é…å¥—ä½¿ç”¨ï¼Œå½“å¤„ç†å®Œå–åˆ°çš„æ•°æ®åï¼Œéœ€è¦ç”¨ MV_CC_FreeImageBuffer() æ¥å£å°†pstFrameå†…çš„æ•°æ®æŒ‡é’ˆæƒé™è¿›è¡Œé‡Šæ”¾ã€‚ \n
+             \li è¯¥æ¥å£ä¸ MV_CC_GetOneFrameTimeout() ç›¸æ¯”ï¼Œæœ‰ç€æ›´é«˜çš„æ•ˆç‡ã€‚ä¸”å…¶å–æµç¼“å­˜çš„åˆ†é…ç”±sdkå†…éƒ¨è‡ªåŠ¨åˆ†é…æˆ–è€…å¤–éƒ¨æ³¨å†Œï¼Œè€Œ MV_CC_GetOneFrameTimeout() æ¥å£æ˜¯éœ€è¦å®¢æˆ·è‡ªè¡Œåˆ†é…ã€‚\n 
+             \li è¯¥æ¥å£åœ¨è°ƒç”¨ MV_CC_Display() åæ— æ³•å–æµã€‚ \n
+ 
+ *  @~english
+ *  @brief  Gets one frame of image. (This API cannot be used with MV_CC_Display() at the same time.) 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstFrame                    [IN][OUT]       It refers to image data and information. 
+ *  @param  nMsec                       [IN]            It refers to the timeout duration, unit: millisecond. You can input INFINITE to set unlimited timeout duration, and image grabbing will not stop until a frame of data is received or the image grabbing is manually stopped. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Before calling this API to get image data frame, call MV_CC_StartGrabbing to start image acquisition.
+             This API can get frame data actively, the upper layer program should control the frequency of calling this API according to the frame rate. This API supports setting timeout duration for receiving image data frames, which helps ensure stable image acquisition. It is applicable to scenes with high-stability requirement for getting images. 
+             This API and MV_CC_FreeImageBuffer should be called in pairs, after processing the acquired data, you should call MV_CC_FreeImageBuffer to release the data pointer permission of pstFrame. 
+             This API's image buffer is allocated by the SDK internally or registered externally, it has higher image acquisition efficiency than MV_CC_GetOneFrameTimeout() , whose image buffer needs to be manually allocated by the user. 
+             This API cannot be called to grab images after calling MV_CC_Display(). 
+ *****************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_GetImageBuffer(IN void* handle, IN OUT MV_FRAME_OUT* pstFrame, IN unsigned int nMsec);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  é‡Šæ”¾å›¾åƒç¼“å­˜ï¼ˆæ­¤æ¥å£ç”¨äºé‡Šæ”¾ä¸å†ä½¿ç”¨çš„å›¾åƒç¼“å­˜ï¼Œä¸ MV_CC_GetImageBuffer() é…å¥—ä½¿ç”¨ï¼‰
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstFrame                    [IN]            å›¾åƒæ•°æ®å’Œå›¾åƒæ•°æ®
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li è¯¥æ¥å£ä¸ MV_CC_GetImageBuffer() é…å¥—ä½¿ç”¨ï¼Œä½¿ç”¨ MV_CC_GetImageBuffer() æ¥å£å–åˆ°çš„å›¾åƒæ•°æ®pstFrameï¼Œéœ€è¦ç”¨ MV_CC_FreeImageBuffer() æ¥å£è¿›è¡Œæƒé™é‡Šæ”¾ã€‚ \n
+             \li è¯¥æ¥å£å¯¹äºå–æµæ•ˆç‡é«˜äº MV_CC_GetOneFrameTimeout() æ¥å£ï¼Œä¸” MV_CC_GetImageBuffer() åœ¨ä¸è¿›è¡ŒFreeçš„æƒ…å†µä¸‹ï¼Œæœ€å¤§æ”¯æŒè¾“å‡ºçš„èŠ‚ç‚¹æ•°ä¸ MV_CC_SetImageNodeNum() æ¥å£æ‰€è®¾ç½®çš„èŠ‚ç‚¹æ•°ç›¸ç­‰ï¼Œé»˜è®¤èŠ‚ç‚¹æ•°æ˜¯1ã€‚\n 
+ 
+ *  @~english
+ *  @brief  Releases image buffer. (This API is used to release the image buffer that is no longer used, and it is used with MV_CC_GetImageBuffer() in pairs.) 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstFrame                    [IN]            It refers to image data and information. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API and MV_CC_GetImageBuffer() should be called in pairs. After calling MV_CC_GetImageBuffer() to get image data pstFrame, call MV_CC_FreeImageBuffer() to release the permission. 
+             This API has higher efficiency of image acquisition than the API MV_CC_GetOneFrameTimeout(). The max. number of nodes that can be outputted by MV_CC_GetImageBuffer()(without freeing the buffer) is the same as the "nNum" set by the API MV_CC_SetImageNodeNum(). 
+ **********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_FreeImageBuffer(IN void* handle, IN MV_FRAME_OUT* pstFrame);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  é‡‡ç”¨è¶…æ—¶æœºåˆ¶è·å–ä¸€å¸§å›¾ç‰‡ï¼ŒSDKå†…éƒ¨ç­‰å¾…ç›´åˆ°æœ‰æ•°æ®æ—¶è¿”å›
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pData                       [IN][OUT]       å›¾åƒæ•°æ®æ¥æ”¶æŒ‡é’ˆ
+ *  @param  nDataSize                   [IN]            æ¥æ”¶ç¼“å­˜å¤§å°
+ *  @param  pstFrameInfo                [IN][OUT]       å›¾åƒä¿¡æ¯ç»“æ„ä½“
+ *  @param  nMsec                       [IN]            ç­‰å¾…è¶…æ—¶æ—¶é—´
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è°ƒç”¨è¯¥æ¥å£è·å–å›¾åƒæ•°æ®å¸§ä¹‹å‰éœ€è¦å…ˆè°ƒç”¨ MV_CC_StartGrabbing() å¯åŠ¨å›¾åƒé‡‡é›†ã€‚è¯¥æ¥å£ä¸ºä¸»åŠ¨å¼è·å–å¸§æ•°æ®ï¼Œä¸Šå±‚åº”ç”¨ç¨‹åºéœ€è¦æ ¹æ®å¸§ç‡ï¼Œæ§åˆ¶å¥½è°ƒç”¨è¯¥æ¥å£çš„é¢‘ç‡ã€‚è¯¥æ¥å£æ”¯æŒè®¾ç½®è¶…æ—¶æ—¶é—´ï¼ŒSDKå†…éƒ¨ç­‰å¾…ç›´åˆ°æœ‰æ•°æ®æ—¶è¿”å›ï¼Œå¯ä»¥å¢åŠ å–æµå¹³ç¨³æ€§ï¼Œé€‚åˆç”¨äºå¯¹å¹³ç¨³æ€§è¦æ±‚è¾ƒé«˜çš„åœºåˆã€‚\n 
+ 
+ *  @~english
+ *  @brief  Gets one frame of image with timeout, and the SDK waits internally to return until data is available. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pData                       [IN][OUT]       It refers to the pointer to receive image data. 
+ *  @param  nDataSize                   [IN]            It refers to received buffer size. 
+ *  @param  pstFrameInfo                [IN][OUT]       It refers to the structure of image information. 
+ *  @param  nMsec                       [IN]            It refers to timeout duration. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Before calling this API to get image data frame, call MV_CC_StartGrabbing() to start image acquisition. 
+             This API can get frame data actively, the upper layer program should control the frequency of calling this API according to the frame rate.
+             This API supports setting timeout duration for receiving image data frames, which helps ensure stable image acquisition. It is applicable to scenes with high-stability requirement for getting images. 
+             This API is supported by both USB3 vision devices and GigE devices.
+             This API is not supported by MV_CAMERALINK_DEVICE.
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_GetOneFrameTimeout(IN void* handle, IN OUT unsigned char* pData , IN unsigned int nDataSize, IN OUT MV_FRAME_OUT_INFO_EX* pstFrameInfo, IN unsigned int nMsec);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  æ¸…é™¤å–æµæ•°æ®ç¼“å­˜
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li è¯¥æ¥å£å…è®¸ç”¨æˆ·åœ¨ä¸åœæ­¢å–æµçš„æ—¶å€™ï¼Œå°±èƒ½æ¸…é™¤ç¼“å­˜ä¸­ä¸éœ€è¦çš„å›¾åƒã€‚ \n
+             \li è¯¥æ¥å£åœ¨è¿ç»­æ¨¡å¼åˆ‡è§¦å‘æ¨¡å¼åï¼Œå¯ä»¥æ¸…é™¤å†å²æ•°æ®ã€‚ \n
+             \li è¯¥æ¥å£å½“å‰ä»…æ”¯æŒæ¸…é™¤SDKå†…éƒ¨çš„å›¾åƒç¼“å­˜ï¼Œæš‚ä¸æ”¯æŒæ¸…é™¤é‡‡é›†å¡å†…çš„ç¼“å­˜ã€‚
+ 
+ *  @~english
+ *  @brief  Clears the image buffer. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API to clear the images you do not need in the buffer when the streaming is in progress. 
+             After switching to trigger mode from continuous mode, you can call this API to clear historical data buffer. 
+             Call this API to clear internal image buffer of SDK. The clearing of the buffer inside the frame grabbers is not supported. 
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_ClearImageBuffer(IN void* handle);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è·å–å½“å‰å›¾åƒç¼“å­˜åŒºçš„æœ‰æ•ˆå›¾åƒä¸ªæ•°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnValidImageNum             [IN][OUT]       å½“å‰å›¾åƒç¼“å­˜åŒºä¸­æœ‰æ•ˆå›¾åƒä¸ªæ•°çš„æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£åªç»Ÿè®¡SDKå†…éƒ¨çš„æœ‰æ•ˆå›¾åƒä¸ªæ•°ï¼Œä¸åŒ…æ‹¬é‡‡é›†å¡ç¼“å­˜å†…çš„æœ‰æ•ˆå›¾åƒä¸ªæ•°
+ 
+ *  @~english
+ *  @brief  Gets the number of valid images in the current image buffer. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pnValidImageNum             [IN][OUT]       It refers to the pointer to the number of valid images in the current image buffer. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API can only be called to get the number of valid images in the SDK, not the number of those in frame grabbers. 
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_GetValidImageNum(IN void* handle, IN OUT unsigned int *pnValidImageNum);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è®¾ç½®SDKå†…éƒ¨å›¾åƒç¼“å­˜èŠ‚ç‚¹ä¸ªæ•°ï¼Œå¤§äºç­‰äº1ï¼Œåœ¨æŠ“å›¾å‰è°ƒç”¨
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nNum                        [IN]            ç¼“å­˜èŠ‚ç‚¹ä¸ªæ•°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li è°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®SDKå†…éƒ¨å›¾åƒç¼“å­˜èŠ‚ç‚¹ä¸ªæ•°ï¼Œåœ¨è°ƒç”¨ MV_CC_StartGrabbing() å¼€å§‹æŠ“å›¾å‰è°ƒç”¨ã€‚ \n
+             \li GigE Visionã€USB3 Visionè®¾å¤‡ä¼šåœ¨è°ƒç”¨ MV_CC_StartGrabbing() æ—¶è¿›è¡Œå†…å­˜æ ¡éªŒï¼Œè‹¥ç³»ç»Ÿå†…å­˜ä¸è¶³ï¼Œåˆ™ MV_CC_StartGrabbing() è¿”å›å¼‚å¸¸ã€‚ \n
+             \li å…¶ä»–é‡‡é›†å¡ä¸‹ç›¸æœºï¼Œè°ƒç”¨ MV_CC_StartGrabbing() æ—¶æ£€æµ‹ç³»ç»Ÿå†…å­˜èµ„æºä¸å¤Ÿï¼ŒSDKå†…éƒ¨å°†é‡æ–°è®¡ç®—é¢„åˆ†é…çš„ç¼“å­˜èŠ‚ç‚¹ä¸ªæ•°ã€‚åœ¨è¯¥æƒ…å†µä¸‹ï¼ŒSDKå®é™…åˆ†é…çš„èŠ‚ç‚¹ä¸ªæ•°ä»¥é‡æ–°è®¡ç®—çš„èŠ‚ç‚¹ä¸ªæ•°ä¸ºå‡†ã€‚
+             \li è¯¥æ¥å£ä¸æ”¯æŒCameraLinkè®¾å¤‡ã€‚CameraLinkè®¾å¤‡å¯ä»¥é€šè¿‡GenTLæ–¹å¼è¿æ¥å¹¶è®¾ç½®ç¼“å­˜èŠ‚ç‚¹ä¸ªæ•°ã€‚ \n
+ 
+ *  @~english
+ *  @brief  Sets the number of nodes for SDK internal image buffer. The value is no less than 1, and this API should be called before image grabbing. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  nNum                        [IN]            It refers to the number of buffer nodes, which cannot be less than 1. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API before MV_CC_StartGrabbing() to set the number of nodes for SDK internal image buffer.
+             This API does not support devices of type MV_CAMERALINK_DEVICE
+             For cameras with network interface or U port, the SDK will perform a memory check when calling MV_CC_StartGrabbing. If the system memory is insufficient, MV_CC_StartGrabbing will return an exception
+             For cameras using other capture cards, when calling MV_CC_StartGrabbing, the SDK detects that the system memory is insufficient and will internally recalculate the number of pre-allocated buffer nodes. In this case, the actual number of nodes allocated by the Software Development Kit (SDK) will be based on the recalculated number.
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_SetImageNodeNum(IN void* handle, IN unsigned int nNum);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è®¾ç½®å–æµç­–ç•¥
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  enGrabStrategy              [IN]            ç­–ç•¥æšä¸¾å€¼
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£å®šä¹‰äº†å››ç§å–æµç­–ç•¥ï¼Œç”¨æˆ·å¯ä»¥æ ¹æ®å®é™…éœ€æ±‚è¿›è¡Œé€‰æ‹©ã€‚å…·ä½“æè¿°å¦‚ä¸‹ï¼š
+            \li OneByOneï¼šä»æ—§åˆ°æ–°ä¸€å¸§ä¸€å¸§çš„ä»è¾“å‡ºç¼“å­˜åˆ—è¡¨ä¸­è·å–å›¾åƒï¼Œæ‰“å¼€è®¾å¤‡åé»˜è®¤ä¸ºè¯¥ç­–ç•¥
+            \li LatestImagesOnlyï¼šä»…ä»è¾“å‡ºç¼“å­˜åˆ—è¡¨ä¸­è·å–æœ€æ–°çš„ä¸€å¸§å›¾åƒï¼ŒåŒæ—¶æ¸…ç©ºè¾“å‡ºç¼“å­˜åˆ—è¡¨
+            \li LatestImagesï¼šä»è¾“å‡ºç¼“å­˜åˆ—è¡¨ä¸­è·å–æœ€æ–°çš„OutputQueueSizeå¸§å›¾åƒï¼Œå…¶ä¸­OutputQueueSizeèŒƒå›´ä¸º1-ImageNodeNumï¼Œå¯ç”¨ MV_CC_SetOutputQueueSize() æ¥å£è®¾ç½®ï¼ŒImageNodeNumé»˜è®¤ä¸º1ï¼Œå¯ç”¨ MV_CC_SetImageNodeNum() æ¥å£è®¾ç½® OutputQueueSizeè®¾ç½®æˆ1ç­‰åŒäºLatestImagesOnlyç­–ç•¥ï¼ŒOutputQueueSizeè®¾ç½®æˆImageNodeNumç­‰åŒäºOneByOneç­–ç•¥
+            \li UpcomingImageï¼šåœ¨è°ƒç”¨å–æµæ¥å£æ—¶å¿½ç•¥è¾“å‡ºç¼“å­˜åˆ—è¡¨ä¸­æ‰€æœ‰å›¾åƒï¼Œå¹¶ç­‰å¾…è®¾å¤‡å³å°†ç”Ÿæˆçš„ä¸€å¸§å›¾åƒã€‚
+            @note
+            \li WINDOWS
+            è¯¥æ¥å£æ”¯æŒ \ref MV_GIGE_DEVICE ã€ \ref MV_USB_DEVICE ã€ \ref MV_GENTL_GIGE_DEVICE ã€ \ref MV_GENTL_CAMERALINK_DEVICE ã€ \ref MV_GENTL_CXP_DEVICE ã€ \ref MV_GENTL_XOF_DEVICE è®¾å¤‡ã€‚
+            \endif
+            \li LINUX
+            è¯¥æ¥å£æ”¯æŒ \ref MV_USB_DEVICE ã€ \ref MV_GENTL_GIGE_DEVICE ã€ \ref MV_GENTL_CAMERALINK_DEVICE ã€ \ref MV_GENTL_CXP_DEVICE ã€ \ref MV_GENTL_XOF_DEVICE è®¾å¤‡ã€‚
+            \endif
+
+ *  @~english
+ *  @brief  Sets image grabbing strategy. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  enGrabStrategy              [IN]            It refers to strategy enumeration.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks There are four defined image grabbing strategies, from which you can choose the suitable one according to the actual requirement. Details are following. 
+                OneByOne:Gets image frames one by one in chronological order. It is the default strategy. 
+                LatestImagesOnly:Only gets the latest one frame from the output buffer list, and clears the rest images in the list. 
+                LatestImages:Gets the latest image of OutputQueueSize frame from the output buffer list. The range of OutputQueueSize is between 1 and ImageNodeNum.
+                             If the OutputQueueSize value is set to 1, the strategy is same to LatestImagesOnly, and if the OutputQueueSize value is set to ImageNodeNum, the strategy is same to OneByOne.
+                             You can set the OutputQueueSize via API MV_CC_SetOutputQueueSize(), and set the ImageNodeNum via API MV_CC_SetImageNodeNum(). 
+                UpcomingImage:Ignores all images in the output buffer list during calling this API, and waits for the upcoming image generated by the device. 
+                Device Types Supported by Windows Platform: MV_GIGE_DEVICEã€MV_USB_DEVICEã€MV_GENTL_GIGE_DEVICEã€MV_GENTL_CAMERALINK_DEVICEã€MV_GENTL_CXP_DEVICEã€MV_GENTL_XOF_DEVICE.
+                Device Types Supported by Linux Platform: MV_USB_DEVICEã€MV_GENTL_GIGE_DEVICEã€MV_GENTL_CAMERALINK_DEVICEã€MV_GENTL_CXP_DEVICEã€MV_GENTL_XOF_DEVICE.
+
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_SetGrabStrategy(IN void* handle, IN MV_GRAB_STRATEGY enGrabStrategy);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è®¾ç½®è¾“å‡ºç¼“å­˜ä¸ªæ•°ï¼ˆåªæœ‰åœ¨ \ref MV_GrabStrategy_LatestImages ç­–ç•¥ä¸‹æ‰æœ‰æ•ˆï¼ŒèŒƒå›´ï¼š1-ImageNodeNumï¼‰
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nOutputQueueSize            [IN]            è¾“å‡ºç¼“å­˜ä¸ªæ•°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£éœ€ä¸LatestImageså–æµç­–ç•¥é…å¥—è°ƒç”¨ï¼Œç”¨äºè®¾ç½®LatestImagesç­–ç•¥ä¸‹æœ€å¤šå…è®¸ç¼“å­˜å›¾åƒçš„ä¸ªæ•°ã€‚å¯ä»¥åœ¨å–æµè¿‡ç¨‹ä¸­åŠ¨æ€è°ƒèŠ‚è¾“å‡ºç¼“å­˜ä¸ªæ•°ã€‚
+            @note
+            \li WINDOWS
+            è¯¥æ¥å£æ”¯æŒ \ref MV_GIGE_DEVICE ã€ \ref MV_USB_DEVICE ã€ \ref MV_GENTL_GIGE_DEVICE ã€ \ref MV_GENTL_CAMERALINK_DEVICE ã€ \ref MV_GENTL_CXP_DEVICE ã€ \ref MV_GENTL_XOF_DEVICE è®¾å¤‡ã€‚
+            \endif
+            \li LINUX
+            è¯¥æ¥å£æ”¯æŒ \ref MV_USB_DEVICE ã€ \ref MV_GENTL_GIGE_DEVICE ã€ \ref MV_GENTL_CAMERALINK_DEVICE ã€ \ref MV_GENTL_CXP_DEVICE ã€ \ref MV_GENTL_XOF_DEVICE è®¾å¤‡ã€‚
+            \endif
+
+ *  @~english
+ *  @brief  Sets the number of output buffers, range: [1, ImageNodeNum]. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  nOutputQueueSize            [IN]            It refers to the number of output buffers. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API is valid only when MV_CC_SetGrabStrategy() is set to LatestImages. It is called to set the max. number of buffer images under the LatestImages strategy. You can adjust the number of output buffers during image grabbing. 
+             The user may change the output queue size while grabbing images.
+             This API only support MV_GIGE_DEVICE, MV_USB_DEVICE device on Windows, and only support MV_USB_DEVICE device on Linux.
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_SetOutputQueueSize(IN void* handle, IN unsigned int nOutputQueueSize);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  åˆ†é…å¯¹é½å†…å­˜
+ *  @param  nBufSize                     [IN]            åˆ†é…å†…å­˜çš„é•¿åº¦
+ *  @param  nAlignment                   [IN]            å†…å­˜å¯¹é½å­—èŠ‚æ•° (å¿…é¡»æ˜¯å¤§äº0ï¼Œå¹¶ä¸”æ˜¯2çš„æ•´æ•°æ¬¡å¹‚)
+ *  @return æˆåŠŸï¼Œè¿”å›ç”³è¯·å†…å­˜åœ°å€ï¼›å¤±è´¥ï¼Œè¿”å› NULL
+
+ *  @~english
+ *  @brief  Allocates aligned memory
+ *  @param  nBufSize                     [IN]        It refers to allocation length of memory     
+ *  @param  nAlignment                   [IN]        It refers to memory alignment size (must be greater than 0 and a power of 2)
+ *  @return Returns memory address for success, and returns NULL for failure.
+ *  @remarks 
+************************************************************************/
+MV_CAMCTRL_API void *  __stdcall MV_CC_AllocAlignedBuffer(IN uint64_t  nBufSize, IN unsigned int nAlignment);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  å¯¹é½å†…å­˜é‡Šæ”¾
+ *  @param  pBuffer                      [IN]            å†…å­˜åœ°å€
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks å¯¹é½å†…å­˜çš„é‡Šæ”¾ï¼Œæ­é… MV_CC_AllocAlignedBuffer() ä½¿ç”¨
+
+ *  @~english 
+ *  @brief   Releases aligned memory
+ *  @param   pBuffer                      [IN]        It refers to memory address
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks This API and MV_CC_AllocAlignedBuffer should be called in pairs.
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_FreeAlignedBuffer(IN void* pBuffer);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è·å–è®¾å¤‡payloadå¤§å°ï¼ˆpayloadåŒ…å«å›¾åƒæ•°æ®å’ŒChunkæ•°æ®ç­‰ï¼‰å’Œå†…å­˜å¯¹é½æ–¹å¼ï¼Œç”¨äºSDKå¤–éƒ¨æ³¨å†Œç¼“å­˜æ—¶ï¼Œåº”ç”¨å±‚åˆ†é…è¶³å¤Ÿçš„ç¼“å­˜åŠæ­£ç¡®çš„å†…å­˜å¯¹é½æ–¹å¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnPayloadSize               [IN OUT]        è´Ÿè½½é•¿åº¦
+ *  @param  pnAlignment                 [IN OUT]        è´Ÿè½½å†…å­˜å¯¹é½çš„å­—èŠ‚æ•°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è·å–åˆ°çš„payloadå¤§å°å¦‚æœæƒ³è¦æ”¹å¤§ï¼Œéœ€è¦æŒ‰ç…§å¯¹é½å­—èŠ‚æ•°çš„æ•´æ•°å€å¢åŠ ï¼Œå¦åˆ™ MV_CC_AllocAlignedBuffer() ç”³è¯·çš„å†…å­˜å¯èƒ½å‡ºç°ä¸æŒ‰è¦æ±‚å¯¹é½çš„æƒ…å†µ
+
+ *  @~english
+ *  @brief  Gets the device payload size (including image data and Chunk data, and more.) and memory alignment method. 
+           It is used by the application layer to allocate sufficient buffer and correct memory alignment when registering external memory for SDK. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pnPayloadSize               [IN OUT]        It refers to the payload size. 
+ *  @param  pnAlignment                 [IN OUT]        It refers to alignment bytes.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks If you want to increase the size of the obtained payload, it must be increased by an integer multiple of the aligned byte count. Otherwise, the memory allocated by MV_CC_AllocAlignedBuffer may not be aligned as required.
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_GetPayloadSize(IN void* handle, IN OUT uint64_t* pnPayloadSize, IN OUT unsigned int* pnAlignment);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  åº”ç”¨ç¨‹åºåˆ†é…ç¼“å­˜ï¼Œå¹¶æ³¨å†Œåˆ°SDKå†…éƒ¨ï¼Œä¾›SDKä½¿ç”¨
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pBuffer                     [IN]            å†…å­˜åœ°å€
+ *  @param  nBufSize                    [IN]            å†…å­˜é•¿åº¦
+ *  @param  pUser                       [IN]            ç”¨æˆ·æŒ‡é’ˆ 
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks å¯ä»¥ä½¿ç”¨ MV_CC_GetPayloadSize() è·å–ç¼“å­˜å¤§å°ï¼Œå¹¶ä½¿ç”¨ MV_CC_AllocAlignedBuffer() åˆ†é…ç©ºé—´ï¼Œä¹‹åä½¿ç”¨ MV_CC_RegisterBuffer() æ³¨å†Œ
+            \li æ³¨å†Œçš„ç¼“å­˜éœ€è¦ç”±åº”ç”¨å±‚é€šçŸ¥SDKå–æ¶ˆæ³¨å†Œï¼ˆ MV_CC_UnRegisterBuffer() ï¼‰åï¼Œè¿›è¡Œé‡Šæ”¾ï¼ˆ MV_CC_FreeAlignedBuffer() ï¼‰ã€‚
+            \li ä½¿ç”¨è¯¥æ¥å£åï¼Œä»…æ”¯æŒ MV_CC_GetImageBuffer() / MV_CC_FreeImageBuffer() / MV_CC_RegisterImageCallBackEx() è·å–å›¾åƒï¼Œä¸æ”¯æŒå…¶ä»–æ¥å£è·å–å›¾åƒã€‚\n
+            @note \li ä½¿ç”¨è¯¥æ¥å£åï¼Œå¦‚æœä¹‹å‰é…ç½®äº†SDKå†…éƒ¨èŠ‚ç‚¹ï¼ˆ MV_CC_SetImageNodeNum() ï¼‰æ— æ•ˆã€‚\n
+            \li åŒUSBæ¥å£ç›¸æœºè¦æ±‚è‡³å°‘æ³¨å†Œ3å—ç©ºé—´åˆ°SDKå†…éƒ¨ã€‚å…¶ä»–ç›¸æœºæš‚æ— é™åˆ¶ï¼Œä½†æ˜¯ä¸ºäº†é¿å…ç¼“å­˜ä¸è¶³ï¼Œè¯·é…ç½®è¶³å¤Ÿçš„ç¼“å­˜åˆ°åº•å±‚ã€‚\n
+
+ *  @~english
+ *  @brief  Application allocates cache and registers it internally to the SDK for SDK usage
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pBuffer                     [IN]            It refers to external memory address
+ *  @param  nBufSize                    [IN]            It refers to external length of memory 
+ *  @param  pUser                       [IN]            It refers to user-defined variable.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Registering memory can be done by using MV_CC_GetPayloadSize to obtain the memory size, and allocating the memory size using MV_CC_AllocAlignedBuffer
+            The registered memory needs to be notified by the application layer to the SDK to cancel the registration (MV_CC_UnregisterBuffer) and then released (MV_CC_FreeAlignedBuffer)
+            After using this API, only MV_CC_GetImageBufferã€MV_CC_FreeImageBuffer/MV_CC_RegisterImageCallBackEx is supported for image retrieval, and other API are not supported for image retrieval
+            After using this API, if the SDK internal node (MV_CC_SetImageNodeNum) was previously configured, it is invalid
+            The dual USB API camera requires at least 3 spaces to be registered inside the SDK;There is no limit for other cameras for the time being, but to avoid insufficient cache, please configure sufficient cache into the SDK
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_RegisterBuffer(IN void* handle, IN void *pBuffer, IN uint64_t nBufSize, IN void* pUser);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  å¤–éƒ¨å†…å­˜å–æ¶ˆSDKå†…éƒ¨æ³¨å†Œ
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pBuffer                     [IN]            å¤–éƒ¨å†…å­˜åœ°å€
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+
+ *  @~english
+ *  @brief   Revokes external memory
+ *  @param  handle                      [IN]            It refers to the device handle
+ *  @param  pBuffer                     [IN]            It refers to external memory address
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_UnRegisterBuffer(IN void* handle, IN void* pBuffer);
+
+/// @}
+
+/// \addtogroup å›¾åƒæ¸²æŸ“
+/// @{
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  æ˜¾ç¤ºä¸€å¸§å›¾åƒï¼ˆæ‰©å±•æ¥å£ï¼‰
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  hWnd                        [IN]            çª—å£å¥æŸ„
+ *  @param  pstDisplayInfo              [IN]            å›¾åƒä¿¡æ¯
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£æ”¯æŒæ¸²æŸ“çš„å›¾åƒå®½ã€é«˜å¯è¾¾åˆ°Intç±»å‹ã€‚
+ *  \if WINDOWS
+ *  å¯é€‰æ‹©GDIæˆ–D3Dæ¸²æŸ“æ¨¡å¼ï¼Œé»˜è®¤é€‰æ‹©GDIæ¨¡å¼ã€‚å…³äºæ¸²æŸ“æ¨¡å¼çš„è¯´æ˜å¦‚ä¸‹ï¼š
+    \li GDIæ¨¡å¼ï¼šå¯¹ç”µè„‘çš„æ˜¾å¡æ€§èƒ½æ²¡æœ‰è¦æ±‚ï¼Œé€‚ç”¨äºæ‰€æœ‰ç”µè„‘ã€‚
+    \li D3Dæ¨¡å¼ï¼šé€‚ç”¨äºå·²å®‰è£…æ˜¾å¡é©±åŠ¨ä¸”æ˜¾å¡å†…å­˜å¤§äº1GBçš„ç”µè„‘ã€‚åœ¨è¯¥æ¨¡å¼ä¸‹ï¼Œå®¢æˆ·ç«¯é¢„è§ˆçš„å›¾åƒæ•ˆæœä¼šä¼˜äºGDIæ¨¡å¼ä¸‹çš„å›¾åƒæ•ˆæœã€‚è¯¥æ¨¡å¼æ”¯æŒçš„æœ€å¤§å›¾åƒåˆ†è¾¨ç‡ä¸º16384 * 163840ã€‚
+    \li  MV_CC_DisplayOneFrameEx() æ”¯æŒPixelType_Gvsp_RGB8_Packedï¼ŒPixelType_Gvsp_BGR8_Packedï¼ŒPixelType_Gvsp_Mono8ä¸‰ç§åƒç´ æ ¼å¼çš„æ¸²æŸ“å®½é«˜å¤§å°è‡³intç±»å‹ï¼Œå…¶ä½™åƒç´ æ ¼å¼æ¸²æŸ“ä»…æ”¯æŒå®½é«˜è‡³shortã€‚
+    \endif
+
+ *  @~english
+ *  @brief  Displays one frame of image (extended API 1). 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  hWnd                        [IN]            It refers to window handle. 
+ *  @param  pstDisplayInfo              [IN]            It refers to image information. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks TThis API supports converting image width and image height to integer type data. The rendering mode can be set to GDI (default) or D3D. See details about rendering modes below. 
+             The GDI mode is applicable to all computers with no requirements on graphic card performance. 
+             The D3D mode is suitable for computers with a graphics card driver and the memory of the graphics card is greater than 1GB. In this mode, the image effect of the client preview is better than that of the GDI mode. The max. supported resolution is 16384 Ã— 163840. 
+  ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_DisplayOneFrameEx(IN void* handle, IN void* hWnd, IN MV_DISPLAY_FRAME_INFO_EX* pstDisplayInfo);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  æ˜¾ç¤ºä¸€å¸§å›¾åƒï¼ˆæ‰©å±•æ¥å£2ï¼‰
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  hWnd                        [IN]            çª—å£å¥æŸ„
+ *  @param  pstImage                    [IN]            å›¾åƒä¿¡æ¯
+ *  \if WINDOWS
+ *  @param  enRenderMode                [IN]            æ¸²æŸ“æ–¹å¼ï¼š0-GDI 1-D3D 2-OpenGL
+ *  \endif
+ *  \if LINUX
+ *  @param  enRenderMode                [IN]            æ¸²æŸ“æ–¹å¼ï¼š0-OpenGL
+ *  \endif
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks
+ *  \if WINDOWS
+ *  æ­¤æ¥å£æ”¯æŒ4GBä»¥ä¸Šè¶…å¤§å›¾æ¸²æŸ“ï¼Œè°ƒç”¨æ—¶éœ€è¦è¾“å…¥ MV_CC_IMAGE ä¸­ nImageLen çš„å€¼ã€‚ \n
+ *  D3Då’ŒOpenGLæ¨¡å¼é€‚ç”¨äºå·²å®‰è£…æ˜¾å¡é©±åŠ¨ä¸”æ˜¾å­˜å¤§äº1GBçš„è®¾å¤‡ï¼Œå…¶å®¢æˆ·ç«¯é¢„è§ˆçš„å›¾åƒæ•ˆæœä¼˜äºGDIæ¨¡å¼ã€‚\n
+ *  æ ¹æ®å›¾åƒå¤§å°åŠæ ¼å¼çš„ä¸åŒï¼Œå¯é€‰çš„æ¸²æŸ“æ¨¡å¼åŠé™åˆ¶å¦‚ä¸‹ï¼š \n
+ * - è‹¥å›¾åƒå¤§å°å¤§äº4GBï¼š
+ *    - æ”¯æŒæ¨¡å¼ï¼šOpenGL
+ *    - æ”¯æŒåƒç´ æ ¼å¼ï¼šRGB8_Packedã€BGR8_Packedå’ŒMono8
+ *    - å°ºå¯¸é™åˆ¶ï¼šå›¾åƒå®½åº¦ä¸èƒ½è¶…è¿‡å½“å‰ç¯å¢ƒä¸‹ OpenGL æ”¯æŒçš„æœ€å¤§çº¹ç†å¤§å°ã€‚
+ * - è‹¥å›¾åƒå¤§å°å°äº4GBï¼š
+ *    - æ”¯æŒæ¨¡å¼ï¼šå¯æ ¹æ®å®é™…æƒ…å†µé€‰æ‹©GDIã€D3Dæˆ–OpenGLæ¨¡å¼ã€‚
+ *    - å°ºå¯¸é™åˆ¶ï¼šè‹¥æ¸²æŸ“æ ¼å¼ä¸ºRGB8_Packedã€BGR8_Packedæˆ–Mono8ï¼Œå›¾åƒå®½é«˜ç†è®ºä¸Šå¯è¾¾åˆ°intç±»å‹ä¸Šé™ï¼Œä½†å—é™äºå…·ä½“æ¸²æŸ“æ¨¡å¼çš„çº¦æŸï¼š
+ *       - D3Dæ¨¡å¼ï¼šå›¾åƒå®½åº¦ä¸èƒ½è¶…è¿‡ 16384ï¼ˆæœ€å¤§åˆ†è¾¨ç‡é™åˆ¶ä¸º 16384 Ã— 163840ï¼‰ã€‚
+ *       - OpenGLæ¨¡å¼ï¼šå›¾åƒå®½åº¦ä¸èƒ½è¶…è¿‡å½“å‰ç¯å¢ƒä¸‹ OpenGL æ”¯æŒçš„æœ€å¤§çº¹ç†å¤§å°ã€‚      
+ *  \endif
+ *  \if LINUX
+ *  \li æ”¯æŒPixelType_Gvsp_RGB8_Packedï¼ŒPixelType_Gvsp_BGR8_Packedï¼ŒPixelType_Gvsp_Mono8ä¸‰ç§åƒç´ æ ¼å¼å›¾åƒå¤§å°è¶…è¿‡4GBçš„æ¸²æŸ“ã€‚ \n
+    \li è‹¥å›¾åƒå¤§å°æœªè¶…è¿‡4GBï¼Œæ”¯æŒå®½é«˜å¤§å°è‡³intç±»å‹ã€‚ \n
+    \li è°ƒç”¨æ—¶éœ€è¦è¾“å…¥ MV_CC_IMAGE ç»“æ„ä½“ä¸­nImageLençš„å€¼; \n
+ *  \endif
+ 
+ *  @~english
+ *  @brief  Displays one frame of image (extended API 2). 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  hWnd                        [IN]            It refers to window handle. 
+ *  @param  pstImage                    [IN]            It refers to the image information. 
+ *  @param  enRenderMode                [IN]            It refers to image rendering mode. 0: GDI; 1: D3D; 2: OpenGL.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API supports rendering of images over 4 GB by entering nImageBufLen value of structure MV_CC_IMAGE. 
+             D3D mode and OpenGL mode are suitable for computers with a graphics card driver and the memory of the graphics card is greater than 1GB. In these modes, the image effect of the client preview is better than that of the GDI mode. For D3D mode, the max. supported resolution is 16384 Ã— 163840. 
+             Rendering mode and supported rendering width and rendering height vary from images over 4 GB and images no more than 4 GB. 
+             For an image over 4 GB, only OpenGL rendering mode is supported for image in pixel formats including RGB8_Packed, BGR8_Packed, and Mono8. 
+             For image size under 4 GB, you can choose GDI, D3D, or OpenGL according to actual demand. For an image with pixel formats including RGB8_Packed, BGR8_Packed, and Mono8, it supports converting image width and image height to integer type data. 
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_DisplayOneFrameEx2(IN void* handle, IN void* hWnd, IN MV_CC_IMAGE* pstImage, unsigned int enRenderMode);
+
+/// \cond WINDOWS
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  åœ¨å›¾åƒä¸Šç»˜åˆ¶çŸ©å½¢æ¡†è¾…åŠ©çº¿
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pRectInfo                   [IN]            çŸ©å½¢è¾…åŠ©çº¿çš„ä¿¡æ¯
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks  è¯¥æ¥å£ä»…æ”¯æŒwindowså¹³å°
+ 
+ *  @~english
+ *  @brief  Draws auxiliary rectangle frames on the image. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pRectInfo                   [IN]            It refers to the information of auxiliary rectangle frame. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API only supports windows platform.
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_DrawRect(IN void* handle, IN MVCC_RECT_INFO* pRectInfo);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  åœ¨å›¾åƒä¸Šç»˜åˆ¶åœ†å½¢è¾…åŠ©çº¿
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pCircleInfo                 [IN]            åœ†å½¢è¾…åŠ©çº¿çš„ä¿¡æ¯
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks  è¯¥æ¥å£ä»…æ”¯æŒwindowså¹³å°
+ 
+ *  @~english
+ *  @brief  Draws auxiliary circle frames on the image. 
+ *  @param  handle                      [IN]           It refers to the device handle.
+ *  @param  pCircleInfo                 [IN]           It refers to the information of auxiliary circle frame. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API only supports windows platform.
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_DrawCircle(IN void* handle, IN MVCC_CIRCLE_INFO* pCircleInfo);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  åœ¨å›¾åƒä¸Šç»˜åˆ¶çº¿æ¡
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pLinesInfo                  [IN]            çº¿æ¡è¾…åŠ©çº¿ä¿¡æ¯
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks  è¯¥æ¥å£ä»…æ”¯æŒwindowså¹³å°
+ 
+ *  @~english
+ *  @brief  Draws lines on the image. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pLinesInfo                  [IN]            It refers to the information of line
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks  This API only supports windows platform.
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_DrawLines(IN void* handle, IN MVCC_LINES_INFO* pLinesInfo);
+/// \endcond
+
+/// @}
+
+/**************************Part3 ch: é‡‡é›†å¡çš„é…ç½®  | en: Frame grabber control ******************************************/
+
+/// \addtogroup é‡‡é›†å¡åˆå§‹åŒ–
+/// @{
+/********************************************************************//**
+ *  @~chinese
+ *  @brief   æšä¸¾é‡‡é›†å¡
+ *  @param   nTLayerType        [IN]             é‡‡é›†å¡æ¥å£ç±»å‹
+                                    | é‡‡é›†å¡æ¥å£ç±»å‹å®šä¹‰ | å€¼ | è¯´æ˜ |
+                                    | :--- | :---: | :--- | 
+                                    | \ref MV_GIGE_INTERFACE | 0x00000001 | GigE Visioné‡‡é›†å¡ |
+                                    | \ref MV_CAMERALINK_INTERFACE | 0x00000004 | Camera Linké‡‡é›†å¡ |
+                                    | \ref MV_CXP_INTERFACE | 0x00000008 | CoaXPressé‡‡é›†å¡ |
+                                    | \ref MV_XOF_INTERFACE | 0x00000010 | XoFLinké‡‡é›†å¡ |
+                                    | \ref MV_VIR_INTERFACE | 0x00000020 | è™šæ‹Ÿé‡‡é›†å¡ |
+                                    | \ref MV_LC_INTERFACE | 0x00000040 | å…‰æºæ§åˆ¶å¡ |
+ *  @param   pInterfaceInfoList [IN][OUT]       é‡‡é›†å¡åˆ—è¡¨
+ *  @return  æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @if LINUX
+ *  @remarks è¯¥æ¥å£ä¸æ”¯æŒarmå’ŒLinux32å¹³å°
+ *  @endif
+
+ *  @~english
+ *  @brief   Enumerates frame grabbers. 
+ *  @param   nTLayerType         [IN]             It refers to the frame grabber interface type.  eg: (MV_GIGE_INTERFACE | MV_CAMERALINK_INTERFACE | MV_CXP_INTERFACE| MV_XOF_INTERFACE | MV_VIR_INTERFACE | MV_LC_INTERFACEï¼‰
+ *  @param   pInterfaceInfoList   [IN][OUT]       It refers to the frame grabber list. 
+ *  @return  Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API do not support arm and Linux32 platform.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_EnumInterfaces(IN unsigned int nTLayerType, IN OUT MV_INTERFACE_INFO_LIST* pInterfaceInfoList);
 
 /********************************************************************//**
-*  @~chinese
-*  @brief   ´´½¨²É¼¯¿¨¾ä±ú
-*  @param   handle  [OUT] ²É¼¯¿¨¾ä±ú
-*  @param   pInterfaceInfo [IN] ²É¼¯¿¨ĞÅÏ¢
-*  @return  ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
-*  @remarks ¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+ *  @~chinese
+ *  @brief   åˆ›å»ºé‡‡é›†å¡å¥æŸ„
+ *  @param   handle             [OUT]       é‡‡é›†å¡å¥æŸ„
+ *  @param   pInterfaceInfo     [IN]        é‡‡é›†å¡ä¿¡æ¯
+ *  @return  æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @if LINUX
+ *  @remarks è¯¥æ¥å£ä¸æ”¯æŒarmå’ŒLinux32å¹³å°
+ *  @endif
 
-*  @~english
-*  @brief   create Frame grabber handle
-*  @param   handle              [OUT]      Frame grabber handle
-*  @param   pInterfaceInfo      [IN]       Frame grabber Info
-*  @return  Success, return MV_OK. Failure, return error code
-*  @remarks This API do not support arm and Linux32 platform.
+ *  @~english
+ *  @brief   Creates frame grabber handle. 
+ *  @param   handle              [OUT]      It refers to the frame grabber handle. 
+ *  @param   pInterfaceInfo      [IN]       It refers to the frame grabber information. 
+ *  @return  Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API do not support arm and Linux32 platform.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_CreateInterface(IN OUT void ** handle, IN MV_INTERFACE_INFO* pInterfaceInfo);
 
 /********************************************************************//**
-*  @~chinese
-*  @brief   Í¨¹ı²É¼¯¿¨ID´´½¨²É¼¯¿¨¾ä±ú
-*  @param   handle         [IN][OUT]       ²É¼¯¿¨¾ä±ú
-*  @param   pInterfaceID   [IN]            ²É¼¯¿¨ID
-*  @return  ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
-*  @remarks ¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+ *  @~chinese
+ *  @brief   é€šè¿‡é‡‡é›†å¡IDåˆ›å»ºé‡‡é›†å¡å¥æŸ„
+ *  @param   handle         [IN][OUT]       é‡‡é›†å¡å¥æŸ„
+ *  @param   pInterfaceID   [IN]            é‡‡é›†å¡ID
+ *  @return  æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @if LINUX
+ *  @remarks è¯¥æ¥å£ä¸æ”¯æŒarmå’ŒLinux32å¹³å°
+ *  @endif
 
-*  @~english
-*  @brief   create Frame grabber handle by ID
-*  @param   handle             [IN][OUT]         Frame grabber handle
-*  @param   pInterfaceID       [IN]              Frame grabber ID
-*  @return  Success, return MV_OK. Failure, return error code
-*  @remarks This API do not support arm and Linux32 platform.
+ *  @~english
+ *  @brief   Creates frame grabber handle by frame grabber ID. 
+ *  @param   handle             [IN][OUT]         It refers to the frame grabber handle. 
+ *  @param   pInterfaceID       [IN]              It refers to the frame grabber ID such as frame grabber serial No. 
+ *  @return  Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API do not support arm and Linux32 platform.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_CreateInterfaceByID(IN OUT void ** handle, IN const char* pInterfaceID);
 
 /********************************************************************//**
-*  @~chinese
-*  @brief   ´ò¿ª²É¼¯¿¨
-*  @param   handle         [IN]        ²É¼¯¿¨¾ä±ú
-*  @param   pReserved      [IN]        Ô¤Áô£¬Ö±½ÓÌîNULL
-*  @return  ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
-*  @remarks ¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+ *  @~chinese
+ *  @brief   æ‰“å¼€é‡‡é›†å¡
+ *  @param   handle         [IN]        é‡‡é›†å¡å¥æŸ„
+ *  @param   pReserved      [IN]        é¢„ç•™ï¼Œç›´æ¥å¡«NULL
+ *  @return  æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @if LINUX
+ *  @remarks è¯¥æ¥å£ä¸æ”¯æŒarmå’ŒLinux32å¹³å°
+ *  @endif
 
-*  @~english
-*  @brief   open Frame grabber
-*  @param   handle         [IN]       Frame grabber handle
-*  @param   pReserved      [IN]       Reserved£¬default NULL
-*  @return   Success, return MV_OK. Failure, return error code
-*  @remarks This API do not support arm and Linux32 platform.
+ *  @~english
+ *  @brief   Turns on the frame grabber. 
+ *  @param   handle         [IN]       It refers to the frame grabber handle. 
+ *  @param   pReserved      [IN]       Reserved (NULL). 
+ *  @return   Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API do not support arm and Linux32 platform.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_OpenInterface(IN void* handle, IN char* pReserved);
 
 /********************************************************************//**
-*  @~chinese
-*  @brief   ¹Ø±Õ²É¼¯¿¨
-*  @param   handle  [IN]       ²É¼¯¿¨¾ä±ú
-*  @return  ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
-*  @remarks ¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+ *  @~chinese
+ *  @brief   å…³é—­é‡‡é›†å¡
+ *  @param   handle  [IN]       é‡‡é›†å¡å¥æŸ„
+ *  @return  æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @if LINUX
+ *  @remarks è¯¥æ¥å£ä¸æ”¯æŒarmå’ŒLinux32å¹³å°
+ *  @endif
 
-*  @~english
-*  @brief   close Frame grabber
-*  @param   handle  [IN]          Frame grabber handle
-*  @return   Success, return MV_OK. Failure, return error code
-*  @remarks This API do not support arm and Linux32 platform.
+ *  @~english
+ *  @brief   Turns off the frame grabber. 
+ *  @param   handle  [IN]          It refers to the frame grabber handle. 
+ *  @return  Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API do not support arm and Linux32 platform.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_CloseInterface(IN void* handle);
 
 /********************************************************************//**
-*  @~chinese
-*  @brief   Ïú»Ù²É¼¯¿¨¾ä±ú
-*  @param   handle  [IN]²É¼¯¿¨¾ä±ú
-*  @return  ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
-*  @remarks MV_CC_DestroyInterface Èç¹û´«ÈëÏà»ú¾ä±ú£¬ÆäĞ§¹ûºÍ MV_CC_DestroyHandle ÏàÍ¬; ¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+ *  @~chinese
+ *  @brief   é”€æ¯é‡‡é›†å¡å¥æŸ„
+ *  @param   handle  [IN]é‡‡é›†å¡å¥æŸ„
+ *  @return  æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è‹¥ä¼ å…¥ç›¸æœºå¥æŸ„ï¼Œå…¶æ•ˆæœå’Œ MV_CC_DestroyHandle() ç›¸åŒ; 
+ *  @if LINUX
+ *  @remarks è¯¥æ¥å£ä¸æ”¯æŒarmå’ŒLinux32å¹³å°
+ *  @endif
 
-*  @~english
-*  @brief   Destroy Frame grabber handle
-*  @param   handle  [IN] Frame grabber handle
-*  @return  Success, return MV_OK. Failure, return error code
-*  @remarks If MV_CC_DestroyInterface passes in "Device handle", the effect is the same as the MV_CC_DestroyHandle. This API do not support arm and Linux32 platform.
+ *  @~english
+ *  @brief   Destroys the frame grabber handle. 
+ *  @param   handle  [IN] It refers to the frame grabber handle. 
+ *  @return  Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks If camera handle is passed, the effect is the same as the MV_CC_DestroyHandle. This API do not support arm and Linux32 platform.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_DestroyInterface(IN void* handle);
 
-/********************************************************************//**
-*  @~chinese
-*  @brief  Í¨¹ı²É¼¯¿¨¾ä±úÃ¶¾ÙÉè±¸
-*  @param  handle                    [IN]            ²É¼¯¿¨¾ä±ú
-*  @param  pstDevList                [OUT]           Éè±¸ÁĞ±í
-*  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
-*  @remarks Éè±¸ÁĞ±íµÄÄÚ´æÊÇÔÚSDKÄÚ²¿·ÖÅäµÄ£¬¶àÏß³Ìµ÷ÓÃ¸Ã½Ó¿ÚÊ±»á½øĞĞÉè±¸ÁĞ±íÄÚ´æµÄÊÍ·ÅºÍÉêÇë
-½¨Òé¾¡Á¿±ÜÃâ¶àÏß³ÌÃ¶¾Ù²Ù×÷¡£
-
-*  @~english
-*  @brief  Enumerate Devices with interface handle
-*  @param  handle                   [IN]            Interface information
-*  @param  pstDevList               [OUT]           Device List
-*  @return Success, return MV_OK. Failure, return error code
-*  @remarks The memory of the list is allocated within the SDK. When the interface is invoked by multiple threads, the memory of the device list will be released and applied
-It is recommended to avoid multithreaded enumeration operations as much as possible.
-************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_EnumDevicesByInterface(IN void* handle, OUT MV_CC_DEVICE_INFO_LIST* pstDevList);
+/// @}
 
 
+/*******************Part4 ch: ç›¸æœº/é‡‡é›†å¡å±æ€§ä¸‡èƒ½é…ç½®æ¥å£ | en: Universal configuration API for camera/frame grabber properties*******************/
 
-/*******************Part4 ch: Ïà»ú/²É¼¯¿¨ÊôĞÔÍòÄÜÅäÖÃ½Ó¿Ú | en: Camera /Frame grabber attribute nodes universal interface*******************/
+/// \addtogroup å±æ€§é…ç½®
+/// @{
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡IntegerÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ£¬Èç»ñÈ¡¿í¶ÈĞÅÏ¢ÔòÎª"Width"
- *  @param  pstIntValue                 [IN][OUT]       ·µ»Ø¸øµ÷ÓÃÕßÓĞ¹ØÉè±¸ÊôĞÔ½á¹¹ÌåÖ¸Õë
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔ»ñÈ¡intÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è·å–Integerå±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼ï¼Œå¦‚è·å–å®½åº¦ä¿¡æ¯åˆ™ä¸º"Width"
+ *  @param  pstIntValue                 [IN][OUT]       è¿”å›ç»™è°ƒç”¨è€…æœ‰å…³è®¾å¤‡å±æ€§ç»“æ„ä½“æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è·å–intç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚å…·ä½“å¯æŸ¥çœ‹å®¢æˆ·ç«¯çš„å±æ€§æè¿°ã€‚
  
  *  @~english
- *  @brief  Get Integer value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value, for example, using "Width" to get width
- *  @param  pstIntValue                 [IN][OUT]       Structure pointer of camera features
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks You can call this API to get the value of camera node with integer type after connecting the device. 
+ *  @brief  Gets the value of integer type node. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  strKey                      [IN]            It refers to key value (node name), for example, using "Width" to get the image width. 
+ *  @param  pstIntValue                 [IN][OUT]       It refers to the pointer to device feature structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of integer type. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetIntValueEx(IN void* handle,IN const char* strKey,IN OUT MVCC_INTVALUE_EX *pstIntValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃIntegerĞÍÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ£¬Èç»ñÈ¡¿í¶ÈĞÅÏ¢ÔòÎª"Width"
- *  @param  nValue                      [IN]            ÏëÒªÉèÖÃµÄÉè±¸µÄÊôĞÔÖµ
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃintÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è®¾ç½®Integerå‹å±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼ï¼Œå¦‚è·å–å®½åº¦ä¿¡æ¯åˆ™ä¸º"Width"
+ *  @param  nValue                      [IN]            æƒ³è¦è®¾ç½®çš„è®¾å¤‡çš„å±æ€§å€¼
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®intç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ï¼Œå…·ä½“å¯ä»¥æŸ¥çœ‹å®¢æˆ·ç«¯å±æ€§æè¿°ã€‚
  
  *  @~english
- *  @brief  Set Integer value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value, for example, using "Width" to set width
- *  @param  nValue                      [IN]            Feature value to set
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks You can call this API to get the value of camera node with integer type after connecting the device. 
+ *  @brief  Sets the value of integer type node
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle. 
+ *  @param  strKey                      [IN]            It refers to key value (node name), for example, using "Width" to set width. 
+ *  @param  nValue                      [IN]            It refers to the device node value to be set. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of integer type. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetIntValueEx(IN void* handle,IN const char* strKey,IN int64_t nValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡EnumÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ£¬Èç»ñÈ¡ÏñËØ¸ñÊ½ĞÅÏ¢ÔòÎª"PixelFormat"
- *  @param  pstEnumValue                [IN][OUT]       ·µ»Ø¸øµ÷ÓÃÕßÓĞ¹ØÉè±¸ÊôĞÔ½á¹¹ÌåÖ¸Õë
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔ»ñÈ¡EnumÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è·å–Enumå±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼ï¼Œå¦‚è·å–åƒç´ æ ¼å¼ä¿¡æ¯åˆ™ä¸º"PixelFormat"
+ *  @param  pstEnumValue                [IN][OUT]       è¿”å›ç»™è°ƒç”¨è€…æœ‰å…³è®¾å¤‡å±æ€§ç»“æ„ä½“æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è·å–Enumç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚
  
  *  @~english
- *  @brief  Get Enum value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value, for example, using "PixelFormat" to get pixel format
- *  @param  pstEnumValue                [IN][OUT]       Structure pointer of camera features
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to get specified Enum nodes. 
+ *  @brief  Gets the value of enumeration type node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle. 
+ *  @param  strKey                      [IN]            It refers to key value (node name), for example, using "PixelFormat" to get pixel format. 
+ *  @param  pstEnumValue                [IN][OUT]       It refers to the pointer to device feature structure.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of Enum type.  
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetEnumValue(IN void* handle,IN const char* strKey,IN OUT MVCC_ENUMVALUE *pstEnumValue);
 
 /********************************************************************//**
-*  @~chinese
-*  @brief  »ñÈ¡EnumÊôĞÔÖµ
-*  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
-*  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ£¬Èç»ñÈ¡ÏñËØ¸ñÊ½ĞÅÏ¢ÔòÎª"PixelFormat"
-*  @param  pstEnumValue                [IN][OUT]       ·µ»Ø¸øµ÷ÓÃÕßÓĞ¹ØÉè±¸ÊôĞÔ½á¹¹ÌåÖ¸Õë
-*  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
-*  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔ»ñÈ¡EnumÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ,Çø±ğÓëMV_CC_GetEnumValue,´Ë½Ó¿Ú·µ»ØµÄÃ¶¾ÙÓĞĞ§¸öÊıÀ©Õ¹µ½256¸ö¡£
+ *  @~chinese
+ *  @brief  è·å–Enumå±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼ï¼Œå¦‚è·å–åƒç´ æ ¼å¼ä¿¡æ¯åˆ™ä¸º"PixelFormat"
+ *  @param  pstEnumValue                [IN][OUT]       è¿”å›ç»™è°ƒç”¨è€…æœ‰å…³è®¾å¤‡å±æ€§ç»“æ„ä½“æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è·å–Enumç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚\n
+ *           \li åŒºåˆ«ä¸ MV_CC_GetEnumValue() ï¼Œæ­¤æ¥å£è¿”å›çš„æšä¸¾æœ‰æ•ˆä¸ªæ•°æ‰©å±•åˆ°256ä¸ªã€‚
 
-*  @~english
-*  @brief  Get Enum value
-*  @param  handle                      [IN]            Device handle/Frame grabber handle
-*  @param  strKey                      [IN]            Key value, for example, using "PixelFormat" to get pixel format
-*  @param  pstEnumValue                [IN][OUT]       Structure pointer of camera features
-*  @return Success, return MV_OK. Failure, return error code
-*  @remarks After the device is connected, call this interface to get specified Enum nodes.
-            Comparing with the API MV_CC_GetEnumValue, this API expands the number of enumeration values up to 256.
+ *  @~english
+ *  @brief  Gets the value of enumeration type node (extended API). 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle. 
+ *  @param  strKey                      [IN]            It refers to key value (node name), for example, using "PixelFormat" to get pixel format. 
+ *  @param  pstEnumValue                [IN][OUT]       It refers to the pointer to device feature structure.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of Enum type
+            The valid enumerations this API returns extend to 256.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetEnumValueEx(IN void* handle, IN const char* strKey, IN OUT MVCC_ENUMVALUE_EX *pstEnumValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃEnumĞÍÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ£¬Èç»ñÈ¡ÏñËØ¸ñÊ½ĞÅÏ¢ÔòÎª"PixelFormat"
- *  @param  nValue                      [IN]            ÏëÒªÉèÖÃµÄÉè±¸µÄÊôĞÔÖµ
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃEnumÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è®¾ç½®Enumå‹å±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼ï¼Œå¦‚è·å–åƒç´ æ ¼å¼ä¿¡æ¯åˆ™ä¸º"PixelFormat"
+ *  @param  nValue                      [IN]            æƒ³è¦è®¾ç½®çš„è®¾å¤‡çš„å±æ€§å€¼
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®Enumç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚
  
  *  @~english
- *  @brief  Set Enum value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value, for example, using "PixelFormat" to set pixel format
- *  @param  nValue                      [IN]            Feature value to set
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to set specified Enum nodes. 
+ *  @brief  Sets the value of enumeration type node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle. 
+ *  @param  strKey                      [IN]            It refers to key value (node name), for example, using "PixelFormat" to set pixel format. 
+ *  @param  nValue                      [IN]            It refers to the device node value to be set. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks  Call this API after connecting to the device to get the value of specified node of Enum type 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetEnumValue(IN void* handle,IN const char* strKey,IN unsigned int nValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡EnumĞÍ½ÚµãÖ¸¶¨ÖµµÄ·ûºÅ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ£¬Èç»ñÈ¡ÏñËØ¸ñÊ½ĞÅÏ¢ÔòÎª"PixelFormat"
- *  @param  pstEnumEntry                [IN][OUT]           ÏëÒª»ñÈ¡µÄÉè±¸µÄÊôĞÔ·ûºÅ
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔ»ñÈ¡EnumÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµËù¶ÔÓ¦µÄ·ûºÅ¡£
+ *  @brief  è·å–Enumå‹èŠ‚ç‚¹æŒ‡å®šå€¼çš„ç¬¦å·
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼ï¼Œå¦‚è·å–åƒç´ æ ¼å¼ä¿¡æ¯åˆ™ä¸º"PixelFormat"
+ *  @param  pstEnumEntry                [IN][OUT]       æƒ³è¦è·å–çš„è®¾å¤‡çš„å±æ€§ç¬¦å·
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è·å–Enumç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼æ‰€å¯¹åº”çš„ç¬¦å·ã€‚
  
  *  @~english
- *  @brief  Get the symbolic of the specified value of the Enum type node
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value, for example, using "PixelFormat" to set pixel format
- *  @param  pstEnumEntry                [IN][OUT]           Symbolic to get
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Call this interface after connecting the device to obtain the symbol corresponding to the value of the specified node of Enum type.
+ *  @brief  Gets the enumerator name according to the node name and assigned value. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strKey                      [IN]            It refers to key value (node name), for example, using "PixelFormat" to get pixel format. 
+ *  @param  pstEnumEntry                [IN][OUT]       It refers to the enumerator name. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of Enum type. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetEnumEntrySymbolic(IN void* handle,IN const char* strKey,IN OUT MVCC_ENUMENTRY* pstEnumEntry);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃEnumĞÍÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ£¬Èç»ñÈ¡ÏñËØ¸ñÊ½ĞÅÏ¢ÔòÎª"PixelFormat"
- *  @param  strValue                    [IN]            ÏëÒªÉèÖÃµÄÉè±¸µÄÊôĞÔ×Ö·û´®
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃEnumÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è®¾ç½®Enumå‹å±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼ï¼Œå¦‚è·å–åƒç´ æ ¼å¼ä¿¡æ¯åˆ™ä¸º"PixelFormat"
+ *  @param  strValue                    [IN]            æƒ³è¦è®¾ç½®çš„è®¾å¤‡çš„å±æ€§å­—ç¬¦ä¸²
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®Enumç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚
            
  *  @~english
- *  @brief  Set Enum value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value, for example, using "PixelFormat" to set pixel format
- *  @param  strValue                    [IN]            Feature String to set
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to set specified Enum nodes. 
+ *  @brief  Sets the value of enumeration type node
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strKey                      [IN]            It refers to key value (node name), for example, using "PixelFormat" to set pixel format. 
+ *  @param  strValue                    [IN]            It refers to device property string to be set. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of Enum type
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetEnumValueByString(IN void* handle,IN const char* strKey,IN const char* strValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡FloatÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ
- *  @param  pstFloatValue               [IN][OUT]       ·µ»Ø¸øµ÷ÓÃÕßÓĞ¹ØÉè±¸ÊôĞÔ½á¹¹ÌåÖ¸Õë
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔ»ñÈ¡floatÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è·å–Floatå±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼
+ *  @param  pstFloatValue               [IN][OUT]       è¿”å›ç»™è°ƒç”¨è€…æœ‰å…³è®¾å¤‡å±æ€§ç»“æ„ä½“æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è·å–floatç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚
  
  *  @~english
- *  @brief  Get Float value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value
- *  @param  pstFloatValue               [IN][OUT]       Structure pointer of camera features
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to get specified float node. 
+ *  @brief  Gets the value of float type node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strKey                      [IN]            It refers to the key value. 
+ *  @param  pstFloatValue               [IN][OUT]       It refers to the structure pointer to the returned device features. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of float type. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetFloatValue(IN void* handle,IN const char* strKey,IN OUT MVCC_FLOATVALUE *pstFloatValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃfloatĞÍÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ
- *  @param  fValue                      [IN]            ÏëÒªÉèÖÃµÄÉè±¸µÄÊôĞÔÖµ
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃfloatÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è®¾ç½®Floatå‹å±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼
+ *  @param  fValue                      [IN]            æƒ³è¦è®¾ç½®çš„è®¾å¤‡çš„å±æ€§å€¼
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®floatç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚
  
  *  @~english
- *  @brief  Set float value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value
- *  @param  fValue                      [IN]            Feature value to set
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to set specified float node. 
+ *  @brief  Sets the value of float type node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strKey                      [IN]            It refers to the key value. 
+ *  @param  fValue                      [IN]            It refers to device node value to be set.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of float type. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetFloatValue(IN void* handle,IN const char* strKey,IN float fValue);
     
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡BooleanÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ
- *  @param  pbValue                     [IN][OUT]       ·µ»Ø¸øµ÷ÓÃÕßÓĞ¹ØÉè±¸ÊôĞÔÖµ
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔ»ñÈ¡boolÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è·å–Booleanå±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼
+ *  @param  pbValue                     [IN][OUT]       è¿”å›ç»™è°ƒç”¨è€…æœ‰å…³è®¾å¤‡å±æ€§å€¼
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è·å–boolç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚
  
  *  @~english
- *  @brief  Get Boolean value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value
- *  @param  pbValue                     [IN][OUT]       Structure pointer of camera features
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to get specified bool nodes. 
+ *  @brief  Gets the value of boolean type node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strKey                      [IN]            It refers to the key value. 
+ *  @param  pbValue                     [IN][OUT]       It refers to the structure pointer for returning device features. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of bool type. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetBoolValue(IN void* handle,IN const char* strKey,IN OUT bool *pbValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃBooleanĞÍÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ
- *  @param  bValue                      [IN]            ÏëÒªÉèÖÃµÄÉè±¸µÄÊôĞÔÖµ
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃboolÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è®¾ç½®Booleanå‹å±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼
+ *  @param  bValue                      [IN]            æƒ³è¦è®¾ç½®çš„è®¾å¤‡çš„å±æ€§å€¼
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®boolç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚
  
  *  @~english
- *  @brief  Set Boolean value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value
- *  @param  bValue                      [IN]            Feature value to set
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to set specified bool nodes. 
+ *  @brief  Sets the value of boolean type node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strKey                      [IN]            It refers to the key value. 
+ *  @param  bValue                      [IN]            It refers to device node value to be set. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of bool type. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetBoolValue(IN void* handle,IN const char* strKey,IN bool bValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡StringÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ
- *  @param  pstStringValue              [IN][OUT]       ·µ»Ø¸øµ÷ÓÃÕßÓĞ¹ØÉè±¸ÊôĞÔ½á¹¹ÌåÖ¸Õë
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔ»ñÈ¡stringÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è·å–Stringå±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼
+ *  @param  pstStringValue              [IN][OUT]       è¿”å›ç»™è°ƒç”¨è€…æœ‰å…³è®¾å¤‡å±æ€§ç»“æ„ä½“æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è·å–stringç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚
  
  *  @~english
- *  @brief  Get String value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value
- *  @param  pstStringValue              [IN][OUT]       Structure pointer of camera features
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to get specified string nodes. 
+ *  @brief  Gets the value of string type node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strKey                      [IN]            It refers to the key value. 
+ *  @param  pstStringValue              [IN][OUT]       It refers to the structure pointer to the returned device features. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarksCall this API after connecting to the device to get the value of specified node of string type. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetStringValue(IN void* handle,IN const char* strKey,IN OUT MVCC_STRINGVALUE *pstStringValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃStringĞÍÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ
- *  @param  strValue                    [IN]            ÏëÒªÉèÖÃµÄÉè±¸µÄÊôĞÔÖµ
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃstringÀàĞÍµÄÖ¸¶¨½ÚµãµÄÖµ¡£
+ *  @brief  è®¾ç½®Stringå‹å±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼
+ *  @param  strValue                    [IN]            æƒ³è¦è®¾ç½®çš„è®¾å¤‡çš„å±æ€§å€¼
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®stringç±»å‹çš„æŒ‡å®šèŠ‚ç‚¹çš„å€¼ã€‚
  
  *  @~english
- *  @brief  Set String value
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value
- *  @param  strValue                    [IN]            Feature value to set
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to set specified string nodes. 
+ *  @brief  Sets the value of string type node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strKey                      [IN]            It refers to the key value. 
+ *  @param  strValue                    [IN]            It refers to device node value to be set. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of string type. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetStringValue(IN void* handle,IN const char* strKey,IN const char* strValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃCommandĞÍÊôĞÔÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strKey                      [IN]            ÊôĞÔ¼üÖµ
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃÖ¸¶¨µÄCommandÀàĞÍ½Úµã¡£
+ *  @brief  è®¾ç½®Commandå‹å±æ€§å€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strKey                      [IN]            å±æ€§é”®å€¼
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®æŒ‡å®šçš„Commandç±»å‹èŠ‚ç‚¹ã€‚
  
  *  @~english
- *  @brief  Send Command
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strKey                      [IN]            Key value
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to set specified Command nodes. 
+ *  @brief  Sets the value of command type node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strKey                      [IN]            It refers to the key value. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to get the value of specified node of Command type. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetCommandValue(IN void* handle,IN const char* strKey);
 
-
-
 /********************************************************************//**
  *  @~chinese
- *  @brief  ¶ÁÄÚ´æ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  pBuffer                     [IN][OUT]       ×÷Îª·µ»ØÖµÊ¹ÓÃ£¬±£´æ¶Áµ½µÄÄÚ´æÖµ£¨GEVÉè±¸ÄÚ´æÖµÊÇ°´ÕÕ´ó¶ËÄ£Ê½´æ´¢µÄ£¬²É¼¯¿¨Éè±¸ºÍ²É¼¯¿¨ÏÂÏà»ú°´ÕÕ´ó¶Ë´æ´¢£¬ÆäËüĞ­ÒéÉè±¸°´ÕÕĞ¡¶Ë´æ´¢£©
- *  @param  nAddress                    [IN]            ´ı¶ÁÈ¡µÄÄÚ´æµØÖ·£¬¸ÃµØÖ·¿ÉÒÔ´ÓÉè±¸µÄCamera.xmlÎÄ¼şÖĞ»ñÈ¡£¬ĞÎÈçxxx_RegAddrµÄxml½ÚµãÖµ
- *  @param  nLength                     [IN]            ´ı¶ÁÈ¡µÄÄÚ´æ³¤¶È
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ·ÃÎÊÉè±¸£¬¶ÁÈ¡Ä³¶Î¼Ä´æÆ÷µÄÊı¾İ¡£
- 
- *  @~english
- *  @brief  Read Memory
- *  @param  handle                      [IN]            Device Handle/Frame grabber handle
- *  @param  pBuffer                     [IN][OUT]       Used as a return value, save the read-in memory value ( The memory value of GEV devices is stored in the big end mode, with the capture card device and the camera under the capture card stored in the big end mode, and other protocol devices stored in the small end mode)
- *  @param  nAddress                    [IN]            Memory address to be read, which can be obtained from the Camera.xml file of the device, the form xml node value of xxx_RegAddr
- *  @param  nLength                     [IN]            Length of the memory to be read
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Access device, read the data from certain register.
-*************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_ReadMemory(IN void* handle , IN OUT void *pBuffer, IN int64_t nAddress, IN int64_t nLength);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  Ğ´ÄÚ´æ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  pBuffer                     [IN]            ´ıĞ´ÈëµÄÄÚ´æÖµ£¨×¢ÒâGEVÉè±¸ÄÚ´æÖµÒª°´ÕÕ´ó¶ËÄ£Ê½´æ´¢£¬²É¼¯¿¨Éè±¸ºÍ²É¼¯¿¨ÏÂÏà»ú°´ÕÕ´ó¶Ë´æ´¢£¬ÆäËüĞ­ÒéÉè±¸°´ÕÕĞ¡¶Ë´æ´¢£©
- *  @param  nAddress                    [IN]            ´ıĞ´ÈëµÄÄÚ´æµØÖ·£¬¸ÃµØÖ·¿ÉÒÔ´ÓÉè±¸µÄCamera.xmlÎÄ¼şÖĞ»ñÈ¡£¬ĞÎÈçxxx_RegAddrµÄxml½ÚµãÖµ
- *  @param  nLength                     [IN]            ´ıĞ´ÈëµÄÄÚ´æ³¤¶È
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ·ÃÎÊÉè±¸£¬°ÑÒ»¶ÎÊı¾İĞ´ÈëÄ³¶Î¼Ä´æÆ÷¡£
- 
- *  @~english
- *  @brief  Write Memory
- *  @param  handle                      [IN]            Device Handle/Frame grabber handle
- *  @param  pBuffer                     [IN]            Memory value to be written ( Note The memory value of GEV devices is stored in the big end mode, with the capture card device and the camera under the capture card stored in the big end mode, and other protocol devices stored in the small end mode)
- *  @param  nAddress                    [IN]            Memory address to be written, which can be obtained from the Camera.xml file of the device, the form xml node value of xxx_RegAddr
- *  @param  nLength                     [IN]            Length of the memory to be written
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Access device, write a piece of data into a certain segment of register.
-************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_WriteMemory(IN void* handle, IN const void *pBuffer, IN int64_t nAddress, IN int64_t nLength);
-
-
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  Çå³ıGenICam½Úµã»º´æ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- 
- *  @~english
- *  @brief  Invalidate GenICam Nodes
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @return Success, return MV_OK. Failure, return error code
- ************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_InvalidateNodes(IN void* handle);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  »ñÈ¡Éè±¸ÊôĞÔÊ÷XML
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  pData                       [IN][OUT]       XMLÊı¾İ½ÓÊÕ»º´æ
- *  @param  nDataSize                   [IN]            ½ÓÊÕ»º´æ´óĞ¡
- *  @param  pnDataLen                   [IN][OUT]       Êµ¼ÊÊı¾İ´óĞ¡
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks µ±pDataÎªNULL»ònDataSize±ÈÊµ¼ÊµÄxmlÎÄ¼şĞ¡Ê±£¬²»¿½±´Êı¾İ£¬ÓÉpnDataLen·µ»ØxmlÎÄ¼ş´óĞ¡
-             µ±pDataÎªÓĞĞ§»º´æµØÖ·£¬ÇÒ»º´æ×ã¹»´óÊ±£¬¿½±´ÍêÕûÊı¾İ±£´æÔÚ¸Ã»º´æÀïÃæ£¬²¢ÓÉpnDataLen·µ»ØxmlÎÄ¼şÊµ¼Ê´óĞ¡¡£
- 
- *  @~english
- *  @brief  Get camera feature tree XML
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  pData                       [IN][OUT]       XML data receiving buffer
- *  @param  nDataSize                   [IN]            Buffer size
- *  @param  pnDataLen                   [IN][OUT]       Actual data length
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks When pData is NULL or nDataSize than the actual XML file hours, do not copy the data, returned by pnDataLen XML file size.
-             When pData is a valid cache address and the cache is large enough, copy the full data into the cache, and pnDataLen returns the actual size of the XML file.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_XML_GetGenICamXML(IN void* handle, IN OUT unsigned char* pData, IN unsigned int nDataSize, IN OUT unsigned int* pnDataLen);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  »ñµÃµ±Ç°½ÚµãµÄ·ÃÎÊÄ£Ê½
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strName                     [IN]            ½ÚµãÃû³Æ
- *  @param  penAccessMode               [IN][OUT]       ½ÚµãµÄ·ÃÎÊÄ£Ê½
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
+ *  @brief  è·å¾—å½“å‰èŠ‚ç‚¹çš„è®¿é—®æ¨¡å¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strName                     [IN]            èŠ‚ç‚¹åç§°
+ *  @param  penAccessMode               [IN][OUT]       èŠ‚ç‚¹çš„è®¿é—®æ¨¡å¼
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
 
  *  @~english
- *  @brief  Get Access mode of cur node
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strName                     [IN]            Name of node
- *  @param  penAccessMode               [IN][OUT]       Access mode of the node
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Gets access mode of the current node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strName                     [IN]            It refers to the node name. 
+ *  @param  penAccessMode               [IN][OUT]       It refers to access mode for node. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
  ***********************************************************************/
 MV_CAMCTRL_API int __stdcall MV_XML_GetNodeAccessMode(IN void* handle, IN const char * strName, IN OUT enum MV_XML_AccessMode *penAccessMode);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñµÃµ±Ç°½ÚµãµÄÀàĞÍ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strName                     [IN]            ½ÚµãÃû³Æ
- *  @param  penInterfaceType            [IN][OUT]       ½ÚµãµÄÀàĞÍ
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿Ú¿ÉÒÔÔÚµ÷ÓÃÍòÄÜ½Ó¿ÚÖ®Ç°£¬ÌáÇ°ÖªµÀ½ÚµãÀàĞÍ£¬·½±ãÓÃ»§Ñ¡ÔñºÏÊÊµÄÍòÄÜ½Ó¿Ú½øĞĞ½ÚµãÖµµÄÉèÖÃºÍ»ñÈ¡¡£
+ *  @brief  è·å¾—å½“å‰èŠ‚ç‚¹çš„ç±»å‹
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strName                     [IN]            èŠ‚ç‚¹åç§°
+ *  @param  penInterfaceType            [IN][OUT]       èŠ‚ç‚¹çš„ç±»å‹
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks åœ¨è°ƒç”¨ MV_CC_GetIntValueEx() ã€ MV_CC_SetIntValueEx() ç­‰ä¸‡èƒ½æ¥å£ä¹‹å‰ï¼Œæ‚¨å¯è°ƒç”¨è¯¥æ¥å£è·å–èŠ‚ç‚¹ç±»å‹ï¼Œæ–¹ä¾¿é€‰æ‹©åˆé€‚çš„æ¥å£è¿›è¡ŒèŠ‚ç‚¹å€¼çš„è®¾ç½®å’Œè·å–ã€‚
 
  *  @~english
- *  @brief  Get Interface Type of cur node
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strName                     [IN]            Name of node
- *  @param  penInterfaceType            [IN][OUT]       Interface Type of the node
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks The interface can know the node type in advance before calling the universal interface, so as to facilitate users to select the appropriate universal interface for setting and obtaining the node value.
+ *  @brief  Gets the type of the current node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strName                     [IN]            It refers to the node name. 
+ *  @param  penInterfaceType            [IN][OUT]       It refers to node type. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks You can call this API to get the node type in advance before calling the universal API, so that you can choose the proper universal API to get and set node value. 
  ***********************************************************************/
 MV_CAMCTRL_API int __stdcall MV_XML_GetNodeInterfaceType(IN void* handle, IN const char * strName, IN OUT enum MV_XML_InterfaceType *penInterfaceType);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ±£´æÉè±¸ÊôĞÔ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strFileName                 [IN]            ÊôĞÔÎÄ¼şÃû
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
+ *  @brief  å¯¼å…¥è®¾å¤‡å±æ€§
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strFileName                 [IN]            å±æ€§æ–‡ä»¶å
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
  
  *  @~english
- *  @brief  Save camera feature
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strFileName                 [IN]            File name
- *  @return Success, return MV_OK. Failure, return error code
- ************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_FeatureSave(IN void* handle, IN const char* strFileName);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  µ¼ÈëÉè±¸ÊôĞÔ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strFileName                 [IN]            ÊôĞÔÎÄ¼şÃû
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- 
- *  @~english
- *  @brief  Load camera feature
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strFileName                 [IN]            File name
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Loads device features. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strFileName                 [IN]            It refers to the feature file name. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_FeatureLoad(IN void* handle, IN const char* strFileName);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  µ¼ÈëÉè±¸ÊôĞÔ²¢±£´æ´íÎóĞÅÏ¢ÁĞ±í
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  strFileName                 [IN]            ÊôĞÔÎÄ¼şÃû
- *  @param  stNodeErrorList             [IN OUT]        ´íÎóĞÅÏ¢ÁĞ±í£¬ÓÉÓÃ»§ÔÚÍâ²¿ÉêÇë²¢ÓÉÄÚ²¿Ìî³äÊı¾İ£¬¸Ã²ÎÊıÔÊĞíÌînull´ú±íÓÃ»§²»¹ØĞÄµ¼ÈëÊ±µÄ´íÎóĞÅÏ¢
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ²¿·Ö½Úµãµ¼ÈëÊ§°ÜÊ±£¬½Ó¿Ú·µ»ØMV_OK£¬Í¨¹ı´íÎóĞÅÏ¢ÁĞ±íÖĞstNodeError»ñÈ¡³ö´í½Úµã¼°Ê§°ÜÔ­Òò
+ *  @brief  å¯¼å…¥è®¾å¤‡å±æ€§å¹¶ä¿å­˜é”™è¯¯ä¿¡æ¯åˆ—è¡¨
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strFileName                 [IN]            å±æ€§æ–‡ä»¶å
+ *  @param  pstNodeErrorList            [IN OUT]        é”™è¯¯ä¿¡æ¯åˆ—è¡¨
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li éƒ¨åˆ†èŠ‚ç‚¹å¯¼å…¥å¤±è´¥æ—¶ï¼Œæ¥å£è¿”å›MV_OKï¼Œé€šè¿‡é”™è¯¯ä¿¡æ¯åˆ—è¡¨ä¸­stNodeErrorè·å–å‡ºé”™èŠ‚ç‚¹åŠå¤±è´¥åŸå› 
+ *           \li pstNodeErrorListè¯¥å‚æ•°åœ¨å¤–éƒ¨ç”³è¯·å¹¶ç”±å†…éƒ¨å¡«å……æ•°æ®ã€‚è¯¥å‚æ•°å¯æ¥å—å¡«å…¥nullï¼Œä»£è¡¨ç”¨æˆ·ä¸å…³å¿ƒå¯¼å…¥æ—¶çš„é”™è¯¯ä¿¡æ¯ã€‚
 
  *  @~english
- *  @brief  Load camera feature with error message list
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  strFileName                 [IN]            File name
- *  @param  pstNodeErrorList            [IN OUT]        Error message list, requested by the user externally and filled with data internally, \n
- *                                                      this parameter allows null to indicate that the user is not concerned about error information during import.
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks When some nodes fail to load, the interface returns MV_OK. \n
- *           The error node and the reason for the failure are obtained through stNodeError in the error message list.
+ *  @brief  Loads device features, and saves error information list. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  strFileName                 [IN]            It refers to the feature file name. 
+ *  @param  pstNodeErrorList            [IN OUT]        It refers to the error message list.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks If loading part of the nodes fails, the API will return MV_OK. You can get the error node and the reason for failure through stNodeError in the error message list.
+ *           The parameter pstNodeErrorList is requested by the user externally and filled with data internally, and the value null indicates that the user is not concerned about error occurred when loading.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_FeatureLoadEx(IN void* handle, IN const char* strFileName, IN OUT MVCC_NODE_ERROR_LIST* pstNodeErrorList);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ´ÓÉè±¸¶ÁÈ¡ÎÄ¼ş
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  pstFileAccess               [IN]            ÎÄ¼ş´æÈ¡½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
+ *  @brief  ä¿å­˜è®¾å¤‡å±æ€§
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  strFileName                 [IN]            å±æ€§æ–‡ä»¶å
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
  
  *  @~english
- *  @brief  Read the file from the camera
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  pstFileAccess               [IN]            File access structure
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Saves device features.  
+ *  @param  handle                      [IN]            It refers to device handle / frame grabber handle. 
+ *  @param  strFileName                 [IN]            It refers to the feature file name. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.  
  ************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_FileAccessRead(IN void* handle, IN MV_CC_FILE_ACCESS * pstFileAccess);
+MV_CAMCTRL_API int __stdcall MV_CC_FeatureSave(IN void* handle, IN const char* strFileName);
 
+/// @}
+
+/// \addtogroup è¯»å†™å¯„å­˜å™¨
+/// @{
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ´ÓÉè±¸¶ÁÈ¡ÎÄ¼ş,ÎÄ¼şÊÇDataÊı¾İ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  pstFileAccess               [IN]            ÎÄ¼ş´æÈ¡½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë ±ÜÃâÎÄ¼ş²Ù×÷È¨ÏŞÎÊÌâ¶ÁÊ§°Ü 
+ *  @brief  è¯»å†…å­˜
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  pBuffer                     [IN][OUT]       ä½œä¸ºè¿”å›å€¼ä½¿ç”¨ï¼Œä¿å­˜è¯»åˆ°çš„å†…å­˜å€¼ï¼ˆGigE Visionè®¾å¤‡å†…å­˜å€¼æ˜¯æŒ‰ç…§å¤§ç«¯æ¨¡å¼å­˜å‚¨çš„ï¼Œé‡‡é›†å¡è®¾å¤‡å’Œé‡‡é›†å¡ä¸‹ç›¸æœºæŒ‰ç…§å¤§ç«¯å­˜å‚¨ï¼Œå…¶å®ƒåè®®è®¾å¤‡æŒ‰ç…§å°ç«¯å­˜å‚¨ï¼‰
+ *  @param  nAddress                    [IN]            å¾…è¯»å–çš„å†…å­˜åœ°å€ï¼Œè¯¥åœ°å€å¯ä»¥ä»è®¾å¤‡çš„Camera.xmlæ–‡ä»¶ä¸­è·å–ï¼Œå½¢å¦‚xxx_RegAddrçš„xmlèŠ‚ç‚¹å€¼
+ *  @param  nLength                     [IN]            å¾…è¯»å–çš„å†…å­˜é•¿åº¦
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯»å–è®¾å¤‡æŸæ®µå¯„å­˜å™¨çš„æ•°æ®ã€‚
  
  *  @~english
- *  @brief  Read the file data from the camera
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  pstFileAccess               [IN]            File access structure
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Read data from device register. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  pBuffer                     [IN][OUT]       It refers to data buffer for saving memory value that is read  (GEV memory value is stored based on big-endian mode, frame grabber device is stored based on big-endian mode, and memory value of other devices is stored based on little-endian mode)
+ *  @param  nAddress                    [IN]            It refers to memory address to be read. It can be acquired from Camera.xml file, in a form similar to XML node value of xxx_RegAddr. 
+ *  @param  nLength                     [IN]            It refers to length of memory to be read. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Access device and read the data from certain register. 
+*************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_ReadMemory(IN void* handle , IN OUT void *pBuffer, IN int64_t nAddress, IN int64_t nLength);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  å†™å†…å­˜
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  pBuffer                     [IN]            å¾…å†™å…¥çš„å†…å­˜å€¼ï¼ˆæ³¨æ„GigE Visionè®¾å¤‡å†…å­˜å€¼è¦æŒ‰ç…§å¤§ç«¯æ¨¡å¼å­˜å‚¨ï¼Œé‡‡é›†å¡è®¾å¤‡å’Œé‡‡é›†å¡ä¸‹ç›¸æœºæŒ‰ç…§å¤§ç«¯å­˜å‚¨ï¼Œå…¶å®ƒåè®®è®¾å¤‡æŒ‰ç…§å°ç«¯å­˜å‚¨ï¼‰
+ *  @param  nAddress                    [IN]            å¾…å†™å…¥çš„å†…å­˜åœ°å€ï¼Œè¯¥åœ°å€å¯ä»¥ä»è®¾å¤‡çš„Camera.xmlæ–‡ä»¶ä¸­è·å–ï¼Œå½¢å¦‚xxx_RegAddrçš„xmlèŠ‚ç‚¹å€¼
+ *  @param  nLength                     [IN]            å¾…å†™å…¥çš„å†…å­˜é•¿åº¦
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è®¿é—®è®¾å¤‡ï¼ŒæŠŠä¸€æ®µæ•°æ®å†™å…¥æŸæ®µå¯„å­˜å™¨ã€‚
+ 
+ *  @~english
+ *  @brief  Writes data into device register. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  pBuffer                     [IN]            It refers to memory value to be written(GEV memory value is stored based on big-endian mode, frame grabber device is stored based on big-endian mode, and memory value of other devices is stored based on little-endian mode)
+ *  @param  nAddress                    [IN]            It refers to memory address to be written to. It can be acquired from Camera.xml file, in a form similar to XML node value of xxx_RegAddr. 
+ *  @param  nLength                     [IN]            It refers to length of memory to be written. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Access device for writing data to certain segment of register. 
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_WriteMemory(IN void* handle, IN const void *pBuffer, IN int64_t nAddress, IN int64_t nLength);
+
+/// @}
+
+/// \addtogroup è®¾å¤‡XMLæ–‡ä»¶
+/// @{
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  æ¸…é™¤GenICamèŠ‚ç‚¹ç¼“å­˜
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remark åœ¨åŠ è½½å·¥ä¸šç›¸æœºèŠ‚ç‚¹æ—¶éœ€è¦è¯»å–GenICamé…ç½®æ–‡ä»¶ï¼Œè¯¥æ¥å£å¯ä»¥èµ·åˆ°æ¸…é™¤GenICamç¼“å­˜çš„åŠŸèƒ½ã€‚
+ 
+ *  @~english
+ *  @brief  Clears the buffer of the GenICam node. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_InvalidateNodes(IN void* handle);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è·å–è®¾å¤‡å±æ€§æ ‘XML
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  pData                       [IN][OUT]       XMLæ•°æ®æ¥æ”¶ç¼“å­˜
+ *  @param  nDataSize                   [IN]            æ¥æ”¶ç¼“å­˜å¤§å°
+ *  @param  pnDataLen                   [IN][OUT]       å®é™…æ•°æ®å¤§å°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li å½“pDataä¸ºNULLæˆ–nDataSizeæ¯”å®é™…çš„xmlæ–‡ä»¶å°æ—¶ï¼Œä¸æ‹·è´æ•°æ®ï¼Œç”±pnDataLenè¿”å›xmlæ–‡ä»¶å¤§å°ã€‚ \n
+             \li å½“pDataä¸ºæœ‰æ•ˆç¼“å­˜åœ°å€ï¼Œä¸”ç¼“å­˜è¶³å¤Ÿå¤§æ—¶ï¼Œæ‹·è´å®Œæ•´æ•°æ®ä¿å­˜åœ¨è¯¥ç¼“å­˜é‡Œé¢ï¼Œå¹¶ç”±pnDataLenè¿”å›xmlæ–‡ä»¶å®é™…å¤§å°ã€‚ \n
+ 
+ *  @~english
+ *  @brief  Gets the XML file of device feature tree. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  pData                       [IN][OUT]       It refers to received XML data buffer. 
+ *  @param  nDataSize                   [IN]            It refers to received buffer size. 
+ *  @param  pnDataLen                   [IN][OUT]       It refers to actual data size. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks When pData is NULL or when the value of nDataSize is less than the XML file size, no data will be copied, and the XML file size will be returned by pnDataLen. 
+             When pData is valid and the buffer size is enough, the complete data will be copied and stored in the buffer, and the XML file size will be returned by pnDataLen. 
+ ***********************************************************************/
+MV_CAMCTRL_API int __stdcall MV_XML_GetGenICamXML(IN void* handle, IN OUT unsigned char* pData, IN unsigned int nDataSize, IN OUT unsigned int* pnDataLen);
+
+/// @}
+
+/// \addtogroup è¯»å†™ç›¸æœºæ–‡ä»¶
+/// @{
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  ä»è®¾å¤‡è¯»å–æ–‡ä»¶
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  pstFileAccess               [IN]            æ–‡ä»¶å­˜å–ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ 
+ *  @~english
+ *  @brief  Reads the file from the device. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  pstFileAccess               [IN]            It refers to the file access structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_FileAccessRead(IN void* handle, IN MV_CC_FILE_ACCESS * pstFileAccess);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  ä»è®¾å¤‡è¯»å–æ–‡ä»¶ï¼ˆæ‰©å±•æ¥å£ï¼Œæ–‡ä»¶æ˜¯Dataæ•°æ®ï¼‰
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  pstFileAccessEx             [IN]            æ–‡ä»¶å­˜å–ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£ç›´æ¥ä½¿ç”¨ç¼“å­˜æ•°æ®ï¼Œè¿›è¡Œè¯»å†™æ“ä½œï¼Œé¿å…ç›´æ¥æ“ä½œæ–‡ä»¶å‡ºç°æ— æƒé™çš„é—®é¢˜ã€‚è¯¥æ¥å£æ˜¯ MV_CC_FileAccessRead() çš„æ‰©å±•æ¥å£ã€‚
+ 
+ *  @~english
+ *  @brief  Reads the Data file from the device (extended). 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  pstFileAccessEx             [IN]            It refers to the file access structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_FileAccessReadEx(IN void* handle, IN OUT MV_CC_FILE_ACCESS_EX * pstFileAccessEx);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ½«ÎÄ¼şĞ´ÈëÉè±¸
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  pstFileAccess               [IN]            ÎÄ¼ş´æÈ¡½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
+ *  @brief  å°†æ–‡ä»¶å†™å…¥è®¾å¤‡
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  pstFileAccess               [IN]            æ–‡ä»¶å­˜å–ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
  
  *  @~english
- *  @brief  Write the file to camera
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  pstFileAccess               [IN]            File access structure
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Writes file to device.
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  pstFileAccess               [IN]            It refers to the file access structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_FileAccessWrite(IN void* handle, IN MV_CC_FILE_ACCESS * pstFileAccess);
 
-
 /********************************************************************//**
  *  @~chinese
- *  @brief  ½«»º´æ(buffer)Ğ´ÈëÉè±¸
- *  @param  handle                        [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  pstFileAccessEx               [IN][OUT]       ÎÄ¼ş´æÈ¡½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÖ±½ÓÊ¹ÓÃ»º´æÊı¾İ£¬½øĞĞ¶ÁĞ´²Ù×÷£¬±ÜÃâÖ±½Ó²Ù×÷ÎÄ¼ş³öÏÖÎŞÈ¨ÏŞµÄÎÊÌâ,ÊÇMV_CC_FileAccessWriteµÄÀ©Õ¹½Ó¿Ú
+ *  @brief  å°†ç¼“å­˜(buffer)å†™å…¥è®¾å¤‡
+ *  @param  handle                        [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  pstFileAccessEx               [IN][OUT]       æ–‡ä»¶å­˜å–ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£ç›´æ¥ä½¿ç”¨ç¼“å­˜æ•°æ®ï¼Œè¿›è¡Œå†™æ“ä½œï¼Œé¿å…ç›´æ¥å°†æ–‡ä»¶å†™å…¥Cç›˜ï¼Œç³»ç»Ÿä¿æŠ¤å‡ºç°å†™å¤±è´¥ã€‚è¯¥æ¥å£æ˜¯ MV_CC_FileAccessWrite() çš„æ‰©å±•æ¥å£ã€‚
  
  *  @~english
- *  @brief  Write the data(buffer) to camera
- *  @param  handle                        [IN]            Device handle/Frame grabber handle
- *  @param  pstFileAccessEx               [IN][OUT]       File access structure
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface uses cached data for read and write,solve the problem of no permissions in direct operation files, it's an extended interface of MV_CC_FileAccessWrite.
+ *  @brief  Writes buffer to device.
+ *  @param  handle                        [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  pstFileAccessEx               [IN][OUT]       It refers to the file access structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API to write the file by using the buffer data in case of the error of system protection when operating files in C disk. This API is the extended API of MV_CC_FileAccessWrite(). 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_FileAccessWriteEx(IN void* handle, IN OUT MV_CC_FILE_ACCESS_EX * pstFileAccessEx);
 
-
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡ÎÄ¼ş´æÈ¡µÄ½ø¶È
- *  @param  handle                      [IN]            Éè±¸¾ä±ú/²É¼¯¿¨¾ä±ú
- *  @param  pstFileAccessProgress       [IN][OUT]       ½ø¶ÈÄÚÈİ
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë £¨µ±Ç°ÎÄ¼ş´æÈ¡µÄ×´Ì¬£©
+ *  @brief  è·å–æ–‡ä»¶å­˜å–çš„è¿›åº¦
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„/é‡‡é›†å¡å¥æŸ„
+ *  @param  pstFileAccessProgress       [IN][OUT]       è¿›åº¦å†…å®¹
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ ï¼ˆå½“å‰æ–‡ä»¶å­˜å–çš„çŠ¶æ€ï¼‰
  
  *  @~english
- *  @brief  Get File Access Progress 
- *  @param  handle                      [IN]            Device handle/Frame grabber handle
- *  @param  pstFileAccessProgress       [IN][OUT]       File access Progress
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Gets file access progress. 
+ *  @param  handle                      [IN]            It refers to the device handle or frame grabber handle.
+ *  @param  pstFileAccessProgress       [IN][OUT]       It refers to the file access progress. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetFileAccessProgress(IN void* handle, IN OUT MV_CC_FILE_ACCESS_PROGRESS * pstFileAccessProgress);
 
+/// @}
 
-/*******************Part5 ch: Ïà»úºÍ²É¼¯¿¨ Éı¼¶ | en:  Camera /Frame grabber  upgrade *******************/
+/*******************Part5 ch: ç›¸æœºå’Œé‡‡é›†å¡ å‡çº§ | en:  Camera /Frame grabber  upgrade *******************/
+
+/// \addtogroup è®¾å¤‡å‡çº§
+/// @{
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Éè±¸±¾µØÉı¼¶
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  strFilePathName             [IN]            ÎÄ¼şÃû
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Í¨¹ı¸Ã½Ó¿Ú¿ÉÒÔ½«Éı¼¶¹Ì¼şÎÄ¼ş·¢ËÍ¸øÉè±¸½øĞĞÉı¼¶¡£
-             ¸Ã½Ó¿ÚĞèÒªµÈ´ıÉı¼¶¹Ì¼şÎÄ¼ş³É¹¦´«¸øÉè±¸¶ËÖ®ºóÔÙ·µ»Ø£¬ÏìÓ¦Ê±¼ä¿ÉÄÜ½Ï³¤¡£
+ *  @brief  è®¾å¤‡æœ¬åœ°å‡çº§
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  strFilePathName             [IN]            æ–‡ä»¶å
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks  é€šè¿‡è¯¥æ¥å£å¯ä»¥å°†å‡çº§å›ºä»¶æ–‡ä»¶å‘é€ç»™è®¾å¤‡è¿›è¡Œå‡çº§ã€‚è¯¥æ¥å£éœ€è¦ç­‰å¾…å‡çº§å›ºä»¶æ–‡ä»¶æˆåŠŸä¼ ç»™è®¾å¤‡ç«¯ä¹‹åå†è¿”å›ï¼Œå“åº”æ—¶é—´å¯èƒ½è¾ƒé•¿ã€‚
  
  *  @~english
- *  @brief  Device Local Upgrade
- *  @param  handle                      [IN]            Device handle
- *  @param  strFilePathName             [IN]            File name
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Call this API to send the upgrade firmware to the device for upgrade.
-             This API will wait for return until the upgrade firmware is sent to the device, this response may take a long time.
-             For CameraLink device, it keeps sending upgrade firmware continuously. 
+ *  @brief  Upgrades device via local file. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  strFilePathName             [IN]            It refers to the file name. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Provided this API to send upgrade firmware to device. 
+             It may take a long response time since the API will only be recalled after the upgrade firmware is sent to device. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_LocalUpgrade(IN void* handle, IN const void* strFilePathName);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡Éı¼¶½ø¶È
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnProcess                   [IN][OUT]       ½ø¶È½ÓÊÕµØÖ·
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
+ *  @brief  è·å–å‡çº§è¿›åº¦
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnProcess                   [IN][OUT]       è¿›åº¦æ¥æ”¶åœ°å€
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
  
  *  @~english
- *  @brief  Get Upgrade Progress
- *  @param  handle                      [IN]            Device handle
- *  @param  pnProcess                   [IN][OUT]       Progress receiving address
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Gets the upgrade progress. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pnProcess                   [IN][OUT]       It refers to address for receiving upgrade progress. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetUpgradeProcess(IN void* handle, IN OUT unsigned int* pnProcess);
 
+/// @}
 
-/*******************Part6  ch: Ïà»úºÍ²É¼¯¿¨ ×¢²áÒì³£»Øµ÷ºÍÊÂ¼ş½Ó¿Ú | en:  Camera /Frame  Enrol abnormal callbacks and event interface*******************/
+/*******************Part6  ch: ç›¸æœºå’Œé‡‡é›†å¡ æ³¨å†Œå¼‚å¸¸å›è°ƒå’Œäº‹ä»¶æ¥å£ | en:  Exception callback registration and event API for cameras and frame grabbers*******************/
+
+/// \addtogroup äº‹ä»¶åŠå¼‚å¸¸
+/// @{
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ×¢²áÒì³£ÏûÏ¢»Øµ÷£¬ÔÚ´ò¿ªÉè±¸Ö®ºóµ÷ÓÃ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  cbException                 [IN]            Òì³£»Øµ÷º¯ÊıÖ¸Õë
- *  @param  pUser                       [IN]            ÓÃ»§×Ô¶¨Òå±äÁ¿
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚĞèÒªÔÚMV_CC_OpenDevice´ò¿ªÉè±¸Ö®ºóµ÷ÓÃ¡£
-             Éè±¸Òì³£¶Ï¿ªÁ¬½Óºó¿ÉÒÔÔÚ»Øµ÷ÀïÃæ»ñÈ¡µ½Òì³£ÏûÏ¢£¬GigEÉè±¸µôÏßÖ®ºóĞèÒªÏÈµ÷ÓÃMV_CC_CloseDevice½Ó¿Ú¹Ø±ÕÉè±¸£¬ÔÙµ÷ÓÃMV_CC_OpenDevice½Ó¿ÚÖØĞÂ´ò¿ªÉè±¸¡£
+ *  @brief  æ³¨å†Œå¼‚å¸¸æ¶ˆæ¯å›è°ƒï¼Œåœ¨æ‰“å¼€è®¾å¤‡ä¹‹åè°ƒç”¨
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  cbException                 [IN]            å¼‚å¸¸å›è°ƒå‡½æ•°æŒ‡é’ˆ
+ *  @param  pUser                       [IN]            ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li è¯¥æ¥å£éœ€è¦åœ¨ MV_CC_OpenDevice() æ‰“å¼€è®¾å¤‡ä¹‹åè°ƒç”¨ã€‚\n
+ 			 \li è®¾å¤‡å¼‚å¸¸æ–­å¼€è¿æ¥åå¯ä»¥åœ¨å›è°ƒé‡Œé¢è·å–åˆ°å¼‚å¸¸æ¶ˆæ¯ï¼ŒGigEè®¾å¤‡æ‰çº¿ä¹‹åéœ€è¦å…ˆè°ƒç”¨ MV_CC_CloseDevice() æ¥å£å…³é—­è®¾å¤‡ï¼Œå†è°ƒç”¨ MV_CC_OpenDevice() æ¥å£é‡æ–°æ‰“å¼€è®¾å¤‡ã€‚
+    | å®å®šä¹‰  |  å®å®šä¹‰å€¼   | å«ä¹‰   | 
+    | :---: | :---: | :---: |
+    | \ref MV_EXCEPTION_DEV_DISCONNECT  | 0x00008001  | è®¾å¤‡æ–­å¼€è¿æ¥ | 
  
  *  @~english
- *  @brief  Register Exception Message CallBack, call after open device
- *  @param  handle                      [IN]            Device handle
- *  @param  cbException                 [IN]            Exception Message CallBack Function Pointer
- *  @param  pUser                       [IN]            User defined variable
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Call this interface after the device is opened by MV_CC_OpenDevice. 
-             When device is exceptionally disconnected, the exception message can be obtained from callback function. For Disconnected GigE device,
-             first call MV_CC_CloseDevice to shut device, and then call MV_CC_OpenDevice to reopen the device. 
+ *  @brief  Register callback function for getting exception information of cameras and dongles. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  cbException                 [IN]            It refers to the pointer to the exception callback function. 
+ *  @param  pUser                       [IN]            It refers to the user-defined variable. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API after turning on the device by calling MV_CC_OpenDevice(). 
+             When the device is exceptionally disconnected, you can get the exception message from callback function. 
+             For disconnected GigE device, call MV_CC_CloseDevice() to turn off the device, and then call MV_CC_OpenDevice() to turn on the device again. 
 ************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_RegisterExceptionCallBack(IN void* handle, IN void(__stdcall* cbException)(unsigned int nMsgType, void* pUser), IN void* pUser);
+MV_CAMCTRL_API int __stdcall MV_CC_RegisterExceptionCallBack(IN void* handle, IN MvExceptionCallback cbException, IN void* pUser);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ×¢²áÈ«²¿ÊÂ¼ş»Øµ÷£¬ÔÚ´ò¿ªÉè±¸Ö®ºóµ÷ÓÃ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  cbEvent                     [IN]            ÊÂ¼ş»Øµ÷º¯ÊıÖ¸Õë
- *  @param  pUser                       [IN]            ÓÃ»§×Ô¶¨Òå±äÁ¿
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Í¨¹ı¸Ã½Ó¿ÚÉèÖÃÊÂ¼ş»Øµ÷£¬¿ÉÒÔÔÚ»Øµ÷º¯ÊıÀïÃæ»ñÈ¡²É¼¯¡¢ÆØ¹âµÈÊÂ¼şĞÅÏ¢
-             ¸Ã½Ó¿Ú²»Ö§³ÖCameraLinkÉè±¸¡£
+ *  @brief  æ³¨å†Œå…¨éƒ¨äº‹ä»¶å›è°ƒï¼Œåœ¨æ‰“å¼€è®¾å¤‡ä¹‹åè°ƒç”¨
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  cbEvent                     [IN]            äº‹ä»¶å›è°ƒå‡½æ•°æŒ‡é’ˆ
+ *  @param  pUser                       [IN]            ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks    \li é€šè¿‡è¯¥æ¥å£è®¾ç½®äº‹ä»¶å›è°ƒï¼Œå¯ä»¥åœ¨å›è°ƒå‡½æ•°é‡Œé¢è·å–é‡‡é›†ã€æ›å…‰ç­‰äº‹ä»¶ä¿¡æ¯ã€‚
+                \li è¯¥æ¥å£ä¸æ”¯æŒCameraLinkè®¾å¤‡ã€‚
  
  *  @~english
- *  @brief  Register event callback, which is called after the device is opened
- *  @param  handle                      [IN]            Device handle
- *  @param  cbEvent                     [IN]            Event CallBack Function Pointer
- *  @param  pUser                       [IN]            User defined variable
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Call this API to set the event callback function to get the event information, e.g., acquisition, exposure, and so on
+ *  @brief  Registers a callback for all events. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  cbEvent                     [IN]            It refers to the pointer to the event callback function. 
+ *  @param  pUser                       [IN]            It refers to user-defined variable. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API after connecting to the device to set the event callback function to get event information including acquisition and exposure.
              This API is not supported by CameraLink device.
 ************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_RegisterAllEventCallBack(IN void* handle, IN void(__stdcall* cbEvent)(MV_EVENT_OUT_INFO * pEventInfo, void* pUser), IN void* pUser);
+MV_CAMCTRL_API int __stdcall MV_CC_RegisterAllEventCallBack(IN void* handle, IN MvEventCallback cbEvent, IN void* pUser);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ×¢²áµ¥¸öÊÂ¼ş»Øµ÷£¬ÔÚ´ò¿ªÉè±¸Ö®ºóµ÷ÓÃ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  strEventName                [IN]            ÊÂ¼şÃû³Æ
- *  @param  cbEvent                     [IN]            ÊÂ¼ş»Øµ÷º¯ÊıÖ¸Õë
- *  @param  pUser                       [IN]            ÓÃ»§×Ô¶¨Òå±äÁ¿
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Í¨¹ı¸Ã½Ó¿ÚÉèÖÃÊÂ¼ş»Øµ÷£¬¿ÉÒÔÔÚ»Øµ÷º¯ÊıÀïÃæ»ñÈ¡²É¼¯¡¢ÆØ¹âµÈÊÂ¼şĞÅÏ¢¡£
-             ¸Ã½Ó¿Ú²»Ö§³ÖCameraLinkÉè±¸¡£
+ *  @brief  æ³¨å†Œå•ä¸ªäº‹ä»¶å›è°ƒï¼Œåœ¨æ‰“å¼€è®¾å¤‡ä¹‹åè°ƒç”¨
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  strEventName                [IN]            äº‹ä»¶åç§°
+ *  @param  cbEvent                     [IN]            äº‹ä»¶å›è°ƒå‡½æ•°æŒ‡é’ˆ
+ *  @param  pUser                       [IN]            ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç 
+ *  @note \li é€šè¿‡è¯¥æ¥å£è®¾ç½®äº‹ä»¶å›è°ƒï¼Œå¯ä»¥åœ¨å›è°ƒå‡½æ•°é‡Œé¢è·å–é‡‡é›†ã€æ›å…‰ç­‰äº‹ä»¶ä¿¡æ¯ã€‚
+          \li è¯¥æ¥å£ä¸æ”¯æŒCameraLinkè®¾å¤‡ã€‚
  
  *  @~english
- *  @brief  Register single event callback, which is called after the device is opened
- *  @param  handle                      [IN]            Device handle
- *  @param  strEventName                [IN]            Event name
- *  @param  cbEvent                     [IN]            Event CallBack Function Pointer
- *  @param  pUser                       [IN]            User defined variable
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Call this API to set the event callback function to get the event information, e.g., acquisition, exposure, and so on.
+ *  @brief  Registers a callback for single event. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  strEventName                [IN]            It refers to the event name. 
+ *  @param  cbEvent                     [IN]            It refers to the pointer to the event callback function. 
+ *  @param  pUser                       [IN]            It refers to user-defined variable. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API after connecting to the device to set the event callback function to get event information including acquisition and exposure.
              This API is not supported by CameraLink device .
 ************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_RegisterEventCallBackEx(IN void* handle, IN const char* strEventName, IN void(__stdcall* cbEvent)(MV_EVENT_OUT_INFO * pEventInfo, void* pUser), IN void* pUser);
+MV_CAMCTRL_API int __stdcall MV_CC_RegisterEventCallBackEx(IN void* handle, IN const char* strEventName, IN MvEventCallback cbEvent, IN void* pUser);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ¿ªÆôÉè±¸Ö¸¶¨ÊÂ¼ş
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  strEventName                [IN]            ÊÂ¼şÃû³Æ
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
+ *  @brief  æ³¨å†Œæµå¼‚å¸¸æ¶ˆæ¯å›è°ƒ
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  cbStreamException           [IN]            å¼‚å¸¸å›è°ƒå‡½æ•°æŒ‡é’ˆ
+ *  @param  pUser                       [IN]            ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+*  @remarks \li è¯¥æ¥å£æ³¨å†Œçš„å›è°ƒå‡½æ•°ä¸­ä¸èƒ½è°ƒç”¨ MV_CC_StopGrabbing() ã€ MV_CC_CloseDevice() å’Œ MV_CC_DestroyHandle() ï¼Œåªç”¨äºæ¶ˆæ¯é€šçŸ¥ã€‚
+            \li è¯¥æ¥å£ä¸æ”¯æŒè™šæ‹Ÿç›¸æœºå’Œå¯¼å…¥ä¸‰æ–¹ctiçš„åœºæ™¯ã€‚
+
+ *  @~english
+ *  @brief  Registers a stream exception callback. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  cbStreamException           [IN]            It refers to the pointer to the exception callback function. 
+ *  @param  pUser                       [IN]            It refers to the user-defined variable. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks In the callback function registered via this API, MV_CC_StopGrabbing(), MV_CC_CloseDevice(), and MV_CC_DestroyHandle() cannot be called, and the callback function can only be used for message notification. 
+            This API does not support virtual cameras and scenarios involving the import of third-party CTI files.
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_RegisterStreamExceptionCallBack(IN void* handle, IN MvStreamExceptionCallback cbStreamException, IN void* pUser);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  å¼€å¯è®¾å¤‡æŒ‡å®šäº‹ä»¶
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  strEventName                [IN]            äº‹ä»¶åç§°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
  
  *  @~english
- *  @brief  Enable specified event of device
- *  @param  handle                      [IN]            Device handle
- *  @param  strEventName                [IN]            Event name
- *  @return Success, return MV_OK. Failure, return error code 
+ *  @brief  Enables specified event of device. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  strEventName                [IN]            It refers to the event name.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_EventNotificationOn(IN void* handle, IN const char* strEventName);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ¹Ø±ÕÉè±¸Ö¸¶¨ÊÂ¼ş
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  strEventName                [IN]            ÊÂ¼şÃû³Æ
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
+ *  @brief  å…³é—­è®¾å¤‡æŒ‡å®šäº‹ä»¶
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  strEventName                [IN]            äº‹ä»¶åç§°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
  
  *  @~english
  *  @brief  Disable specified event of device
- *  @param  handle                      [IN]            Device handle
- *  @param  strEventName                [IN]            Event name
- *  @return Success, return MV_OK. Failure, return error code 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  strEventName                [IN]            It refers to the event name.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_EventNotificationOff(IN void* handle, IN const char* strEventName);
 
+/// @}
 
+/*******************Part7 ch: ä»…GigEè®¾å¤‡æ”¯æŒçš„æ¥å£ | en: API exclusively for GigE devices*******************/
 
-/*******************Part7 ch: ½öGigEÉè±¸Ö§³ÖµÄ½Ó¿Ú | en: Only support GigE interface*******************/
+/// \addtogroup GigEç›¸æœº
+/// @{
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃÃ¶¾Ù³¬Ê±Ê±¼ä£¬½öÖ§³ÖGigEĞ­Òé£¬·¶Î§:[1, UINT_MAX)
- *  @param  nMilTimeout                 [IN]            ³¬Ê±Ê±¼ä£¬Ó¦ÎªÎŞ·ûºÅÕûÊı,Ä¬ÈÏ100ms
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ÔÚµ÷ÓÃMV_CC_EnumDevicesµÈÃ¶¾Ù½Ó¿ÚÇ°Ê¹ÓÃ¸Ã½Ó¿Ú£¬¿ÉÉèÖÃÃ¶¾ÙGIGEÉè±¸µÄÍø¿¨×î´ó³¬Ê±Ê±¼ä£¨Ä¬ÈÏ100ms£©,¿ÉÒÔ¼õÉÙ×î´ó³¬Ê±Ê±¼ä£¬À´¼Ó¿ìÃ¶¾ÙGIGEÉè±¸µÄËÙ¶È
- *  @remarks ½öÖ§³ÖGigEVisionÉè±¸¡£
+ *  @brief  è®¾ç½®æšä¸¾è¶…æ—¶æ—¶é—´ï¼Œä»…æ”¯æŒGigEåè®®ï¼ŒèŒƒå›´:[1, UINT_MAX)
+ *  @param  nMilTimeout                 [IN]            è¶…æ—¶æ—¶é—´ï¼Œåº”ä¸ºæ— ç¬¦å·æ•´æ•°,é»˜è®¤100ms
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li åœ¨è°ƒç”¨ MV_CC_EnumDevices() ç­‰æšä¸¾æ¥å£å‰ä½¿ç”¨è¯¥æ¥å£ï¼Œå¯è®¾ç½®æšä¸¾GIGEè®¾å¤‡çš„ç½‘å¡æœ€å¤§è¶…æ—¶æ—¶é—´ï¼ˆé»˜è®¤100msï¼‰ï¼Œå¯ä»¥å‡å°‘æœ€å¤§è¶…æ—¶æ—¶é—´ï¼Œä»¥åŠ å¿«æšä¸¾GIGEè®¾å¤‡çš„é€Ÿåº¦ã€‚\n
+             \li è¯¥æ¥å£ä»…æ”¯æŒè¾“å…¥æ— ç¬¦å·æ•´æ•°ã€‚
 
  *  @~english
- *  @brief  Set enumerate device timeout,only support GigE,range:[1, UINT_MAX)
- *  @param  nMilTimeout                 [IN]            time out,input of unsigned int,default 100ms
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Before calling enum device interfaces,call MV_GIGE_SetEnumDevTimeout to set max timeout,can reduce the maximum timeout to speed up the enumeration of GigE devices.
- *  @remarks This API only support GigE Vision Device.
+ *  @brief  Sets enumeration timeout duration, range: [1, UINT_MAX). Only GigE protocol is supported. 
+ *  @param  nMilTimeout                 [IN]             It refers to the timeout duration, unit: millisecond. The value should be an integer (100 by default). 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API before calling enumeration APIs including MV_CC_EnumDevices() to set the timeout duration for enumerating GigE devices (100 ms by default). You can accelerate the enumeration by reducing the timeout duration. 
+ *  @remarks Only supports GigE vision devices. 
              
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_SetEnumDevTimeout(IN unsigned int nMilTimeout);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Ç¿ÖÆIP
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nIP                         [IN]            ÉèÖÃµÄIP
- *  @param  nSubNetMask                 [IN]            ×ÓÍøÑÚÂë
- *  @param  nDefaultGateWay             [IN]            Ä¬ÈÏÍø¹Ø
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Ç¿ÖÆÉèÖÃÉè±¸ÍøÂç²ÎÊı£¨°üÀ¨IP¡¢×ÓÍøÑÚÂë¡¢Ä¬ÈÏÍø¹Ø£©£¬Ç¿ÖÆÉèÖÃÖ®ºó½«ĞèÒªÖØĞÂ´´½¨Éè±¸¾ä±ú£¬Ö§³ÖGigEVision(MV_GIGE_DEVICE)Éè±¸ºÍGenTL(MV_GENTL_GIGE_DEVICE)Éè±¸
-             Èç¹ûÉè±¸ÎªDHCPµÄ×´Ì¬£¬µ÷ÓÃ¸Ã½Ó¿ÚÇ¿ÖÆÉèÖÃÉè±¸ÍøÂç²ÎÊıÖ®ºóÉè±¸½«»áÖØÆô¡£
+ *  @brief  å¼ºåˆ¶IP
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nIP                         [IN]            è®¾ç½®çš„IP
+ *  @param  nSubNetMask                 [IN]            å­ç½‘æ©ç 
+ *  @param  nDefaultGateWay             [IN]            é»˜è®¤ç½‘å…³
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li å¼ºåˆ¶è®¾ç½®è®¾å¤‡ç½‘ç»œå‚æ•°ï¼ˆåŒ…æ‹¬IPã€å­ç½‘æ©ç ã€é»˜è®¤ç½‘å…³ï¼‰ï¼Œå¼ºåˆ¶è®¾ç½®ä¹‹åå°†éœ€è¦é‡æ–°åˆ›å»ºè®¾å¤‡å¥æŸ„ï¼Œæ”¯æŒ [GigE Vision]( \ref MV_GIGE_DEVICE )è®¾å¤‡å’Œ [GenTL]( \ref MV_GENTL_GIGE_DEVICE )è®¾å¤‡ã€‚ \n
+             \li å¦‚æœè®¾å¤‡ä¸ºDHCPçš„çŠ¶æ€ï¼Œè°ƒç”¨è¯¥æ¥å£å¼ºåˆ¶è®¾ç½®è®¾å¤‡ç½‘ç»œå‚æ•°ä¹‹åè®¾å¤‡å°†ä¼šé‡å¯ã€‚ \n
  
  *  @~english
- *  @brief  Force IP
- *  @param  handle                      [IN]            Device handle
- *  @param  nIP                         [IN]            IP to set
- *  @param  nSubNetMask                 [IN]            Subnet mask
- *  @param  nDefaultGateWay             [IN]            Default gateway
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Force setting camera network parameter (including IP address, subnet mask, default gateway). After forced setting, device handle should be created again. 
-             This API support GigEVision(MV_GIGE_DEVICE) and GenTL(MV_GENTL_GIGE_DEVICE) device.
-             If device is in DHCP status, after calling this API to force setting camera network parameter, the device will restart.
+ *  @brief  Sets device network parameters forcefully, including IP address, subnet mask, and default gateway. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  nIP                         [IN]            It refers to the IP address. 
+ *  @param  nSubNetMask                 [IN]            It refers to the subnet mask. 
+ *  @param  nDefaultGateWay             [IN]            It refers to the default gateway. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks After forcing the configuration of device network parameters (including IP address, subnet mask,and default gateway), create device handle again.
+             This API is supported GigE Vision(MV_GIGE_DEVICE) and GenTL(MV_GENTL_GIGE_DEVICE) device.
+             The device will restart after calling this API to set network parameters forcefully when the device is in DHCP status. 
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_ForceIpEx(IN void* handle, IN unsigned int nIP, IN unsigned int nSubNetMask, IN unsigned int nDefaultGateWay);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÅäÖÃIP·½Ê½
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nType                       [IN]            IPÀàĞÍ£¬¼ûMV_IP_CFG_x
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ·¢ËÍÃüÁîÉèÖÃÉè±¸µÄIP·½Ê½£¬ÈçDHCP¡¢LLAµÈ£¬½öÖ§³ÖGigEVision(MV_GIGE_DEVICE)ºÍGenTl(MV_GENTL_GIGE_DEVICE)µÄÉè±¸¡£
+ *  @brief  é…ç½®IPæ–¹å¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nType                       [IN]            IPç±»å‹ï¼Œè§MV_IP_CFG_x
+    | å®å®šä¹‰  |  å®å®šä¹‰å€¼  |  å«ä¹‰   | 
+    | :---: | :---: | :---: | 
+    | \ref MV_IP_CFG_STATIC  |  0x05000000  | å›ºå®šIPåœ°å€æ¨¡å¼   | 
+    | \ref MV_IP_CFG_DHCP   | 0x06000000   | DHCPè‡ªåŠ¨è·å–IPæ¨¡å¼   | 
+    | \ref MV_IP_CFG_LLA   | 0x04000000   | LLA(Link-local address)ï¼Œé“¾è·¯æœ¬åœ°åœ°å€   | 
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks å‘é€å‘½ä»¤è®¾ç½®è®¾å¤‡çš„IPæ–¹å¼ï¼Œå¦‚DHCPã€LLAç­‰ï¼Œä»…æ”¯æŒ[GigE Vision]( \ref MV_GIGE_DEVICE )å’Œ[GenTL]( \ref MV_GENTL_GIGE_DEVICE )çš„è®¾å¤‡ã€‚
  
  *  @~english
- *  @brief  IP configuration method
- *  @param  handle                      [IN]            Device handle
- *  @param  nType                       [IN]            IP type, refer to MV_IP_CFG_x
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Send command to set camera IP mode, such as DHCP and LLA, only supported by GigEVision(MV_GIGE_DEVICE) and GenTL(MV_GENTL_GIGE_DEVICE) Device.
+ *  @brief  Configures IP mode. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  nType                       [IN]            It refers to IP type. Refer to MV_IP_CFG_x for more details. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks This API is only supported by GigE vision devices and GenTL(MV_GENTL_GIGE_DEVICE) device. You can send command to set the MVC IP configuration mode, including DHCP and LLA. 
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_SetIpConfig(IN void* handle, IN unsigned int nType);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃ½öÊ¹ÓÃÄ³ÖÖÄ£Ê½,type: MV_NET_TRANS_x£¬²»ÉèÖÃÊ±£¬Ä¬ÈÏÓÅÏÈÊ¹ÓÃdriver
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nType                       [IN]            ÍøÂç´«ÊäÄ£Ê½£¬¼ûMV_NET_TRANS_x
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Í¨¹ı¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃSDKÄÚ²¿ÓÅÏÈÊ¹ÓÃµÄÍøÂçÄ£Ê½£¬Ä¬ÈÏÓÅÏÈÊ¹ÓÃÇı¶¯Ä£Ê½£¬½öGigEVisionÉè±¸Ö§³Ö¡£
+ *  @brief  è®¾ç½®ä»…ä½¿ç”¨æŸç§æ¨¡å¼,type: MV_NET_TRANS_xï¼Œä¸è®¾ç½®æ—¶ï¼Œé»˜è®¤ä¼˜å…ˆä½¿ç”¨driver
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nType                       [IN]            ç½‘ç»œä¼ è¾“æ¨¡å¼ï¼Œè§ MV_NET_TRANS_x
+    |  å®å®šä¹‰  |  å®å®šä¹‰å€¼ |   å«ä¹‰  |  
+    | :---: | :---: | :---: | 
+    | \ref MV_NET_TRANS_DRIVER |   0x00000001 |   é©±åŠ¨æ¨¡å¼  |  
+    | \ref MV_NET_TRANS_SOCKET |   0x00000002 |   Socketæ¨¡å¼  |
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks é€šè¿‡è¯¥æ¥å£å¯ä»¥è®¾ç½®SDKå†…éƒ¨ä¼˜å…ˆä½¿ç”¨çš„ç½‘ç»œæ¨¡å¼ï¼Œé»˜è®¤ä¼˜å…ˆä½¿ç”¨é©±åŠ¨æ¨¡å¼ï¼Œä»…GigE Visionè®¾å¤‡æ”¯æŒã€‚
  
  *  @~english
- *  @brief  Set to use only one mode,type: MV_NET_TRANS_x. When do not set, priority is to use driver by default
- *  @param  handle                      [IN]            Device handle
- *  @param  nType                       [IN]            Net transmission mode, refer to MV_NET_TRANS_x
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarksSet SDK internal priority network mode through this interface, drive mode by default, only supported by GigEVision camera.
+ *  @brief  Sets SDK internal priority network mode. If it is not set, driver mode is used by default. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  nType                       [IN]            It refers to the network transmission mode. See MV_NET_TRANS_x for details. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarksSet You can call this API to set the internal priority network mode for the SDK (driver mode by default). This API is supported by GigE vision devices only. 
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_SetNetTransMode(IN void* handle, IN unsigned int nType);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡ÍøÂç´«ÊäĞÅÏ¢
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstInfo                     [IN][OUT]       ĞÅÏ¢½á¹¹Ìå
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Í¨¹ı¸Ã½Ó¿Ú¿ÉÒÔ»ñÈ¡ÍøÂç´«ÊäÏà¹ØĞÅÏ¢£¬°üÀ¨ÒÑ½ÓÊÕÊı¾İ´óĞ¡¡¢¶ªÖ¡ÊıÁ¿µÈ£¬ÔÚMV_CC_StartGrabbing¿ªÆô²É¼¯Ö®ºóµ÷ÓÃ¡£½öGigEVisionÉè±¸Ö§³Ö¡£
+ *  @brief  è·å–ç½‘ç»œä¼ è¾“ä¿¡æ¯
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstInfo                     [IN][OUT]       ä¿¡æ¯ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks é€šè¿‡è¯¥æ¥å£å¯ä»¥è·å–ç½‘ç»œä¼ è¾“ç›¸å…³ä¿¡æ¯ï¼ŒåŒ…æ‹¬å·²æ¥æ”¶æ•°æ®å¤§å°ã€ä¸¢å¸§æ•°é‡ç­‰ï¼Œåœ¨ MV_CC_StartGrabbing() å¼€å¯é‡‡é›†ä¹‹åè°ƒç”¨ã€‚ä»…GigE Visionç›¸æœºæ”¯æŒã€‚
  
  *  @~english
- *  @brief  Get net transmission information
- *  @param  handle                      [IN]            Device handle
- *  @param  pstInfo                     [IN][OUT]       Information Structure
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Get network transmission information through this API, including received data size, number of lost frames.
-             Call this API after starting image acquiring through MV_CC_StartGrabbing. This API is supported only by GigEVision Camera.
+ *  @brief  Gets network transmission information. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstInfo                     [IN][OUT]       It refers to network transmission information structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API to get information about network transmission after grabbing images via calling MV_CC_StartGrabbing(), including received data size and the number of lost frames. 
+             This API is supported only by GigE Vision devices.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_GetNetTransInfo(IN void* handle, IN OUT MV_NETTRANS_INFO* pstInfo);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃÃ¶¾ÙÃüÁîµÄ»Ø¸´°üÀàĞÍ
- *  @param  nMode                       [IN]            »Ø¸´°üÀàĞÍ£¨Ä¬ÈÏ¹ã²¥£©£¬0-µ¥²¥£¬1-¹ã²¥
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÖ»¶ÔGigEÏà»úÓĞĞ§¡£
+ *  @brief  è®¾ç½®æšä¸¾å‘½ä»¤çš„å›å¤åŒ…ç±»å‹
+ *  @param  nMode                       [IN]            å›å¤åŒ…ç±»å‹ï¼ˆé»˜è®¤å¹¿æ’­ï¼‰ï¼Œ0-å•æ’­ï¼Œ1-å¹¿æ’­
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£åªå¯¹GigE Visionç›¸æœºæœ‰æ•ˆã€‚
 
  *  @~english
- *  @brief  Setting the ACK mode of devices Discovery.
- *  @param  nMode                       [IN]            ACK mode£¨Default-Broadcast£©,0-Unicast,1-Broadcast.
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks This interface is ONLY effective on GigE cameras.
+ *  @brief  Sets the ACK mode of enumeration command. 
+ *  @param  nMode                       [IN]            It refers to the ACK mode (default broadcast). 0: unicast; 1: broadcast. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks This API is only supported by GigE devices. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_SetDiscoveryMode(IN unsigned int nMode);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃGVSPÈ¡Á÷³¬Ê±Ê±¼ä
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nMillisec                   [IN]            ³¬Ê±Ê±¼ä£¬Ä¬ÈÏ30ms£¬·¶Î§:[10 - UINT_MAX)
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks Á¬½ÓÉè±¸Ö®ºó£¬È¡Á÷¶¯×÷·¢ÉúÇ°£¬µ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃGVSPÈ¡Á÷³¬Ê±Ê±¼ä¡£GVSPÈ¡Á÷³¬Ê±ÉèÖÃ¹ı¶Ì¿ÉÄÜÔì³ÉÍ¼ÏñÒì³££¬ÉèÖÃ¹ı³¤¿ÉÄÜÔì³ÉÈ¡Á÷Ê±¼ä±ä³¤¡£
+ *  @brief  è®¾ç½®GVSPå–æµè¶…æ—¶æ—¶é—´
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nMillisec                   [IN]            è¶…æ—¶æ—¶é—´ï¼Œé»˜è®¤300msï¼ŒèŒƒå›´ï¼š>=10ms
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åï¼Œå–æµåŠ¨ä½œå‘ç”Ÿå‰ï¼Œè°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®GVSPå–æµè¶…æ—¶æ—¶é—´ã€‚GVSPå–æµè¶…æ—¶è®¾ç½®è¿‡çŸ­å¯èƒ½é€ æˆå›¾åƒå¼‚å¸¸ï¼Œè®¾ç½®è¿‡é•¿å¯èƒ½é€ æˆå–æµæ—¶é—´å˜é•¿ã€‚
  
  *  @~english
- *  @brief  Set GVSP streaming timeout
- *  @param  handle                      [IN]            Device handle
- *  @param  nMillisec                   [IN]            Timeout, default 30ms, range:[10 - UINT_MAX)
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, and just before start streaming, 
- *           call this interface to set GVSP streaming timeout value.
+ *  @brief  Sets timeout duration for image grabbing via GVSP. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  nMillisec                   [IN]            It refers to timeout duration (unit:millisecond), range:>10ms. The default value is 300 ms. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks After connecting to the device and before starting image grabbing, call this API to set timeout duration for image grabbing via GVSP. 
+             Image exception might occur if timeout duration is too short, and the streaming duration will become longer if timeout duration is too long. 
+ *           
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_SetGvspTimeout(IN void* handle, IN unsigned int nMillisec);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡GVSPÈ¡Á÷³¬Ê±Ê±¼ä
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnMillisec                  [IN][OUT]       ³¬Ê±Ê±¼äÖ¸Õë£¬ÒÔºÁÃëÎªµ¥Î»
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚ»ñÈ¡µ±Ç°µÄGVSPÈ¡Á÷³¬Ê±Ê±¼ä
+ *  @brief  è·å–GVSPå–æµè¶…æ—¶æ—¶é—´
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnMillisec                  [IN][OUT]       è¶…æ—¶æ—¶é—´æŒ‡é’ˆï¼Œä»¥æ¯«ç§’ä¸ºå•ä½
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£ç”¨äºè·å–å½“å‰çš„GVSPå–æµè¶…æ—¶æ—¶é—´
  
  *  @~english
- *  @brief  Get GVSP streaming timeout
- *  @param  handle                      [IN]            Device handle
- *  @param  pnMillisec                  [IN][OUT]       Timeout, ms as unit
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface is used to get the current GVSP streaming timeout.
+ *  @brief  Gets timeout for image grabbing via GVSP. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pnMillisec                  [IN][OUT]       It refers to pointer to the timeout duration, unit: millisecond. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API to get the current timeout duration of image grabbing via GVSP. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_GetGvspTimeout(IN void* handle, IN OUT unsigned int* pnMillisec);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃGVCPÃüÁî³¬Ê±Ê±¼ä
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nMillisec                   [IN]            ³¬Ê±Ê±¼ä(ms)£¬Ä¬ÈÏ500ms£¬·¶Î§£º[0,10000]
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃGVCPÃüÁî³¬Ê±Ê±¼ä¡£
+ *  @brief  è®¾ç½®GVCPå‘½ä»¤è¶…æ—¶æ—¶é—´
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nMillisec                   [IN]            è¶…æ—¶æ—¶é—´(ms)ï¼Œé»˜è®¤500msï¼ŒèŒƒå›´ï¼š[0,10000]
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®GVCPå‘½ä»¤è¶…æ—¶æ—¶é—´ã€‚
  
  *  @~english
- *  @brief  Set GVCP cammand timeout
- *  @param  handle                      [IN]            Device handle
- *  @param  nMillisec                   [IN]            Timeout(ms), default 500ms, range: [0,10000]
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks The API can set GVCP command timeout(ms) after device is connected .
+ *  @brief  Sets timeout for GVCP command. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  nMillisec                   [IN]            It refers to the timeout duration, range: [0, 10000], unit: millisecond. It is 500 ms by default. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API after connecting to the device to set the timeout of GVCP command. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_SetGvcpTimeout(IN void* handle, IN unsigned int nMillisec);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡GVCPÃüÁî³¬Ê±Ê±¼ä
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnMillisec                  [IN][OUT]       ³¬Ê±Ê±¼äÖ¸Õë£¬ÒÔºÁÃëÎªµ¥Î»
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚ»ñÈ¡µ±Ç°µÄGVCP³¬Ê±Ê±¼ä¡£
+ *  @brief  è·å–GVCPå‘½ä»¤è¶…æ—¶æ—¶é—´
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnMillisec                  [IN][OUT]       è¶…æ—¶æ—¶é—´æŒ‡é’ˆï¼Œä»¥æ¯«ç§’ä¸ºå•ä½
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£ç”¨äºè·å–å½“å‰çš„GVCPè¶…æ—¶æ—¶é—´ã€‚
  
  *  @~english
- *  @brief  Get GVCP cammand timeout
- *  @param  handle                      [IN]            Device handle
- *  @param  pnMillisec                  [IN][OUT]       Timeout, ms as unit
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface is used to get the current GVCP timeout.
+ *  @brief  Gets timeout duration for GVCP command. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pnMillisec                  [IN][OUT]       It refers to pointer to the timeout duration, unit: millisecond. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API to get the current GVCP timeout duration. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_GetGvcpTimeout(IN void* handle, IN OUT unsigned int* pnMillisec);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃÖØ´«GVCPÃüÁî´ÎÊı
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nRetryGvcpTimes             [IN]            ÖØ´«´ÎÊı£¬·¶Î§£º0-100
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚÔÚGVCP°ü´«ÊäÒì³£Ê±£¬Ôö¼ÓÖØ´«µÄ´ÎÊı£¬ÔÚÒ»¶¨³Ì¶ÈÉÏ¿ÉÒÔ±ÜÃâÉè±¸µôÏß£¬·¶Î§Îª0-100¡£
+ *  @brief  è®¾ç½®é‡ä¼ GVCPå‘½ä»¤æ¬¡æ•°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nRetryGvcpTimes             [IN]            é‡ä¼ æ¬¡æ•°ï¼ŒèŒƒå›´ï¼š0-100
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£ç”¨äºåœ¨GVCPåŒ…ä¼ è¾“å¼‚å¸¸æ—¶ï¼Œå¢åŠ é‡ä¼ çš„æ¬¡æ•°ï¼Œåœ¨ä¸€å®šç¨‹åº¦ä¸Šå¯ä»¥é¿å…è®¾å¤‡æ‰çº¿ï¼ŒèŒƒå›´ä¸º0-100ã€‚
  
  *  @~english
- *  @brief  Set the number of retry GVCP cammand
- *  @param  handle                      [IN]            Device handle
- *  @param  nRetryGvcpTimes             [IN]            The number of retries£¬rang£º0-100
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface is used to increase The Times of retransmission when GVCP packet transmission is abnormal,and to some extent,
-             it can avoid dropping the camera, with a range of 0-100.
+ *  @brief  Sets the number of times for resending GVCP command.
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  nRetryGvcpTimes             [IN]            It refers to the number of times for resending. It should be between 0 and 100. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API to increase the resending times when exception occurred during GVCP packet transmission, range: [0, 100]. To some extent, it can prevent the device from getting offline. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_SetRetryGvcpTimes(IN void* handle, IN unsigned int nRetryGvcpTimes);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡ÖØ´«GVCPÃüÁî´ÎÊı
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnRetryGvcpTimes            [IN][OUT]       ÖØ´«´ÎÊıÖ¸Õë
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚ»ñÈ¡µ±Ç°µÄGVCPÖØ´«´ÎÊı£¬Ä¬ÈÏ3´Î¡£
+ *  @brief  è·å–é‡ä¼ GVCPå‘½ä»¤æ¬¡æ•°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnRetryGvcpTimes            [IN][OUT]       é‡ä¼ æ¬¡æ•°æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£ç”¨äºè·å–å½“å‰çš„GVCPé‡ä¼ æ¬¡æ•°ï¼Œé»˜è®¤3æ¬¡ã€‚
  
  *  @~english
- *  @brief  Get the number of retry GVCP cammand
- *  @param  handle                      [IN]            Device handle
- *  @param  pnRetryGvcpTimes            [IN][OUT]       The number of retries
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface is used to get the current number of GVCP retransmissions, which defaults to 3.
+ *  @brief  Gets the number of times for resending GVCP command. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pnRetryGvcpTimes            [IN][OUT]       It refers to the pointer to resending times. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API to get the current resending times of GVCP command (3 by default). 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_GetRetryGvcpTimes(IN void* handle, IN OUT unsigned int* pnRetryGvcpTimes);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡×î¼ÑµÄpacket size£¬¸Ã½Ó¿ÚÄ¿Ç°Ö»Ö§³ÖGigEÉè±¸
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @return ×î¼Ñpacketsize
- *  @remarks »ñÈ¡×î¼ÑµÄpacket size£¬¶ÔÓ¦GigEVisionÉè±¸ÊÇSCPS¡£
-             ¸Ã½Ó¿ÚĞèÒªÔÚMV_CC_OpenDeviceÖ®ºó¡¢MV_CC_StartGrabbingÖ®Ç°µ÷ÓÃ¡£
-             ¸Ã½Ó¿Ú²»Ö§³ÖCameraLinkÉè±¸¡¢U3VÉè±¸¡£
-			 ¸Ã½Ó¿Ú²»Ö§³ÖGenTLÉè±¸£¨Ğ­Òé²»Ö§³Ö£©,Èç¹ûÊÇGenTL·½Ê½Ìí¼ÓµÄÍø¿ÚÏà»ú£¬½¨Òé¸ù¾İÍøÂçÊµ¼ÊÇé¿öÅäÖÃGevSCPSPacketSize£¬»òÕßÅäÖÃ1500¡£
+ *  @brief  è·å–æœ€ä½³çš„packet sizeï¼Œè¯¥æ¥å£ç›®å‰åªæ”¯æŒGigE Visionè®¾å¤‡
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return æœ€ä½³packetsize
+ *  @remarks \li è·å–æœ€ä½³çš„packet sizeï¼Œå¯¹åº”GigE Visionè®¾å¤‡æ˜¯SCPSï¼Œå¯¹åº”USB3 Visionè®¾å¤‡æ˜¯æ¯æ¬¡ä»é©±åŠ¨è¯»å–çš„åŒ…å¤§å°ï¼Œè¯¥å¤§å°å³ç½‘ç»œä¸Šä¼ è¾“ä¸€ä¸ªåŒ…çš„å¤§å°ã€‚\n
+             \li è¯¥æ¥å£éœ€è¦åœ¨ MV_CC_OpenDevice() ä¹‹åã€ MV_CC_StartGrabbing() ä¹‹å‰è°ƒç”¨ã€‚\n
+             \li è¯¥æ¥å£ä¸æ”¯æŒCameraLinkè®¾å¤‡ã€USB3 Visionè®¾å¤‡ã€‚\n
+             \li è¯¥æ¥å£ä¸æ”¯æŒGenTLè®¾å¤‡ï¼ˆåè®®ä¸æ”¯æŒï¼‰ï¼Œå¦‚æœæ˜¯GenTLæ–¹å¼æ·»åŠ çš„ç½‘å£ç›¸æœºï¼Œå»ºè®®æ ¹æ®ç½‘ç»œå®é™…æƒ…å†µé…ç½®GevSCPSPacketSizeï¼Œæˆ–è€…é…ç½®1500ã€‚
  
  *  @~english
- *  @brief  Get the optimal Packet Size, Only support GigE Camera
- *  @param  handle                      [IN]            Device handle
- *  @return Optimal packetsize
- *  @remarks To get optimized packet size, for GigEVision device is SCPS
-             and it is the size of a packet transported on the network. The interface should be called after MV_CC_OpenDevice and before MV_CC_StartGrabbing.
-             This API is not supported by CameraLink device and U3V device. 
-			 This interface does not support GenTL devices (protocol not supported). If a network camera is added in GenTL mode, it is recommended to configure GevSCPSPacketSize according to the actual network situation,or 1500.
+ *  @brief  Gets the optimal packet size. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @return Returns optimal packet size. 
+ *  @remarks The optimal packet size for GigE Vision device is SCPS.
+             This API should be called after calling MV_CC_OpenDevice(), and before calling MV_CC_StartGrabbing(). 
+             This API is not supported by CameraLink device and USB3 Vision device. 
+			 This API is not supported by GenTL device (unsupported protocols). For GigE Vision cameras added via GenTL, configure GevSCPSPacketSize or configure 1500 as needed. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_GetOptimalPacketSize(IN void* handle);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃÊÇ·ñ´ò¿ªÖØ·¢°üÖ§³Ö£¬¼°ÖØ·¢°üÉèÖÃ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  bEnable                     [IN]            ÊÇ·ñÖ§³ÖÖØ·¢°ü
- *  @param  nMaxResendPercent           [IN]            ×î´óÖØ·¢±È
- *  @param  nResendTimeout              [IN]            ÖØ·¢³¬Ê±Ê±¼ä£¬·¶Î§£º0-10000ms
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks Á¬½ÓÉè±¸Ö®ºóµ÷ÓÃ¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃÖØ·¢°üÊôĞÔ£¬½öGigEVisionÉè±¸Ö§³Ö¡£
+ *  @brief  è®¾ç½®æ˜¯å¦æ‰“å¼€é‡å‘åŒ…æ”¯æŒï¼ŒåŠé‡å‘åŒ…è®¾ç½®
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  bEnable                     [IN]            æ˜¯å¦æ”¯æŒé‡å‘åŒ…
+ *  @param  nMaxResendPercent           [IN]            æœ€å¤§é‡å‘æ¯”
+ *  @param  nResendTimeout              [IN]            é‡å‘è¶…æ—¶æ—¶é—´ï¼ŒèŒƒå›´ï¼š0-10000ms
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¿æ¥è®¾å¤‡ä¹‹åè°ƒç”¨è¯¥æ¥å£å¯ä»¥è®¾ç½®é‡å‘åŒ…å±æ€§ï¼Œä»…GigE Visionè®¾å¤‡æ”¯æŒã€‚
  
  *  @~english
- *  @brief  Set whethe to enable resend, and set resend
- *  @param  handle                      [IN]            Device handle
- *  @param  bEnable                     [IN]            enable resend
- *  @param  nMaxResendPercent           [IN]            Max resend persent
- *  @param  nResendTimeout              [IN]            Resend timeout, rang£º0-10000ms
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After the device is connected, call this interface to set resend packet properties, only supported by GigEVision camera.
+ *  @brief  Sets whether to enable packet resending, and sets corresponding parameters. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  bEnable                     [IN]            Whether to enable packet resending. 
+ *  @param  nMaxResendPercent           [IN]            It refers to the max. resending percent. 
+ *  @param  nResendTimeout              [IN]            It refers to resending timeout duration. rangï¼š0-10000ms
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API after connecting to the device to set packet resending parameters. This API is only supported by GigE vision devices. 
  ************************************************************************/
 #ifndef __cplusplus
 MV_CAMCTRL_API int __stdcall MV_GIGE_SetResend(IN void* handle, IN unsigned int bEnable, IN unsigned int nMaxResendPercent, IN unsigned int nResendTimeout);
 #else
-MV_CAMCTRL_API int __stdcall MV_GIGE_SetResend(IN void* handle, IN unsigned int bEnable, IN unsigned int nMaxResendPercent = 10, IN unsigned int nResendTimeout = 50);
+MV_CAMCTRL_API int __stdcall MV_GIGE_SetResend(IN void* handle, IN unsigned int bEnable, IN unsigned int nMaxResendPercent = 100, IN unsigned int nResendTimeout = 50);
 #endif
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃÖØ´«ÃüÁî×î´ó³¢ÊÔ´ÎÊı
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nRetryTimes                 [IN]            ÖØ´«ÃüÁî×î´ó³¢ÊÔ´ÎÊı£¬Ä¬ÈÏ20
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿Ú±ØĞëÔÚµ÷ÓÃMV_GIGE_SetResend¿ªÆôÖØ´«°ü¹¦ÄÜÖ®ºóµ÷ÓÃ£¬·ñÔòÊ§°ÜÇÒ·µ»ØMV_E_CALLORDER
+ *  @brief  è®¾ç½®é‡ä¼ å‘½ä»¤æœ€å¤§å°è¯•æ¬¡æ•°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nRetryTimes                 [IN]            é‡ä¼ å‘½ä»¤æœ€å¤§å°è¯•æ¬¡æ•°ï¼Œé»˜è®¤20
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£å¿…é¡»åœ¨è°ƒç”¨ MV_GIGE_SetResend() å¼€å¯é‡ä¼ åŒ…åŠŸèƒ½ä¹‹åè°ƒç”¨ï¼Œå¦åˆ™å¤±è´¥ä¸”è¿”å›MV_E_CALLORDER
  
  *  @~english
- *  @brief  set the max resend retry times
- *  @param  handle                      [IN]            Device handle
- *  @param  nRetryTimes                 [IN]            The max times to retry resending lost packets£¬default 20
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface MUST be called after enabling resending lost packets by calling MV_GIGE_SetResend,
- *           otherwise would fail and return MV_E_CALLORDER.
+ *  @brief  Sets the max. command resending times. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  nRetryTimes                 [IN]            It refers to the max. command resending times. It is 20 by default. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API should be called after resending packet is enabled via calling MV_GIGE_SetResend(). If APIs are not called in order, it will be failed and MV_E_CALLORDER will be returned. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall  MV_GIGE_SetResendMaxRetryTimes(IN void* handle, IN unsigned int nRetryTimes);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡ÖØ´«ÃüÁî×î´ó³¢ÊÔ´ÎÊı
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnRetryTimes                [IN][OUT]       ÖØ´«ÃüÁî×î´ó³¢ÊÔ´ÎÊı
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿Ú±ØĞëÔÚµ÷ÓÃMV_GIGE_SetResend¿ªÆôÖØ´«°ü¹¦ÄÜÖ®ºóµ÷ÓÃ£¬·ñÔòÊ§°ÜÇÒ·µ»ØMV_E_CALLORDER
+ *  @brief  è·å–é‡ä¼ å‘½ä»¤æœ€å¤§å°è¯•æ¬¡æ•°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnRetryTimes                [IN][OUT]       é‡ä¼ å‘½ä»¤æœ€å¤§å°è¯•æ¬¡æ•°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£å¿…é¡»åœ¨è°ƒç”¨ MV_GIGE_SetResend() å¼€å¯é‡ä¼ åŒ…åŠŸèƒ½ä¹‹åè°ƒç”¨ï¼Œå¦åˆ™å¤±è´¥ä¸”è¿”å›MV_E_CALLORDERã€‚
  
  *  @~english
- *  @brief  get the max resend retry times
- *  @param  handle                      [IN]            Device handle
- *  @param  pnRetryTimes                [IN][OUT]       The max times to retry resending lost packets
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface MUST be called after enabling resending lost packets by calling MV_GIGE_SetResend,
- *           otherwise would fail and return MV_E_CALLORDER. 
+ *  @brief  Gets the max. command resending times. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pnRetryTimes                [IN][OUT]       It refers to the max. times to retry resending lost packets
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API should be called after resending packet is enabled via calling MV_GIGE_SetResend(). If APIs are not called in order, it will be failed and MV_E_CALLORDER will be returned. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall  MV_GIGE_GetResendMaxRetryTimes(IN void* handle, IN OUT unsigned int* pnRetryTimes);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃÍ¬Ò»ÖØ´«°ü¶à´ÎÇëÇóÖ®¼äµÄÊ±¼ä¼ä¸ô
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nMillisec                   [IN]            Í¬Ò»ÖØ´«°ü¶à´ÎÇëÇóÖ®¼äµÄÊ±¼ä¼ä¸ô£¬Ä¬ÈÏ10ms
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿Ú±ØĞëÔÚµ÷ÓÃMV_GIGE_SetResend¿ªÆôÖØ´«°ü¹¦ÄÜÖ®ºóµ÷ÓÃ£¬·ñÔòÊ§°ÜÇÒ·µ»ØMV_E_CALLORDER
+ *  @brief  è®¾ç½®åŒä¸€é‡ä¼ åŒ…å¤šæ¬¡è¯·æ±‚ä¹‹é—´çš„æ—¶é—´é—´éš”
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nMillisec                   [IN]            åŒä¸€é‡ä¼ åŒ…å¤šæ¬¡è¯·æ±‚ä¹‹é—´çš„æ—¶é—´é—´éš”ï¼Œé»˜è®¤10ms
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£å¿…é¡»åœ¨è°ƒç”¨ MV_GIGE_SetResend() å¼€å¯é‡ä¼ åŒ…åŠŸèƒ½ä¹‹åè°ƒç”¨ï¼Œå¦åˆ™å¤±è´¥ä¸”è¿”å›MV_E_CALLORDERã€‚
  
  *  @~english
- *  @brief  set time interval between same resend requests
- *  @param  handle                      [IN]            Device handle
- *  @param  nMillisec                   [IN]            The time interval between same resend requests,default 10ms
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface MUST be called after enabling resending lost packets by calling MV_GIGE_SetResend,
- *           otherwise would fail and return MV_E_CALLORDER. 
+ *  @brief  Sets the time interval of two resending requests for one packet. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  nMillisec                   [IN]            It refers to the time interval of two resending requests for one packet. It is 10 ms by default. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API should be called after resending packet is enabled via calling MV_GIGE_SetResend(). If APIs are not called in order, MV_GIGE_SetResendTimeInterval() calling will be failed and MV_E_CALLORDER will be returned. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall  MV_GIGE_SetResendTimeInterval(IN void* handle, IN unsigned int nMillisec);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡Í¬Ò»ÖØ´«°ü¶à´ÎÇëÇóÖ®¼äµÄÊ±¼ä¼ä¸ô
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnMillisec                  [IN][OUT]       Í¬Ò»ÖØ´«°ü¶à´ÎÇëÇóÖ®¼äµÄÊ±¼ä¼ä¸ô
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿Ú±ØĞëÔÚµ÷ÓÃMV_GIGE_SetResend¿ªÆôÖØ´«°ü¹¦ÄÜÖ®ºóµ÷ÓÃ£¬·ñÔòÊ§°ÜÇÒ·µ»ØMV_E_CALLORDER
+ *  @brief  è·å–åŒä¸€é‡ä¼ åŒ…å¤šæ¬¡è¯·æ±‚ä¹‹é—´çš„æ—¶é—´é—´éš”
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnMillisec                  [IN][OUT]       åŒä¸€é‡ä¼ åŒ…å¤šæ¬¡è¯·æ±‚ä¹‹é—´çš„æ—¶é—´é—´éš”
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£å¿…é¡»åœ¨è°ƒç”¨ MV_GIGE_SetResend() å¼€å¯é‡ä¼ åŒ…åŠŸèƒ½ä¹‹åè°ƒç”¨ï¼Œå¦åˆ™å¤±è´¥ä¸”è¿”å›MV_E_CALLORDERã€‚
  
  *  @~english
- *  @brief  get time interval between same resend requests
- *  @param  handle                      [IN]            Device handle
- *  @param  pnMillisec                  [IN][OUT]       The time interval between same resend requests
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface MUST be called after enabling resending lost packets by calling MV_GIGE_SetResend,
- *           otherwise would fail and return MV_E_CALLORDER. 
+ *  @brief  Gets the time interval of two resending requests for one packet. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pnMillisec                  [IN][OUT]       It refers to the time interval of two resending requests for one packet. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API should be called after resending packet is enabled via calling MV_GIGE_SetResend(). If APIs are not called in order, MV_GIGE_GetResendTimeInterval() calling will be failed and MV_E_CALLORDER will be returned. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall  MV_GIGE_GetResendTimeInterval(IN void* handle, IN OUT unsigned int* pnMillisec);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃ´«ÊäÄ£Ê½£¬¿ÉÒÔÎªµ¥²¥Ä£Ê½¡¢×é²¥Ä£Ê½µÈ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  stTransmissionType          [IN]            ´«ÊäÄ£Ê½½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks Í¨¹ı¸Ã½Ó¿Ú¿ÉÒÔÉèÖÃ´«ÊäÄ£Ê½Îªµ¥²¥¡¢×é²¥µÈÄ£Ê½£¬½öGigEVisionÉè±¸Ö§³Ö¡£
+ *  @brief  è®¾ç½®ä¼ è¾“æ¨¡å¼ï¼Œå¯ä»¥ä¸ºå•æ’­æ¨¡å¼ã€ç»„æ’­æ¨¡å¼ç­‰
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstTransmissionType         [IN]            ä¼ è¾“æ¨¡å¼ç»“æ„ä½“
+    | å®å®šä¹‰ | å®å®šä¹‰å€¼  | å«ä¹‰ | 
+    | :---: | :---: | :---: |
+    | \ref MV_GIGE_TRANSTYPE_UNICAST |  0 | å•æ’­ |
+    | \ref MV_GIGE_TRANSTYPE_MULTICAST | 1 |ç»„æ’­ |
+    | \ref MV_GIGE_TRANSTYPE_LIMITEDBROADCAST  | 2 | è¡¨ç¤ºå±€åŸŸç½‘å†…å¹¿æ’­ |
+    | \ref MV_GIGE_TRANSTYPE_SUBNETBROADCAST  | 3 | è¡¨ç¤ºå­ç½‘å†…å¹¿æ’­ |
+    | \ref MV_GIGE_TRANSTYPE_CAMERADEFINED | 4 | è¡¨ç¤ºä»ç›¸æœºè·å– |
+    | \ref MV_GIGE_TRANSTYPE_UNICAST_DEFINED_PORT | 5 | è¡¨ç¤ºç”¨æˆ·è‡ªå®šä¹‰åº”ç”¨ç«¯æ¥æ”¶å›¾åƒæ•°æ®Portå· |
+    | \ref MV_GIGE_TRANSTYPE_UNICAST_WITHOUT_RECV | 00010000 | è¡¨ç¤ºè®¾ç½®äº†å•æ’­ï¼Œä½†æœ¬å®ä¾‹ä¸æ¥æ”¶å›¾åƒæ•°æ® |
+    | \ref MV_GIGE_TRANSTYPE_MULTICAST_WITHOUT_RECV | 00010001 | è¡¨ç¤ºç»„æ’­æ¨¡å¼ï¼Œä½†æœ¬å®ä¾‹ä¸æ¥æ”¶å›¾åƒæ•°æ® |
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks é€šè¿‡è¯¥æ¥å£å¯ä»¥è®¾ç½®ä¼ è¾“æ¨¡å¼ä¸ºå•æ’­ã€ç»„æ’­ç­‰æ¨¡å¼ï¼Œä»…GigE Visionè®¾å¤‡æ”¯æŒã€‚
 
  *  @~english
- *  @brief  Set transmission type,Unicast or Multicast
- *  @param  handle                      [IN]            Device handle
- *  @param  stTransmissionType          [IN]            Struct of transmission type
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Call this API to set the transmission mode as single cast mode and multicast mode. And this API is only valid for GigEVision camera. 
+ *  @brief  Sets the transmission mode, including unicast and multicast. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstTransmissionType         [IN]            It refers to the transmission mode structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API to set the transmission mode as unicast mode and multicast mode.This API is only supported by GigE vision devices. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_SetTransmissionType(IN void* handle, IN MV_TRANSMISSION_TYPE * pstTransmissionType);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief   ·¢³ö¶¯×÷ÃüÁî
- *  @param   pstActionCmdInfo           [IN]            ¶¯×÷ÃüÁîĞÅÏ¢
- *  @param   pstActionCmdResults        [IN][OUT]       ¶¯×÷ÃüÁî·µ»ØĞÅÏ¢ÁĞ±í
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ½öGigEVisionÉè±¸Ö§³Ö¡£
+ *  @brief   å‘å‡ºåŠ¨ä½œå‘½ä»¤
+ *  @param   pstActionCmdInfo           [IN]            åŠ¨ä½œå‘½ä»¤ä¿¡æ¯
+ *  @param   pstActionCmdResults        [IN][OUT]       åŠ¨ä½œå‘½ä»¤è¿”å›ä¿¡æ¯åˆ—è¡¨
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks ä»…GigE Visionè®¾å¤‡æ”¯æŒ, æ”¯æŒæœ€å¤š16ä¸ªç»„æ’­åœ°å€åŒæ—¶å‘é€å‘½ä»¤ã€‚
 
  *  @~english
- *  @brief  Issue Action Command
- *  @param   pstActionCmdInfo           [IN]            Action Command
- *  @param   pstActionCmdResults        [IN][OUT]       Action Command Result List
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This API is supported only by GigEVision camera.
+ *  @brief  Sends action commands. 
+ *  @param   pstActionCmdInfo           [IN]            It refers to information of action commands. 
+ *  @param   pstActionCmdResults        [IN][OUT]       It refers to list of returned information about action commands. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API is supported only by GigE Vision devices, Supports sending commands to up to 16 multicast addresses simultaneously.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_IssueActionCommand(IN MV_ACTION_CMD_INFO* pstActionCmdInfo, IN OUT MV_ACTION_CMD_RESULT_LIST* pstActionCmdResults);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡×é²¥×´Ì¬
- *  @param  pstDevInfo                  [IN]            Éè±¸ĞÅÏ¢½á¹¹Ìå
- *  @param  pbStatus                    [IN][OUT]       ×é²¥×´Ì¬,true:×é²¥×´Ì¬£¬false:·Ç×é²¥
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚÅĞ¶ÏÉè±¸µ±Ç°ÊÇ·ñ´¦ÓÚ×é²¥×´Ì¬£¬½â¾ö¿Í»§¶ËÃ¶¾ÙÊ±ĞèÒª´ò¿ªÉè±¸ÅĞ¶Ï×é²¥µÄÎÊÌâ¡£
-             ½öÖ§³Ö±ê×¼GigE Vision £¨MV_GIGE_DEVICE£©Éè±¸¡£
+ *  @brief  è·å–ç»„æ’­çŠ¶æ€
+ *  @param  pstDevInfo                  [IN]            è®¾å¤‡ä¿¡æ¯ç»“æ„ä½“
+ *  @param  pbStatus                    [IN][OUT]       ç»„æ’­çŠ¶æ€,true:ç»„æ’­çŠ¶æ€ï¼Œfalse:éç»„æ’­
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£ç”¨äºåˆ¤æ–­è®¾å¤‡å½“å‰æ˜¯å¦å¤„äºç»„æ’­çŠ¶æ€ï¼Œè§£å†³å®¢æˆ·ç«¯æšä¸¾æ—¶éœ€è¦æ‰“å¼€è®¾å¤‡åˆ¤æ–­ç»„æ’­çš„é—®é¢˜ã€‚ \n
+             ä»…æ”¯æŒæ ‡å‡†GigE Visionè®¾å¤‡ã€‚
 
  *  @~english
- *  @brief  Get Multicast Status
- *  @param  pstDevInfo                  [IN]            Device Information Structure
- *  @param  pbStatus                    [IN][OUT]       Status of Multicast
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface is used to determine whether the camera is currently in multicast state, 
-             and to solve the problem that the client needs to turn on the camera to determine multicast when enumerating.
-			 This API only support GigE Vision £¨MV_GIGE_DEVICE£© Device.
+ *  @brief  Gets multicast status. 
+ *  @param  pstDevInfo                  [IN]            It refers to device information.
+ *  @param  pbStatus                    [IN][OUT]       It refers to status (true: multicast status; false: not multicast status). 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks When enumerating the device, call this API to check if the device is in multicast status without turning on the device. 
+			 This API only support GigE Vision Device.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_GIGE_GetMulticastStatus(IN MV_CC_DEVICE_INFO* pstDevInfo, IN OUT bool* pbStatus);
 
+/// @}
 
-/*******************Part8 ch: ½öCameraLink Éè±¸Ö§³ÖµÄ½Ó¿Ú | en: Only support camlink device interface*******************/
+/*******************Part8 ch: ä»…CameraLink è®¾å¤‡æ”¯æŒçš„æ¥å£ | en: API exclusively for CameraLink devices*******************/
+
+/// \addtogroup ä¸²å£è®¾å¤‡
+/// @{
+
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡´®¿ÚĞÅÏ¢ÁĞ±í
- *  @param  pstSerialPortList           [IN][OUT]       ´®¿ÚĞÅÏ¢ÁĞ±í
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚ»ñÈ¡±¾µØµÄ´®¿ÚĞÅÏ¢¡£¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+ *  @brief  è·å–ä¸²å£ä¿¡æ¯åˆ—è¡¨
+ *  @param  pstSerialPortList           [IN][OUT]       ä¸²å£ä¿¡æ¯åˆ—è¡¨
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£ç”¨äºè·å–æœ¬åœ°çš„ä¸²å£ä¿¡æ¯ã€‚
 
  *  @~english
- *  @brief  Get serial port information list
- *  @param  pstSerialPortList           [IN][OUT]       serial port information list
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface is used to get local serial port information. This API do not support arm and Linux32 platform.
+ *  @brief  Gets serial port information list. 
+ *  @param  pstSerialPortList           [IN][OUT]       It refers to serial port information list. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks This API is used to get local serial port information. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CAML_GetSerialPortList(IN OUT MV_CAML_SERIAL_PORT_LIST* pstSerialPortList);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃÈ¡Ö¸¶¨Ã¶¾Ù´®¿Ú
- *  @param  pstSerialPortList           [IN][OUT]       ´®¿ÚĞÅÏ¢ÁĞ±í
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚÉèÖÃÃ¶¾ÙCameraLink Éè±¸µÄÖ¸¶¨´®¿Ú¡£¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+ *  @brief  è®¾ç½®å–æŒ‡å®šæšä¸¾ä¸²å£
+ *  @param  pstSerialPortList           [IN][OUT]       ä¸²å£ä¿¡æ¯åˆ—è¡¨
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£ç”¨äºè®¾ç½®æšä¸¾CameraLink è®¾å¤‡çš„æŒ‡å®šä¸²å£ã€‚
 
  *  @~english
- *  @brief  Set the specified enumeration serial port
- *  @param  pstSerialPortList           [IN]       serial port information list
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface is used to set the specified enumeration serial port. This API do not support arm and Linux32 platform.
+ *  @brief  Specifies the serial ports for enumerations. 
+ *  @param  pstSerialPortList           [IN]       It refers to serial port information list. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API to specify serial ports for camera link device enumeration. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CAML_SetEnumSerialPorts(IN MV_CAML_SERIAL_PORT_LIST* pstSerialPortList);
 
 /***********************************************************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃÉè±¸²¨ÌØÂÊ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nBaudrate                   [IN]            ÉèÖÃµÄ²¨ÌØÂÊÖµ£¬ÊıÖµ²Î¿¼CameraParams.hÖĞºê¶¨Òå£¬Èç#define MV_CAML_BAUDRATE_9600  0x00000001
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÖ§³ÖÔÚÉè±¸Î´Á¬½ÓÊ±µ÷ÓÃ. Í¨¹ıGenTLĞ­Òé·ÃÎÊÉè±¸Ê±£¬ĞèÒªÏÈÁ¬½ÓÉè±¸£¬²ÅÄÜµ÷ÓÃ¸Ã½Ó¿Ú
-             ÒòÓ²¼ş/ÏµÍ³/Íâ²¿¸ÉÈÅµÈÒòËØ,ÅäÖÃ¸ß²¨ÌØÂÊ¿ÉÄÜµ¼ÖÂÍ¨ĞÅÒì³££¬½¨ÒéÅäÖÃ²¨ÌØÂÊ×î´óĞ¡ÓÚ115200
-             ¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+ *  @brief  è®¾ç½®è®¾å¤‡æ³¢ç‰¹ç‡
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nBaudrate                   [IN]            è®¾ç½®çš„æ³¢ç‰¹ç‡å€¼ï¼Œæ•°å€¼å‚è€ƒCameraParams.hä¸­å®å®šä¹‰
+            | CamercaLinkæ³¢ç‰¹ç‡å®šä¹‰ | å€¼ | å¯¹åº”çš„æ³¢ç‰¹ç‡å€¼ |
+            | :--- | :---: | :--- | 
+            | \ref MV_CAML_BAUDRATE_9600    | 0x00000001 | 9600 |
+            | \ref MV_CAML_BAUDRATE_19200   | 0x00000002 | 19200 |
+            | \ref MV_CAML_BAUDRATE_38400   | 0x00000004 | 38400 |
+            | \ref MV_CAML_BAUDRATE_57600   | 0x00000008 | 57600 |
+            | \ref MV_CAML_BAUDRATE_115200  | 0x00000010 | 115200 |
+            | \ref MV_CAML_BAUDRATE_230400  | 0x00000020 | 230400 |
+            | \ref MV_CAML_BAUDRATE_460800  | 0x00000040 | 460800 |
+            | \ref MV_CAML_BAUDRATE_921600  | 0x00000080 | 921600 |
+            | \ref MV_CAML_BAUDRATE_AUTOMAX | 0x40000000 | æœ€å¤§å€¼ |
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£æ”¯æŒåœ¨è®¾å¤‡æœªè¿æ¥æ—¶è°ƒç”¨ã€‚é€šè¿‡GenTLåè®®è®¿é—®è®¾å¤‡æ—¶ï¼Œéœ€è¦å…ˆè¿æ¥è®¾å¤‡ï¼Œæ‰èƒ½è°ƒç”¨è¯¥æ¥å£ã€‚\n
+ 			 å› ç¡¬ä»¶/ç³»ç»Ÿ/å¤–éƒ¨å¹²æ‰°ç­‰å› ç´ ï¼Œé…ç½®é«˜æ³¢ç‰¹ç‡å¯èƒ½å¯¼è‡´é€šä¿¡å¼‚å¸¸ï¼Œå»ºè®®é…ç½®æ³¢ç‰¹ç‡æœ€å¤§å°äº115200ã€‚
  
  *  @~english
- *  @brief  Set device baudrate using one of the CL_BAUDRATE_XXXX value   
- *  @param  handle                      [IN]            Device handle
- *  @param  nBaudrate                   [IN]            baud rate to set. Refer to the 'CameraParams.h' for parameter definitions, for example, #define MV_CAML_BAUDRATE_9600  0x00000001
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks This API is supported only by CameraLink device.
-             This API support calls when devices are not connected. But it is necessary to connect to the device first when accessing a CameraLink Device through the GenTL protocol.
-             Due to hardware/system/external interference and other factors, configuring a high baud rate may cause abnormal communication. 
+ *  @brief  Sets baud rate for the device. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  nBaudrate                   [IN]            It refers to baud rate to set. Refer to the 'CameraParams.h' for parameter definitions. for example, #define MV_CAML_BAUDRATE_9600  0x00000001
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks You can call this API when the device is not connected. If the device is accessed via GenTL protocol, call this API after the device is connected.            
+             High baud rate may cause communication exception due to factors such as hardware specification, system configuration, and external interference. 
              It is recommended to configure a baud rate of less than 115200
-             This API do not support arm and Linux32 platform.
 ************************************************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CAML_SetDeviceBaudrate(IN void* handle, IN unsigned int nBaudrate);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡Éè±¸²¨ÌØÂÊ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnCurrentBaudrate           [IN][OUT]       ²¨ÌØÂÊĞÅÏ¢Ö¸Õë£¬ÊıÖµ²Î¿¼CameraParams.hÖĞºê¶¨Òå£¬Èç#define MV_CAML_BAUDRATE_9600  0x00000001
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÖ§³ÖÔÚÉè±¸Î´Á¬½ÓÊ±µ÷ÓÃ¡£¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+ *  @brief  è·å–è®¾å¤‡æ³¢ç‰¹ç‡
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnCurrentBaudrate           [IN][OUT]       æ³¢ç‰¹ç‡ä¿¡æ¯æŒ‡é’ˆï¼Œæ•°å€¼å‚è€ƒCameraParams.hä¸­å®å®šä¹‰
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£æ”¯æŒåœ¨è®¾å¤‡æœªè¿æ¥æ—¶è°ƒç”¨ã€‚
  
  *  @~english
- *  @brief  Returns the current device baudrate, using one of the CL_BAUDRATE_XXXX value
- *  @param  handle                      [IN]            Device handle
- *  @param  pnCurrentBaudrate           [IN][OUT]       Return pointer of baud rate to user. Refer to the 'CameraParams.h' for parameter definitions, for example, #define MV_CAML_BAUDRATE_9600  0x00000001
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks This API is supported only by CameraLink device.
-             This API support calls when devices are not connected.
-             This API do not support arm and Linux32 platform.
+ *  @brief  Gets baud rate for devices. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pnCurrentBaudrate           [IN][OUT]       It refers to the pointer to baud rate information. See the 'CameraParams.h' for parameter definitions, for example, #define MV_CAML_BAUDRATE_9600  0x00000001
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks You can call this API when the device is not connected. 
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CAML_GetDeviceBaudrate(IN void* handle,IN OUT unsigned int* pnCurrentBaudrate);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡Éè±¸ÓëÖ÷»ú¼äÁ¬½ÓÖ§³ÖµÄ²¨ÌØÂÊ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnBaudrateAblity            [IN][OUT]       Ö§³ÖµÄ²¨ÌØÂÊĞÅÏ¢µÄÖ¸Õë¡£ËùÖ§³Ö²¨ÌØÂÊµÄ»òÔËËã½á¹û£¬µ¥¸öÊıÖµ²Î¿¼CameraParams.hÖĞºê¶¨Òå£¬ÈçMV_CAML_BAUDRATE_9600  0x00000001
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÖ§³ÖÔÚÉè±¸Î´Á¬½ÓÊ±µ÷ÓÃ¡£¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
+ *  @brief  è·å–è®¾å¤‡ä¸ä¸»æœºé—´è¿æ¥æ”¯æŒçš„æ³¢ç‰¹ç‡
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnBaudrateAblity            [IN][OUT]       æ”¯æŒçš„æ³¢ç‰¹ç‡ä¿¡æ¯çš„æŒ‡é’ˆã€‚ æ‰€æœ‰æ”¯æŒæ³¢ç‰¹ç‡çš„"æˆ–è¿ç®—"ç»“æœï¼Œå•ä¸ªæ•°å€¼å‚è€ƒCameraParams.hä¸­å®å®šä¹‰
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£æ”¯æŒåœ¨è®¾å¤‡æœªè¿æ¥æ—¶è°ƒç”¨ã€‚
  
  *  @~english
- *  @brief  Returns supported baudrates of the combined device and host interface
- *  @param  handle                      [IN]            Device handle
- *  @param  pnBaudrateAblity            [IN][OUT]       Return pointer of the supported baudrates to user. 'OR' operation results of the supported baudrates. Refer to the 'CameraParams.h' for single value definitions, for example, MV_CAML_BAUDRATE_9600  0x00000001
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks This API is supported only by CameraLink device.
-             This API support calls when devices are not connected.
-             This API do not support arm and Linux32 platform.
+ *  @brief  Gets the supported baud rate of the connection between the device and host. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pnBaudrateAblity            [IN][OUT]       It refers to the pointer to the supported baud rate information. See 'CameraParams.h' for the definitions of single value of the OR operation results of all supported baud rate.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks You can call this API when the device is not connected. 
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CAML_GetSupportBaudrates(IN void* handle,IN OUT unsigned int* pnBaudrateAblity);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃ´®¿Ú²Ù×÷µÈ´ıÊ±³¤
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nMillisec                   [IN]            ´®¿Ú²Ù×÷µÄµÈ´ıÊ±³¤, µ¥Î»Îªms
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿Ú²»Ö§³ÖarmºÍLinux32Æ½Ì¨
-
+ *  @brief  è®¾ç½®ä¸²å£æ“ä½œç­‰å¾…æ—¶é•¿
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nMillisec                   [IN]            ä¸²å£æ“ä½œçš„ç­‰å¾…æ—¶é•¿, å•ä½ä¸ºms
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ 
  *  @~english
- *  @brief  Sets the timeout for operations on the serial port
- *  @param  handle                      [IN]            Device handle
- *  @param  nMillisec                   [IN]            Timeout in [ms] for operations on the serial port.
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks This API do not support arm and Linux32 platform.
+ *  @brief  Sets the waiting duration for serial port operation. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  nMillisec                   [IN]            It refers to waiting time of serial port operation, unit: millisecond. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CAML_SetGenCPTimeOut(IN void* handle, IN unsigned int nMillisec);
 
+/// @}
 
-/*******************Part9 ch: ½öU3VÉè±¸Ö§³ÖµÄ½Ó¿Ú | en: Only support U3V device interface*******************/
+/*******************Part9 ch: ä»…USB3 Visionè®¾å¤‡æ”¯æŒçš„æ¥å£ | en: API exclusively for USB3 Vision (USB3 Vision) devices*******************/
+
+/// \addtogroup U3Vç›¸æœº
+/// @{
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃU3VµÄ´«Êä°ü´óĞ¡
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nTransferSize               [IN]            ´«ÊäµÄ°ü´óĞ¡, Byte£¬Ä¬ÈÏÎª1M£¬rang£º>=0x400£¬½¨Òé×î´óÖµ£º[windows] rang <= 0x400000£»[Linux] rang <= 0x200000
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Ôö¼Ó´«Êä°ü´óĞ¡¿ÉÒÔÊÊµ±½µµÍÈ¡Á÷Ê±µÄCPUÕ¼ÓÃÂÊ¡£µ«²»Í¬µÄPCºÍ²»Í¬USBÀ©Õ¹¿¨´æÔÚ²»Í¬µÄ¼æÈİĞÔ£¬Èç¹û¸Ã²ÎÊıÉèÖÃ¹ı´ó¿ÉÄÜ»á³öÏÖÈ¡²»µ½Í¼ÏñµÄ·çÏÕ¡£
+ *  @brief  è®¾ç½®USB3 Visionçš„ä¼ è¾“åŒ…å¤§å°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nTransferSize               [IN]            ä¼ è¾“çš„åŒ…å¤§å°, Byteï¼Œé»˜è®¤ä¸º1Mï¼Œéœ€4çš„å€æ•°ï¼Œrangï¼š>=0x8000ï¼Œå»ºè®®æœ€å¤§å€¼ï¼š[windows] rang <= 0x400000ï¼›[Linux] rang <= 0x200000
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks å¢åŠ ä¼ è¾“åŒ…å¤§å°å¯ä»¥é€‚å½“é™ä½å–æµæ—¶çš„CPUå ç”¨ç‡ã€‚ä½†ä¸åŒçš„PCå’Œä¸åŒUSBæ‰©å±•å¡å­˜åœ¨ä¸åŒçš„å…¼å®¹æ€§ï¼Œå¦‚æœè¯¥å‚æ•°è®¾ç½®è¿‡å¤§å¯èƒ½ä¼šå‡ºç°å–ä¸åˆ°å›¾åƒçš„é£é™©ã€‚
+             \if MACOS MacOSç³»ç»Ÿä¸­ï¼Œä¼ è¾“åŒ…å¤§å°è®¾ç½®è¿‡å°ï¼Œå¯èƒ½å¯¼è‡´å¼€å§‹å–æµæ¥å£æŠ¥å‰ç½®æ¡ä»¶é”™è¯¯ï¼Œè¯¥å€¼å’Œå›¾åƒå¤§å°ä¸ä¼ è¾“é€šé“ä¸ªæ•°æœ‰å…³ï¼Œæ— æ³•ç»™å‡ºå‡†ç¡®çš„æœ€å°å€¼ï¼ŒMacOSç³»ç»Ÿä¸­å°½é‡ä¸åšä¿®æ”¹ã€‚ \endif
  
  *  @~english
- *  @brief  Set transfer size of U3V device
- *  @param  handle                      [IN]            Device handle
- *  @param  nTransferSize               [IN]            Transfer size£¬Byte£¬default£º1M£¬rang£º>=0x400£¬Recommended maximum: [windows] rang <= 0x400000; [Linux] rang <= 0x200000
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Increasing the transmission packet size can reduce the CPU utilization at the time of fetching. However, different PCS and different USB extension CARDS have different compatibility, and if this parameter is set too large, there may be the risk of not getting the image.
-************************************************************************/
+ *  @brief  Sets transmission packet size of USB3 vision cameras. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  nTransferSize               [IN]            It refers to the size of the transmission packet (unit: byte), and the default value is 1 MB (1,048,576 bytes), Multiples of 4. rang: >=0x8000. 
+                                                        Recommended maximum values: [Windows] range â‰¤ 0x400000; [Linux] range â‰¤ 0x200000.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Increasing the packet size can reduce the CPU usage, but for different computers and USB expansion cards, the compatibility is different. If the packet size is too large, image acquisition might fail. 
+             On macOS systems, setting the TransferSize too small may cause MV_CC_StartGrabbing to return MV_E_PRECONDITION. This value is related to the image size and TransferWays, so it is not possible to provide an exact minimum value. It is recommended to avoid modifying this setting whenever possible.
+ ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_USB_SetTransferSize(IN void* handle, IN unsigned int nTransferSize);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡U3VµÄ´«Êä°ü´óĞ¡
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnTransferSize              [IN][OUT]           ´«ÊäµÄ°ü´óĞ¡Ö¸Õë, Byte
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚ»ñÈ¡µ±Ç°µÄU3V´«Êä°ü´óĞ¡£¬Ä¬ÈÏ1M¡£
+ *  @brief  è·å–USB3 Visionçš„ä¼ è¾“åŒ…å¤§å°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnTransferSize              [IN][OUT]       ä¼ è¾“çš„åŒ…å¤§å°æŒ‡é’ˆ, Byte
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£ç”¨äºè·å–å½“å‰çš„USB3 Visionä¼ è¾“åŒ…å¤§å°ï¼Œé»˜è®¤1Mã€‚
  
  *  @~english
- *  @brief  Get transfer size of U3V device
- *  @param  handle                      [IN]            Device handle
- *  @param  pnTransferSize              [IN][OUT]           Transfer size£¬Byte
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks This interface is used to get the current U3V transfer packet size, default 1M.
+ *  @brief  Gets transmission packet size of USB3 vision cameras. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pnTransferSize              [IN][OUT]       It refers to the pointer to the size of the transmission packet (unit: byte). 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API to get the packet size of the current USB3 vision device (1 MB by default). 
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_USB_GetTransferSize(IN void* handle, IN OUT unsigned int* pnTransferSize);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃU3VµÄ´«ÊäÍ¨µÀ¸öÊı
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nTransferWays               [IN]            ´«ÊäÍ¨µÀ¸öÊı£¬·¶Î§£º1-10
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ÓÃ»§¿ÉÒÔ¸ù¾İPCµÄĞÔÄÜ¡¢Éè±¸³öÍ¼Ö¡ÂÊ¡¢Í¼Ïñ´óĞ¡ºÍÄÚ´æÊ¹ÓÃÂÊµÈÒòËØ¶Ô¸Ã²ÎÊı½øĞĞµ÷½Ú¡£µ«²»Í¬µÄPCºÍ²»Í¬µÄUSBÀ©Õ¹¿¨´æÔÚ²»Í¬µÄ¼æÈİĞÔ¡£
+ *  @brief  è®¾ç½®USB3 Visionçš„ä¼ è¾“é€šé“ä¸ªæ•°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nTransferWays               [IN]            ä¼ è¾“é€šé“ä¸ªæ•°ï¼ŒèŒƒå›´ï¼š1-10
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks ç”¨æˆ·å¯ä»¥æ ¹æ®PCçš„æ€§èƒ½ã€è®¾å¤‡å‡ºå›¾å¸§ç‡ã€å›¾åƒå¤§å°å’Œå†…å­˜ä½¿ç”¨ç‡ç­‰å› ç´ å¯¹è¯¥å‚æ•°è¿›è¡Œè°ƒèŠ‚ã€‚ä½†ä¸åŒçš„PCå’Œä¸åŒçš„USBæ‰©å±•å¡å­˜åœ¨ä¸åŒçš„å…¼å®¹æ€§ã€‚
  
  *  @~english
- *  @brief  Set transfer ways of U3V device
- *  @param  handle                      [IN]            Device handle
- *  @param  nTransferWays               [IN]            Transfer ways£¬rang£º1-10
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Users can adjust this parameter according to PC performance, camera image frame rate, image size, memory utilization and other factors. But different PCS and different USB expansion CARDS have different compatibility.
+ *  @brief  Sets the number of transmission channels of USB3 vision cameras. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  nTransferWays               [IN]            It refers to the number of transmission channels. It should be between 1 to 10. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This parameter can be adjusted based on computer performance, device image frame rate, device image size, and device memory usage. But compatibility differs due to different PC and USB expansion cards. 
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_USB_SetTransferWays(IN void* handle, IN unsigned int nTransferWays);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡U3VµÄ´«ÊäÍ¨µÀ¸öÊı
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnTransferWays              [IN][OUT]       ´«ÊäÍ¨µÀ¸öÊıÖ¸Õë
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚ»ñÈ¡µ±Ç°µÄU3VÒì²½È¡Á÷½Úµã¸öÊı£¬U¿ÚÏà»ú´«ÊäÍ¨µÀ¸öÊıºÍÏñËØ¸ñÊ½¶ÔÓ¦µÄ¸ºÔØ°ü´óĞ¡Ïà¹Ø£¬Í¨¹ı×î´óÒì²½×¢²á³¤¶È / ÏñËØ¸ñÊ½¶ÔÓ¦µÄ¸ºÔØ°ü´óĞ¡ ¼ÆËãµÃ³ö¡£
+ *  @brief  è·å–USB3 Visionçš„ä¼ è¾“é€šé“ä¸ªæ•°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnTransferWays              [IN][OUT]       ä¼ è¾“é€šé“ä¸ªæ•°æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£ç”¨äºè·å–å½“å‰çš„USB3 Visionå¼‚æ­¥å–æµèŠ‚ç‚¹ä¸ªæ•°ï¼ŒUå£ç›¸æœºä¼ è¾“é€šé“ä¸ªæ•°å’Œåƒç´ æ ¼å¼å¯¹åº”çš„è´Ÿè½½åŒ…å¤§å°ç›¸å…³ï¼Œå¯é€šè¿‡ï¼ˆæœ€å¤§å¼‚æ­¥æ³¨å†Œé•¿åº¦/åƒç´ æ ¼å¼å¯¹åº”çš„è´Ÿè½½åŒ…å¤§å°ï¼‰è®¡ç®—å¾—å‡ºã€‚ \n
+ *          2000Wè®¾å¤‡çš„MONO8é»˜è®¤ä¸º3ä¸ªï¼ŒYUVä¸ºé»˜è®¤2ä¸ªï¼ŒRGBä¸ºé»˜è®¤1ä¸ªï¼Œå…¶å®ƒæƒ…å†µé»˜è®¤8ä¸ªèŠ‚ç‚¹ã€‚
  
  *  @~english
- *  @brief  Get transfer ways of U3V device
- *  @param  handle                      [IN]            Device handle
- *  @param  pnTransferWays              [IN][OUT]       Transfer ways
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks This interface is used to get the current number of U3V asynchronous feed nodes.
-	For U3V camera, The number of transmission channels is related to the size of the payload size corresponding to the pixel format, which is calculated by the maximum asynchronous registration length / the payload size corresponding to pixel format.
+ *  @brief  Gets the number of transmission channels of USB3 vision cameras. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pnTransferWays              [IN][OUT]       It refers to the pointer to the number of transmission channels. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API is used to get the current number of USB3 Vision asynchronous image acquisition nodes. 
+             For USB3 vision cameras, the number of transmission channels is closely related to the packet size corresponding to the pixel format, and it can be calculated based on the max. asynchronous registration length/packet size of pixel format. 
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_USB_GetTransferWays(IN void* handle, IN OUT unsigned int* pnTransferWays);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ×¢²áÁ÷Òì³£ÏûÏ¢»Øµ÷£¬ÔÚ´ò¿ªÉè±¸Ö®ºóµ÷ÓÃ£¨Ö»Ö§³ÖU3VÏà»ú£¬²»Ö§³ÖGenTLÉè±¸£©
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  cbException                 [IN]            Òì³£»Øµ÷º¯ÊıÖ¸Õë
- *  @param  pUser                       [IN]            ÓÃ»§×Ô¶¨Òå±äÁ¿
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
+ *  @brief  è®¾ç½®USB3 Visionçš„äº‹ä»¶ç¼“å­˜èŠ‚ç‚¹ä¸ªæ•°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nEventNodeNum               [IN]            äº‹ä»¶ç¼“å­˜èŠ‚ç‚¹ä¸ªæ•°ï¼ŒèŒƒå›´ï¼š1-64
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£ç”¨äºè®¾ç½®å½“å‰çš„USB3 Visionäº‹ä»¶ç¼“å­˜èŠ‚ç‚¹ä¸ªæ•°ï¼Œé»˜è®¤æƒ…å†µä¸‹ä¸º5ä¸ªã€‚
  
  *  @~english
- *  @brief  Register exception stream callBack, call after open device (only support U3V Camera, don't support GenTL Device)
- *  @param  handle                      [IN]            Device handle
- *  @param  cbException                 [IN]            Exception callback function pointer
- *  @param  pUser                       [IN]            User defined variable
- *  @return Success, return MV_OK. Failure, return error code 
-************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_USB_RegisterStreamExceptionCallBack(IN void* handle, IN void(__stdcall* cbException)(MV_CC_STREAM_EXCEPTION_TYPE enExceptionType, void* pUser), IN void* pUser);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ÉèÖÃU3VµÄÊÂ¼ş»º´æ½Úµã¸öÊı
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nEventNodeNum               [IN]            ÊÂ¼ş»º´æ½Úµã¸öÊı£¬·¶Î§£º1-64
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚÉèÖÃµ±Ç°µÄU3VÊÂ¼ş»º´æ½Úµã¸öÊı£¬Ä¬ÈÏÇé¿öÏÂÎª5¸ö¡£
- 
- *  @~english
- *  @brief  Set the number of U3V device event cache nodes
- *  @param  handle                      [IN]            Device handle
- *  @param  nEventNodeNum               [IN]            Event Node Number
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks This interface is used to set the current number of U3V event nodes. default to 5 nodes.
+ *  @brief  Sets the number of event buffer nodes of USB3 vision cameras. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  nEventNodeNum               [IN]            It refers to the number of event buffer nodes, range: [1, 64]. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API to set the number of the buffer nodes for the current USB3 vision event. The default value is 5. 
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_USB_SetEventNodeNum(IN void* handle, IN unsigned int nEventNodeNum);
 
-
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃU3VµÄÍ¬²½¶ÁĞ´³¬Ê±Ê±¼ä£¬·¶Î§Îª:[1000, UINT_MAX)
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nMills                      [IN]            ÉèÖÃÍ¬²½¶ÁĞ´³¬Ê±Ê±¼ä,Ä¬ÈÏÊ±¼äÎª1000ms
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks Ôö¼ÓÉèÖÃÍ¬²½¶ÁÈ¡Ê±¼ä½Ó¿Ú£¬¼æÈİ²¿·ÖÏà»úÅäÖÃ²ÎÊıºÜÂı£¬³¬¹ı1000msµÄÇé¿ö
+ *  @brief  è®¾ç½®USB3 Visionçš„åŒæ­¥è¯»å†™è¶…æ—¶æ—¶é—´ï¼ŒèŒƒå›´ä¸º:[1000, INT_MAX)ï¼Œé»˜è®¤1000 ms
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nMills                      [IN]            è®¾ç½®åŒæ­¥è¯»å†™è¶…æ—¶æ—¶é—´,é»˜è®¤æ—¶é—´ä¸º1000ms
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks å¢åŠ è®¾ç½®åŒæ­¥è¯»å–æ—¶é—´æ¥å£ï¼Œå…¼å®¹éƒ¨åˆ†ç›¸æœºé…ç½®å‚æ•°å¾ˆæ…¢ï¼Œè¶…è¿‡1000msçš„æƒ…å†µ
 
  *  @~english
- *  @brief  Set U3V Synchronisation timeout,range:[1000, UINT_MAX)
- *  @param  handle               [IN]            Device handle
- *  @param  nMills               [IN]            set synchronisation timeout(ms),default 1000ms
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Increasing the SetSyncTimeOut can compatible with some camera configuretion parameters very slow,more than 1000ms 
+ *  @brief  Sets the timeout duration for sync reading and writing of USB3 vision devices (1000 ms by default), range: [1000, INT_MAX]. 
+ *  @param  handle               [IN]            It refers to the device handle.
+ *  @param  nMills               [IN]            It refers to the timeout duration for sync reading and writing (1000 by default), unit: millisecond. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.  
+ *  @remarks Increasing the timeout duration for sync reading and writing can help deal with the problem that some cameras' parameter configuration process is very slow (more than 1000 ms). 
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_USB_SetSyncTimeOut(IN void* handle, IN unsigned int nMills);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  »ñÈ¡U3VÏà»úÍ¬²½¶ÁĞ´³¬Ê±Ê±¼ä
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pnMills                     [IN][OUT]       »ñÈ¡µÄ³¬Ê±Ê±¼ä(ms)
- *  @return ³É¹¦,·µ»ØMV_OK,Ê§°Ü,·µ»Ø´íÎóÂë
- *  @remarks ¸Ã½Ó¿ÚÓÃÓÚ»ñÈ¡µ±Ç°µÄU3VÍ¬²½¶ÁĞ´³¬Ê±Ê±¼ä´óĞ¡£¬Ä¬ÈÏ1000ms¡£
+ *  @brief  è·å–USB3 Visionç›¸æœºåŒæ­¥è¯»å†™è¶…æ—¶æ—¶é—´
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnMills                     [IN][OUT]       è·å–çš„è¶…æ—¶æ—¶é—´(ms)
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è¯¥æ¥å£ç”¨äºè·å–å½“å‰çš„USB3 VisionåŒæ­¥è¯»å†™è¶…æ—¶æ—¶é—´å¤§å°ï¼Œé»˜è®¤1000msã€‚
  
  *  @~english
- *  @brief  Get U3V Camera Synchronisation timeout
- *  @param  handle                      [IN]            Device handle
- *  @param  pnMills                     [IN][OUT]       Get Synchronisation time(ms)
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks This interface is used to get the current U3V timeout, default 1000ms.
+ *  @brief  Gets the timeout duration for sync reading and writing of USB3 vision devices. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pnMills                     [IN][OUT]       It refers to the timeout duration, unit: millisecond.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API to get the timeout duration for sync reading and writing of USB3 vision cameras (1000 ms by default).
 ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_USB_GetSyncTimeOut(IN void* handle, IN OUT unsigned int* pnMills);
 
+/// @}
 
 
-/*******************Part10 ch: GenTLÏà¹Ø½Ó¿Ú | en: GenTL related interface*******************/
+/*******************Part10 ch: GenTLç›¸å…³æ¥å£ | en: GenTL-related API*******************/
+
+/// \addtogroup GenTL
+/// @{
 
 /******************************************************************************//**
  *  @~chinese
- *  @brief  Í¨¹ıGenTLÃ¶¾ÙInterfaces
- *  @param  pstIFList                   [IN][OUT]       InterfacesÁĞ±í
- *  @param  strGenTLPath                [IN]            GenTLµÄctiÎÄ¼şÂ·¾¶
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks InterfacesÁĞ±íµÄÄÚ´æÊÇÔÚSDKÄÚ²¿·ÖÅäµÄ£¬¶àÏß³Ìµ÷ÓÃ¸Ã½Ó¿ÚÊ±»á½øĞĞÉè±¸ÁĞ±íÄÚ´æµÄÊÍ·ÅºÍÉêÇë
-             ½¨Òé¾¡Á¿±ÜÃâ¶àÏß³ÌÃ¶¾Ù²Ù×÷¡£
-             Ôİ²»Ö§³Ö¹¤ÒµÏà»úSDKÖ±½Óµ÷ÓÃMvProducerU3V.ctiºÍMvProducerGEV.cti£¬ Ö§³Öµ÷ÓÃÆäËû.cti
+ *  @brief  é€šè¿‡GenTLæšä¸¾Interfaces
+ *  @param  pstIFList                   [IN][OUT]       Interfacesåˆ—è¡¨
+ *  @param  strGenTLPath                [IN]            GenTLçš„ctiæ–‡ä»¶è·¯å¾„
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li Interfacesåˆ—è¡¨çš„å†…å­˜æ˜¯åœ¨SDKå†…éƒ¨åˆ†é…çš„ï¼Œå¤šçº¿ç¨‹è°ƒç”¨è¯¥æ¥å£æ—¶ä¼šè¿›è¡Œè®¾å¤‡åˆ—è¡¨å†…å­˜çš„é‡Šæ”¾å’Œç”³è¯·ï¼Œå»ºè®®å°½é‡é¿å…å¤šçº¿ç¨‹æšä¸¾æ“ä½œã€‚\n
+             \li æš‚ä¸æ”¯æŒç›´æ¥è°ƒç”¨MvProducerU3V.ctiå’ŒMvProducerGEV.ctiï¼Œ æ”¯æŒè°ƒç”¨å…¶ä»–.cti
              
  *  @~english
- *  @brief  Enumerate Interfaces with GenTL
- *  @param  pstIFList                   [IN][OUT]       Interfaces List
- *  @param  strGenTLPath                [IN]            GenTL cti file path
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks The memory of the Interfaces list is allocated within the SDK. When the interface is invoked by multiple threads, the memory of the device list will be released and applied.\n
-             It is recommended to avoid multithreaded enumeration operations as much as possible.
-             Currently not supported for SDK to directly call MvProducerU3V. cti and MvProducerGEV. cti. supports calling other. cti
+ *  @brief  Enumerates interfaces via GenTL. 
+ *  @param  pstIFList                   [IN][OUT]       It refers to interface list. 
+ *  @param  strGenTLPath                [IN]            It refers to CTI file path of GenTL. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks The memory of device list is internally allocated. When this API is called in multiple threads, the SDK will release and apply for the device list memory. 
+             It is recommended to avoid multithreaded enumeration operations. 
+             MvProducerU3V.cti and MvProducerGEV.cti calling are unsupported.
  *******************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_EnumInterfacesByGenTL(IN OUT MV_GENTL_IF_INFO_LIST* pstIFList, IN const char * strGenTLPath);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Ğ¶ÔØcti¿â
- *  @param  pGenTLPath                [IN]            Ã¶¾Ù¿¨Ê±¼ÓÔØµÄctiÎÄ¼şÂ·¾¶
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks Ğ¶ÔØÇ°ĞèÒª±£Ö¤Í¨¹ı¸ÃctiÃ¶¾Ù³öµÄÏà»úÒÑÈ«²¿¹Ø±Õ£¬·ñÔò±¨´íÇ°ÖÃÌõ¼ş´íÎó¡£
+ *  @brief  å¸è½½ctiåº“
+ *  @param  pGenTLPath                [IN]            æšä¸¾å¡æ—¶åŠ è½½çš„ctiæ–‡ä»¶è·¯å¾„
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks å¸è½½å‰éœ€è¦ä¿è¯é€šè¿‡è¯¥ctiæšä¸¾å‡ºçš„ç›¸æœºå·²å…¨éƒ¨å…³é—­ï¼Œå¦åˆ™æŠ¥é”™å‰ç½®æ¡ä»¶é”™è¯¯ã€‚
  
  *  @~english
- *  @brief  Unload cti library
- *  @param  pGenTLPath                [IN]            GenTL cti file path
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks Make sure that all devices enumerated by this cti are already closed.
+ *  @brief  Unload the CTI library. 
+ *  @param  pGenTLPath                [IN]            It refers to the CTI file path during the enumeration. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Make sure that all cameras enumerated by the CTI file are closed before calling this API. Otherwise, MV_E_PRECONDITION error will be returned. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_UnloadGenTLLibrary(IN const char * pGenTLPath);
 
 /*****************************************************************************************************//**
  *  @~chinese
- *  @brief  Í¨¹ıGenTL InterfaceÃ¶¾ÙÉè±¸
- *  @param  pstIFInfo                   [IN]            InterfaceĞÅÏ¢
- *  @param  pstDevList                  [IN][OUT]           Éè±¸ÁĞ±í
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks Éè±¸ÁĞ±íµÄÄÚ´æÊÇÔÚSDKÄÚ²¿·ÖÅäµÄ£¬¶àÏß³Ìµ÷ÓÃ¸Ã½Ó¿ÚÊ±»á½øĞĞÉè±¸ÁĞ±íÄÚ´æµÄÊÍ·ÅºÍÉêÇë
-             ½¨Òé¾¡Á¿±ÜÃâ¶àÏß³ÌÃ¶¾Ù²Ù×÷¡£
+ *  @brief  é€šè¿‡GenTL Interfaceæšä¸¾è®¾å¤‡
+ *  @param  pstIFInfo                   [IN]            Interfaceä¿¡æ¯
+ *  @param  pstDevList                  [IN][OUT]           è®¾å¤‡åˆ—è¡¨
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è®¾å¤‡åˆ—è¡¨çš„å†…å­˜æ˜¯åœ¨SDKå†…éƒ¨åˆ†é…çš„ï¼Œå¤šçº¿ç¨‹è°ƒç”¨è¯¥æ¥å£æ—¶ä¼šè¿›è¡Œè®¾å¤‡åˆ—è¡¨å†…å­˜çš„é‡Šæ”¾å’Œç”³è¯·ã€‚
+ *  @note   å°½é‡é¿å…å¤šçº¿ç¨‹æšä¸¾æ“ä½œã€‚
  
  *  @~english
- *  @brief  Enumerate Devices with GenTL interface
- *  @param  pstIFInfo                   [IN]            Interface information
- *  @param  pstDevList                  [IN][OUT]           Device List
- *  @return Success, return MV_OK. Failure, return error code 
- *  @remarks The memory of the list is allocated within the SDK. When the interface is invoked by multiple threads, the memory of the device list will be released and applied.\n
-             It is recommended to avoid multithreaded enumeration operations as much as possible.
+ *  @brief  Enumerates devices via GenTL interface. 
+ *  @param  pstIFInfo                   [IN]            It refers to interface information. 
+ *  @param  pstDevList                  [IN][OUT]       It refers to the device list. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks The memory of device list is internally allocated. When this API is called in multiple threads, the SDK will release and apply for the device list memory. 
+             It is recommended to avoid multithreaded enumeration operations. 
  *****************************************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_EnumDevicesByGenTL(IN MV_GENTL_IF_INFO* pstIFInfo, IN OUT MV_GENTL_DEV_INFO_LIST* pstDevList);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Í¨¹ıGenTLÉè±¸ĞÅÏ¢´´½¨Éè±¸¾ä±ú
- *  @param  handle                      [IN][OUT]       Éè±¸¾ä±ú
- *  @param  pstDevInfo                  [IN]            Éè±¸ĞÅÏ¢½á¹¹ÌåÖ¸Õë
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸ù¾İÊäÈëµÄÉè±¸ĞÅÏ¢£¬´´½¨¿âÄÚ²¿±ØĞëµÄ×ÊÔ´ºÍ³õÊ¼»¯ÄÚ²¿Ä£¿é¡£
+ *  @brief  é€šè¿‡GenTLè®¾å¤‡ä¿¡æ¯åˆ›å»ºè®¾å¤‡å¥æŸ„
+ *  @param  handle                      [IN][OUT]       è®¾å¤‡å¥æŸ„
+ *  @param  pstDevInfo                  [IN]            è®¾å¤‡ä¿¡æ¯ç»“æ„ä½“æŒ‡é’ˆ
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks æ ¹æ®è¾“å…¥çš„è®¾å¤‡ä¿¡æ¯ï¼Œåˆ›å»ºåº“å†…éƒ¨å¿…é¡»çš„èµ„æºå’Œåˆå§‹åŒ–å†…éƒ¨æ¨¡å—ã€‚
  
  *  @~english
- *  @brief  Create Device Handle with GenTL Device Info
- *  @param  handle                      [IN][OUT]       Device handle
- *  @param  pstDevInfo                  [IN]            Device Information
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Create required resources within library and initialize internal module according to input device information.
+ *  @brief  Creates the device handle by GenTL related device information. 
+ *  @param  handle                      [IN][OUT]       It refers to interface information. 
+ *  @param  pstDevInfo                  [IN]            It refers to the struct pointer to device Information. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Create required resources within library and initialize internal module according to input device information. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_CreateHandleByGenTL(IN OUT void ** handle, IN const MV_GENTL_DEV_INFO* pstDevInfo);
 
+/// @}
 
+/*******************Part11 ch: å›¾åƒä¿å­˜ã€æ ¼å¼è½¬æ¢ç­‰ç›¸å…³æ¥å£ | en: Image saving and format conversion API*******************/
 
-/*******************Part11 ch: Í¼Ïñ±£´æ¡¢¸ñÊ½×ª»»µÈÏà¹Ø½Ó¿Ú | en: Related image save and format convert interface*******************/
+/// \addtogroup å›¾åƒå¤„ç†
+/// @{
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ±£´æÍ¼Æ¬£¬Ö§³ÖBmpºÍJpeg.
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstSaveParam                [IN][OUT]       ±£´æÍ¼Æ¬²ÎÊı½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks Í¨¹ı¸Ã½Ó¿Ú¿ÉÒÔ½«´ÓÉè±¸²É¼¯µ½µÄÔ­Ê¼Í¼ÏñÊı¾İ×ª»»³ÉJPEG»òÕßBMPµÈ¸ñÊ½²¢´æ·ÅÔÚÖ¸¶¨ÄÚ´æÖĞ£¬È»ºóÓÃ»§¿ÉÒÔ½«×ª»»Ö®ºóµÄÊı¾İÖ±½Ó±£´æ³ÉÍ¼Æ¬ÎÄ¼ş¡£
-             ¸Ã½Ó¿Úµ÷ÓÃÎŞ½Ó¿ÚË³ĞòÒªÇó£¬ÓĞÍ¼ÏñÔ´Êı¾İ¾Í¿ÉÒÔ½øĞĞ×ª»»£¬¿ÉÒÔÏÈµ÷ÓÃMV_CC_GetOneFrameTimeout»òÕßMV_CC_RegisterImageCallBackExÉèÖÃ»Øµ÷º¯Êı£¬»ñÈ¡Ò»Ö¡Í¼ÏñÊı¾İ£¬È»ºóÔÙÍ¨¹ı¸Ã½Ó¿Ú×ª»»¸ñÊ½¡£
-             ¸Ã½Ó¿ÚÖ§³ÖÍ¼Ïñ ¿í¡¢¸ß¡¢×Ü³¤×î´óÖÁ UINT_MAX, ÆäÖĞMV_CC_SaveImageEx2Ö§³Ö ¿í¡¢¸ß¡¢×Ü³¤×î´óÖÁ USHRT_MAX
-			 JPEG¸ñÊ½×î´óÖ§³Ö¿í¸ßÎª65500
+ *  @brief  ä¿å­˜å›¾ç‰‡ï¼Œæ”¯æŒBmpå’ŒJpeg.
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstSaveParam                [IN][OUT]       ä¿å­˜å›¾ç‰‡å‚æ•°ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li é€šè¿‡è¯¥æ¥å£å¯ä»¥å°†ä»è®¾å¤‡é‡‡é›†åˆ°çš„åŸå§‹å›¾åƒæ•°æ®è½¬æ¢æˆJPEGæˆ–è€…BMPç­‰æ ¼å¼å¹¶å­˜æ”¾åœ¨æŒ‡å®šå†…å­˜ä¸­ï¼Œç„¶åç”¨æˆ·å¯ä»¥å°†è½¬æ¢ä¹‹åçš„æ•°æ®ç›´æ¥ä¿å­˜æˆå›¾ç‰‡æ–‡ä»¶ã€‚\n
+             \li è¯¥æ¥å£è°ƒç”¨æ— æ¥å£é¡ºåºè¦æ±‚ï¼Œæœ‰å›¾åƒæºæ•°æ®å°±å¯ä»¥è¿›è¡Œè½¬æ¢ï¼Œå¯ä»¥å…ˆè°ƒç”¨ MV_CC_GetOneFrameTimeout() æˆ–è€… MV_CC_RegisterImageCallBackEx() è®¾ç½®å›è°ƒå‡½æ•°ï¼Œè·å–ä¸€å¸§å›¾åƒæ•°æ®ï¼Œç„¶åå†é€šè¿‡è¯¥æ¥å£è½¬æ¢æ ¼å¼ã€‚\n
+             \li è¯¥æ¥å£æ”¯æŒé•¿ä¹˜å®½è‡³UINT_MAXï¼Œå…¶ä¸­ MV_CC_SaveImageEx2() æ”¯æŒé•¿ä¹˜å®½æœ€å¤§è‡³ USHRT_MAXï¼ŒJPEGæ ¼å¼æœ€å¤§æ”¯æŒå®½é«˜ä¸º65500ã€‚
  
  *  @~english
- *  @brief  Save image, support Bmp and Jpeg.
- *  @param  handle                      [IN]            Device handle
- *  @param  pstSaveParam                [IN][OUT]       Save image parameters structure
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Once there is image data, you can call this API to convert the data.
-             You can also call MV_CC_GetOneFrameTimeout or MV_CC_RegisterImageCallBackEx or MV_CC_GetImageBuffer to get one image frame and set the callback function, and then call this API to convert the format.
-             Comparing with the API MV_CC_SaveImageEx2, this API support the parameter nWidth/nHeight/nDataLen to UINT_MAX. 
-			 JPEG format supports a maximum width and height of 65500
+ *  @brief  Saves images, supporting BMP and JPEG. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstSaveParam                [IN][OUT]       It refers to the structure of image saving parameters. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Call this API to convert the collected original images to JPEG or BMP format and save them to specified memory. You can then save the converted data as image files. 
+             This API requires no specific calling sequence. The conversion will be executed when there is any image data. You can call MV_CC_GetOneFrameTimeout() or MV_CC_RegisterImageCallBackEx() to set the callback function and get one image frame, then call this API to convert the format. 
+             This API supports setting the nWidth/nHeight/Length parameter to UINT_MAX: MV_CC_SaveImageEx2() supports setting the max. parameter to USHRT_MAX, and JPEG format supports the max. width and height value 65500.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SaveImageEx3(IN void* handle, IN OUT MV_SAVE_IMAGE_PARAM_EX3* pstSaveParam);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ±£´æÍ¼Ïñµ½ÎÄ¼ş
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstSaveFileParam            [IN][OUT]       ±£´æÍ¼Æ¬ÎÄ¼ş²ÎÊı½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÖ§³ÖBMP/JPEG/PNG/TIFF¡£
-             ¸Ã½Ó¿ÚÖ§³ÖÍ¼Ïñ ¿í¡¢¸ß¡¢×Ü³¤×î´óÖÁ UINT_MAX
-			 JPEG¸ñÊ½×î´óÖ§³Ö¿í¸ßÎª65500
+ *  @brief  ä¿å­˜å›¾åƒåˆ°æ–‡ä»¶
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstSaveFileParam            [IN][OUT]       ä¿å­˜å›¾ç‰‡æ–‡ä»¶å‚æ•°ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li è¯¥æ¥å£æ”¯æŒBMP/JPEG/PNG/TIFFã€‚\n
+             \li  è¯¥æ¥å£æ”¯æŒä¿å­˜çš„å›¾åƒé•¿ä¹˜å®½è‡³UINT_MAXï¼Œ MV_CC_SaveImageToFile() æ”¯æŒé•¿ä¹˜å®½æœ€å¤§è‡³USHRT_MAXã€‚JPEGæ ¼å¼æœ€å¤§æ”¯æŒå®½é«˜ä¸º65500 pxã€‚ \n
+             \li  è¯¥æ¥å£æ˜¯ MV_CC_SaveImageToFile() æ¥å£çš„æ‰©å±•æ¥å£ã€‚
+             
  *  @~english
- *  @brief  Save the image file.
- *  @param  handle                      [IN]            Device handle
- *  @param  pstSaveFileParam            [IN][OUT]       Save the image file parameter structure
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This API support BMP/JPEG/PNG/TIFF.
-             this API support the parameter nWidth/nHeight/nDataLen to UINT_MAX. 
-			 JPEG format supports a maximum width and height of 65500
+ *  @brief  Saves image to file (extended API 1) 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstSaveFileParam            [IN][OUT]       It refers to the structure of image file saving parameters. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks It supports saving images in BMP, JPEG, PNG, and TIFF formats. 
+             this API support the parameter nWidth/nHeight/Length to UINT_MAX. 
+			 For images in JPEG format, the supported max. width and height values are 65500. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SaveImageToFileEx(IN void* handle, IN OUT MV_SAVE_IMAGE_TO_FILE_PARAM_EX* pstSaveFileParam);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ±£´æÍ¼Ïñµ½ÎÄ¼ş
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstImage                    [IN]            Í¼ÏñĞÅÏ¢
- *  @param  pSaveImageParam             [IN]            ´æÍ¼²ÎÊı
- *  @param  pcImagePath                 [IN]            ´æÍ¼Â·¾¶
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÖ§³Ö4GÒÔÉÏ³¬´óÍ¼µÄPNG/TIFF´æÍ¼£¬ÆäËû·Ç³¬´óÍ¼ÏñÖ§³ÖBMP/JPEG/TIFF/PNG
-			 JPEG¸ñÊ½×î´óÖ§³Ö¿í¸ßÎª65500
+ *  @brief  ä¿å­˜å›¾åƒåˆ°æ–‡ä»¶
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstImage                    [IN]            å›¾åƒä¿¡æ¯
+ *  @param  pSaveImageParam             [IN]            å­˜å›¾å‚æ•°
+ *  @param  pcImagePath                 [IN]            å­˜å›¾è·¯å¾„ï¼Œ\if WINDOWS é•¿åº¦ä¸è¶…è¿‡260å­—èŠ‚ \endif \if LINUX ä¸è¶…è¿‡255å­—èŠ‚ \endif
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li è¯¥æ¥å£æ”¯æŒ4Gä»¥ä¸Šè¶…å¤§å›¾çš„PNG/TIFFå­˜å›¾ï¼Œéè¶…å¤§å›¾åƒæ”¯æŒBMP/JPEG/TIFF/PNGã€‚ \n
+			 \li JPEGæ ¼å¼æœ€å¤§æ”¯æŒå®½é«˜ä¸º65500 pxã€‚
+             
  *  @~english
- *  @brief  Save the image file.
- *  @param  handle                      [IN]            Device handle
- *  @param  pstImage                    [IN]            Image information
- *  @param  pSaveImageParam             [IN]            Save the image file parameter structure
- *  @param  pcImagePath                 [IN]            Image path
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks When the image size exceeds 4GB, only PNG and TIFF are supported. Otherwise, BMP,JPEG,TIFF and PNG are supported.
-			 JPEG format supports a maximum width and height of 65500
+ *  @brief  Saves image to file (extended API 2) 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstImage                    [IN]            It refers to the image information. 
+ *  @param  pSaveImageParam             [IN]            It refers to the image saving parameter. 
+ *  @param  pcImagePath                 [IN]            It refers to the image saving path. On  Windows length does not exceed 260 bytes, and on Linux, it does not exceed 255 bytes.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks It supports saving images over 4 GB in PNG and TIFF formats, and images under 4 GB in BMP, JPEG, TIFF, and PNG formats. 
+			 For images in JPEG format, the supported max. width and height values are 65500. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SaveImageToFileEx2(IN void* handle, IN MV_CC_IMAGE* pstImage, IN MV_CC_SAVE_IMAGE_PARAM* pSaveImageParam, IN const char* pcImagePath);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Í¼ÏñĞı×ª
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstRotateParam              [IN][OUT]       Í¼ÏñĞı×ª²ÎÊı½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÖ»Ö§³ÖMONO8/RGB24/BGR24¸ñÊ½Êı¾İµÄ90/180/270¶ÈĞı×ª¡£
+ *  @brief  å›¾åƒæ—‹è½¬
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstRotateParam              [IN][OUT]       å›¾åƒæ—‹è½¬å‚æ•°ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£åªæ”¯æŒMONO8/RGB24/BGR24æ ¼å¼æ•°æ®çš„90/180/270åº¦æ—‹è½¬ã€‚
  
  *  @~english
- *  @brief  Rotate Image
- *  @param  handle                      [IN]            Device handle
- *  @param  pstRotateParam              [IN][OUT]       Rotate image parameter structure
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This API only support 90/180/270 rotation of data in the MONO8/RGB24/BGR24 format.
+ *  @brief  Rotates images. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstRotateParam              [IN][OUT]       It refers to image rotation parameters structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks This API only supports 90Â°, 180Â°, and 270Â° rotation of images in Mono 8, RGB 24, and BGR 24 formats. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_RotateImage(IN void* handle, IN OUT MV_CC_ROTATE_IMAGE_PARAM* pstRotateParam);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Í¼Ïñ·­×ª
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstFlipParam                [IN][OUT]       Í¼Ïñ·­×ª²ÎÊı½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¸Ã½Ó¿ÚÖ»Ö§³ÖMONO8/RGB24/BGR24¸ñÊ½Êı¾İµÄ´¹Ö±ºÍË®Æ½·­×ª¡£
+ *  @brief  å›¾åƒç¿»è½¬
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstFlipParam                [IN][OUT]       å›¾åƒç¿»è½¬å‚æ•°ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è¯¥æ¥å£åªæ”¯æŒMONO8/RGB24/BGR24æ ¼å¼æ•°æ®çš„å‚ç›´å’Œæ°´å¹³ç¿»è½¬ã€‚
  
  *  @~english
- *  @brief  Flip Image
- *  @param  handle                      [IN]            Device handle
- *  @param  pstFlipParam                [IN][OUT]       Flip image parameter structure
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This API only support vertical and horizontal reverse of data in the MONO8/RGB24/BGR24 format.
+ *  @brief  Flips images
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstFlipParam                [IN][OUT]       It refers to the structure of image flipping parameters. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks This API only support vertical and horizontal flipping of images in Mono 8, RGB 24, and BGR 24 formats. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_FlipImage(IN void* handle, IN OUT MV_CC_FLIP_IMAGE_PARAM* pstFlipParam);
 
-
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÏñËØ¸ñÊ½×ª»»
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstCvtParam                 [IN][OUT]       ÏñËØ¸ñÊ½×ª»»²ÎÊı½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks Í¨¹ı½«½Ó¿Ú¿ÉÒÔ½«´ÓÉè±¸²É¼¯µ½µÄÔ­Ê¼Í¼ÏñÊı¾İ×ª»»³ÉÓÃ»§ËùĞèµÄÏñËØ¸ñÊ½²¢´æ·ÅÔÚÖ¸¶¨ÄÚ´æÖĞ¡£
-             ¸Ã½Ó¿Úµ÷ÓÃÎŞ½Ó¿ÚË³ĞòÒªÇó£¬ÓĞÍ¼ÏñÔ´Êı¾İ¾Í¿ÉÒÔ½øĞĞ×ª»»£¬¿ÉÒÔÏÈµ÷ÓÃMV_CC_GetOneFrameTimeout»òÕßMV_CC_RegisterImageCallBackExÉèÖÃ»Øµ÷º¯Êı£¬
-             »ñÈ¡Ò»Ö¡Í¼ÏñÊı¾İ£¬È»ºóÔÙÍ¨¹ı¸Ã½Ó¿Ú×ª»»¸ñÊ½¡£Èç¹ûÉè±¸µ±Ç°²É¼¯Í¼ÏñÊÇJPEGÑ¹ËõµÄ¸ñÊ½£¬Ôò²»Ö§³Öµ÷ÓÃ¸Ã½Ó¿Ú½øĞĞ×ª»»¡£
-             ¸Ã½Ó¿ÚÖ§³ÖÍ¼Ïñ ¿í¡¢¸ß¡¢×Ü³¤×î´óÖÁ UINT_MAX, ÆäÖĞMV_CC_ConvertPixelTypeÖ§³Ö ¿í¡¢¸ß¡¢×Ü³¤×î´óÖÁ USHRT_MAX
+ *  @brief  åƒç´ æ ¼å¼è½¬æ¢
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstCvtParam                 [IN][OUT]       åƒç´ æ ¼å¼è½¬æ¢å‚æ•°ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li é€šè¿‡è¯¥æ¥å£å¯ä»¥å°†ä»è®¾å¤‡é‡‡é›†åˆ°çš„åŸå§‹å›¾åƒæ•°æ®è½¬æ¢æˆç”¨æˆ·æ‰€éœ€çš„åƒç´ æ ¼å¼å¹¶å­˜æ”¾åœ¨æŒ‡å®šå†…å­˜ä¸­ã€‚ \n
+             \li è¯¥æ¥å£è°ƒç”¨æ— æ¥å£é¡ºåºè¦æ±‚ï¼Œæœ‰å›¾åƒæºæ•°æ®å°±å¯ä»¥è¿›è¡Œè½¬æ¢ï¼Œå¯ä»¥å…ˆè°ƒç”¨ MV_CC_GetOneFrameTimeout() æˆ–è€… MV_CC_RegisterImageCallBackEx() è®¾ç½®å›è°ƒå‡½æ•°ï¼Œè·å–ä¸€å¸§å›¾åƒæ•°æ®ï¼Œç„¶åå†é€šè¿‡è¯¥æ¥å£è½¬æ¢æ ¼å¼ã€‚å¦‚æœè®¾å¤‡å½“å‰é‡‡é›†å›¾åƒæ˜¯JPEGå‹ç¼©çš„æ ¼å¼ï¼Œåˆ™ä¸æ”¯æŒè°ƒç”¨è¯¥æ¥å£è¿›è¡Œè½¬æ¢ã€‚ \n
+             \li è¯¥æ¥å£æ”¯æŒè½¬æ¢çš„å›¾åƒé•¿ä¹˜å®½è‡³UINT_MAXã€‚ \n
+             \li åƒç´ æ ¼å¼è½¬æ¢èƒ½åŠ›çš„è¯¦æƒ…ï¼Œå¦‚ä¸‹è¡¨æ‰€ç¤ºã€‚ç¬¬ä¸€åˆ—ä¸ºè¾“å…¥åƒç´ æ ¼å¼ï¼Œç¬¬ä¸€è¡Œä¸ºè½¬æ¢åçš„åƒç´ æ ¼å¼ã€‚â€œ  âˆš  â€ä»£è¡¨å¯ä»¥è½¬æ¢ä¸ºç›®æ ‡åƒç´ æ ¼å¼ã€‚
+                | è¾“å…¥æ ¼å¼\è¾“å‡ºæ ¼å¼ | Mono8 | RGB24 | BGR24 | RGB24 Planar | YUV422 | YUV422 YUYV |
+                | ----------------- | ----- | ----- | ----- | ---------- | ------ | ----------- |
+                | Mono8             |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | Mono10            |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | Mono10P           |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | Mono12            |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | Mono12P           |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerGR8          |   âˆš   |   âˆš   |   âˆš   |      âˆš     |   âˆš    |      âˆš      |
+                | BayerRG8          |   âˆš   |   âˆš   |   âˆš   |      âˆš     |   âˆš    |      âˆš      |
+                | BayerGB8          |   âˆš   |   âˆš   |   âˆš   |      âˆš     |   âˆš    |      âˆš      |
+                | BayerBG8          |   âˆš   |   âˆš   |   âˆš   |      âˆš     |   âˆš    |      âˆš      |
+                | BayerRBGG8        |   âˆš   |   âˆš   |   âˆš   |      âˆš     |   âˆš    |      âˆš      |
+                | BayerBRGG8        |   âˆš   |   âˆš   |   âˆš   |      âˆš     |   âˆš    |      âˆš      |
+                | BayerGR10         |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerRG10         |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerGB10         |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerBG10         |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerGR12         |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerRG12         |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerGB12         |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerBG12         |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerGR10P        |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerRG10P        |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerGB10P        |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerBG10P        |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerGR12P        |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerRG12P        |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerGB12P        |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | BayerBG12P        |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | RGB8P             |   âˆš   |   âˆš   |   âˆš   |      âˆš     |   âˆš    |      âˆš      |
+                | BGR8P             |   âˆš   |   âˆš   |   âˆš   |      âˆš     |   âˆš    |      âˆš      |
+                | YUV422P           |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
+                | YUV422 YUYV       |   âˆš   |   âˆš   |   âˆš   |            |   âˆš    |      âˆš      |
  
  *  @~english
- *  @brief  Pixel format conversion
- *  @param  handle                      [IN]            Device handle
- *  @param  pstCvtParam                 [IN][OUT]       Convert Pixel Type parameter structure
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This API is used to transform the collected original data to pixel format and save to specified memory. 
-             There is no order requirement to call this API, the transformation will execute when there is image data. 
-             First call MV_CC_GetOneFrameTimeout or MV_CC_RegisterImageCallBackEx to set callback function, and get a frame of image data,
-             then call this API to transform the format.
-             Comparing with the API MV_CC_ConvertPixelType, this API support the parameter nWidth/nHeight/nSrcDataLen to UINT_MAX. 
+ *  @brief  Converts pixel format.
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstCvtParam                 [IN][OUT]       It refers to the structure of pixel format conversion parameters.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API to convert the collected original images to images in required pixel format and save them to specified memory.  
+             This API requires no specific calling sequence. The conversion will be executed when there is any image data. 
+             You can call MV_CC_GetOneFrameTimeout() or MV_CC_RegisterImageCallBackEx() to set the callback function and get one image frame, then call this API to convert the format. 
+             If the collected image is in compressed JPEG format, it cannot be converted via this API. 
+             this API support the parameter nWidth/nHeight/Length to UINT_MAX.
+             Comparing with the API MV_CC_ConvertPixelType, this API support the parameter nWidth/nHeight/Length to UINT_MAX. 
 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_ConvertPixelTypeEx(IN void* handle, IN OUT MV_CC_PIXEL_CONVERT_PARAM_EX* pstCvtParam);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃ²åÖµËã·¨ÀàĞÍ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  nBayerCvtQuality            [IN]            BayerµÄ²åÖµ·½·¨  0-¿ìËÙ 1-¾ùºâ£¨Ä¬ÈÏÎª¾ùºâ£© 2-×îÓÅ 3-×îÓÅ+
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ÉèÖÃÄÚ²¿Í¼Ïñ×ª»»½Ó¿ÚµÄBayer²åÖµËã·¨ÀàĞÍ²ÎÊı£¬MV_CC_ConvertPixelTypeEx¡¢MV_CC_GetImageForRGB/BGR½Ó¿ÚÄÚ²¿Ê¹ÓÃµÄ²åÖµËã·¨ÊÇ¸Ã½Ó¿ÚËùÉè¶¨µÄ¡£
+ *  @brief  è®¾ç½®æ’å€¼ç®—æ³•ç±»å‹
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nBayerCvtQuality            [IN]            Bayerçš„æ’å€¼æ–¹æ³•  0-å¿«é€Ÿ 1-å‡è¡¡ï¼ˆé»˜è®¤ä¸ºå‡è¡¡ï¼‰ 2-æœ€ä¼˜ 3-æœ€ä¼˜+
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è®¾ç½®å†…éƒ¨å›¾åƒè½¬æ¢æ¥å£çš„Bayeræ’å€¼ç®—æ³•ç±»å‹å‚æ•°ï¼Œ MV_CC_ConvertPixelTypeEx() ã€ MV_CC_GetImageForRGB() å’Œ MV_CC_GetImageForBGR() æ¥å£å†…éƒ¨ä½¿ç”¨çš„æ’å€¼ç®—æ³•æ˜¯è¯¥æ¥å£æ‰€è®¾å®šçš„ã€‚
 
  *  @~english
- *  @brief  Interpolation algorithm type setting
- *  @param  handle                      [IN]            Device handle
- *  @param  nBayerCvtQuality            [IN]            Bayer interpolation method  0-Fast 1-Equilibrium 2-Optimal
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Set the bell interpolation quality parameters of the internal image conversion interface, 
-             and the interpolation algorithm used in the MV_CC_ConvertPixelTypeEx and MV_CC_GetImageForRGB/BGR interfaces is set by this interface.
+ *  @brief  Sets the interpolation method of Bayer format. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  nBayerCvtQuality            [IN]            It refers to interpolation method. 0: fast; 1: equilibrated; 2: optimal (default); 3: optimal plus. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Call this API to set the Bayer interpolation algorithm type parameter for the APIs: MV_CC_ConvertPixelTypeEx() , MV_CC_GetImageForRGB() , and MV_CC_GetImageForBGR(). 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetBayerCvtQuality(IN void* handle, IN unsigned int nBayerCvtQuality);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ²åÖµËã·¨Æ½»¬Ê¹ÄÜÉèÖÃ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  bFilterEnable               [IN]            Æ½»¬Ê¹ÄÜ(Ä¬ÈÏ¹Ø±Õ)
- *  @return ³É¹¦£¬·µ»Ø#MV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ÉèÖÃÄÚ²¿Í¼Ïñ×ª»»½Ó¿ÚµÄ±´¶û²åÖµÆ½»¬Ê¹ÄÜ²ÎÊı£¬MV_CC_ConvertPixelTypeEx¡¢MV_CC_SaveImageEx3½Ó¿ÚÄÚ²¿Ê¹ÓÃµÄ²åÖµËã·¨ÊÇ¸Ã½Ó¿ÚËùÉè¶¨µÄ¡£
+ *  @brief  æ’å€¼ç®—æ³•å¹³æ»‘ä½¿èƒ½è®¾ç½®
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  bFilterEnable               [IN]            å¹³æ»‘ä½¿èƒ½(é»˜è®¤å…³é—­)
+ *  @return æˆåŠŸï¼Œè¿”å›#MV_OKï¼›é”™è¯¯ï¼Œè¿”å›é”™è¯¯ç  
+ *  @remarks è®¾ç½®å†…éƒ¨å›¾åƒè½¬æ¢æ¥å£çš„è´å°”æ’å€¼å¹³æ»‘ä½¿èƒ½å‚æ•°ï¼Œ MV_CC_ConvertPixelTypeEx() ã€ MV_CC_SaveImageEx3() å’Œ MV_CC_SaveImageToFileEx() å†…éƒ¨ä½¿ç”¨çš„æ’å€¼ç®—æ³•æ˜¯è¯¥æ¥å£æ‰€è®¾å®šçš„ã€‚
 
  *  @~english
- *  @brief  Filter type of the bell interpolation quality algorithm setting
- *  @param  handle                      [IN]            Device handle
- *  @param  bFilterEnable               [IN]            Filter type enable
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Set the bell interpolation filter type parameters of the internal image conversion interface, 
-             and the interpolation algorithm used in the MV_CC_ConvertPixelTypeEx and MV_CC_SaveImageEx3 interfaces is set by this interface.
+ *  @brief  Enables or disables the smoothing function of interpolation algorithm. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  bFilterEnable               [IN]            Whether to enable the smoothing function of interpolation algorithm (disabled by default). 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks This API is used to enable or disable the smoothing function of Bayer interpolation, and it determines the interpolation algorithm of the APIs: MV_CC_ConvertPixelTypeEx()ã€MV_CC_SaveImageToFileEx and MV_CC_SaveImageEx3(). 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetBayerFilterEnable(IN void* handle, IN bool bFilterEnable);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃBayer¸ñÊ½µÄGammaÖµ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  fBayerGammaValue            [IN]            GammaÖµ:0.1 ~ 4.0
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ÉèÖÃ¸ÃÖµºó£¬ÔÚµ÷ÓÃMV_CC_ConvertPixelTypeEx¡¢MV_CC_SaveImageEx3¡¢MV_CC_SaveImageToFileEx½Ó¿Ú½«Bayer8/10/12/16¸ñÊ½×ª³ÉRGB24/48£¬ RGBA32/64£¬BGR24/48£¬BGRA32/64Ê±ÆğĞ§¡£
+ *  @brief  è®¾ç½®Bayeræ ¼å¼çš„Gammaå€¼
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  fBayerGammaValue            [IN]            Gammaå€¼:0.1 ~ 4.0
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è®¾ç½®è¯¥å€¼åï¼Œåœ¨Bayerå›¾åƒï¼ˆBayer8/10/12/16ï¼‰è½¬RGB/BGRå›¾åƒ(RGB24/48ã€RGBA32/64ã€BGR24/48ã€BGRA32/64)æ—¶èµ·æ•ˆã€‚ \n ç›¸å…³æ¥å£ï¼š MV_CC_ConvertPixelTypeEx() ã€ MV_CC_SaveImageEx3() ã€ MV_CC_SaveImageToFile() ã€‚
 
  *  @~english
- *  @brief  Set Gamma value
- *  @param  handle                      [IN]            Device handle
- *  @param  fBayerGammaValue            [IN]            Gamma value[0.1,4.0]
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After setting the value, it works when calling MV_CC_ConvertPixelTypeEx\MV_CC_SaveImageEx3\MV_CC_SaveImageToFileEx API convert Bayer8/10/12/16 to RGB24/48£¬ RGBA32/64£¬BGR24/48£¬BGRA32/64.
+ *  @brief  Sets the Gamma value in Bayer pattern. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  fBayerGammaValue            [IN]            It refers to the Gamma value, range: [0.1, 4.0].
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks After setting this value, it takes effect when converting Bayer images (Bayer8/10/12/16) to RGB/BGR images (RGB24/48, RGBA32/64, BGR24/48, BGRA32/64). Related API: MV_CC_ConvertPixelTypeEx, MV_CC_SaveImageEx3, MV_CC_SaveImageToFileEx.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetBayerGammaValue(IN void* handle, IN float fBayerGammaValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief   ÉèÖÃMono8/Bayer8/10/12/16¸ñÊ½µÄGammaÖµ
- *  @param   handle                           [IN] Éè±¸¾ä±ú
- *  @param   MvGvspPixelType enSrcPixelType   [IN] ÏñËØ¸ñÊ½,Ö§³ÖPixelType_Gvsp_Mono8,Bayer8/10/12/16
- *  @param   fGammaValue                      [IN] GammaÖµ:0.1 ~ 4.0
- *  @return  ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ÉèÖÃMono8µÄgammaÖµºó£¬ÔÚµ÷ÓÃMV_CC_ConvertPixelTypeEx½Ó¿Ú½«Mono8×ª³ÉMono8Ê±gammaÖµÆğĞ§¡£
- *  @remarks ÉèÖÃBayer8/10/12/16µÄgammaÖµºó£¬ÔÚµ÷ÓÃMV_CC_ConvertPixelTypeEx¡¢MV_CC_SaveImageToFileEx¡¢MV_CC_SaveImageEx3½Ó¿Ú½«Bayer8/10/12/16×ªRGB24/48£¬ RGBA32/64£¬BGR24/48£¬BGRA32/64Ê±gammaÖµÆğĞ§¡£
- *  @remarks ¸Ã½Ó¿Ú¼æÈİMV_CC_SetBayerGammaValue½Ó¿Ú£¬ĞÂÔöÖ§³ÖMono8ÏñËØ¸ñÊ½
+ *  @brief   è®¾ç½®Mono8/Bayer8/10/12/16æ ¼å¼çš„Gammaå€¼
+ *  @param   handle                           [IN] è®¾å¤‡å¥æŸ„
+ *  @param   MvGvspPixelType enSrcPixelType   [IN] åƒç´ æ ¼å¼,æ”¯æŒMono8, Bayerï¼ˆBayer8/10/12/16ï¼‰
+ *  @param   fGammaValue                      [IN] Gammaå€¼:0.1 ~ 4.0
+ *  @return  æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks \li è®¾ç½®Mono8çš„gammaå€¼åï¼Œåœ¨è°ƒç”¨ MV_CC_ConvertPixelTypeEx() å°†Mono8è½¬æˆMono8æ—¶gammaå€¼èµ·æ•ˆã€‚ \n
+ *           \li è®¾ç½®Bayerçš„gammaå€¼åï¼Œåœ¨Bayerå›¾åƒï¼ˆBayer8/10/12/16ï¼‰è½¬RGB/BGRå›¾åƒ(RGB24/48ã€RGBA32/64ã€BGR24/48ã€BGRA32/64)æ—¶èµ·æ•ˆã€‚ç›¸å…³æ¥å£ï¼š MV_CC_ConvertPixelType() ã€ MV_CC_SaveImageToFile() ã€ MV_CC_SaveImageEx3() ã€‚
+ *           \li è¯¥æ¥å£å…¼å®¹ MV_CC_SetBayerGammaValue() ï¼Œæ–°å¢æ”¯æŒMono8åƒç´ æ ¼å¼ã€‚
  
  *  @~english
- *  @brief  Set Gamma value
- *  @param  handle                           [IN]            Device handle
- *  @param  MvGvspPixelType enSrcPixelType   [IN]            PixelType,support PixelType_Gvsp_Mono8,Bayer8/10/12/16
- *  @param  fGammaValue                      [IN]            Gamma value:0.1~ 4.0
- *  @remarks After setting the gamma of Mono8 £¬the gamma value takes effect when calling MV_CC_ConvertPixelTypeEx converts Mono8 to Mono8.
- *  @remarks After setting the gamma of Bayer8/10/12/16, the gamma value takes effect when calling MV_CC_ConvertPixelTypeEx\MV_CC_SaveImageToFileEx\MV_CC_SaveImageEx3 converts Bayer8/10/12/16 to RGB24/48,RGBA32/64,BGR24/48,BGRA32/64.
- *  @remarks This API compatible with MV_CC_SetBayerGammaValue, adds Mono8 PixelType.
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Sets Gamma value of Mono 8 or Bayer 8/10/12/16 pattern. 
+ *  @param  handle                           [IN]            It refers to the device handle.
+ *  @param  MvGvspPixelType enSrcPixelType   [IN]            It refers to the pixel format. Supports PixelType_Gvsp_Mono8 and Bayer 8/10/12/16. 
+ *  @param  fGammaValue                      [IN]            It refers to the Gamma value, range: [0.1, 4.0]. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks The Gamma value in Mono 8 pattern set via this API will be used when MV_CC_ConvertPixelType() is called to convert Mono 8 to Mono 8.
+ *  @remarks The Gamma value in Bayer8/10/12/16 pattern set via this API will be used when calling MV_CC_ConvertPixelTypeEx() , MV_CC_SaveImageEx3() , or MV_CC_SaveImageToFileEx() to convert Bayer 8/10/12/16 format to RGB 24/48, RGBA 32/64, BGR 24/48 or BGRA 32/64. 
+ *  @remarks This API is compatible with MV_CC_SetBayerGammaValue() , and it supports Mono 8 pixel format. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetGammaValue(IN void* handle, IN enum MvGvspPixelType enSrcPixelType, IN float fGammaValue);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃBayer¸ñÊ½µÄGammaĞÅÏ¢
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstGammaParam               [IN]            GammaĞÅÏ¢   
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ÉèÖÃ¸ÃĞÅÏ¢ºó£¬ÔÚµ÷ÓÃMV_CC_ConvertPixelTypeEx¡¢MV_CC_SaveImageEx3¡¢MV_CC_SaveImageToFileEx½Ó¿Ú½«Bayer8/10/12/16¸ñÊ½×ª³ÉRGB24/48£¬ RGBA32/64£¬BGR24/48£¬BGRA32/64Ê±GammaÖµÆğĞ§¡£
+ *  @brief  è®¾ç½®Bayeræ ¼å¼çš„Gammaä¿¡æ¯
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstGammaParam               [IN]            Gammaä¿¡æ¯   
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks è®¾ç½®è¯¥å€¼åï¼Œåœ¨Bayerå›¾åƒï¼ˆBayer8/10/12/16ï¼‰è½¬RGB/BGRå›¾åƒ(RGB24/48ã€RGBA32/64ã€BGR24/48ã€BGRA32/64)æ—¶èµ·æ•ˆã€‚ ç›¸å…³æ¥å£ï¼š MV_CC_ConvertPixelTypeEx() ã€ MV_CC_SaveImageEx3() ã€ MV_CC_SaveImageToFileEx() ã€‚
+ *  @note ä»¥ç›¸æœºå®é™…æ”¯æŒæƒ…å†µä¸ºå‡†ã€‚
 
  *  @~english
- *  @brief  Set Gamma param
- *  @param  handle                      [IN]            Device handle
- *  @param  pstGammaParam               [IN]            Gamma param
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After setting the param, it work in the calling MV_CC_ConvertPixelTypeEx\MV_CC_SaveImageEx3\MV_CC_SaveImageToFileEx API convert Bayer8/10/12/16 to RGB24/48£¬ RGBA32/64£¬BGR24/48£¬BGRA32/64.
+ *  @brief  Sets the Gamma value of Bayer pattern. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstGammaParam               [IN]            It refers to the Gamma information.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks The Gamma value set by this API will be used when calling MV_CC_ConvertPixelTypeEx() , MV_CC_SaveImageEx3(), MV_CC_SaveImageToFileEx(), to convert Bayer 8/10/12/16 format to RGB24/48, BGR24/48, RGBA32/64, or BGRA32/64.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetBayerGammaParam(IN void* handle, IN MV_CC_GAMMA_PARAM* pstGammaParam);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃBayer¸ñÊ½µÄCCMÊ¹ÄÜºÍ¾ØÕó£¬Á¿»¯ÏµÊıÄ¬ÈÏ1024
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstCCMParam                 [IN]            CCM²ÎÊı
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¿ªÆôCCM²¢ÉèÖÃCCM¾ØÕóºó£¬ÔÚµ÷ÓÃMV_CC_ConvertPixelTypeEx¡¢MV_CC_SaveImageEx3½Ó¿Ú½«Bayer8/10/12/16¸ñÊ½×ª³ÉRGB24/48£¬ RGBA32/64£¬BGR24/48£¬BGRA32/64Ê±ÆğĞ§¡£ 
+ *  @brief  è®¾ç½®Bayeræ ¼å¼çš„CCMä½¿èƒ½å’ŒçŸ©é˜µï¼Œé‡åŒ–ç³»æ•°é»˜è®¤1024
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstCCMParam                 [IN]            CCMå‚æ•°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks å¼€å¯CCMå¹¶è®¾ç½®CCMçŸ©é˜µåï¼Œåœ¨Bayerå›¾åƒï¼ˆBayer8/10/12/16ï¼‰è½¬RGB/BGRå›¾åƒ(RGB24/48ã€RGBA32/64ã€BGR24/48ã€BGRA32/64)æ—¶èµ·æ•ˆã€‚ ç›¸å…³æ¥å£ï¼š MV_CC_ConvertPixelTypeEx() ã€ MV_CC_SaveImageEx3() ã€ MV_CC_SaveImageToFileEx() ã€‚ 
 
  *  @~english
- *  @brief  Set CCM param,Scale default 1024
- *  @param  handle                      [IN]            Device handle
- *  @param  pstCCMParam                 [IN]            CCM parameter structure
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After enable the color correction and set the color correction matrix, It work in the calling MV_CC_ConvertPixelTypeEx\MV_CC_SaveImageEx3 API convert Bayer8/10/12/16 to RGB24/48£¬ RGBA32/64£¬BGR24/48£¬BGRA32/64.
+ *  @brief  Enables/disables CCM and sets CCM parameters in Bayer pattern. The default quantitative scale is 1024. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstCCMParam                 [IN]            It refers to the CCM parameters. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks After the API is called to enable CCM and set the CCM, the CCM parameters will take effect when MV_CC_ConvertPixelTypeEx() or MV_CC_SaveImageEx3() or MV_CC_SaveImageToFileEx() is called to convert Bayer 8/10/12/16 format to RGB 24/48, RGBA 32/64, BGR 24/48, or BGRA 32/64. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetBayerCCMParam(IN void* handle, IN MV_CC_CCM_PARAM* pstCCMParam);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÉèÖÃBayer¸ñÊ½µÄCCMÊ¹ÄÜºÍ¾ØÕó
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstCCMParam                 [IN]            CCM²ÎÊı
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ¿ªÆôCCM²¢ÉèÖÃCCM¾ØÕóºó£¬ÔÚµ÷ÓÃMV_CC_ConvertPixelTypeEx¡¢MV_CC_SaveImageEx3½Ó¿Ú½«Bayer8/10/12/16¸ñÊ½×ª³ÉRGB24/48£¬ RGBA32/64£¬BGR24/48£¬BGRA32/64Ê±ÆğĞ§¡£
+ *  @brief  è®¾ç½®Bayeræ ¼å¼çš„CCMä½¿èƒ½å’ŒçŸ©é˜µ
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstCCMParam                 [IN]            CCMå‚æ•°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks å¼€å¯CCMå¹¶è®¾ç½®CCMçŸ©é˜µåï¼Œåœ¨Bayerå›¾åƒï¼ˆBayer8/10/12/16ï¼‰è½¬RGB/BGRå›¾åƒ(RGB24/48ã€RGBA32/64ã€BGR24/48ã€BGRA32/64)æ—¶èµ·æ•ˆã€‚ ç›¸å…³æ¥å£ï¼š MV_CC_ConvertPixelTypeEx() ã€ MV_CC_SaveImageEx3() ã€ MV_CC_SaveImageToFileEx() ã€‚
 
  *  @~english
- *  @brief  Set CCM param
- *  @param  handle                      [IN]            Device handle
- *  @param  pstCCMParam                 [IN]            CCM parameter structure
+ *  @brief  Enables and disables CCM, and sets CCM parameters of Bayer pattern. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstCCMParam                 [IN]            It refers to the color correction parameter structure. 
  *  @return Success, return MV_OK. Failure, return error code
- *  @remarks After enable the color correction and set the color correction matrix, It work in the calling MV_CC_ConvertPixelTypeEx\MV_CC_SaveImageEx3 API convert Bayer8/10/12/16 to RGB24/48£¬ RGBA32/64£¬BGR24/48£¬BGRA32/64.
+ *  @remarks After the API is called to enable CCM and set the CCM, the CCM parameters will take effect when MV_CC_ConvertPixelTypeEx() or MV_CC_SaveImageEx3() or MV_CC_SaveImageToFileEx() is called to convert Bayer 8/10/12/16 format to RGB 24/48, RGBA 32/64, BGR 24/48, or BGRA 32/64. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_SetBayerCCMParamEx(IN void* handle, IN MV_CC_CCM_PARAM_EX* pstCCMParam);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  Í¼Ïñ¶Ô±È¶Èµ÷½Ú
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstContrastParam            [IN][OUT]       ¶Ô±È¶Èµ÷½Ú²ÎÊı
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
+ *  @brief  å›¾åƒå¯¹æ¯”åº¦è°ƒèŠ‚
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstContrastParam            [IN][OUT]       å¯¹æ¯”åº¦è°ƒèŠ‚å‚æ•°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
  *  @remarks 
 
  *  @~english
- *  @brief  Adjust image contrast
- *  @param  handle                      [IN]            Device handle
- *  @param  pstContrastParam            [IN][OUT]       Contrast parameter structure
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Adjusts image contrast. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstContrastParam            [IN][OUT]       It refers to the contrast parameter structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
  *  @remarks 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_ImageContrast(IN void* handle, IN OUT MV_CC_CONTRAST_PARAM* pstContrastParam);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÎŞËğ½âÂë
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstDecodeParam              [IN][OUT]       ÎŞËğ½âÂë²ÎÊı½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
- *  @remarks ½«´ÓÏà»úÖĞÈ¡µ½µÄÎŞËğÑ¹ËõÂëÁ÷½âÂë³ÉÂãÊı¾İ£¬Í¬Ê±Ö§³Ö½âÎöµ±Ç°Ïà»úÊµÊ±Í¼ÏñµÄË®Ó¡ĞÅÏ¢£¨Èç¹ûÊäÈëµÄÎŞËğÂëÁ÷²»ÊÇµ±Ç°Ïà»ú»òÕß²»ÊÇÊµÊ±È¡Á÷µÄ£¬ÔòË®Ó¡½âÎö¿ÉÄÜÒì³££©;
-			 Èô½âÂëÊ§°Ü£¬Çë¼ì²éÒÔÏÂÇé¿ö£º£¨1£©ĞèÒªCPUÖ§³Ö SSE AVXÖ¸Áî¼¯£¨2£©Èôµ±Ç°Ö¡Òì³££¨¶ª°üµÈ£©,¿ÉÄÜµ¼ÖÂ½âÂëÒì³££¨3£©Ïà»ú³öÍ¼Òì³££¬ ¼´Ê¹²»¶ª°üÒ²»áÒì³£
+ *  @brief  å›¾åƒå»ç´«è¾¹
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstPurpleFringingParam      [IN][OUT]       å»ç´«è¾¹å‚æ•°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks åƒç´ æ ¼å¼ä»…æ”¯æŒPixelType_Gvsp_RGB8_Packedå’ŒPixelType_Gvsp_BGR8_Packed
 
  *  @~english
- *  @brief  High Bandwidth Decode
- *  @param  handle                      [IN]            Device handle
- *  @param  pstDecodeParam              [IN][OUT]       High Bandwidth Decode parameter structure
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks Decode the lossless compressed data from the camera into raw data£¬At the same time, it supports parsing the watermark information of the real-time image of the current camera (if the input lossless code stream is not the current camera or is not real-time streaming, the watermark parsing may be abnormal);
-			 If decoding fails, please check the following: (1) The CPU is required to support the SSE AVX instruction set. (2) If the current frame is abnormal (packet loss, etc.), it may cause decoding exceptions. (3) The camera plot is abnormal, even if there is no packet loss, it may cause exceptions
+ *  @brief  Corrects purple fringing of the image. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstPurpleFringingParam      [IN][OUT]       It refers to purple fringing correction parameter. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API only supports processing images in PixelType_Gvsp_RGB8_Packed and PixelType_Gvsp_BGR8_Packed formats. 
+ *  ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_PurpleFringing(IN void* handle, IN MV_CC_PURPLE_FRINGING_PARAM* pstPurpleFringingParam);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è®¾ç½®ISPå‚æ•°
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstParam                    [IN]            ISPé…ç½®å‚æ•°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks  è¯¥æ¥å£ä»…æ”¯æŒwindowså¹³å°
+
+ *  @~english
+ *  @brief  Sets ISP parameters. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstParam                    [IN][OUT]       It refers to the ISP parameter structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks This API only supports windows platform.
+ *  ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_SetISPConfig(void* handle, IN MV_CC_ISP_CONFIG_PARAM* pstParam);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  å¯¹å›¾åƒè¿›è¡ŒISPç®—æ³•å¤„ç†
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstInputImage               [IN]            è¾“å…¥å›¾åƒç»“æ„ä½“
+ *  @param  pstOutputImage              [IN][OUT]       è¾“å‡ºå›¾åƒç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks éœ€è¦å…ˆè°ƒç”¨ MV_CC_SetISPConfig() ä¼ å…¥é…ç½®æ–‡ä»¶, é…ç½®æ–‡ä»¶ç”±ISPå·¥å…·ç”Ÿæˆ
+ *  @remarks  è¯¥æ¥å£ä»…æ”¯æŒwindowså¹³å°
+
+ *  @~english
+ *  @brief  Processes the images with ISP algorithm. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstInputImage               [IN]            It refers to the input image structure. 
+ *  @param  pstOutputImage              [IN][OUT]       It refers to the output image structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Before calling this API, call MV_CC_SetISPConfig() to import configuration file generated by the ISP tool. 
+ *  @remarks This API only supports windows platform.
+ *  ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_ISPProcess(void* handle, IN MV_CC_IMAGE* pstInputImage, MV_CC_IMAGE* pstOutputImage);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  æ— æŸè§£ç 
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstDecodeParam              [IN][OUT]       æ— æŸè§£ç å‚æ•°ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks å°†ä»ç›¸æœºä¸­å–åˆ°çš„æ— æŸå‹ç¼©ç æµè§£ç æˆè£¸æ•°æ®ï¼ŒåŒæ—¶æ”¯æŒè§£æå½“å‰ç›¸æœºå®æ—¶å›¾åƒçš„æ°´å°ä¿¡æ¯ï¼ˆå¦‚æœè¾“å…¥çš„æ— æŸç æµä¸æ˜¯å½“å‰ç›¸æœºæˆ–è€…ä¸æ˜¯å®æ—¶å–æµçš„ï¼Œåˆ™æ°´å°è§£æå¯èƒ½å¼‚å¸¸ï¼‰;
+            è‹¥è§£ç å¤±è´¥ï¼Œè¯·æ£€æŸ¥ä»¥ä¸‹æƒ…å†µï¼š
+            \li CPUæ˜¯å¦æ”¯æŒ SSE AVXæŒ‡ä»¤é›†ã€‚
+            \li å½“å‰å¸§æ˜¯å¦å¼‚å¸¸ï¼ˆä¸¢åŒ…ç­‰ï¼‰ï¼Œè‹¥å­˜åœ¨ï¼Œå¯èƒ½å¯¼è‡´è§£ç å¼‚å¸¸ã€‚
+            \li ç›¸æœºå‡ºå›¾æ˜¯å¦å¼‚å¸¸ï¼Œå³ä½¿ä¸ä¸¢åŒ…ä¹Ÿä¼šå¼‚å¸¸ã€‚
+
+ *  @~english
+ *  @brief  Decodes lossless compression stream into raw data. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstDecodeParam              [IN][OUT]       It refers to the structure of lossless decoding parameters. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks Supports decoding the lossless compression stream of camera to raw data, and parsing the watermark of real-time images of the current camera. If the inputted lossless stream is not real-time or does not belong to the current camera, an exception may occur during watermark parsing. 
+			 If the decoding fails, check if it is one of the following circumstances: 
+             (1) CPU does not support SSE AVX instruction set.
+             (2) IException occurs on the current frame (e.g., packet loss).
+             (3) Exception occurs on image generating from camera, even without packet loss. 
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_HB_Decode(IN void* handle, IN OUT MV_CC_HB_DECODE_PARAM* pstDecodeParam);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÔÚÍ¼ÏñÉÏ»æÖÆ¾ØĞÎ¿ò¸¨ÖúÏß
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pRectInfo                   [IN]            ¾ØĞÎ¸¨ÖúÏßµÄĞÅÏ¢
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks  ¸Ã½Ó¿Ú½öÖ§³ÖwindowsÆ½Ì¨
+ *  @brief  å¼€å§‹å½•åƒ
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstRecordParam              [IN]            å½•åƒå‚æ•°ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @note   è¯¥æ¥å£æœ€å¤§æ”¯æŒWidthÃ—Heightä¸º8192Ã—8192å¤§å°ï¼Œæœ€å°æ”¯æŒ96Ã—96ã€‚è‹¥è¶…å‡ºï¼Œä¼šå¯¼è‡´è°ƒç”¨ MV_CC_InputOneFrame() é”™è¯¯ã€‚
  
  *  @~english
- *  @brief  Draw Rect Auxiliary Line
- *  @param  handle                      [IN]            Device handle
- *  @param  pRectInfo                   [IN]            Rect Auxiliary Line Info
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface only supports windows platform.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_DrawRect(IN void* handle, IN MVCC_RECT_INFO* pRectInfo);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ÔÚÍ¼ÏñÉÏ»æÖÆÔ²ĞÎ¸¨ÖúÏß
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pCircleInfo                 [IN]            Ô²ĞÎ¸¨ÖúÏßµÄĞÅÏ¢
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks  ¸Ã½Ó¿Ú½öÖ§³ÖwindowsÆ½Ì¨
- 
- *  @~english
- *  @brief  Draw Circle Auxiliary Line
- *  @param  handle                      [IN]            Device Handle
- *  @param  pCircleInfo                 [IN]            Circle Auxiliary Line Info
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks This interface only supports windows platform.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_DrawCircle(IN void* handle, IN MVCC_CIRCLE_INFO* pCircleInfo);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ÔÚÍ¼ÏñÉÏ»æÖÆÏßÌõ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pLinesInfo                  [IN]            ÏßÌõ¸¨ÖúÏßĞÅÏ¢
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë
- *  @remarks  ¸Ã½Ó¿Ú½öÖ§³ÖwindowsÆ½Ì¨
- 
- *  @~english
- *  @brief  Draw Line Auxiliary Line
- *  @param  handle                      [IN]            Device Handle
- *  @param  pLinesInfo                  [IN]            Linear Auxiliary Line Info
- *  @return Success, return MV_OK. Failure, return error code
- *  @remarks  This interface only supports windows platform.
- ***********************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_DrawLines(IN void* handle, IN MVCC_LINES_INFO* pLinesInfo);
-
-/********************************************************************//**
- *  @~chinese
- *  @brief  ¿ªÊ¼Â¼Ïñ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstRecordParam              [IN]            Â¼Ïñ²ÎÊı½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
-			¸Ã½Ó¿Ú×î´óÖ§³ÖWidth*HeightÎª8000*8000´óĞ¡£¬·ñÔò»áµ¼ÖÂµ÷ÓÃMV_CC_InputOneFrame½Ó¿Ú´íÎó¡£
- 
- *  @~english
- *  @brief  Start Record
- *  @param  handle                      [IN]            Device handle
- *  @param  pstRecordParam              [IN]            Record param structure
- *  @return Success, return MV_OK. Failure, return error code
-	The maximum supported width * height of this interface is 8000 * 8000, otherwise it will result in calling MV_ CC_ InputOneFrame interface error.
+ *  @brief  Starts recording. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstRecordParam              [IN]            It refers to the recording parameter structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks  The max. supported width Ã— height is 8192x8192. The min. supported width Ã— height is 96x96. If the value exceeds, an error will occur when calling MV_CC_InputOneFrame().
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_StartRecord(IN void* handle, IN MV_CC_RECORD_PARAM* pstRecordParam);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÊäÈëÂ¼ÏñÊı¾İ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstInputFrameInfo           [IN]            Â¼ÏñÊı¾İ½á¹¹Ìå
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
+ *  @brief  è¾“å…¥å½•åƒæ•°æ®
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstInputFrameInfo           [IN]            å½•åƒæ•°æ®ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks ä¸æ”¯æŒHBå’ŒJPEGç›´æ¥è¾“å…¥ï¼Œéœ€è¦å…ˆè§£ç ã€‚
  
  *  @~english
- *  @brief  Input RAW data to Record
- *  @param  handle                      [IN]            Device handle
- *  @param  pstInputFrameInfo           [IN]            Record data structure
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Inputs raw data for recording. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstInputFrameInfo           [IN]            It refers to the record data structure. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Direct input of HB and JPEG is not supported; decoding is required first.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_InputOneFrame(IN void* handle, IN MV_CC_INPUT_FRAME_INFO * pstInputFrameInfo);
 
+
 /********************************************************************//**
  *  @~chinese
- *  @brief  Í£Ö¹Â¼Ïñ
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @return ³É¹¦£¬·µ»ØMV_OK£»´íÎó£¬·µ»Ø´íÎóÂë 
+ *  @brief  è¾“å…¥å½•åƒæ•°æ®
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstInputFrameInfo           [IN]            å½•åƒæ•°æ®ç»“æ„ä½“
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ *  @remarks æ”¯æŒHBå’ŒJPEGç›´æ¥è¾“å…¥ï¼ŒSDKå†…éƒ¨è§£ç ã€‚
  
  *  @~english
- *  @brief  Stop Record
- *  @param  handle                      [IN]            Device handle
- *  @return Success, return MV_OK. Failure, return error code
+ *  @brief  Inputs raw data for recording. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstInputFrameInfo           [IN]            It refers to the record data structure. 
+ *  @return Direct input of HB and JPEG is supported, with decoding handled internally by the SDK.
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_InputOneFrameEx(IN void* handle, IN MV_CC_INPUT_FRAME_INFO_EX * pstInputFrameInfo);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  åœæ­¢å½•åƒ
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚ 
+ 
+ *  @~english
+ *  @brief  Stops recording. 
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
  ************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_StopRecord(IN void* handle);
 
 /********************************************************************//**
  *  @~chinese
- *  @brief  ÖØ¹¹Í¼Ïñ(ÓÃÓÚ·ÖÊ±ÆØ¹â¹¦ÄÜ)
- *  @param  handle                      [IN]            Éè±¸¾ä±ú
- *  @param  pstReconstructParam         [IN][OUT]       ÖØ¹¹Í¼Ïñ²ÎÊı
- *  @return ³É¹¦£¬·µ»ØMV_OK£¬Ê§°Ü£¬·µ»Ø´íÎóÂë¡£
- *  @remarks Í¼Ïñ·Ö¸îÖ§³ÖÈÎÒâÏñËØ¸ñÊ½£¬Í¼Ïñ·Ö¸îÓ¦ÓëÏßÕóÏà»úµÄ¡°MultiLightControl¡±½Úµã´îÅäÊ¹ÓÃ£¬¸Ã½Úµã¿ÉÉèÖÃ¶à¸ö²»Í¬µÄÆØ¹âÖµ£¬ÈçMultiLightControl=2,
-             Ïà»ú»á½«Á½¸ö²»Í¬ÆØ¹âÖµËù¶ÔÓ¦µÄÁ½ÕÅÍ¼Ïñ½»µşºÏ²¢ÎªÒ»ÕÅÍ¼Ïñ(Êµ¼Ê¸ß¶ÈÎªÁ½ÕÅÍ¼ÏñµÄ¸ß¶È)·¢ËÍ¸øÉÏ²ãÓ¦ÓÃ³ÌĞò£¬
-             µ÷ÓÃ¸Ã½Ó¿Ú²¢´«Èë·ÖÊ±ÆØ¹âÖµnExposureNumÎª2£¬¿É½«Ïà»ú·¢ËÍµÄÒ»ÕÅÍ¼Ïñ·Ö¸îÎª2ÕÅÍ¼Ïñ£¬ÕâÁ½ÕÅÍ¼Ïñ·Ö±ğ¶ÔÓ¦Ò»¸öÆØ¹âÖµ¡£
-             ÈôÊ¹ÓÃÆÕÍ¨Ïà»ú»òÎ´´ò¿ªÏßÕóÏà»úµÄ¡°MultiLightControl¡±½Úµã£¬ÔòÍ¼Ïñ·Ö¸îÎŞÒâÒå£¬Ö»ÊÇ½«Í¼Ïñ°´ĞĞ·Ö¸îÎª2£¬3£¬4ÕÅÍ¼Ïñ£¬
-             Ã¿ÕÅÍ¼ÏñµÄ¸ß¶È±äÎªÔ­Í¼ÏñµÄ1/2£¬1/3£¬1/4(ÓÉnExposureNum¾ö¶¨)¡£
+ *  @brief  é‡æ„å›¾åƒ(ç”¨äºåˆ†æ—¶æ›å…‰åŠŸèƒ½)
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstReconstructParam         [IN][OUT]       é‡æ„å›¾åƒå‚æ•°
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks ä½¿ç”¨æ—¶ï¼Œéœ€ä¸çº¿é˜µç›¸æœºçš„åˆ†æ—¶é¢‘é—ªæˆ–åˆ†æ—¶æ›å…‰ç­‰åœºæ™¯æ­é…ã€‚å‡è®¾è®¾ç½®åˆ†æ—¶æ›å…‰èŠ‚ç‚¹ä¸º2ï¼Œåˆ™ç›¸æœºä¼šå°†2ä¸ªä¸åŒæ›å…‰å€¼æ‰€å¯¹åº”çš„ä¸¤å¼ å›¾åƒäº¤å åˆå¹¶ä¸º1å¼ å›¾åƒï¼ˆå®é™…é«˜åº¦ä¸º2å¼ å›¾åƒçš„é«˜åº¦ï¼‰å‘é€ç»™ä¸Šå±‚åº”ç”¨ç¨‹åºã€‚ \n
+             æ­¤æ—¶ï¼Œè°ƒç”¨è¯¥æ¥å£å¹¶ä¼ å…¥åˆ†æ—¶æ›å…‰å€¼nExposureNumä¸º2ï¼Œå¯å°†ç›¸æœºå‘é€çš„1å¼ å›¾åƒåˆ†å‰²ä¸º2å¼ å›¾åƒï¼Œå¹¶ä¸”è¿™2å¼ å›¾åƒåˆ†åˆ«å¯¹åº”1ä¸ªæ›å…‰å€¼ã€‚ \n
+             è‹¥ä½¿ç”¨é¢é˜µç›¸æœºæˆ–ä½¿ç”¨çº¿é˜µç›¸æœºï¼Œä½†æœªå¯ç”¨åˆ†æ—¶æ›å…‰/åˆ†æ—¶é¢‘é—ªåŠŸèƒ½ï¼Œåˆ™è°ƒç”¨è¯¥æ¥å£è¿›è¡Œå›¾åƒåˆ†å‰²æ˜¯æ¯«æ— æ„ä¹‰çš„ï¼Œå°¤å…¶æ˜¯Bayeræ ¼å¼ï¼Œä¼šæ‰“ä¹±å›¾åƒå†…å®¹ã€‚ \n
 
  *  @~english
- *  @brief  Reconstruct Image(For time-division exposure function)
- *  @param  handle                      [IN]            Device handle
- *  @param  pstReconstructParam         [IN][OUT]       Reconstruct image parameters
- *  @return Success, return MV_OK, Failure, return error code.
- *  @remarks Image segmentation supports any pixel format. Image segmentation should be used with the "MultiLightControl" node of the linear array camera. This node can set multiple different exposure values, such as MultiLightControl=2, 
-             The camera will overlap and merge two images corresponding to two different exposure values into one image (the actual height is the height of the two images) and send it to the upper application. 
-             Call the interface and pass in nExposureNum is two. One image sent by the camera can be divided into two images, each of which corresponds to an exposure value. 
-             If an ordinary camera is used or the "MultiLightControl" node of the linear array camera is not turned on, the image segmentation is meaningless, but the image is divided into 2, 3, and 4 images by line. 
-             The height of each image becomes 1/2, 1/3, 1/4 of the original image (determined by nExposureNum).
- ************************************************************************/
+ *  @brief  Reconstructs the image for multi-light control. 
+ *  @param  handle                      [IN]            It refers to the device handle. 
+ *  @param  pstReconstructParam         [IN][OUT]       It refers to the image reconstruction parameters. 
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks When used, this API must be paired with multi-light control of line scan cameras. If the multi-light exposure node is 2, the camera will reconstruct 2 images with different exposure values into one image (with its height the sum of two images) and send it to the upper layer application.
+             If this API is called then and the value of nExposureNum is set to 2, the reconstructed image will be later divided to 2 images with two corresponding exposure values.
+             If using an area scan camera or a line scan camera without enabling the multi-light control function, calling this interface for image splitting is meaningless, especially for Bayer format images, as it may disrupt the image content.
+************************************************************************/
 MV_CAMCTRL_API int __stdcall MV_CC_ReconstructImage(IN void* handle, IN OUT MV_RECONSTRUCT_IMAGE_PARAM* pstReconstructParam);
 
+/// @}
+
+
+
+/**************************Part12 ch: æ”¯æŒä¸²å£é€šä¿¡çš„è®¾å¤‡æ¥å£ | en: API for devices supporting serial communication ******************************************/
+
+/// \addtogroup ä¸²å£æ§åˆ¶ç›¸å…³
+/// @{
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief    æ‰“å¼€ä¸²å£
+ *  @param    handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return   æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç " ã€‚
+ *  @remarks  æ­¤æ¥å£é€‚ç”¨äºæ”¯æŒä¸²å£é€šä¿¡çš„ç›¸æœº
+
+ *  @~english
+ *  @brief    Opens the serial port. 
+ *  @param    handle                      [IN]            It refers to the device handle.
+ *  @return   Returns MV_OK for success, and returns corresponding Error Code for failure.   
+ *  @remarks  This API is compatible with cameras supporting serial communication
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_SerialPort_Open(IN void* handle);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief    å‘ä¸²å£å†™æ•°æ®ï¼Œä¸€æ¬¡æœ€å¤§å†™512å­—èŠ‚çš„æ•°æ®
+ *  @param    handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param    pBuffer                     [IN]            æ•°æ®
+ *  @param    nLength                     [IN]            æ•°æ®é•¿åº¦
+ *  @param    pnWriteLen                  [OUT]           å®é™…å†™æˆåŠŸçš„æ•°æ®é•¿åº¦
+ *  @return   æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç " ã€‚
+ *  @remarks  æ¥å£ä¸ºé˜»å¡æ¨¡å¼ï¼Œæ•°æ®å…¨éƒ¨å‘é€å®Œæˆæˆ–è€…å‘é€å¤±è´¥æ—¶è¿”å›
+
+ *  @~english
+ *  @brief   Writes data to serial port, allowing a maximum of 512 bytes written at a time.  
+ *  @param    handle                      [IN]            It refers to the device handle.
+ *  @param    pBuffer                     [IN]            It refers to the data buffer. 
+ *  @param    nLength                     [IN]            It refers to the data length.
+ *  @param    pnWriteLen                  [OUT]           It refers to the actual written data length. 
+ *  @return   Returns MV_OK for success, and returns corresponding Error Code for failure. 
+ *  @remarks  The API is in blocking mode, returning the result only when all data has been successfully transmitted or transmission fails. 
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_SerialPort_Write(IN void* handle, IN const void *pBuffer, IN unsigned int nLength, OUT unsigned int* pnWriteLen);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief    è¯»ä¸²å£æ•°æ®
+ *  @param    handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param    pBuffer                     [IN]            æ•°æ®
+ *  @param    nLength                     [IN]            æ•°æ®é•¿åº¦
+ *  @param    pnReadLen                   [OUT]           å®é™…è¯»åˆ°çš„æ•°æ®é•¿åº¦
+ *  @param    nMsec                       [IN]            è¶…æ—¶æ—¶é—´ï¼Œå•ä½ï¼šms
+ *  @return   æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç " ã€‚
+ *  @remarks  æ¥å£ä¸ºé˜»å¡æ¨¡å¼ï¼Œå½“æœ‰æ”¶åˆ°æ•°æ®ã€åˆ°è¾¾è¶…æ—¶æ—¶é—´ã€å‡ºç°å¼‚å¸¸æ—¶ï¼Œç«‹å³è¿”å›
+
+ *  @~english
+ *  @brief    Reads the serial port data. 
+ *  @param    handle                      [IN]            It refers to the device handle. 
+ *  @param    pBuffer                     [IN]            It refers to the data buffer. 
+ *  @param    nLength                     [IN]            It refers to the data buffer length.
+ *  @param    pnReadLen                   [OUT]           It refers to the reader data length. 
+ *  @param    nMsec                       [IN]            It refers to the timeout duration, unit: millisecond. 
+ *  @return   Returns MV_OK for success, and returns corresponding Error Code for failure.   
+ *  @remarks  The API is in blocking mode, returning the result only when data is received, timed out, or exception occurs. 
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_SerialPort_Read(IN void* handle, IN void *pBuffer, IN unsigned int nLength, OUT unsigned int* pnReadLen, IN unsigned int nMsec);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief    æ¸…ç©ºå·²æ¥æ”¶çš„ä¸²å£æ•°æ®
+ *  @param    handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return   æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç " ã€‚
+ *  @remarks  
+
+ *  @~english
+ *  @brief    Clears the received serial port data.  
+ *  @param    handle                      [IN]            It refers to the device handle. 
+ *  @return   Returns MV_OK for success, and returns corresponding Error Code for failure.  
+ *  @remarks  
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_SerialPort_ClearBuffer(IN void* handle);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief    å…³é—­ä¸²å£
+ *  @param    handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return   æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç " ã€‚
+ *  @remarks  
+
+ *  @~english
+ *  @brief    Closes the serial port.  
+ *  @param    handle                      [IN]            It refers to the device handle. 
+ *  @return   Returns MV_OK for success, and returns corresponding Error Code for failure.    
+ *  @remarks  
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_SerialPort_Close(IN void* handle);
+
+/// @}
+
+/**************************Part13 ch: æ”¯æŒæ¶²æ€é•œå¤´çš„è®¾å¤‡æ¥å£ | en: API for devices supporting liquid lens ******************************************/
+
+/// \addtogroup æ¶²æ€é•œå¤´æ§åˆ¶
+/// @{
+/********************************************************************//**
+ *  @~chinese
+ *  @brief    æ‰“å¼€æ¶²æ€é•œå¤´
+ *  @param    handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param    pstLiquidLensInfo           [OUT]           æ¶²æ€é•œå¤´åŸºæœ¬ä¿¡æ¯
+ *  @return   æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç " ã€‚
+ *  @remarks  è°ƒç”¨ MV_CC_LiquidLens_Open() åï¼Œè¯¥æ¥å£ä¼šè·å–å¹¶è¾“å‡ºé•œå¤´æ”¯æŒçš„å…‰ç„¦åº¦èŒƒå›´ã€‚
+
+ *  @~english
+ *  @brief    Open the liquid lens.  
+ *  @param    handle                      [IN]            It refers to the device handle. 
+ *  @param    pstLiquidLensInfo           [OUT]           It refers to the information of liquid lens.
+ *  @return   Returns MV_OK for success, and returns corresponding Error Code for failure.    
+ *  @remarks  
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_Open(IN void* handle, OUT MV_CC_LIQUIDLENS_INFO* pstLiquidLensInfo);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief    å…³é—­æ¶²æ€é•œå¤´
+ *  @param    handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @return   æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç " ã€‚
+
+ *  @~english
+ *  @brief    Close the liquid lens.  
+ *  @param    handle                      [IN]            It refers to the device handle. 
+ *  @return   Returns MV_OK for success, and returns corresponding Error Code for failure.    
+ *  @remarks  
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_Close(IN void* handle);
 
 
 /********************************************************************//**
-*  @~chinese
-*  @brief  ·ÖÅä¶ÔÆëÄÚ´æ
-*  @param  nBufLen                      [IN]            ·ÖÅäÄÚ´æµÄ³¤¶È
-*  @param  nAlignment                   [IN]            ÄÚ´æ¶ÔÆë×Ö½ÚÊı (±ØĞëÊÇ´óÓÚ0£¬²¢ÇÒÊÇ2µÄÕûÊı´ÎÃİ)
-*  @return ³É¹¦£¬·µ»ØÉêÇëÄÚ´æµØÖ·£¬Ê§°Ü£¬·µ»Ø NULL
-*  @remarks 
+ *  @~chinese
+ *  @brief  è®¾ç½®å…‰ç„¦åº¦
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nFocalPower                 [IN]            å…‰ç„¦åº¦å€¼ã€‚èŒƒå›´ç”±è°ƒç”¨ MV_CC_LiquidLens_Open() è·å–çš„é•œå¤´æ”¯æŒçš„å…‰ç„¦åº¦èŒƒå›´å†³å®šã€‚
+ *  @param  nTriggerEnable              [IN]            æ˜¯å¦è§¦å‘ç›¸æœºï¼Œ0-ä¸è§¦å‘ï¼Œ é0-è§¦å‘
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks å½“nTriggerEnableä¸ä¸º0æ—¶ï¼Œç”¨æˆ·éœ€è¦å…ˆæŠŠç›¸æœºè®¾ç½®ä¸ºè½¯è§¦å‘æ¨¡å¼ï¼Œæ¥å£è°ƒç”¨åï¼Œç›¸æœºå°†è§¦å‘ä¸€å¸§å›¾åƒï¼Œå¦åˆ™æ— æ³•å‡ºå›¾ã€‚
 
-*  @~english
-*  @brief  
-*  @param  nBufLen                      [IN]        memory bytes     
-*  @param  nAlignment                   [IN]        memory aligned bytes (Must be an integer power of 2 greater than 0)
-*  @return Success, return memory address, Failure, return NULL.
-*  @remarks 
+ *  @~english
+ *  @brief  Sets the focal power of liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  nFocalPower                 [IN]            It refers to the focal power value. range[INT16_MIN, INT16_MAX]
+ *  @param  nTriggerEnable              [IN]            It refers to whether to trigger the camera. 0: not trigger; non-zero: trigger.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks When nTriggerEnable is not 0, the user needs to set the camera to software trigger mode first. After calling this API, the camera will trigger one frame of image. Otherwise, the camera will not output images.
 ************************************************************************/
-MV_CAMCTRL_API void *  __stdcall MV_CC_AllocAlignedBuffer(IN uint64_t  nBufSize, IN unsigned int nAlignment);
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_SetFocalPower(IN void* handle, IN int nFocalPower, IN int nTriggerEnable);
 
 /********************************************************************//**
-*  @~chinese
-*  @brief  ¶ÔÆëÄÚ´æÊÍ·Å
-*  @param  pBuffer                      [IN]            ÄÚ´æµØÖ·
-*  @return ³É¹¦£¬·µ»ØMV_OK£¬Ê§°Ü£¬·µ»Ø´íÎóÂë¡£
-*  @remarks ¶ÔÆëÄÚ´æµÄÊÍ·Å£¬´îÅäMV_CC_AllocAlignedBufferÊ¹ÓÃ
+ *  @~chinese
+ *  @brief  è·å–å…‰ç„¦åº¦ä¿¡æ¯
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnFocalPower               [OUT]           å½“å‰å…‰ç„¦åº¦
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
 
-*  @~english 
-*  @brief   release aligned memory
-*  @param  pBuffer                      [IN]        memory address
-*  @return Success, return MV_OK, Failure, return error code.
-*  @remarks
+ *  @~english
+ *  @brief  Gets the focal power information of liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pnFocalPower               [OUT]           It refers to the current focal power.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
 ************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_FreeAlignedBuffer(IN void* pBuffer);
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_GetFocalPower(IN void* handle, OUT int* pnFocalPower);
 
 /********************************************************************//**
-*  @~chinese
-*  @brief  »ñÈ¡Éè±¸palyload´óĞ¡£¨payload°üº¬Í¼ÏñÊı¾İºÍChunkÊı¾İ£©ºÍÄÚ´æ¶ÔÆä·½Ê½£¬ÓÃÓÚSDKÍâ²¿×¢²á»º´æÊ±£¬Ó¦ÓÃ²ã·ÖÅä×ã¹»µÄ»º´æ¼°ÕıÈ·µÄÄÚ´æ¶ÔÆë·½Ê½
-*  @param  handle                      [IN]            Éè±¸¾ä±ú
-*  @param  pnPayloadSize               [IN OUT]        ¸ºÔØ³¤¶È
-*  @param  pnAlignment                 [IN OUT]        ¸ºÔØÄÚ´æ¶ÔÆëµÄ×Ö½ÚÊı
-*  @return ³É¹¦£¬·µ»ØMV_OK£¬Ê§°Ü£¬·µ»Ø´íÎóÂë¡£
-*  @remarks
+ *  @~chinese
+ *  @brief  æ‰§è¡Œè‡ªåŠ¨å¯¹ç„¦
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstAutoFocusParam           [IN]            è‡ªåŠ¨å¯¹ç„¦å‚æ•°
+ *  @param  nOutputImage                [IN]            å¯¹ç„¦è¿‡ç¨‹ä¸­æ˜¯å¦è¾“å‡ºå›¾åƒï¼Œ0: ä¸¢å¼ƒå¯¹ç„¦è¿‡ç¨‹ä¸­çš„å›¾åƒï¼Œé0ï¼šä¿ç•™å¯¹ç„¦è¿‡ç¨‹ä¸­çš„å›¾åƒ
+ *  @param  pnResultFocalPower          [OUT]           æœ€ä½³æ¸…æ™°ä½ç½®çš„å…‰ç„¦åº¦å€¼ï¼Œå¦‚æœä¸éœ€è¦æ­¤å€¼ï¼Œå¯ä»¥ç½®ç©º
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks \li è°ƒç”¨è¯¥æ¥å£å‰ï¼Œæ‚¨éœ€è°ƒç”¨ MV_CC_StartGrabbing() ï¼Œä¸”éœ€è¦ä¿è¯å½“å‰å–æµç­–ç•¥æ˜¯ \ref MV_GRAB_STRATEGY.MV_GrabStrategy_OneByOne "MV_GrabStrategy_OneByOne" ã€‚
+             \li å½“nOutputImageé0æ—¶ï¼Œç”¨æˆ·å¯ä»¥é€šè¿‡æ³¨å†Œå›è°ƒæˆ–è€… MV_CC_GetImageBuffer() ä¸»åŠ¨è·å–å›¾åƒï¼Œä½†åœ¨å¯¹ç„¦å‰å»ºè®®å¢å¤§å›¾åƒç¼“å­˜èŠ‚ç‚¹ä¸ªæ•°ï¼Œ ä¸”å¦‚æœæ˜¯å›è°ƒå–å›¾ï¼Œå›è°ƒä¸­ä¸è¦è¿›è¡Œè€—æ—¶æ“ä½œï¼Œå¦åˆ™SDKå†…éƒ¨ä¼šä¸»åŠ¨ä¸¢å¼ƒå›¾åƒã€‚\n
+             \li å¯¹ç„¦è¿‡ç¨‹ä¸­ä¼šå°†ç›¸æœºåˆ‡æ¢æˆè½¯è§¦å‘æ¨¡å¼ï¼Œå¯¹ç„¦ç»“æŸåï¼Œä¼šå°†è§¦å‘æ¨¡å¼æ¢å¤åˆ°å¯¹ç„¦å‰çš„è®¾å®šã€‚\n
+             \li ä¸ºäº†æé«˜å¯¹ç„¦çš„æœ‰æ•ˆæ€§ï¼Œå¯¹ç„¦å‰è¯·ç¡®ä¿å¯¹ç„¦ç”»é¢äº®åº¦å‡åŒ€ã€‚\n
 
-*  @~english
-*  @brief  Obtain the device payload size (payload includes image data and Chunk data) and memory alignment method, 
-    which is used by the application layer to allocate sufficient cache and correct memory alignment when registering external cache for SDK
-*  @param  handle                      [IN]            Device Handle
-*  @param  pnPayloadSize               [IN OUT]        Payload size
-*  @param  pnAlignment                 [IN OUT]        Alignment bytes
-*  @return Success, return MV_OK, Failure, return error code.
-*  @remarks
+ *  @~english
+ *  @brief  Executes auto focus for liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstAutoFocusParam           [IN]            It refers to the auto focus parameters.
+ *  @param  nOutputImage                [IN]            It refers to whether to output images during auto focus. 
+ *                                                      0: discard images during auto focus; non-zero: retain images during auto focus. 
+ *  @param  pnResultFocalPower          [OUT]           It refers to the focal power value at the best focus position, set to 0 if this value is not required.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks When nOutputImage is non-zero, users can obtain images by registering a callback or using MV_CC_GetImageBuffer. However, before focusing, it is recommended to increase the number of image buffer nodes. 
+ *           Additionally, if images are acquired through the callback, avoid performing time-consuming operations within the callback; otherwise, the SDK will actively discard images.
+ *           During auto focus, the camera will be switched to software trigger mode. After auto focus is completed, the trigger mode will be restored to the setting before auto focus.
+ *           To improve the effectiveness of auto focus, please ensure the focus image brightness is uniform before focusing.
 ************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_GetPayloadSize(IN void* handle, IN OUT uint64_t* pnPayloadSize, IN OUT unsigned int* pnAlignment);
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_AutoFocus(IN void* handle, IN MV_CC_LIQUIDLENS_AUTOFOCUS_PARAM* pstAutoFocusParam, IN int nOutputImage, OUT int* pnResultFocalPower);
 
 /********************************************************************//**
-*  @~chinese
-*  @brief  Ó¦ÓÃ³ÌĞò·ÖÅä»º´æ£¬²¢×¢²áµ½SDKÄÚ²¿£¬¹©SDKÊ¹ÓÃ
-*  @param  handle                      [IN]            Éè±¸¾ä±ú
-*  @param  pBuffer                     [IN]            ÄÚ´æµØÖ·
-*  @param  nBufSize                    [IN]            ÄÚ´æ³¤¶È
-*  @return ³É¹¦£¬·µ»ØMV_OK£¬Ê§°Ü£¬·µ»Ø´íÎóÂë¡£
-*  @remarks ¿ÉÒÔÊ¹ÓÃ MV_CC_GetPayloadSize »ñÈ¡»º´æ´óĞ¡£¬²¢Ê¹ÓÃ MV_CC_AllocAlignedBuffer ·ÖÅä¿Õ¼ä£¬Ö®ºó½øĞĞMV_CC_RegisterBuffer×¢²á
-            startÇ°µ÷ÓÃ,ÒªÇóµ÷ÓÃ3´ÎÒÔÉÏ£¬¼´ÖÁÉÙ×¢²á3¿éÄÚ´æµ½SDKÖĞ£» £¨U¿Ú/Íø¿ÚÏà»ú»áÊ¹ÓÃ²¿·Ö×¢²áÄÚ´æ½Úµã×÷Îª»º´æ£¬ËùÒÔMV_CC_GetValidImageNum Ğ¡ÓÚÊµ¼Ê×¢²áÍâ²¿ÄÚ´æ¸öÊı£©
-            ×¢²áµÄ»º´æĞèÒªÓÉÓ¦ÓÃ²ãÍ¨ÖªSDKÈ¡Ïû×¢²á£¨MV_CC_UnRegisterBuffer£©ºó£¬½øĞĞÊÍ·Å£¨MV_CC_FreeAlignedBuffer£©
-            Ê¹ÓÃ¸Ã½Ó¿Úºó£¬½ö½öÖ§³ÖMV_CC_GetImageBuffer/MV_CC_FreeImageBuffer MV_CC_RegisterImageCallBackEx »ñÈ¡Í¼Ïñ£¬²»Ö§³ÖÆäËû½Ó¿Ú»ñÈ¡Í¼Ïñ
-            Ê¹ÓÃ¸Ã½Ó¿Úºó£¬Èç¹ûÖ®Ç°ÅäÖÃÁËSDKÄÚ²¿½Úµã£¨MV_CC_SetImageNodeNum£©ÎŞĞ§
-*  @~english
-*  @brief  The application allocates memory and registers it within the SDK for use by the SDK
-*  @param  handle                      [IN]            Device Handle
-*  @param  pBuffer                     [IN]            external memory address
-*  @param  nBufSize                    [IN]            external memory len 
-*  @return Success, return MV_OK, Failure, return error code.
-*  @remarks Registering memory can be done by using MV_CC_GetPayloadSize to obtain the memory size, and allocating the memory size using MV_CC_AllocAlignedBuffer
-            Called before start, call at last 3 times, that is ,register at least 3 blocks of memory or more.(U-port/Ethernet port cameras will use some registered memory nodes as cache, so MV_CC_GetValidImageNum is less than the actual number of registered external memory.)
-            The registered memory needs to be notified by the application layer to the SDK to cancel the registration (MV_CC_UnregisterBuffer) and then released (MV_CC_FreeAlignedBuffer)
-            After using this interface, only MV_CC_GetImageBuffer¡¢MV_CC_FreeImageBuffer/MV_CC_RegisterImageCallBackEx is supported for image retrieval, and other interfaces are not supported for image retrieval
-            After using this interface, if the SDK internal node (MV_CC_SetImageNodeNum) was previously configured, it is invalid
+ *  @~chinese
+ *  @brief  æ‰§è¡Œå…‰ç„¦åº¦åŒºé—´æ‰«æ
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstRangeScanParam           [IN]            åŒºé—´æ‰«æå‚æ•°
+ *  @param  cbLiquidLensMsg             [IN]            æ¶²æ€é•œå¤´ä¸Šä¼ æ¶ˆæ¯å›è°ƒå‡½æ•°
+ *  @param  pUser                       [IN]            ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks å…‰ç„¦åº¦åŒºé—´åŠŸèƒ½å¯æ§åˆ¶æ¶²æ€é•œå¤´åœ¨æŒ‡å®šçš„å…‰ç„¦åº¦åŒºé—´å†…ï¼ŒæŒ‰ç…§è®¾ç½®çš„æ¬¡æ•°å’Œæ—¶é—´ï¼Œè¿›è¡Œç­‰é—´è·å˜ç„¦ã€‚å¸¸åº”ç”¨äºè‡ªåŠ¨å¯¹ç„¦ã€æ™¯æ·±èåˆç­‰åœºæ™¯ã€‚
+             \li è°ƒç”¨æ¥å£å‰éœ€è¦ç”¨æˆ·å…ˆæŠŠç›¸æœºè®¾ç½®ä¸ºè½¯è§¦å‘æ¨¡å¼ï¼Œå¦åˆ™æ‰«æè¿‡ç¨‹ä¸­ç›¸æœºæ— æ³•è§¦å‘å‡ºå›¾ã€‚ç›¸æœºè§¦å‘å‡ºå›¾çš„æ—¶æœºå—è§¦å‘å»¶è¿Ÿæ—¶é—´çš„å½±å“ï¼Œå¯ä»¥é€šè¿‡ MV_CC_LiquidLens_SetTriggerDelayTime() è®¾ç½®ã€‚\n
+             \li åœ¨å›è°ƒä¸­å¯ä»¥è·å–åˆ°å…‰ç„¦åº¦å˜åŒ–äº‹ä»¶å’Œæ‰«æç»“æŸäº‹ä»¶ï¼Œå¦‚æœæ˜¯å…‰ç„¦åº¦å˜åŒ–äº‹ä»¶ï¼Œæ¶ˆæ¯æ•°æ®è¿”å›çš„æ˜¯å½“å‰å…‰ç„¦åº¦å€¼ã€‚\n
+             @note è¯·å‹¿åœ¨å›è°ƒå‡½æ•°ä¸­æ‰§è¡Œè€—æ—¶æ“ä½œï¼Œå¦åˆ™ä¼šé˜»å¡ä¸²å£æ•°æ®çš„è¯»å†™ï¼Œå½±å“è®¾å¤‡é€šä¿¡æ€§èƒ½ã€‚\n
+
+ *  @~english
+ *  @brief  Executes focal power range scan for liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstRangeScanParam           [IN]            It refers to the range scan parameters.
+ *  @param  cbLiquidLensMsg             [IN]            It refers to the callback function for liquid lens messages.
+ *  @param  pUser                       [IN]            It refers to the user-defined variable.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Before calling this API, the user needs to set the camera to software trigger mode first. Otherwise, the camera cannot trigger and output images during the scan process. 
+ *           The timing of camera trigger image output is affected by the trigger delay time, which can be set through the MV_CC_LiquidLens_SetTriggerDelayTime API.\n
+ *           In the callback, you can obtain focal power change events and scan end events. If it is a focal power change event, the message data returns the current focal power value.
+ *           Note: Do not perform time-consuming operations in the callback function, otherwise it will block serial port data read/write and affect device communication performance.
 ************************************************************************/
-MV_CAMCTRL_API int __stdcall MV_CC_RegisterBuffer(IN void* handle, IN void* pBuffer, IN uint64_t nBufSize);
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_FocalPowerRangeScan(IN void* handle, IN MV_CC_LIQUIDLENS_RANGE_SCAN_PARAM* pstRangeScanParam, IN MvLiquidLensMsgCallback cbLiquidLensMsg, IN void* pUser);
 
 /********************************************************************//**
-*  @~chinese
-*  @brief  Íâ²¿ÄÚ´æÈ¡ÏûSDKÄÚ²¿×¢²á
-*  @param  handle                      [IN]            Éè±¸¾ä±ú
-*  @param  pBuffer                     [IN]            Íâ²¿ÄÚ´æµØÖ·
-*  @return ³É¹¦£¬·µ»ØMV_OK£¬Ê§°Ü£¬·µ»Ø´íÎóÂë¡£
-*  @remarks 
+ *  @~chinese
+ *  @brief  æ‰§è¡Œå¤šç„¦åº¦è½®è¯¢
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pstMultiFPScanParam         [IN]            å¤šç„¦åº¦æ‰«æå‚æ•°
+ *  @param  cbLiquidLensMsg             [IN]            æ¶²æ€é•œå¤´ä¸Šä¼ æ¶ˆæ¯å›è°ƒå‡½æ•°
+ *  @param  pUser                       [IN]            ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks å¤šç„¦åº¦è½®è¯¢åŠŸèƒ½ç”¨äºå¤šæ®µæ™¯æ·±èåˆã€å¤šæ®µæ™¯æ·±æ‰«æç­‰åœºæ™¯ã€‚åœ¨æ‚¨è®¾ç½®ä¸€ç»„å…‰ç„¦åº¦å’Œä¿æŒæ—¶é—´åï¼Œé•œå¤´æŒ‰ç…§è®¾ç½®çš„å…‰ç„¦åº¦ç»„å’Œä¿æŒæ—¶é—´è½®æ¬¡è¿è¡Œã€‚
+             \li è°ƒç”¨æ¥å£å‰éœ€è¦ç”¨æˆ·å…ˆæŠŠç›¸æœºè®¾ç½®ä¸ºè½¯è§¦å‘æ¨¡å¼ï¼Œå¦åˆ™æ‰«æè¿‡ç¨‹ä¸­ç›¸æœºæ— æ³•è§¦å‘å‡ºå›¾ã€‚ç›¸æœºè§¦å‘å‡ºå›¾çš„æ—¶æœºå—è§¦å‘å»¶è¿Ÿæ—¶é—´çš„å½±å“ï¼Œå¯ä»¥é€šè¿‡ MV_CC_LiquidLens_SetTriggerDelayTime() è®¾ç½®ã€‚\n
+             \li åœ¨å›è°ƒä¸­å¯ä»¥è·å–åˆ°å…‰ç„¦åº¦å˜åŒ–äº‹ä»¶å’Œæ‰«æç»“æŸäº‹ä»¶ï¼Œå¦‚æœæ˜¯å…‰ç„¦åº¦å˜åŒ–äº‹ä»¶ï¼Œæ¶ˆæ¯æ•°æ®è¿”å›çš„æ˜¯å½“å‰å…‰ç„¦åº¦å€¼ã€‚\n
+             @note
+             \li è¯·å‹¿åœ¨å›è°ƒå‡½æ•°ä¸­æ‰§è¡Œè€—æ—¶æ“ä½œï¼Œå¦åˆ™ä¼šé˜»å¡ä¸²å£æ•°æ®çš„è¯»å†™ï¼Œå½±å“è®¾å¤‡é€šä¿¡æ€§èƒ½ã€‚
+             \li è¯¥æ¥å£çš„è¿è¡Œæ— æ³•è¢«ä¸­æ–­ã€‚åœ¨æ‰§è¡Œå¤šç„¦åº¦è½®è¯¢æ—¶ï¼Œè¯·ç­‰å¾…é•œå¤´æ‰§è¡Œå®Œæˆã€‚
 
-*  @~english
-*  @brief   revoke external memory
-*  @param  handle                      [IN]            Device Handle
-*  @param  pBuffer                     [IN]            external memory address
-*  @return Success, return MV_OK, Failure, return error code.
-*  @remarks
+ *  @~english
+ *  @brief  Executes multi focal power scan for liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pstMultiFPScanParam         [IN]            It refers to the multi focal power scan parameters.
+ *  @param  cbLiquidLensMsg             [IN]            It refers to the callback function for liquid lens messages.
+ *  @param  pUser                       [IN]            It refers to the user-defined variable.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks Before calling this API, the user needs to set the camera to software trigger mode first. Otherwise, the camera cannot trigger and output images during the scan process.
+ *           The timing of camera trigger image output is affected by the trigger delay time, which can be set through the MV_CC_LiquidLens_SetTriggerDelayTime API.
+ *           In the callback, you can obtain focal power change events and scan end events. If it is a focal power change event, the message data returns the current focal power value.
+ *           Note: Do not perform time-consuming operations in the callback function, otherwise it will block serial port data read/write and affect device communication performance.
 ************************************************************************/
-MV_CAMCTRL_API int __stdcall  MV_CC_UnRegisterBuffer(IN void* handle, IN void* pBuffer);
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_MultiFocalPowerScan(IN void* handle, IN MV_CC_LIQUIDLENS_MULTI_FP_SCAN_PARAM* pstMultiFPScanParam, IN MvLiquidLensMsgCallback cbLiquidLensMsg, IN void* pUser);
 
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è®¾ç½®è§¦å‘å»¶æ—¶
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  nDelayTimeMs                [IN]            è§¦å‘å»¶è¿Ÿæ—¶é—´ï¼Œå•ä½ï¼šæ¯«ç§’,ä¸èƒ½å¤§äº1000
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è§¦å‘å»¶è¿Ÿæ—¶é—´å†³å®šç›¸æœºè§¦å‘å‡ºå›¾çš„æ—¶æœºï¼Œæ¯”å¦‚å‘é€è®¾ç½®å…‰ç„¦åº¦å‘½ä»¤åï¼Œç­‰å¾…ä¸€ä¸ªè§¦å‘å»¶è¿Ÿæ—¶é—´åï¼Œå†è§¦å‘å‡ºå›¾ï¼ˆå¦‚æœéœ€è¦ï¼‰ã€‚
+
+ *  @~english
+ *  @brief  Sets the trigger delay time for liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  nDelayTimeMs                [IN]            It refers to the trigger delay time, unit: millisecond,cannot exceed 1000.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks The trigger delay time determines when the camera triggers to output images. For example, after sending a focal power setting command, wait for the trigger delay time before triggering image output (if needed).
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_SetTriggerDelayTime(IN void* handle, IN unsigned int nDelayTimeMs);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è·å–è§¦å‘å»¶æ—¶
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  pnDelayTimeMs               [OUT]           è§¦å‘å»¶è¿Ÿæ—¶é—´
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+
+ *  @~english
+ *  @brief  Gets the trigger delay time for liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  pnDelayTimeMs               [OUT]           It refers to the trigger delay time.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_GetTriggerDelayTime(IN void* handle, OUT unsigned int* pnDelayTimeMs);
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  ä¿å­˜å‚æ•°åˆ°æŒ‡å®šç”¨æˆ·é›†
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  enUserSet                   [IN]            ç”¨æˆ·é›†
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+
+ *  @~english
+ *  @brief  Saves parameters to the specified user set of liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  enUserSet                   [IN]            It refers to the user set.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_SaveUserSet(IN void* handle, IN MV_CC_LIQUIDLENS_USERSET enUserSet);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è·å–å½“å‰ç”¨æˆ·é›†
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  penUserSet                  [OUT]           å½“å‰ç”¨æˆ·é›†
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+
+ *  @~english
+ *  @brief  Gets the current user set of liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  penUserSet                  [OUT]           It refers to the current user set.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_GetCurrentUserSet(IN void* handle, OUT MV_CC_LIQUIDLENS_USERSET* penUserSet);
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  åŠ è½½æŒ‡å®šç”¨æˆ·é›†
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  enUserSet                   [IN]            ç”¨æˆ·é›†
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+
+ *  @~english
+ *  @brief  Loads the specified user set for liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  enUserSet                   [IN]            It refers to the user set.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_LoadUserSet(IN void* handle, IN MV_CC_LIQUIDLENS_USERSET enUserSet);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è®¾ç½®é»˜è®¤ç”¨æˆ·é›†
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  enUserSet                   [IN]            ç”¨æˆ·é›†
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks è°ƒç”¨æ­¤æ¥å£åï¼Œé•œå¤´é‡æ–°ä¸Šç”µåï¼Œå°†é»˜è®¤åŠ è½½è®¾å®šçš„ç”¨æˆ·é›†ã€‚
+
+ *  @~english
+ *  @brief  Sets the default user set for liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  enUserSet                   [IN]            It refers to the user set.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+ *  @remarks After calling this API, the lens will load the set user set by default after power-on.
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_SetDefaultUserSet(IN void* handle, IN MV_CC_LIQUIDLENS_USERSET enUserSet);
+
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è·å–é»˜è®¤ç”¨æˆ·é›†
+ *  @param  handle                      [IN]            è®¾å¤‡å¥æŸ„
+ *  @param  penUserSet                  [OUT]           é»˜è®¤ç”¨æˆ·é›†
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+
+ *  @~english
+ *  @brief  Gets the default user set of liquid lens.
+ *  @param  handle                      [IN]            It refers to the device handle.
+ *  @param  penUserSet                  [OUT]           It refers to the default user set.
+ *  @return Returns MV_OK for success, and returns corresponding Error Code for failure.
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_GetDefaultUserSet(IN void* handle, OUT MV_CC_LIQUIDLENS_USERSET* penUserSet);
+/********************************************************************//**
+*  @~chinese
+ *  @brief  è®¾ç½®æ¶²æ€é•œå¤´æ¸©åº¦å˜åŒ–æ£€æµ‹æ—¶é—´é—´éš”
+ *  @param  handle              [IN]    è®¾å¤‡å¥æŸ„
+ *  @param  nIntervalSeconds    [IN]    æ£€æµ‹æ—¶é—´é—´éš”ï¼ˆå•ä½ï¼šç§’ï¼‰ï¼Œä¸èƒ½å¤§äº65535
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  
+ *  @~english
+ *  @brief  Set temperature detection interval for liquid lens
+ *  @param  handle              [IN]    It refers to the device handle.
+ *  @param  nIntervalSeconds    [IN]    It refers to the detection interval in seconds,cannot exceed 65535.
+ *  @return Success, return \ref status code "MV_OK"; Failure, return \ref status code "status code".
+************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_SetTempDetectInterval(IN void* handle, IN unsigned int nIntervalSeconds);
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  è·å–æ¶²æ€é•œå¤´æ¸©åº¦å˜åŒ–æ£€æµ‹æ—¶é—´é—´éš”
+ *  @param  handle              [IN]    è®¾å¤‡å¥æŸ„
+ *  @param  pnIntervalSeconds   [OUT]   æ£€æµ‹æ—¶é—´é—´éš”ï¼ˆå•ä½ï¼šç§’ï¼‰
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  
+ *  @~english
+ *  @brief  Get temperature detection interval for liquid lens
+ *  @param  handle              [IN]    It refers to the device handle.
+ *  @param  pnIntervalSeconds   [OUT]   It refers to the detection interval in seconds
+ *  @return Success, return \ref status code "MV_OK"; Failure, return \ref status code "status code".
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_GetTempDetectInterval(IN void* handle, OUT unsigned int* pnIntervalSeconds);
+/********************************************************************//**
+ *  @~chinese
+ *  @brief  æ³¨å†Œæ¶²æ€é•œå¤´å¼‚å¸¸äº‹ä»¶å›è°ƒæ¥å£
+ *  @param  handle          [IN]    è®¾å¤‡å¥æŸ„
+ *  @param  cbLiquidLensException     [IN]    å¼‚å¸¸äº‹ä»¶å›è°ƒå‡½æ•°æŒ‡é’ˆ
+ *  @param  pUser           [IN]    ç”¨æˆ·è‡ªå®šä¹‰æ•°æ®
+ *  @return æˆåŠŸï¼Œè¿”å›\ref çŠ¶æ€ç  "MV_OK"ï¼›å¤±è´¥ï¼Œè¿”å›\ref çŠ¶æ€ç  "çŠ¶æ€ç "ã€‚
+ *  @remarks é•œå¤´å‘ç”Ÿå¼‚å¸¸æ—¶ï¼Œå¯ä»¥åœ¨å›è°ƒé‡Œé¢è·å–åˆ°å¼‚å¸¸æ¶ˆæ¯ï¼Œæ¯”å¦‚é•œå¤´å¼‚å¸¸æ–­å¼€ã€‚
+
+ *  @~english
+ *  @brief  Register liquid lens exception event callback interface
+ *  @param  handle                    [IN]    It refers to the device handle.
+ *  @param  cbLiquidLensException     [IN]    It refers to the exception event callback function pointer
+ *  @param  pUser                     [IN]    It refers to the user defined data
+ *  @return Success, return \ref status code "MV_OK"; Failure, return \ref status code "status code".
+ *  @remarks When the lens encounters exceptions, you can obtain the exception information through the callback, such as obtaining the exception message after the lens is abnormally disconnected.
+ ************************************************************************/
+MV_CAMCTRL_API int __stdcall MV_CC_LiquidLens_RegisterExceptionCallBack(IN void* handle, IN MvLiquidLensExceptionCallback cbLiquidLensException, IN void* pUser);
+/// @}
 #ifdef __cplusplus
 }
 #endif 

@@ -2,8 +2,8 @@
 /**
 \file		IGXFeatureControl.h
 \brief		Definition of IGXFeatureControl class.
-\Date       2022-8-01
-\Version    1.1.2208.9011
+\Date       2023-10-24
+\Version    1.1.2310.9241
 */
 //------------------------------------------------------------------------
 #ifndef IGXFEATURE_CONTROL_H
@@ -210,6 +210,38 @@ public:
 	*/
 	//---------------------------------------------------------
 	virtual void WritePortStacked(const GX_REGISTER_STACK_ENTRY* pstEntries, size_t *piNumEntries) = 0;
+	
+	//---------------------------------------------------------
+    /**
+    \brief Get interface feature control pointer
+    \return   Feature control pointer
+    */
+    //---------------------------------------------------------
+    virtual void FeatureSave(const GxIAPICPP::gxstring& strFilePath) = 0;
+    
+    //---------------------------------------------------------
+    /**
+    \brief Get interface feature control pointer
+    \return   Feature control pointer
+    */
+    //---------------------------------------------------------
+    virtual void FeatureLoad(const GxIAPICPP::gxstring& strFilePath, bool bVerify = false) = 0;
+    
+    //---------------------------------------------------------
+    /**
+    \brief Get interface feature control pointer
+    \return   Feature control pointer
+    */
+    //---------------------------------------------------------
+    virtual void FeatureSaveW(const wchar_t* pchWFilePath) = 0;
+    
+    //---------------------------------------------------------
+    /**
+    \brief Get interface feature control pointer
+    \return   Feature control pointer
+    */
+    //---------------------------------------------------------
+    virtual void FeatureLoadW(const wchar_t*  pchWFilePath, bool bVerify = false) = 0;
 
 };
 

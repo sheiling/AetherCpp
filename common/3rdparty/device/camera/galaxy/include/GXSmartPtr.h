@@ -2,8 +2,8 @@
 /**
 \file		GXSmartPtr.h
 \brief		Definition of template GXSmartPtr
-\Date       2019-01-04
-\Version    1.1.1901.9041
+\Date       2024-10-12
+\Version    1.1.2410.9121
 */
 //------------------------------------------------------------------------
 #ifndef GX_SMART_POINTER_H
@@ -33,9 +33,8 @@ private:
 	LONG m_nUseCount;        // #shared
 
 public:
-
 	/// Default constructor
-	volatile GXSPCountedBase(): m_nUseCount(1)
+	GXSPCountedBase(): m_nUseCount(1)
 	{
 	}
 

@@ -647,7 +647,7 @@ void GalaxyCamera::refreshCameraInfo()
         m_cameraInfo_.pixelFormat = featureControlPtr_->GetEnumFeature("PixelFormat")->GetValue();
         m_cameraInfo_.imageFormat   = ToImageFormat(m_cameraInfo_.pixelFormat);
 
-        std::string pixelSize = featureControlPtr_->GetEnumFeature("PixelSize")->GetValue();
+        std::string pixelSize = featureControlPtr_->GetEnumFeature("PixelSize")->GetValue().c_str();
         if (pixelSize.find("Bpp") != std::string::npos) {
             pixelSize.erase(0, 3);
         }

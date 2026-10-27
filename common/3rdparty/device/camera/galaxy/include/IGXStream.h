@@ -2,8 +2,8 @@
 /**
 \file		IGXStream.h
 \brief		Definition of the IGXDevice interface
-\Date       2019-8-15
-\Version    1.1.1908.9151
+\Date       2024-12-19
+\Version    1.1.2412.9191
 */
 //------------------------------------------------------------------------
 #pragma once
@@ -113,6 +113,57 @@ public:
 	*/
 	//----------------------------------------------------------------------------------
     virtual uint32_t GetOptimalPacketSize(void) = 0;
+    
+    //----------------------------------------------------------------------------------
+	/**
+	\brief     Get payload Size 
+	\return    uint32_t
+	*/
+	//----------------------------------------------------------------------------------
+    virtual uint64_t GetPayloadSize(void) = 0;
+
+	//----------------------------------------------------------------------------------
+	/**
+	\brief     Get one image with zero copy. Different from the call back way, User can call this function to get one image at one time.
+	After using ImageData in this method, it is necessary to call DQBuf to return ImageData to the acquisition system. Otherwise,
+	it will result in the collection being unable to continue.
+	If you have registered capture call back, you can't use DQBuf at the same time.
+	\param     nTimeout[in]       The timeout waits in ms.
+	\return    A smart pointer object CImageDataPointer
+	*/
+	//----------------------------------------------------------------------------------
+	virtual CImageDataPointer DQBuf(uint32_t nTimeout) = 0;
+
+	//----------------------------------------------------------------------------------
+	/**
+	\brief     Return ImageData to the acquisition system.
+	If you have registered capture call back, you can't use QBuf at the same time.
+	\param     pImgData[in]       A smart pointer object CImageDataPointer
+	\return    void
+	*/
+	//----------------------------------------------------------------------------------
+	virtual void QBuf(const CImageDataPointer& pImgData) = 0;
+
+	//----------------------------------------------------------------------------------
+	/**
+	\brief    Register the extern buffer for grab.
+	\param    pBuffer[in] 		buffer address
+	\param    nSize[in] 		buffer size
+	\param    pUserParam[in]    User parameter
+	\return   void
+	*/
+	//----------------------------------------------------------------------------------
+	virtual void RegisterBuffer(void* pBuffer, size_t nSize, void* pUserParam) = 0;
+
+	//----------------------------------------------------------------------------------
+	/**
+	\brief    Unregister the extern buffer.
+	\param    pBuffer[in] 		buffer address
+	\return   void
+	*/
+	//----------------------------------------------------------------------------------
+	virtual void UnRegisterBuffer(void* pBuffer) = 0;
+
 };
 
 template class GXIAPICPP_API  GXSmartPtr<IGXStream>;

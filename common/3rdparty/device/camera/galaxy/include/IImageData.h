@@ -11,6 +11,7 @@
 #include "GXSmartPtr.h"
 #include "IImageProcessConfig.h"
 
+class IGXFeatureControl;
 class GXIAPICPP_API IImageData
 {
 public:
@@ -115,6 +116,22 @@ public:
 	*/
 	//----------------------------------------------------------------------------------
 	virtual void* ImageProcess(CImageProcessConfigPointer &objCfg) = 0;
+
+	//----------------------------------------------------------------------------------
+	/**
+	\brief    Get the register user param
+	\return    User param
+	*/
+	//----------------------------------------------------------------------------------
+	virtual void* GetUserParam() = 0;
+
+	//----------------------------------------------------------------------------------
+	/**
+	\brief     To get the chunk data feature control
+	\return    chunk data feature control
+	*/
+	//----------------------------------------------------------------------------------
+	virtual IGXFeatureControl* GetChunkDataFeatureControl() = 0;
 };
 
 template class GXIAPICPP_API  GXSmartPtr<IImageData>;
